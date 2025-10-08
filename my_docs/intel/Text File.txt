@@ -1,1 +1,5 @@
 1. WICHTIG.....NUTZEN PCI 3 für Vergleichbarkeit
+
+watch -n1 "nvidia-smi --query-gpu=pcie.link.gen.current,pcie.link.width.current --format=csv"
+
+watch -n 0.5 'sudo lspci -vvv -s $(lspci | grep VGA | cut -d" " -f1) | grep "LnkSta:"'

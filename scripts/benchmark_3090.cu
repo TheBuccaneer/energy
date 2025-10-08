@@ -42,9 +42,10 @@ int main(int argc, char** argv) {
     printf("Transfer-Größe: %.2f GB\n", transferSize / (1024.0f * 1024.0f * 1024.0f));
     printf("Drücke Ctrl+C zum Beenden\n\n");
     
-    // Speicher allokieren
-    float *h_data = (float*)malloc(transferSize);
+    // Speicher allokieren - PINNED für maximale Geschwindigkeit!
+    float *h_data;
     float *d_data;
+    CUDA_CHECK(cudaHostAlloc(&h_data, transferSize, cudaHostAllocDefault));
     CUDA_CHECK(cudaMalloc(&d_data, transferSize));
     
     // Host-Daten initialisieren
