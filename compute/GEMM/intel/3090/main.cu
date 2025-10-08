@@ -24,7 +24,7 @@
 // ============================================================================
 
 constexpr double TARGET_RUNTIME_S = 1.0;
-constexpr int    MAX_BATCH_SIZE   = 200000;
+constexpr int    MAX_BATCH_SIZE   = 250000;
 constexpr int    MACRO_REPEATS    = 5;
 
 // GEMM sizes only
@@ -121,6 +121,7 @@ struct GPUTelemetry {
     unsigned int sm_clock;
     unsigned int mem_clock;
     unsigned int temp;
+    unsigned long long throttle_reasons;  // NVML bitmask: 0=none, 1=thermal, 2=power, etc.
 };
 
 std::string getGPUName(nvmlDevice_t device) {
@@ -145,6 +146,13 @@ GPUTelemetry getGPUTelemetry(nvmlDevice_t device) {
     CHECK_NVML(nvmlDeviceGetClockInfo(device, NVML_CLOCK_SM, &telem.sm_clock));
     CHECK_NVML(nvmlDeviceGetClockInfo(device, NVML_CLOCK_MEM, &telem.mem_clock));
     CHECK_NVML(nvmlDeviceGetTemperature(device, NVML_TEMPERATURE_GPU, &telem.temp));
+    
+    // Get throttle reasons (bitmask)
+    nvmlReturn_t ret = nvmlDeviceGetCurrentClocksThrottleReasons(device, &telem.throttle_reasons);
+    if (ret != NVML_SUCCESS) {
+        telem.throttle_reasons = 0;  // Not supported or error
+    }
+    
     return telem;
 }
 
@@ -168,6 +176,8 @@ BatchResult determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, fl
     CHECK_CUDA(cudaEventCreate(&stop));
     
     while (batch <= MAX_BATCH_SIZE) {
+        // Note: During batch determination, we measure kernel-only time
+        // In actual measurements, events will include H2D/D2H transfers
         CHECK_CUDA(cudaEventRecord(start, stream));
         
         for (int b = 0; b < batch; b++) {
@@ -212,7 +222,7 @@ void writeCSVHeader(std::ofstream& file) {
          << "seconds_target,seconds_gpu,seconds_wall,"
          << "energy_j,avg_power_w,below_target,"
          << "pcie_gen_current,pcie_width_current,"
-         << "clocks_sm_mhz,clocks_mem_mhz,temp_c\n";
+         << "clocks_sm_mhz,clocks_mem_mhz,temp_c,throttle_reasons\n";
 }
 
 void writeCSVRow(std::ofstream& file, const std::string& host, 
@@ -236,7 +246,8 @@ void writeCSVRow(std::ofstream& file, const std::string& host,
          << telem.pcie_width << ","
          << telem.sm_clock << ","
          << telem.mem_clock << ","
-         << telem.temp << "\n";
+         << telem.temp << ","
+         << telem.throttle_reasons << "\n";
 }
 
 // ============================================================================
@@ -364,6 +375,9 @@ int main() {
             auto wall_start = std::chrono::steady_clock::now();
             unsigned long long energy_before = getGPUEnergy(nvml_device);
             
+            // GPU E2E timing starts HERE (before H2D)
+            CHECK_CUDA(cudaEventRecord(start_event, stream));
+            
             // H2D transfers (pinned, async) - 2D copy for upper-left n×n submatrix
             CHECK_CUDA(cudaMemcpy2DAsync(d_A, dst_pitch,
                                          h_A, src_pitch,
@@ -374,9 +388,7 @@ int main() {
                                          width_in_bytes, height,
                                          cudaMemcpyHostToDevice, stream));
             
-            // GPU kernel timing
-            CHECK_CUDA(cudaEventRecord(start_event, stream));
-            
+            // GPU kernel (batches)
             for (int b = 0; b < batches; b++) {
                 CHECK_CUBLAS(cublasSgemm(handle, CUBLAS_OP_T, CUBLAS_OP_T,
                                         n, n, n, &alpha, 
@@ -386,13 +398,14 @@ int main() {
                                         d_C, MAX_SIZE));  // ldc = MAX_SIZE
             }
             
-            CHECK_CUDA(cudaEventRecord(stop_event, stream));
-            
             // D2H transfer (2D copy for realistic E2E)
             CHECK_CUDA(cudaMemcpy2DAsync(h_C, src_pitch,
                                          d_C, dst_pitch,
                                          width_in_bytes, height,
                                          cudaMemcpyDeviceToHost, stream));
+            
+            // GPU E2E timing ends HERE (after D2H)
+            CHECK_CUDA(cudaEventRecord(stop_event, stream));
             
             // Synchronize and measure
             CHECK_CUDA(cudaDeviceSynchronize());
@@ -444,6 +457,9 @@ int main() {
                      << "E=" << std::setprecision(1) << energy_j << "J "
                      << "P=" << std::setprecision(0) << avg_power_w << "W "
                      << "T=" << telem.temp << "°C";
+            if (telem.throttle_reasons != 0) {
+                std::cout << " THROTTLE=0x" << std::hex << telem.throttle_reasons << std::dec;
+            }
             if (below_target) {
                 std::cout << " (!)";
             }
