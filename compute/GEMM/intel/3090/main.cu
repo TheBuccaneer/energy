@@ -14,6 +14,8 @@
 #include <ctime>
 #include <chrono>
 #include <random>
+#include <algorithm>
+#include <filesystem>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -22,7 +24,7 @@
 // ============================================================================
 
 constexpr double TARGET_RUNTIME_S = 1.0;
-constexpr int    MAX_BATCH_SIZE   = 60000;
+constexpr int    MAX_BATCH_SIZE   = 200000;
 constexpr int    MACRO_REPEATS    = 5;
 
 // GEMM sizes only
@@ -31,7 +33,7 @@ static const int GEMM_SIZES[] = {
     1024, 1152, 1280, 1408, 1536
 };
 static const int NUM_SIZES = sizeof(GEMM_SIZES) / sizeof(GEMM_SIZES[0]);
-static const int MAX_SIZE = 1536;  // Maximum matrix size
+static const int MAX_SIZE = *std::max_element(std::begin(GEMM_SIZES), std::end(GEMM_SIZES));
 
 static const char* OUTPUT_FILE = "data/raw/energy_benchmark_rtx3090.csv";
 
@@ -87,11 +89,10 @@ std::string getHostname() {
 }
 
 void ensureDirectoryExists(const char* filepath) {
-    std::string path(filepath);
-    size_t pos = path.find_last_of('/');
-    if (pos != std::string::npos) {
-        std::string dir = path.substr(0, pos);
-        mkdir(dir.c_str(), 0755);
+    namespace fs = std::filesystem;
+    fs::path file_path(filepath);
+    if (file_path.has_parent_path()) {
+        fs::create_directories(file_path.parent_path());
     }
 }
 
@@ -151,8 +152,13 @@ GPUTelemetry getGPUTelemetry(nvmlDevice_t device) {
 // Auto-Batch Determination
 // ============================================================================
 
-int determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, float* d_C,
-                       int n, int lda, float target_seconds, cudaStream_t stream) {
+struct BatchResult {
+    int batches;
+    bool below_target;
+};
+
+BatchResult determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, float* d_C,
+                               int n, int lda, float target_seconds, cudaStream_t stream) {
     const float alpha = 1.0f;
     const float beta = 0.0f;
     int batch = 1;
@@ -165,8 +171,8 @@ int determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, float* d_C
         CHECK_CUDA(cudaEventRecord(start, stream));
         
         for (int b = 0; b < batch; b++) {
-            CHECK_CUBLAS(cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
-                                     n, n, n, &alpha, d_A, lda, d_B, lda, 
+            CHECK_CUBLAS(cublasSgemm(handle, CUBLAS_OP_T, CUBLAS_OP_T,
+                                     n, n, n, &alpha, d_B, lda, d_A, lda, 
                                      &beta, d_C, lda));
         }
         
@@ -177,10 +183,16 @@ int determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, float* d_C
         CHECK_CUDA(cudaEventElapsedTime(&ms, start, stop));
         float elapsed = ms / 1000.0f;
         
-        if (elapsed >= target_seconds || batch >= MAX_BATCH_SIZE) {
+        if (elapsed >= target_seconds) {
             CHECK_CUDA(cudaEventDestroy(start));
             CHECK_CUDA(cudaEventDestroy(stop));
-            return batch;
+            return {batch, false};  // Target reached
+        }
+        
+        if (batch >= MAX_BATCH_SIZE) {
+            CHECK_CUDA(cudaEventDestroy(start));
+            CHECK_CUDA(cudaEventDestroy(stop));
+            return {batch, true};  // Below target (hit max batch limit)
         }
         
         batch = std::min(batch * 2, MAX_BATCH_SIZE);
@@ -188,7 +200,7 @@ int determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, float* d_C
     
     CHECK_CUDA(cudaEventDestroy(start));
     CHECK_CUDA(cudaEventDestroy(stop));
-    return batch;
+    return {batch, false};
 }
 
 // ============================================================================
@@ -198,7 +210,7 @@ int determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, float* d_C
 void writeCSVHeader(std::ofstream& file) {
     file << "timestamp,host,gpu_name,matrix_size,mode,batches,"
          << "seconds_target,seconds_gpu,seconds_wall,"
-         << "energy_mj,avg_power_w,"
+         << "energy_j,avg_power_w,below_target,"
          << "pcie_gen_current,pcie_width_current,"
          << "clocks_sm_mhz,clocks_mem_mhz,temp_c\n";
 }
@@ -206,7 +218,7 @@ void writeCSVHeader(std::ofstream& file) {
 void writeCSVRow(std::ofstream& file, const std::string& host, 
                  const std::string& gpu_name, int n, int batches,
                  float gpu_time_s, float wall_time_s,
-                 unsigned long long energy_mj, float avg_power_w,
+                 double energy_j, double avg_power_w, bool below_target,
                  const GPUTelemetry& telem) {
     file << getTimestamp() << ","
          << host << ","
@@ -217,8 +229,9 @@ void writeCSVRow(std::ofstream& file, const std::string& host,
          << TARGET_RUNTIME_S << ","
          << std::fixed << std::setprecision(4) << gpu_time_s << ","
          << wall_time_s << ","
-         << energy_mj << ","
+         << std::setprecision(3) << energy_j << ","
          << std::setprecision(1) << avg_power_w << ","
+         << (below_target ? 1 : 0) << ","
          << telem.pcie_gen << ","
          << telem.pcie_width << ","
          << telem.sm_clock << ","
@@ -325,9 +338,16 @@ int main() {
         
         // Determine batch size for this matrix size
         std::cout << "  Determining batch size... " << std::flush;
-        int batches = determineBatchSize(handle, d_A, d_B, d_C, n, MAX_SIZE, 
-                                        TARGET_RUNTIME_S, stream);
-        std::cout << "using " << batches << " batches\n";
+        BatchResult batch_result = determineBatchSize(handle, d_A, d_B, d_C, n, MAX_SIZE, 
+                                                      TARGET_RUNTIME_S, stream);
+        int batches = batch_result.batches;
+        bool below_target_size = batch_result.below_target;
+        
+        std::cout << "using " << batches << " batches";
+        if (below_target_size) {
+            std::cout << " (!) below target";
+        }
+        std::cout << "\n";
         
         // Run MACRO_REPEATS measurements
         for (int rep = 0; rep < MACRO_REPEATS; rep++) {
@@ -335,49 +355,50 @@ int main() {
             // E2E Measurement Start
             // ================================================================
             
-            auto wall_start = std::chrono::high_resolution_clock::now();
+            // Prepare 2D copy parameters for n×n submatrix
+            size_t src_pitch = size_t(MAX_SIZE) * sizeof(float);
+            size_t dst_pitch = size_t(MAX_SIZE) * sizeof(float);
+            size_t width_in_bytes = size_t(n) * sizeof(float);
+            size_t height = size_t(n);
+            
+            auto wall_start = std::chrono::steady_clock::now();
             unsigned long long energy_before = getGPUEnergy(nvml_device);
             
-            // H2D transfers (pinned, async) - using upper-left n×n submatrix
-            size_t transfer_bytes = n * n * sizeof(float);
-            for (int i = 0; i < n; i++) {
-                CHECK_CUDA(cudaMemcpyAsync(d_A + i * MAX_SIZE, 
-                                          h_A + i * MAX_SIZE,
-                                          n * sizeof(float),
-                                          cudaMemcpyHostToDevice, stream));
-                CHECK_CUDA(cudaMemcpyAsync(d_B + i * MAX_SIZE,
-                                          h_B + i * MAX_SIZE,
-                                          n * sizeof(float),
-                                          cudaMemcpyHostToDevice, stream));
-            }
+            // H2D transfers (pinned, async) - 2D copy for upper-left n×n submatrix
+            CHECK_CUDA(cudaMemcpy2DAsync(d_A, dst_pitch,
+                                         h_A, src_pitch,
+                                         width_in_bytes, height,
+                                         cudaMemcpyHostToDevice, stream));
+            CHECK_CUDA(cudaMemcpy2DAsync(d_B, dst_pitch,
+                                         h_B, src_pitch,
+                                         width_in_bytes, height,
+                                         cudaMemcpyHostToDevice, stream));
             
             // GPU kernel timing
             CHECK_CUDA(cudaEventRecord(start_event, stream));
             
             for (int b = 0; b < batches; b++) {
-                CHECK_CUBLAS(cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
+                CHECK_CUBLAS(cublasSgemm(handle, CUBLAS_OP_T, CUBLAS_OP_T,
                                         n, n, n, &alpha, 
-                                        d_A, MAX_SIZE,  // lda = MAX_SIZE
-                                        d_B, MAX_SIZE,  // ldb = MAX_SIZE
+                                        d_B, MAX_SIZE,  // B first (transposed)
+                                        d_A, MAX_SIZE,  // then A (transposed)
                                         &beta, 
                                         d_C, MAX_SIZE));  // ldc = MAX_SIZE
             }
             
             CHECK_CUDA(cudaEventRecord(stop_event, stream));
             
-            // D2H transfer (optional, for realistic E2E)
-            for (int i = 0; i < n; i++) {
-                CHECK_CUDA(cudaMemcpyAsync(h_C + i * MAX_SIZE,
-                                          d_C + i * MAX_SIZE,
-                                          n * sizeof(float),
-                                          cudaMemcpyDeviceToHost, stream));
-            }
+            // D2H transfer (2D copy for realistic E2E)
+            CHECK_CUDA(cudaMemcpy2DAsync(h_C, src_pitch,
+                                         d_C, dst_pitch,
+                                         width_in_bytes, height,
+                                         cudaMemcpyDeviceToHost, stream));
             
             // Synchronize and measure
             CHECK_CUDA(cudaDeviceSynchronize());
             
             unsigned long long energy_after = getGPUEnergy(nvml_device);
-            auto wall_end = std::chrono::high_resolution_clock::now();
+            auto wall_end = std::chrono::steady_clock::now();
             
             // ================================================================
             // E2E Measurement End
@@ -391,33 +412,42 @@ int main() {
             std::chrono::duration<double> wall_duration = wall_end - wall_start;
             float wall_time_s = wall_duration.count();
             
-            // Calculate energy and power
-            unsigned long long energy_mj = 0;
-            float avg_power_w = 0.0f;
+            // Calculate energy (convert mJ to J) and power
+            double energy_j = 0.0;
+            double avg_power_w = 0.0;
             
             if (energy_after > energy_before) {
-                energy_mj = energy_after - energy_before;
-                avg_power_w = (energy_mj / 1000.0f) / wall_time_s;
+                unsigned long long energy_mj = energy_after - energy_before;
+                energy_j = energy_mj / 1000.0;  // mJ to J
+                avg_power_w = energy_j / wall_time_s;
             }
+            
+            // Check if this run is below target
+            bool below_target = (gpu_time_s < TARGET_RUNTIME_S);
             
             // Get GPU telemetry
             GPUTelemetry telem = getGPUTelemetry(nvml_device);
             
             // Write to CSV
             writeCSVRow(csv_file, hostname, gpu_name, n, batches,
-                       gpu_time_s, wall_time_s, energy_mj, avg_power_w, telem);
+                       gpu_time_s, wall_time_s, energy_j, avg_power_w, 
+                       below_target, telem);
             csv_file.flush();
             
             // Console progress
-            char check = (gpu_time_s >= TARGET_RUNTIME_S) ? '+' : '!';
+            char check = below_target ? '!' : '+';
             std::cout << "  " << check << " Run " << (rep + 1) << "/" 
                      << MACRO_REPEATS << ": "
                      << std::fixed << std::setprecision(3) 
                      << gpu_time_s << "s (GPU) "
                      << wall_time_s << "s (wall) | "
-                     << "E=" << energy_mj << "mJ "
+                     << "E=" << std::setprecision(1) << energy_j << "J "
                      << "P=" << std::setprecision(0) << avg_power_w << "W "
-                     << "T=" << telem.temp << "°C\n";
+                     << "T=" << telem.temp << "°C";
+            if (below_target) {
+                std::cout << " (!)";
+            }
+            std::cout << "\n";
         }
         
         std::cout << "\n";

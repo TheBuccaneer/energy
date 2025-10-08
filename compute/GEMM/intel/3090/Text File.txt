@@ -1,0 +1,2 @@
+nvcc -O3 -std=c++17 -o gemm_bench main.cu -lcublas -lnvidia-ml
+./gemm_bench
