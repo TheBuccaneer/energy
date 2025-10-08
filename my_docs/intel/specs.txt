@@ -1,0 +1,106 @@
+rock@rock-ms7a95:~$ lscpu
+Architecture:                x86_64
+  CPU op-mode(s):            32-bit, 64-bit
+  Address sizes:             46 bits physical, 48 bits virtual
+  Byte Order:                Little Endian
+CPU(s):                      20
+  On-line CPU(s) list:       0-19
+Vendor ID:                   GenuineIntel
+  Model name:                Intel(R) Core(TM) i9-7900X CPU @ 3.30GHz
+    CPU family:              6
+    Model:                   85
+    Thread(s) per core:      2
+    Core(s) per socket:      10
+    Socket(s):               1
+    Stepping:                4
+    CPU(s) scaling MHz:      46%
+    CPU max MHz:             4500,0000
+    CPU min MHz:             1200,0000
+    BogoMIPS:                6599,98
+    Flags:                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush d
+                             ts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc 
+                             art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pn
+                             i pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid 
+                             dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdran
+                             d lahf_lm abm 3dnowprefetch cpuid_fault cat_l3 cdp_l3 pti ssbd mba ibrs ibpb stib
+                             p tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep 
+                             bmi2 erms invpcid rtm cqm mpx rdt_a avx512f avx512dq rdseed adx smap clflushopt c
+                             lwb intel_pt avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cq
+                             m_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts hwp hwp_act_windo
+                             w hwp_pkg_req vnmi md_clear flush_l1d arch_capabilities
+Virtualization features:     
+  Virtualization:            VT-x
+Caches (sum of all):         
+  L1d:                       320 KiB (10 instances)
+  L1i:                       320 KiB (10 instances)
+  L2:                        10 MiB (10 instances)
+  L3:                        13,8 MiB (1 instance)
+NUMA:                        
+  NUMA node(s):              1
+  NUMA node0 CPU(s):         0-19
+Vulnerabilities:             
+  Gather data sampling:      Vulnerable
+  Ghostwrite:                Not affected
+  Indirect target selection: Not affected
+  Itlb multihit:             KVM: Mitigation: Split huge pages
+  L1tf:                      Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
+  Mds:                       Mitigation; Clear CPU buffers; SMT vulnerable
+  Meltdown:                  Mitigation; PTI
+  Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable
+  Reg file data sampling:    Not affected
+  Retbleed:                  Mitigation; IBRS
+  Spec rstack overflow:      Not affected
+  Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:                Mitigation; IBRS; IBPB conditional; STIBP conditional; RSB filling; PBRSB-eIBRS N
+                             ot affected; BHI Not affected
+  Srbds:                     Not affected
+  Tsx async abort:           Mitigation; Clear CPU buffers; SMT vulnerable
+
+
+
+
+rock@rock-ms7a95:~$ nvidia-smi
+Wed Oct  8 11:28:02 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.65.06              Driver Version: 580.65.06      CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3090        Off |   00000000:17:00.0  On |                  N/A |
+|  0%   52C    P0            129W /  370W |     820MiB /  24576MiB |      5%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            8688      G   /usr/lib/xorg/Xorg                       46MiB |
+|    0   N/A  N/A            8800      G   /usr/bin/kwalletd6                        4MiB |
+|    0   N/A  N/A            8904      G   /usr/bin/kwin_wayland                   211MiB |
+|    0   N/A  N/A            8962      G   /usr/bin/Xwayland                         6MiB |
+|    0   N/A  N/A            8999      G   /usr/bin/ksmserver                        4MiB |
+|    0   N/A  N/A            9001      G   /usr/bin/kded6                            4MiB |
+|    0   N/A  N/A            9021      G   /usr/bin/plasmashell                    237MiB |
+|    0   N/A  N/A            9069      G   /usr/bin/kaccess                          4MiB |
+|    0   N/A  N/A            9070      G   ...it-kde-authentication-agent-1          4MiB |
+|    0   N/A  N/A            9193      G   /usr/bin/xwaylandvideobridge              4MiB |
+|    0   N/A  N/A            9237      G   ...-gnu/libexec/DiscoverNotifier          4MiB |
+|    0   N/A  N/A            9318      G   ...ibexec/xdg-desktop-portal-kde          4MiB |
+|    0   N/A  N/A           12512      G   /usr/bin/dolphin                          4MiB |
+|    0   N/A  N/A           14397      G   ...nux-gnu/libexec/kf6/kioworker          4MiB |
+|    0   N/A  N/A           14441      G   ...linux-gnu/libexec/baloorunner          4MiB |
+|    0   N/A  N/A           15166      G   /usr/bin/konsole                          4MiB |
++-----------------------------------------------------------------------------------------+
+rock@rock-ms7a95:~$ 
+
+
+
+nvidia-smi --query-gpu=pcie.link.gen.current,pcie.link.width.current,pcie.link.gen.max,pcie.link.width.max --format=csv
+pcie.link.gen.current, pcie.link.width.current, pcie.link.gen.max, pcie.link.width.max
+1, 16, 3, 16
+

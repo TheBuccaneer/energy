@@ -1,0 +1,11 @@
+#nvidia-drivers
+
+sudo apt get install nvidia-driver-580-open
+
+#cuda toolkit
+
+sudo apt install nvidia-cuda-toolkit
+
+
+
+
