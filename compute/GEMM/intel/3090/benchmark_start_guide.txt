@@ -1,0 +1,454 @@
+## Quick Start
+
+### 1. Build
+```bash
+nvcc -O3 -std=c++17 -o gemm_bench main.cu -lcublas -lnvidia-ml
+```
+
+### 2. Run (Single)
+```bash
+./gemm_bench
+```
+
+That's it! The benchmark will:
+- Auto-create `data/raw/` directory
+- Run 19 matrix sizes (64×64 to 1536×1536)
+- 5 repetitions per size
+- Output to `data/raw/energy_benchmark_rtx3090.csv`
+
+### 3. Run (Multiple Sessions - Recommended)
+
+For statistical robustness (AP1b: ≥25-# CUDA GEMM Energy Benchmark - Production Version
+
+Single-file C++/CUDA benchmark for RTX 3090 energy measurements. Hardcoded configuration for reproducibility.
+
+## Quick Start
+
+### 1. Build
+```bash
+nvcc -O3 -std=c++17 -o gemm_bench main.cu -lcublas -lnvidia-ml
+```
+
+### 2. Run
+```bash
+./gemm_bench
+```
+
+That's it! The benchmark will:
+- Auto-create `data/raw/` directory
+- Run 19 matrix sizes (64×64 to 1536×1536)
+- 5 repetitions per size
+- Output to `data/raw/energy_benchmark_rtx3090.csv`
+
+## Configuration (Hardcoded in main.cu)
+
+```cpp
+TARGET_RUNTIME_S = 1.0    // Target GPU time per measurement
+MAX_BATCH_SIZE   = 60000  // Maximum batch size for auto-tuning
+MACRO_REPEATS    = 5      // Repetitions per size
+
+GEMM_SIZES[] = {64, 96, 128, 160, 192, 224, 256, 320, 384, 448, 512, 
+                640, 768, 896, 1024, 1152, 1280, 1408, 1536}
+```
+
+**To modify:** Edit `main.cu` and recompile.
+
+## Output Format
+
+### CSV Columns
+```
+timestamp,host,gpu_name,matrix_size,mode,batches,
+seconds_target,seconds_gpu,seconds_wall,
+energy_j,avg_power_w,below_target,
+pcie_gen_current,pcie_width_current,
+clocks_sm_mhz,clocks_mem_mhz,temp_c,throttle_reasons
+```
+
+### Example Output
+```csv
+2025-10-08T15:23:45,gpu-node01,NVIDIA GeForce RTX 3090,1024,e2e,512,
+1.0,1.0234,1.0567,
+234.567,222.0,0,
+4,16,
+1890,9501,62,0
+```
+
+### Measurement Details
+
+- **Mode**: Always `e2e` (End-to-End with H2D/D2H transfers)
+- **Batches**: Auto-determined per size to reach target runtime
+- **seconds_gpu**: **Complete E2E GPU time** (H2D + Kernel + D2H) via CUDA events
+- **seconds_wall**: Wall time for energy window (steady_clock)
+- **energy_j**: NVML TotalEnergyConsumption delta in Joules (converted from mJ)
+- **avg_power_w**: energy_j / seconds_wall
+- **below_target**: `1` if gpu_time < target_runtime (batch limit hit), `0` otherwise
+- **throttle_reasons**: NVML bitmask (0=none, 1=thermal, 2=power, 4=SW thermal, 8=HW slowdown, etc.)
+
+## Key Features
+
+### ✅ Buffer Reuse with LDA Trick
+- Allocates once for max size (1536×1536)
+- Smaller sizes use upper-left submatrix
+- `lda = ldb = ldc = 1536` for all sizes
+- **Much faster** than re-allocation per size
+
+### ✅ Pinned Memory (Critical for Async Transfers)
+- `cudaMallocHost()` for all host buffers
+- **Enables true asynchronous H2D/D2H** via cudaMemcpy2DAsync
+- Without pinned memory, async copies would degrade to synchronous
+- Optimal H2D/D2H transfer bandwidth
+- Critical for E2E measurements
+
+### ✅ TF32 Disabled
+- `cublasSetMathMode(handle, CUBLAS_DEFAULT_MATH)`
+- Pure FP32 for reproducible comparisons
+
+### ✅ Auto-Batch Sizing
+- Per-size determination
+- Ensures GPU time ≥ 1.0s (target)
+- Respects MAX_BATCH_SIZE limit (200,000)
+- **Flags below-target runs**: If MAX_BATCH_SIZE is hit but GPU time < 1.0s, sets `below_target=1`
+  - Expected for very small matrices (64×64, 96×96)
+  - Console shows `(!)` marker for these runs
+
+### ✅ Complete E2E Timing
+- **CUDA Events wrap entire E2E pipeline:**
+  ```
+  EVENT START
+    → H2D transfers (async, pinned)
+    → Kernel batches
+    → D2H transfers (async, pinned)
+  EVENT STOP
+  ```
+- `seconds_gpu` measures true E2E GPU time (not just kernel)
+- All operations in same stream → sequential ordering guaranteed
+- Events fire after all prior stream work completes
+
+### ✅ NVML Energy + Telemetry
+- **Energy**: `nvmlDeviceGetTotalEnergyConsumption` deltas
+  - NVML returns cumulative mJ since driver reload
+  - We calculate: `energy_j = (E_after - E_before) / 1000.0`
+  - CSV stores in Joules for consistency with scientific conventions
+- **Power**: `avg_power_w = energy_j / seconds_wall`
+- **Throttle Detection**: `nvmlDeviceGetCurrentClocksThrottleReasons`
+  - Bitmask: 0=none, 1=thermal, 2=power limit, 4=SW thermal, 8=HW slowdown
+  - Logged per measurement for QC analysis
+  - Console shows `THROTTLE=0xXX` if non-zero
+- Clocks, temperature, PCIe state per measurement
+- Overflow-safe (energy_after > energy_before check)
+
+## Expected Runtime
+
+```
+19 sizes × 5 repeats × ~1.0s = ~95s + batch-determination overhead
+Total: ~2-3 minutes
+```
+
+## Example Console Output
+
+```
+========================================
+CUDA GEMM Energy Benchmark
+========================================
+System:         gpu-node01
+GPU:            NVIDIA GeForce RTX 3090
+Target runtime: 1s
+Macro repeats:  5
+Matrix sizes:   19 sizes (64-1536)
+Output:         data/raw/energy_benchmark_rtx3090.csv
+========================================
+
+Allocated pinned host buffers: 27 MB
+Allocated device buffers: 27 MB
+
+Initializing host matrices...
+Starting measurements...
+========================================
+
+GEMM size 64x64
+  Determining batch size... using 200000 batches (!) below target
+  ! Run 1/5: 0.856s (GPU) 0.878s (wall) | E=103.4J P=118W T=58°C (!)
+  ! Run 2/5: 0.852s (GPU) 0.874s (wall) | E=102.9J P=118W T=59°C (!)
+  ...
+
+GEMM size 1536x1536
+  Determining batch size... using 4096 batches
+  + Run 1/5: 1.087s (GPU) 1.124s (wall) | E=298.8J P=266W T=68°C
+  + Run 2/5: 1.085s (GPU) 1.122s (wall) | E=297.2J P=265W T=68°C THROTTLE=0x2
+  ...
+
+========================================
+Benchmark complete!
+Results saved to: data/raw/energy_benchmark_rtx3090.csv
+Total measurements: 95
+========================================
+```
+
+## Integration with Projektplan
+
+This tool implements **AP1 (Mess-Harness robust)** and is ready for **AP3 (Hauptmessungen)**:
+
+### ✅ AP1 Requirements
+- NVML TotalEnergyConsumption with deltas
+- Overflow guard (energy_after > energy_before)
+- Pinned memory for realistic async transfers
+- **Complete E2E timing**: CUDA Events wrap H2D + Kernel + D2H
+- TF32 disabled
+- CSV schema for analysis pipeline
+- Telemetry (clocks, temp, PCIe)
+- **Throttle detection**: Explicit NVML throttle reasons bitmask
+
+### ✅ Methodological Improvements (ChatGPT Audit Compliance)
+1. **Events measure true E2E**:
+   - `seconds_gpu` includes H2D, Kernel, and D2H transfers
+   - Events placed before H2D and after D2H in same stream
+   - Sequential stream ordering guarantees complete transfer measurement
+   
+2. **Explicit throttle monitoring**:
+   - No longer infer from temperature alone
+   - NVML `GetCurrentClocksThrottleReasons` logged per measurement
+   - Distinguishes thermal, power, and other throttle types
+   
+3. **Pinned memory critical path**:
+   - `cudaMallocHost()` enables true async transfers
+   - Without pinned: cudaMemcpy2DAsync degrades to synchronous
+   - Documented in code and README
+
+### ✅ AP3 Integration
+```bash
+# System stabilization (run once before measurements)
+sudo cpupower frequency-set -g performance
+sudo nvidia-smi -pm 1
+sudo nvidia-smi -pl 350  # Optional: 350W power limit for RTX 3090
+
+# Run benchmark
+./gemm_bench
+
+# Validate no throttling
+awk -F',' 'NR>1 && $18!=0 {print "THROTTLE:", $1, $4, $18}' \
+  data/raw/energy_benchmark_rtx3090.csv
+
+# Results ready for analysis
+python analyze_results.py data/raw/energy_benchmark_rtx3090.csv
+```
+
+## Troubleshooting
+
+### "NVML Error: Not Supported"
+- **Cause**: Energy counter not available
+- **Fix**: Driver R450+ required (RTX 3090 should be OK)
+- **Note**: Tool sets energy_mj=0 and continues
+
+### "CUDA out of memory"
+- **Cause**: 1536×1536 too large (unlikely with RTX 3090's 24GB)
+- **Fix**: Reduce MAX_SIZE in main.cu
+
+### Batch size stuck at MAX_BATCH_SIZE (below target)
+- **Cause**: Very small matrices can't reach 1.0s even with 60k batches
+- **Indicator**: Console shows `(!)` and `below_target=1` in CSV
+- **Expected**: For 64×64, 96×96, possibly 128×128 sizes
+- **Impact**: Minimal - still generates valid energy measurements
+- **Analysis**: Filter or analyze separately in QC pipeline (AP1b)
+
+### Inconsistent energy readings
+- **Cause**: Thermal throttling, power limit, unstable clocks
+- **Check**: `throttle_reasons` column in CSV
+- **Fix**: System stabilization (see AP3 Integration above)
+- **Validation**: Temperature should be stable (±2°C during run), throttle_reasons=0
+
+### Throttling detected (throttle_reasons != 0)
+- **0x2 (Power Limit)**: GPU hitting 350W TDP
+  - **Fix**: Increase power limit: `sudo nvidia-smi -pl 370` (if safe)
+  - **Or**: Accept slightly lower clocks (still valid measurements)
+- **0x4/0x8 (Thermal)**: GPU hitting temperature limit
+  - **Fix**: Improve cooling, check airflow
+  - **Critical**: If temp >80°C consistently
+- **Impact**: Throttled runs have lower power but longer time
+  - Energy measurement still valid
+  - Flag these runs for separate analysis if needed
+
+## Validation Checks
+
+### QC Criteria (from Projektplan)
+- ✓ GPU time ≥ target runtime (marked with `+` in console)
+- ✓ Below-target runs flagged with `!` and `below_target=1` in CSV
+- ✓ Energy delta > 0 (negative deltas rejected → energy_j=0)
+- ✓ Power 150-350W typical for RTX 3090 under load
+- ✓ Temperature stable 55-75°C range
+- ✓ **Throttle monitoring**: `throttle_reasons=0` expected (no throttling)
+  - `0x1` = GPU Idle (ignore)
+  - `0x2` = GPU clock limited by power
+  - `0x4` = SW Thermal Slowdown
+  - `0x8` = HW Thermal Slowdown
+  - Any non-zero during measurement → investigate thermal/power issues
+
+### Post-Run Validation
+```bash
+# Check measurement count
+wc -l data/raw/energy_benchmark_rtx3090.csv
+# Should be: 96 lines (1 header + 19×5 measurements)
+
+# Check for missing data
+grep -c ",0.000," data/raw/energy_benchmark_rtx3090.csv
+# Should be: 0 (no zero energy values)
+
+# Count below-target runs
+awk -F',' '$12==1' data/raw/energy_benchmark_rtx3090.csv | wc -l
+# Should be minimal (only smallest sizes like 64×64, 96×96)
+
+# Check for throttling events
+awk -F',' '$18!=0' data/raw/energy_benchmark_rtx3090.csv | wc -l
+# Should be: 0 (no throttling during measurements)
+# If non-zero: inspect thermal management, power limits
+
+# Check CV per size (requires R/Python analysis)
+python check_cv.py data/raw/energy_benchmark_rtx3090.csv
+# Target: CV ≤ 15% per matrix size
+```
+
+## Next Steps
+
+1. **Run benchmark**: `./gemm_bench`
+2. **Validate QC**: Check console output for `+` markers
+3. **Analyze results**: Load CSV into R/Python (AP1b)
+4. **Check CV**: Ensure variability ≤ 15% (AP1b)
+5. **Proceed to AP3**: Extend to other workloads if needed
+
+## File Structure
+
+```
+project/
+├── main.cu                              # This benchmark
+├── gemm_bench                           # Compiled binary
+└── data/
+    └── raw/
+        └── energy_benchmark_rtx3090.csv # Output
+```
+
+## Technical Details
+
+### E2E Timing Architecture
+
+**Measurement Pipeline:**
+```
+Wall Clock: |──────────────────────────────────────────|
+            ↓                                          ↓
+         t_start                                    t_end
+            
+Energy:     E0 ─────────────────────────────────────→ E1
+            
+GPU Stream: |──────────────────────────────────────────|
+            ↓                                          ↓
+         EVENT_START                             EVENT_STOP
+            │                                          │
+            ├─ H2D Transfer A (async, pinned)         │
+            ├─ H2D Transfer B (async, pinned)         │
+            ├─ Kernel Batch 1                         │
+            ├─ Kernel Batch 2                         │
+            ├─ ... (N batches)                        │
+            ├─ D2H Transfer C (async, pinned)         │
+            └──────────────────────────────────────────┘
+                          ↓
+              cudaDeviceSynchronize()
+```
+
+**Key Points:**
+1. **Events are stream markers**, not host-side timestamps
+2. `EVENT_STOP` fires only after D2H completes (stream ordering guarantee)
+3. `cudaDeviceSynchronize()` waits for `EVENT_STOP` to fire
+4. `seconds_gpu` = time between events (true GPU E2E)
+5. `seconds_wall` = host time including small overhead
+6. `energy_j` measured over same window as `seconds_wall`
+
+### Why Pinned Memory Matters
+
+**With Pinned Memory (our implementation):**
+```
+cudaMemcpy2DAsync():
+  1. DMA engine copies directly from pinned host buffer
+  2. Operation is truly asynchronous (returns immediately)
+  3. Overlaps with other stream operations
+  4. Full PCIe bandwidth (~16 GB/s on Gen3 x16)
+```
+
+**Without Pinned Memory (incorrect):**
+```
+cudaMemcpy2DAsync():
+  1. CUDA allocates temporary pinned buffer
+  2. Copies from pageable → pinned (blocking!)
+  3. Then DMA transfer
+  4. Operation becomes synchronous despite "Async" API
+  5. Reduced effective bandwidth
+```
+
+**Our Implementation:**
+- `cudaMallocHost()` at startup (once)
+- Reuse for all measurements
+- Guaranteed async behavior
+
+### NVML Energy Counter Semantics
+
+```cpp
+// NVML returns cumulative energy in mJ since driver reload
+unsigned long long E0 = nvmlDeviceGetTotalEnergyConsumption(device);
+// ... GPU work ...
+unsigned long long E1 = nvmlDeviceGetTotalEnergyConsumption(device);
+
+// Energy for this job:
+double energy_j = (E1 - E0) / 1000.0;  // mJ to J
+```
+
+**Important:**
+- Counter may overflow (implementation-dependent)
+- We check `E1 > E0` and reject negative deltas
+- Counter resets on driver reload (log this!)
+- Sampling rate: ~1ms (sufficient for 1+ second runs)
+
+### Throttle Reasons Bitmask
+
+```
+throttle_reasons (unsigned long long):
+  0x0000 = No throttling
+  0x0001 = GPU Idle (not a problem)
+  0x0002 = GPU clock limited by applications power draw
+  0x0004 = GPU clock limited by SW Thermal Slowdown
+  0x0008 = GPU clock limited by HW Thermal Slowdown  
+  0x0010 = GPU clock limited by Sync Boost
+  0x0020 = GPU clock limited by board power draw
+  0x0040 = GPU clock limited by low voltage
+```
+
+**During measurements:**
+- `0x0` expected (no throttling)
+- `0x2` common near TDP limit (acceptable if stable)
+- `0x4/0x8` indicates thermal issues (investigate!)
+
+---
+
+## Modifications
+
+To customize for your setup, edit these sections in `main.cu`:
+
+**Matrix sizes:**
+```cpp
+static const int GEMM_SIZES[] = {
+    // Add/remove sizes as needed
+};
+```
+
+**Repetitions:**
+```cpp
+constexpr int MACRO_REPEATS = 5;  // Increase for more statistics
+```
+
+**Output path:**
+```cpp
+static const char* OUTPUT_FILE = "your/path/here.csv";
+```
+
+**Target runtime:**
+```cpp
+constexpr double TARGET_RUNTIME_S = 2.0;  // Longer measurements
+```
+
+Then recompile: `nvcc -O3 -std=c++17 -o gemm_bench main.cu -lcublas -lnvidia-ml`
