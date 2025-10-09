@@ -30,7 +30,7 @@
 // ============================================================================
 
 constexpr double TARGET_RUNTIME_S = 1.0;
-constexpr int    MAX_BATCH_SIZE   = 200000;
+constexpr int    MAX_BATCH_SIZE   = 250000;
 constexpr int    MACRO_REPEATS    = 5;
 constexpr int    WARMUP_SIZE      = 512;  // Size for warmup SGEMM
 constexpr int    NUM_THREADS      = 20;   // OpenBLAS threads
@@ -474,12 +474,11 @@ int main() {
         // Run MACRO_REPEATS measurements
         for (int rep = 0; rep < MACRO_REPEATS; rep++) {
             // ================================================================
-            // Measurement Start
+            // Measurement Start - align time window with energy window
             // ================================================================
             
+            auto wall_start = std::chrono::steady_clock::now();
             double energy_before = readRAPLEnergy();
-            
-            auto compute_start = std::chrono::steady_clock::now();
             
             // Execute batch
             for (int b = 0; b < batches; b++) {
@@ -488,19 +487,18 @@ int main() {
                            beta, h_C, MAX_SIZE);
             }
             
-            auto compute_end = std::chrono::steady_clock::now();
-            
             double energy_after = readRAPLEnergy();
+            auto wall_end = std::chrono::steady_clock::now();
             
             // ================================================================
             // Measurement End
             // ================================================================
             
-            // Calculate timing
-            std::chrono::duration<double> compute_duration = compute_end - compute_start;
-            double compute_time_s = compute_duration.count();
+            // Calculate timing - use wall time (aligned with energy window)
+            std::chrono::duration<double> wall_duration = wall_end - wall_start;
+            double compute_time_s = wall_duration.count();
             
-            // Calculate energy and power
+            // Calculate energy and power (now with aligned time window)
             double energy_j = -1.0;
             double avg_power_w = -1.0;
             
@@ -508,7 +506,7 @@ int main() {
                 double delta = energy_after - energy_before;
                 if (delta >= 0) {
                     energy_j = delta;
-                    avg_power_w = energy_j / compute_time_s;
+                    avg_power_w = energy_j / compute_time_s;  // Same time window as energy
                 }
             }
             
