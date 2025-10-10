@@ -6,11 +6,28 @@
 echo "=== CPU Stabilization ==="
 
 # Dynamische Frequenz-Erkennung
-BASE_FREQ=$(lscpu | grep "Model name" | grep -oP '@\s*\K[0-9.]+' | awk '{print int($1*1000000)}')
+# base_frequency ist am zuverlässigsten - prüfe das zuerst
+BASE_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/base_frequency 2>/dev/null)
+
+# Fallback 1: Parse aus lscpu mit korrekter Locale
 if [ -z "$BASE_FREQ" ] || [ "$BASE_FREQ" -eq 0 ]; then
-    # Fallback: Nutze aktuelle Frequenz
-    BASE_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/base_frequency 2>/dev/null || \
-                cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq)
+    BASE_FREQ=$(LANG=C LC_NUMERIC=C lscpu | grep "Model name" | grep -oP '@\s*\K[0-9.]+' | LC_NUMERIC=C awk '{print int($1*1000000)}')
+fi
+
+# Fallback 2: cpuinfo_max_freq
+if [ -z "$BASE_FREQ" ] || [ "$BASE_FREQ" -eq 0 ]; then
+    BASE_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq 2>/dev/null)
+fi
+
+# Fallback 2: cpuinfo_max_freq (nicht min!)
+if [ -z "$BASE_FREQ" ] || [ "$BASE_FREQ" -eq 0 ]; then
+    BASE_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq 2>/dev/null)
+fi
+
+# Letzter Fallback: Für i9-7900X bekannte Base-Freq
+if [ -z "$BASE_FREQ" ] || [ "$BASE_FREQ" -eq 0 ]; then
+    echo "Warning: Could not detect base frequency, using 3.3 GHz (i9-7900X default)"
+    BASE_FREQ=3300000
 fi
 
 echo "Detected base frequency: $(($BASE_FREQ/1000)) MHz"
