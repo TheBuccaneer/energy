@@ -1,0 +1,22 @@
+openblat muss instralliert werden
+
+sudo apt-get update
+sudo apt-get install libopenblas-dev
+
+
+Permisson load
+
+sudo nano /etc/udev/rules.d/70-rapl-read.rules
+
+# Intel RAPL
+SUBSYSTEM=="powercap", KERNEL=="intel-rapl:*",   ACTION=="add|change", RUN+="/bin/chmod 0444 /sys/%p/energy_uj"
+SUBSYSTEM=="powercap", KERNEL=="intel-rapl:*:*", ACTION=="add|change", RUN+="/bin/chmod 0444 /sys/%p/energy_uj"
+
+# AMD Energy
+SUBSYSTEM=="powercap", KERNEL=="amd_energy:*",   ACTION=="add|change", RUN+="/bin/chmod 0444 /sys/%p/energy_uj"
+
+# Wildcard fallback (beide Vendor)
+SUBSYSTEM=="powercap", KERNEL=="*rapl*",         ACTION=="add|change", RUN+="/bin/chmod 0444 /sys/%p/energy_uj"
+
+sudo udevadm control --reload-rules
+sudo udevadm trigger
