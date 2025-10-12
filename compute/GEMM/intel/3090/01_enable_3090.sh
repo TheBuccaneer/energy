@@ -1,5 +1,5 @@
 #!/bin/bash
-# GPU Stabilisierungs-Script mit sauberem Cleanup
+# GPU Stabilisierungs-Script
 
 set -e
 
@@ -7,36 +7,9 @@ set -e
 LOCK_CLOCKS="${LOCK_CLOCKS:-0}"  # 1=Clocks locken, 0=nicht locken
 WARMUP_DURATION="${WARMUP_DURATION:-60}"
 
-# Arrays für ursprüngliche Werte
-declare -A OLD_PL
-
 echo "=== GPU Stabilization (Safe & Robust) ==="
 echo "Clock locking: $([[ "$LOCK_CLOCKS" == "1" ]] && echo "ENABLED" || echo "DISABLED")"
 echo ""
-
-# Cleanup-Funktion für sichere Rücksetzung
-cleanup() {
-    echo ""
-    echo "Cleaning up..."
-    
-    # Clock locks zurücksetzen
-    if [[ "$LOCK_CLOCKS" == "1" ]]; then
-        sudo nvidia-smi --reset-gpu-clocks 2>/dev/null || true
-        sudo nvidia-smi --reset-memory-clocks 2>/dev/null || true
-        echo "Clock locks reset"
-    fi
-    
-    # Power limits zurücksetzen
-    for gpu_id in "${!OLD_PL[@]}"; do
-        if [[ -n "${OLD_PL[$gpu_id]}" ]]; then
-            sudo nvidia-smi -i $gpu_id -pl "${OLD_PL[$gpu_id]}" 2>/dev/null || true
-            echo "GPU $gpu_id power limit reset to ${OLD_PL[$gpu_id]}W"
-        fi
-    done
-}
-
-# Trap für sauberes Cleanup bei Abbruch
-trap cleanup EXIT INT TERM
 
 # Persistence Mode aktivieren
 sudo nvidia-smi -pm 1
@@ -45,9 +18,6 @@ sudo nvidia-smi -pm 1
 for gpu_id in $(nvidia-smi --query-gpu=index --format=csv,noheader); do
     gpu_name=$(nvidia-smi -i $gpu_id --query-gpu=name --format=csv,noheader)
     echo "Configuring GPU $gpu_id: $gpu_name"
-
-    # Aktuelles Power Limit sichern
-    OLD_PL[$gpu_id]=$(nvidia-smi -i $gpu_id --query-gpu=power.default_limit --format=csv,noheader,nounits | xargs printf "%.0f")
     
     # Power Limit setzen (konservativ)
     if [[ "$gpu_name" == *"3090"* ]]; then

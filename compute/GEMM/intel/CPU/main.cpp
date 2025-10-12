@@ -33,7 +33,7 @@ constexpr double TARGET_RUNTIME_S = 1.0;
 constexpr int    MAX_BATCH_SIZE   = 250000;
 constexpr int    MACRO_REPEATS    = 5;
 constexpr int    WARMUP_SIZE      = 512;  // Size for warmup SGEMM
-constexpr int    NUM_THREADS      = 8;   // OpenBLAS threads
+constexpr int    NUM_THREADS      = 20;   // OpenBLAS threads
 
 // GEMM sizes - same as GPU variant
 static const int GEMM_SIZES[] = {

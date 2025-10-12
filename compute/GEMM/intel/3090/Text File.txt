@@ -1,6 +1,8 @@
 nvcc -O3 -std=c++17 -o gemm_bench main.cu -lcublas -lnvidia-ml
 ./gemm_bench
 
+nvidia-smi --query-gpu=name,power.default_limit,power.max_limit,clocks.max.graphics,clocks.max.memory --format=csv
+
 
 chatGPT
 
