@@ -1,0 +1,224 @@
+# Reduction Benchmark (NVIDIA GPU)
+
+> **Goal.** Measure time, energy and bandwidth of a vector **reduction** `sum(x)` on NVIDIA GPUs.
+>
+> **Operation.** Implemented as **DOT with a ones vector**: `sum(x) = dot(x, 1⃗)` using **cuBLAS** (`cublasSdot`, FP32). The ones vector lives **persistently on the device**.
+
+---
+
+## TL;DR (What we measure)
+
+* **Kernel window (on‑device):** cuBLAS DOT only. Time via **CUDA Events** on the stream. Energy via **NVML delta**.
+* **E2E window (host↔device):** `H2D(x)` + DOT + `D2H(scalar)` per pass, wall‑clock timed and synchronized at the end. Energy via **NVML delta**.
+* **Calibration:** Each window is calibrated **separately** to ~**1.0 s** (with a small +5% guard), **5 repeats**, **median** reported.
+* **Bytes model:**
+
+  * Kernel: `bytes = 2 * N * sizeof(float) * passes_kernel` (reads **x** & **ones**)
+  * E2E:   `bytes = 1 * N * sizeof(float) * passes_e2e` (only **H2D(x)**; ones is persistent)
+* **Output:** two CSV rows per size (**mode=kernel/e2e**) with **tidy** energy/power semantics.
+
+---
+
+## Why DOT with 1⃗?
+
+* It maps directly to a vendor‑optimized BLAS‑1 primitive (DOT), so we get competitive kernels without custom CUDA.
+* On the GPU, the reduction tree, synchronization and memory access patterns are handled by cuBLAS; we focus on measurement fidelity.
+
+---
+
+## Core assumptions / design choices
+
+* **Datatype:** FP32 only (can be extended later).
+* **Device:** `device 0` (fixed).
+* **Pinned host memory:** `x` is allocated page‑locked for higher H2D bandwidth.
+* **Persistent ones vector:** allocated once on device at maximum N and never copied per pass.
+* **Pointer mode:**
+
+  * **Kernel window:** `CUBLAS_POINTER_MODE_DEVICE` (device scalar, no host sync)
+  * **E2E window:**   `CUBLAS_POINTER_MODE_HOST` (host scalar counts into E2E window)
+* **Stream discipline:** `cublasSetStream(handle, stream)`, events recorded on the **same** stream as the BLAS call.
+* **Energy source:** NVML **total energy** counter (mJ since driver reload) → **window delta** → Joule.
+* **Target runtime:** `TARGET_RUNTIME_S = 1.0` (hard‑coded), `REPEATS = 5` (median reported).
+* **Size schedule:** 19 sizes **N ∈ {1M … 384M}** (hard‑coded list).
+* **CSV path:** `data/raw/reduction_gpu_cublas.csv` (hard‑coded).
+
+---
+
+## Measurement procedure
+
+### 1) Kernel window (on‑device only)
+
+1. Set cuBLAS **pointer mode = DEVICE**.
+2. Record CUDA event **start** on the stream.
+3. Run `passes_kernel` times: `cublasSdot(N, d_x, 1, d_ones, 1, d_scalar)`.
+4. Record CUDA event **stop**; `cudaEventSynchronize(stop)`.
+5. Time = `cudaEventElapsedTime(start, stop)` (ms → s).
+6. Energy = NVML total‑energy **after − before** (mJ → /1000 → J).
+
+**Calibration:** determine `passes_kernel` such that measured time ≈ `TARGET_RUNTIME_S` (with ~5% guard).
+
+### 2) End‑to‑End (E2E) window (host↔device)
+
+1. Set cuBLAS **pointer mode = HOST**.
+2. Wall‑clock **start**.
+3. Run `passes_e2e` times:
+
+   * `cudaMemcpyAsync(d_x, h_x, N*sizeof(float), H2D)`
+   * `cublasSdot(N, d_x, 1, d_ones, 1, &host_scalar)`
+4. `cudaDeviceSynchronize()`; wall‑clock **stop**.
+5. Energy = NVML **delta** over the same window.
+
+**Calibration:** determine `passes_e2e` to reach **~1.0 s** wall‑time (with ~5% guard).
+
+> **Note.** Kernel and E2E are **separate** windows with **separate pass counts**. Their durations need not be comparable; E2E includes transfers.
+
+---
+
+## Bandwidth models
+
+* **Kernel BW:**
+
+  ```
+  bytes_total_kernel = 2 * N * sizeof(float) * passes_kernel
+  bw_kernel_gb_s = bytes_total_kernel / seconds_kernel
+  ```
+* **E2E BW:**
+
+  ```
+  bytes_total_e2e   = 1 * N * sizeof(float) * passes_e2e  // only H2D(x)
+  bw_e2e_gb_s = bytes_total_e2e / seconds_wall
+  ```
+
+**PCIe plausibility anchors**
+
+* **PCIe 3.0 ×8:** ~7.88 GB/s theoretical per direction; real **~6–7 GB/s**
+* **PCIe 3.0 ×16:** ~15.75 GB/s theoretical per direction; real **~12–14 GB/s**
+
+---
+
+## CSV format (final, tidy)
+
+> We write **two rows per N**: one with `mode=kernel`, one with `mode=e2e`.
+
+### Columns (ordered)
+
+* `timestamp` — ISO 8601
+* `host` — machine hostname
+* `gpu_name` — as reported by driver; duplicate of `device_name`
+* `matrix_size` — kept for compatibility (set to 0)
+* `mode` — `kernel` or `e2e`
+* `batches` — kept for compatibility (pass count proxy)
+* `seconds_target` — target window length (e.g., 1.00)
+* `seconds_gpu` — **kernel time** (CUDA events) in **both** modes
+* `seconds_wall` — **E2E** time (only meaningful in `e2e`; in kernel either same as `seconds_gpu` or left blank, but consistent)
+* `energy_j` — **primary energy of this row’s window** (kernel delta in `mode=kernel`, E2E delta in `mode=e2e`)
+* `avg_power_w` — **primary power** = `energy_j / seconds_*` (kernel: `/seconds_kernel`, e2e: `/seconds_wall`)
+* `below_target` — 1 if the window is below `seconds_target`
+* `workload` — `reduction`
+* `impl` — `cublas`
+* `dtype` — `fp32`
+* `N` — vector length
+* `passes_kernel`, `passes_e2e` — pass counts (per window)
+* `seconds_kernel` — kernel time (events)
+* `energy_kernel_j` — kernel energy delta (J)
+* `avg_power_w_kernel`, `avg_power_w_e2e` — convenience fields
+* `bytes_total` — according to the mode’s bytes model
+* `bw_gb_s` — `bytes_total / seconds_*`
+* `time_mode` — `kernel` or `e2e` (duplicative label for robust parsing)
+* `energy_mode` — `kernel` or `e2e`
+* `includes_transfer` — `0` for kernel, `1` for e2e
+* `device_name`, `driver_version`
+* `pcie_gen_current`, `pcie_width_current`
+* `pcie_rx_kbs`, `pcie_tx_kbs` — **KB/s snapshots** from NVML (diagnostic, not integrated)
+* `clocks_sm_mhz`, `clocks_mem_mhz` — reported clocks
+* `temp_c` — GPU temperature (°C)
+* `throttle_reasons` — NVML bitmask / nvidia‑smi flags
+* `notes` — freeform
+
+### Tidy semantics (important)
+
+* A **single** column carries a **single** meaning:
+
+  * `energy_j` is always the **energy of the active window in this row**.
+  * `avg_power_w` is always `energy_j / seconds_*` of that window.
+* Keep `energy_kernel_j`, `avg_power_w_kernel`, `avg_power_w_e2e` as helper columns for convenience / back‑compat; parsers should prefer the tidy columns.
+
+### Minimal example (one N)
+
+```csv
+# mode=kernel row
+...,mode,kernel,...,seconds_gpu,0.6271,seconds_wall,0.6271,energy_j,167.702,avg_power_w,267.4,...,bytes_total,318568000000,bw_gb_s,508.04,...,includes_transfer,0,...
+# mode=e2e row
+...,mode,e2e,...,seconds_gpu,0.6271,seconds_wall,1.1071,energy_j,181.141,avg_power_w,163.6,...,bytes_total,11700000000,bw_gb_s,10.57,...,includes_transfer,1,...
+```
+
+---
+
+## Expected ranges (sanity checks)
+
+* **E2E (PCIe‑limited):**
+
+  * Gen3 ×8: **~6–7 GB/s**
+  * Gen3 ×16: **~12–14 GB/s**
+* **Kernel (on‑device):**
+
+  * High hundreds of GB/s; on RTX 3090 often **~500–900 GB/s** for large N
+* **Power:**
+
+  * E2E typically lower than kernel (transfers + wait); `avg_power_w = energy_j / seconds_*` must be numerically consistent
+
+---
+
+## Warm‑up & stability
+
+* Enable persistence / keep clocks reasonably steady (optional).
+* Avoid unrelated foreground GPU workloads during final runs.
+* Very **short** windows (<~0.5 s) can show jitter / energy quantization; we **target ~1.0 s** by calibration and report medians.
+
+---
+
+## Troubleshooting
+
+* **E2E BW looks too high (≈×2)?** Ensure you **do not copy the ones vector per pass**; E2E bytes must be `N*sizeof(T)*passes_e2e`.
+* **Energy is ~0 for some rows?** NVML energy is an **accumulating mJ counter**; for short windows the delta can quantize to 0. Increase window duration (target 1 s) and use medians.
+* **`seconds_wall < seconds_gpu`?** Kernel and E2E are **separate windows** with **separate pass counts**. Compare within each window, not across.
+* **PCIe RX/TX doesn’t match E2E BW.** NVML reports **momentary KB/s snapshots**; rely on your own computed `bytes_total / seconds_wall` for bandwidth.
+
+---
+
+## Build & run (reference)
+
+* **Prereqs:** CUDA Toolkit (nvcc), cuBLAS, NVML (libnvidia‑ml), C++17.
+* **Compile:** standard nvcc compile linking cublas + nvidia‑ml (see project’s `CMakeLists.txt` or build script).
+* **Run:** binary has **no CLI**; constants are hard‑coded (device=0, dtype=fp32, target=1s, repeats=5, fixed N list, CSV path).
+
+---
+
+## Repository integration
+
+* Output CSV: `data/raw/reduction_gpu_cublas.csv` (append‑only; each run adds rows).
+* Keep a **README snippet** in your analysis notebooks describing the tidy mapping, so parsers do not rely on helper columns.
+* For merging with GEMM CSVs, add a schema shim that fills missing columns with `NA` and sets `workload = "gemm"` vs `"reduction"`.
+
+---
+
+## Porting note (CPU / Intel)
+
+For a CPU version (Intel, oneMKL/CBLAS), reuse the same CSV schema and measurement logic. Use `cblas_sdot` with a host ones‑vector; kernel/e2e windows collapse (no PCIe), but write two rows for compatibility (set `includes_transfer=1` for e2e, `0` for kernel; both times may be identical on CPU). Energy can be integrated via RAPL if desired.
+
+---
+
+## Changelog (methodology deltas captured)
+
+* Adopted **tidy energy/power** columns (`energy_j`, `avg_power_w`) per row window; kept helper columns for back‑compat.
+* Fixed E2E bytes model to **not** count ones; clarified PCIe telemetry units (KB/s).
+* Separate pass calibration for kernel/e2e, ~1 s targets, median reporting.
+
+---
+
+## License / reproducibility
+
+This benchmark relies on proprietary NVIDIA drivers and NVML. Ensure driver versions are recorded (`driver_version` column) for reproducibility. CSVs are append‑only; prefer storing raw CSVs under version control for audit trails.
+
+
+Fertig! Ich habe dir die ausführliche **README** zur NVIDIA-Reduction in die Canvas gelegt (Titel: “README — Reduction Benchmark (NVIDIA GPU)”). Wenn du noch Abschnitte ergänzen möchtest (z. B. Build-Snippet mit `nvcc`/CMake oder ein Mini-CSV-Beispiel aus deinem letzten Run), sag Bescheid—ich patch’ die Datei direkt.

@@ -1,0 +1,51 @@
+Kurzfassung: Lass uns das **Reduction-CSV** als Kanon nehmen (es ist das „tidy“/reichere Superset) und **GEMM** darauf mappen—so vermeiden wir eine dritte Variante.
+
+# Einheitliches Schema (übernehmen)
+
+Aus der Reduction-Datei übernehmen wir das Header-Schema und räumen Dubletten auf (siehe unten zu Umbenennungen):
+
+```
+timestamp,host,device_name,workload,impl,dtype,
+mode,batches,seconds_target,seconds_gpu,seconds_wall,
+energy_j,avg_power_w,below_target,
+N,passes_kernel,passes_e2e,seconds_kernel,energy_kernel_j,
+avg_power_w_kernel,avg_power_w_e2e,
+bytes_total,bw_gb_s,
+time_mode,energy_mode,includes_transfer,
+driver_version,
+pcie_gen_current,pcie_width_current,pcie_rx_kbs,pcie_tx_kbs,
+clocks_sm_mhz,clocks_mem_mhz,temp_c,throttle_reasons,notes
+```
+
+Begründung/Quelle: Das Reduction-CSV hat genau diese (reicheren) Spalten; wir streichen dabei die Doppelungen `gpu_name`/`matrix_size`, denn weiter unten stehen bereits `device_name` und `N`. 
+
+# Mapping von GEMM → Kanon
+
+Die GEMM-CSV hat aktuell:
+`timestamp,host,gpu_name,matrix_size,mode,batches,seconds_target,seconds_gpu,seconds_wall,energy_j,avg_power_w,below_target,pcie_gen_current,pcie_width_current,clocks_sm_mhz,clocks_mem_mhz,temp_c,throttle_reasons`. 
+So mappen/füllen wir auf das gemeinsame Schema:
+
+* `gpu_name` → **device_name**
+* `matrix_size` → **N**  (bei GEMM: Seitenlänge n; bei Reduction: Vektorlänge)
+* `mode,batches,seconds_target,seconds_gpu,seconds_wall,energy_j,avg_power_w,below_target,pcie_* ,clocks_* ,temp_c,throttle_reasons` → **gleich übernehmen**
+* Neue Pflicht-Metadaten setzen:
+
+  * **workload** = `gemm` bzw. `reduction`
+  * **impl** = `cblas|openblas|mkl|cublas|rocblas` (passend zur Messung)
+  * **dtype** = z. B. `fp32`
+  * **driver_version** (falls CPU: `NA`)
+* Felder, die GEMM bisher nicht schreibt, so befüllen:
+
+  * **passes_kernel/passes_e2e** = jeweilige `batches`
+  * **seconds_kernel** = `seconds_gpu` (bei `mode=kernel` identisch; bei CPU/GEMM ≈ `seconds_wall`)
+  * **energy_kernel_j**, **avg_power_w_kernel**, **avg_power_w_e2e**: optional berechnet; sonst leer/`NA`
+  * **bytes_total**, **bw_gb_s**: für Reduction gemäß Formel; für GEMM vorerst `NA` (oder separat definieren, wenn ihr eine belastbare Byte-Zählung für GEMM festlegt)
+  * **time_mode/energy_mode** = `kernel` bzw. `e2e` (konsistent zur Zeile)
+  * **includes_transfer**: GPU: `0` (kernel) / `1` (e2e); CPU: `0`
+
+# Kleine Bereinigung (damit wirklich nur eine Variante bleibt)
+
+* **`gpu_name` entfernen**, überall **`device_name`** verwenden (Reduction hat beides—wir lassen nur `device_name`). 
+* **`matrix_size` entfernen**, überall **`N`** verwenden. 
+
+Damit sind alle heute schon in GEMM genutzten Spalten kompatibel (werden 1:1 gemappt), und die zusätzlichen Reduction-Felder stehen konsistent für beide Workloads zur Verfügung.
