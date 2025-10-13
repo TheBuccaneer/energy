@@ -1,0 +1,120 @@
+alles klar — hier ist deine **vollständige Doku** für die STREAM/Triad-Messungen (GPU & CPU), so wie wir sie umgesetzt haben. Ich halte sie kompakt, aber vollständig, mit belastbaren Quellen.
+
+# Ziel & Scope
+
+Wir messen die **nachhaltige Hauptspeicher-Bandbreite** (und optional Energie/Leistung) mittels **STREAM/Triad** auf GPU (CUDA) und CPU (OpenMP). Gemessen wird **nur der Kernel/DRAM-Teil** – keine PCIe-Transfers. Ergebnisse werden in ein **einheitliches CSV-Schema** geschrieben, damit CPU↔GPU fair vergleichbar sind. ([Dr Tom Deakin][1])
+
+# Annahmen & Rahmen
+
+* **Workload:** Triad `A[i]=B[i]+q*C[i]` (2 Reads + 1 Write pro Element). STREAM zählt nominal **12 B/Iter (FP32)** bzw. **24 B/Iter (FP64)**. Auf CPUs ist wegen **Write-Allocate/RFO** oft **effektiv 32 B/Iter** (Triad/Add), sofern keine non-temporal Stores genutzt werden. Wir deklarieren die Zählweise explizit im CSV. ([cs.virginia.edu][2])
+* **Größenregel (DRAM-Regime):** Jede der drei Arrays **≥ 4× Summe der Last-Level-Caches** oder **≥ 1 M Elemente** (größerer Wert). So misst STREAM **Hauptspeicher**, nicht Cache. ([cs.virginia.edu][2])
+* **„Common vs. CPU-Extra“:** Für faire CPU↔GPU-Vergleiche verwenden wir alle **GPU-N**, die auch auf der CPU die Größenregel erfüllen (**cohort=common**). Zusätzlich dürfen CPU-spezifisch größere N geloggt werden (**cohort=cpu_extra**), klar markiert. (Vergleichspunkte kommen aus „common“.) ([cs.virginia.edu][2])
+* **Zeitfenster & Repeats:** Pro N **≈ 1.1 s** Messfenster (per Kalibrierung), **REPEATS=50** Zeilen je N zur Statistik.
+* **Thermik/Takt/Throttling:** GPU-„Clocks Throttle Reasons“ werden geloggt (z. B. **SW Power Cap** → geringere Peak-BW möglich). ([NVIDIA Docs][3])
+
+# Messmethodik
+
+## GPU (CUDA, RTX-Klasse)
+
+* **Timing:** **CUDA Events** exakt um die Iterationsschleife (start→kernel-passes→stop; `cudaEventElapsedTime`). Auflösung ~**0.5 µs**; empfohlen gegenüber Host-Timern. **Keine** Host-Transfers im Fenster. ([NVIDIA Developer][4])
+* **Energie:** **NVML `nvmlDeviceGetTotalEnergyConsumption`** liefert **mJ seit letztem Treiber-Reload**. Wir lesen **direkt vor** Start-Event und **direkt nach** Stop-Event, bilden die **Differenz**, konvertieren zu **Joule**, berechnen **avg_power = J / t**. Negative Deltas werden als `bad_energy_delta` markiert. ([NVIDIA Docs][5])
+* **Bytes & BW:** `bytes_total = passes * N * (12|24)` je FP-Format; `bandwidth_GBps = bytes_total / 1e9 / seconds_kernel`. (STREAM-Zählweise). ([cs.virginia.edu][2])
+
+## CPU (OpenMP + SIMD)
+
+* **Timing:** **`std::chrono::steady_clock`** um die vollständige Triad-Pass-Schleife (warm-up außerhalb). Kalibrierung eines Passes → `passes = ceil(TARGET_S/t_pass*1.02)`; dann messen.
+* **Energie:** **Linux powercap/RAPL** aus **`/sys/class/powercap/...`**: pro Paket `energy_uj` & `max_energy_range_uj` **vor** und **nach** dem Fenster lesen; **Δ** bilden, Overflows mit Range korrigieren; zu **J** skalieren; **avg_power = J / t**. (RAPL liefert **keine Instant-Power**, nur Energiezähler.) Optionaler Fallback auf HWMON `amd_energy` analog. ([Kernel.org][6])
+* **Parallelisierung & Stores:**
+
+  * `#pragma omp parallel for schedule(static)` + `#pragma omp simd`.
+  * Optional **`nontemporal(a)`** im SIMD-Loop, um Write-Allocate zu vermeiden (dann 12/24 B-Zählweise). Ohne NT-Stores deklarieren wir **32 B/Iter** („hardware byte counting“). ([OpenMP][7])
+* **NUMA/Binding:** First-touch (Arrays parallel initialisieren) und Threads binden (`OMP_PLACES=cores`, `OMP_PROC_BIND=spread`) für reproduzierbares DRAM-Plateau. (Praxisregel; ergänzend zur STREAM-Größenregel.) ([cs.virginia.edu][2])
+
+# Datensätze / Problemgrößen
+
+* **GPU-Set:** Potenzen von zwei (z. B. 2²⁰…2²⁹ FP32; FP64 ggf. ≤ 2²⁸), begrenzt durch VRAM.
+* **CPU-Common:** Alle GPU-N, die **≥ 4×ΣLLC** oder **≥ 1 M** sind.
+* **CPU-Extra:** 1–3 größere N in ×2-Schritten, um das CPU-DRAM-Plateau deutlich zu sehen; `cohort=cpu_extra`. ([cs.virginia.edu][2])
+
+# CSV-Schema & Bedeutung der Spalten
+
+Der Header bleibt **identisch** zu eurer Reduction-Variante:
+
+```
+timestamp,host,gpu_name,matrix_size,mode,batches,seconds_target,seconds_gpu,seconds_wall,
+energy_j,avg_power_w,below_target,workload,impl,dtype,N,passes_kernel,passes_e2e,
+seconds_kernel,energy_kernel_j,avg_power_w_kernel,avg_power_w_e2e,bytes_total,bw_gb_s,
+time_mode,energy_mode,includes_transfer,device_name,driver_version,pcie_gen_current,
+pcie_width_current,pcie_rx_kbs,pcie_tx_kbs,clocks_sm_mhz,clocks_mem_mhz,temp_c,
+throttle_reasons,notes
+```
+
+Kurzdefinitionen:
+
+* **timestamp/host** – Zeitpunkt (lokal, ISO/Epoch) & Hostname.
+* **gpu_name/device_name** – Gerätebezeichnung (GPU bzw. `cpu:<modell>`).
+* **matrix_size** – 0 / „NA“ (STREAM ist 1D-Vektor).
+* **mode** – `"kernel"` (nur Kernelfenster).
+* **batches** – i. d. R. 1 (keine Mehrfach-Batches pro Zeile).
+* **seconds_target** – Ziel-Messzeit (z. B. 1.10 s).
+* **seconds_gpu/seconds_wall/seconds_kernel** – bei uns identisch (= Kernelfenster). GPU via CUDA-Events, CPU via steady_clock. ([NVIDIA Developer][4])
+* **energy_j/energy_kernel_j** – Joule über **dasselbe** Fenster (GPU: NVML-ΔmJ; CPU: RAPL-ΔuJ). **avg_power_w(_kernel)** = `energy/seconds`. ([NVIDIA Docs][5])
+* **below_target** – 1, falls `seconds_kernel < seconds_target`, sonst 0.
+* **workload/impl** – `"stream_triad"` / `"cuda_grid_stride"` (GPU) bzw. `"openmp"` (CPU).
+* **dtype** – `"float32"` / `"float64"`.
+* **N** – Vektorgröße (Elemente).
+* **passes_kernel/passes_e2e** – Zahl der Kernel-Pässe im Fenster (identisch, da E2E=Kernel).
+* **bytes_total** – `passes*N*bytes_per_iter`.
+* **bw_gb_s** – `bytes_total/1e9/seconds_kernel`.
+* **time_mode** – `"cuda_events"` (GPU) bzw. `"steady_clock"` (CPU). ([NVIDIA Developer][4])
+* **energy_mode** – `"nvml_total_energy_delta"` (GPU) bzw. `"rapl_energy_uj_delta"` (CPU). ([NVIDIA Docs][5])
+* **includes_transfer** – 0 (keine PCIe/Memcpy im Fenster; das ist STREAM-/BabelStream-Prinzip). ([Dr Tom Deakin][1])
+* **pcie_*** – optional/NA (hier irrelevant, weil keine Transfers).
+* **clocks_sm_mhz/clocks_mem_mhz/temp_c/throttle_reasons** – Telemetrie (GPU: NVML; z. B. **SW Power Cap** = Bitmaske 0x4). ([NVIDIA Docs][3])
+* **notes** – Repro-Kontext (`sweep;repeats=50;cohort=<common|cpu_extra>;OMP_*;bytes_per_iter=<…>;nt_store=<0|1>` etc.).
+
+# Formeln & Ableitungen (Cheat-Sheet)
+
+* **bytes_per_iter (GPU):** FP32 = 12, FP64 = 24. (STREAM-Zählung) ([cs.virginia.edu][2])
+* **bytes_per_iter (CPU):** default **32** (mit RFO), optional **12/24** mit `nontemporal`. **Im CSV transparent machen.** ([blogs.fau.de][8])
+* **bandwidth_GBps** = `bytes_total / (1e9 * seconds_kernel)`
+* **avg_power_W** = `energy_J / seconds_kernel`
+* **pJ_per_B** (optional, in notes) = `1e12 * energy_J / bytes_total`
+* **GB/s/W** (optional) = `bandwidth_GBps / avg_power_W`
+
+# Qualitätskontrollen (QC)
+
+* **Zielzeit erreicht:** `seconds_kernel ≥ 1.00 s` (Sicherheitsfaktor 1.02).
+* **Streuung:** pro N **50 Runs** → median & CV prüfen (typisch **CV < 5 %** bei stabilem System).
+* **Energie-Guards:** fehlende Zähler → `;no_energy`, negative Deltas → `;bad_energy_delta`.
+* **Fairness erfüllt:** „common“ nur, wenn CPU-Größenregel erfüllt; „cpu_extra“ separat.
+
+# Grenzen & Hinweise
+
+* **GPU Throttling:** Bei **SW Power Cap** (NVML-Flag) ist die gemessene BW typischerweise < theoretischer Maximal-BW; das ist „normal“, da häufig nur Core-Clock reduziert wird, nicht Speichertakt. Kurz dokumentieren. ([NVIDIA Developer Forums][9])
+* **PCIe-Version:** Für diese Messung **irrelevant**, da keine Transfers im Messfenster (nur Device/DRAM). ([Dr Tom Deakin][1])
+* **NT-Stores Portabilität:** `omp simd nontemporal` ist standardisiert (OpenMP 5.1), aber die Wirksamkeit ist compiler-/µArch-abhängig → Zählweise im CSV offenlegen. ([OpenMP][7])
+
+# Reproduzierbarkeit (Kurz-Checkliste)
+
+1. **Buildflags:** GPU: CUDA üblich; CPU: `-O3 -fopenmp -march=native` (oder gezieltes `znverX`, `icx`, …).
+2. **Env:** `OMP_NUM_THREADS=<phys_cores>`, `OMP_PLACES=cores`, `OMP_PROC_BIND=spread`.
+3. **Warm-up + Kalibrierung** vor jedem N; **REPEATS=50**.
+4. **Telemetry** (GPU) mitschreiben: Clocks, Temp, Throttle-Bits. ([NVIDIA Docs][3])
+
+---
+
+**Kurzfazit:**
+Mit dieser Methodik – **STREAM-Größenregel**, **gleiches Kernelfenster**, **saubere Zeit-/Energie-Deltas**, **transparente Byte-Zählweise** – sind CPU↔GPU-Vergleiche **fair** und die CSV-Outputs **wissenschaftlich belastbar**. Die zentralen Regeln (Größe, Events/steady_clock, NVML/RAPL-Deltas, nontemporal/RFO) sind durch die **Primärquellen** abgesichert. ([cs.virginia.edu][2])
+
+Wenn du magst, hänge ich eine **Mini-Legende** (2-Zeiler pro CSV-Feld) separat an eure README.
+
+[1]: https://hpc.tomdeakin.com/projects/babelstream?utm_source=chatgpt.com "BabelStream - Dr Tom Deakin"
+[2]: https://www.cs.virginia.edu/stream/ref.html?utm_source=chatgpt.com "STREAM Benchmark Reference Information"
+[3]: https://docs.nvidia.com/deploy/nvml-api/group__nvmlClocksThrottleReasons.html?utm_source=chatgpt.com "2.31. NvmlClocksThrottleReasons"
+[4]: https://developer.nvidia.com/blog/how-implement-performance-metrics-cuda-cc/?utm_source=chatgpt.com "How to Implement Performance Metrics in CUDA C/C++"
+[5]: https://docs.nvidia.com/deploy/nvml-api/group__nvmlDeviceQueries.html?utm_source=chatgpt.com "5.16. Device Queries"
+[6]: https://www.kernel.org/doc/html/next/power/powercap/powercap.html?utm_source=chatgpt.com "Power Capping Framework"
+[7]: https://www.openmp.org/spec-html/5.1/openmpsu49.html?utm_source=chatgpt.com "SIMD Directives"
+[8]: https://blogs.fau.de/hager/archives/8263?utm_source=chatgpt.com "Georg Hager's Blog | The McCalpin STREAM benchmark"
+[9]: https://forums.developer.nvidia.com/t/gpu-is-throttled-nv-gpu-perf-decrease-reason-api-triggered/205097?utm_source=chatgpt.com "GPU is throttled - CUDA"
