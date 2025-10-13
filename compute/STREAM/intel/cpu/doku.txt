@@ -1,0 +1,28 @@
+**Audit-Fazit (kurz):** Ja — die Messungen sehen **konsistent & plausibel** aus und sind so **paper-tauglich**, wenn du die Zählweise und RAPL-Domäne sauber dokumentierst.
+
+**Warum das stimmig wirkt:**
+
+* Deine CSV-Zeilen zeigen für `N=2147483648`, `passes=2` exakt `bytes_total=137438953472` B (≙ 128 GiB) und Bandbreiten um **~68 GB/s**, mit sehr geringer Streuung (Beispiel: 67.99/67.93/67.33/66.94 GB/s; CV ≈ <1 %). Auch `REPEATS=50` ist im `notes`-Feld dokumentiert. ✔️ 
+* Auf der verwendeten **Intel Core i9-7900X (DDR4-2666, 4-Channel)** liegt die **max. Speicherbandbreite** nominell bei **~85 GB/s** — deine ~68 GB/s sind ~80 % davon und damit im typischen STREAM-Korridor für Skylake-X/DDR4-2666. ([Intel][1])
+* **Energie/Leistung**: ~180–189 J in ~2.02–2.05 s ⇒ **~89–93 W** Paketleistung; das passt für einen 10-Kern-Skylake-X unter Voll-DRAM-Last. (Deine CSV weist `energy_mode=rapl_energy_uj_delta` aus; das ist korrekt für RAPL-Differenzen.) 
+* Methodisch korrekt: Du zählst **„hardware bytes“** (write-allocate/RFO) mit **`BYTES_PER_ITER=32`** — das erklärt, warum deine GB/s niedriger wirken als klassische STREAM-Angaben, die nur **„user bytes“** zählen (TRIAD = 3·sizeof(TYPE), vgl. Referenz). Dokumentiert man das, sind die Zahlen direkt verwendbar. ([cs.virginia.edu][2])
+
+**Kleine Hinweise für die Paper-Reife (empfohlen):**
+
+1. **Zählweise offenlegen:** Notiere im Methoden-Teil, dass du „hardware bytes“ (RFO inkludiert) rechnest und verweise auf die STREAM-Zählung (TRIAD zählt nur Nutzer-Bytes). Optional kannst du eine **zusätzliche Spalte** mit „STREAM-style GB/s“ ausgeben (nur zur Vergleichbarkeit), aber konsistent bei **einer** Zählweise bleiben. ([cs.virginia.edu][2])
+2. **RAPL-Domäne nennen:** Schreib dazu, **welche RAPL-Zone** du nutzt (typisch *package*). Die powercap-Doku beschreibt `energy_uj`/`max_energy_range_uj` und dass es **keine verlässliche Instant-Power** gibt — Differenzen sind der richtige Weg (den du nutzt). ✔️ ([Kernel.org][3])
+3. **Run-Zeit-Ziel:** Dein `seconds_target` ist 1.10 s, real ~2.02 s (weil `passes=2`). Das ist ok (längere Fenster sind sogar robuster). Nur kurz erwähnen, dass du **≥1 s** anpeilst und eine Übererfüllung zulässt. 
+4. **DRAM-Regime belegen:** Deine Größen sind weit jenseits von 4×ΣLLC → eindeutig **out-of-cache**, wie es STREAM fordert. Kurz im Text vermerken. ([cs.virginia.edu][2])
+5. **Reproduzierbarkeit/QC:** Du loggst OMP-Settings, Repeats, etc. bereits in `notes` — gut. Ergänze ggf. eine **CV-Kennzahl pro Konfiguration** (QC-Gate ≤ 15 %), wie im Projektplan vorgesehen. 
+
+**Antwort auf deine Kernfragen:**
+
+* **Plausibel?** Ja — Bandbreite, Leistung und Energie passen zur Plattform und zur Theorie. ([Intel][1])
+* **Korrekt?** Ja — Schema, Repeats (50), RAPL-Differenzen, und Metriken sind konsistent in den Zeilen. 
+* **Für die wissenschaftliche Arbeit nutzbar?** Ja — mit klarer **Methodendokumentation** (Zählweise + RAPL-Domäne) und einem kurzen **QC-Abschnitt** sind die Daten publikationsreif. Für Leser-Vergleiche mit publizierten STREAM-Tabellen verweise auf die STREAM-Zählregeln. ([cs.virginia.edu][2])
+
+Wenn du willst, rechne ich dir jetzt aus deinen CSV-Zeilen zusätzlich die **„STREAM-style“ GB/s** (und die CV je Größe) heraus und hänge sie als Tabelle an.
+
+[1]: https://www.intel.com/content/www/us/en/products/sku/123613/intel-core-i97900x-xseries-processor-13-75m-cache-up-to-4-30-ghz/specifications.html?utm_source=chatgpt.com "Intel® Core™ i9-7900X X-series Processor"
+[2]: https://www.cs.virginia.edu/stream/ref.html "STREAM Benchmark Reference Information"
+[3]: https://www.kernel.org/doc/html/next/power/powercap/powercap.html?utm_source=chatgpt.com "Power Capping Framework"
