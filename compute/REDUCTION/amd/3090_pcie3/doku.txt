@@ -1,0 +1,90 @@
+Hier ist eine kompakte **Doku für „Reduction“ auf der RTX 3090 auf einem AMD-System (Threadripper/AM4/TRX40)** – abgestimmt auf euer bestehendes Setup (GPU-Script `main.cu`, CSV-Schema, *kernel* vs. *e2e*):
+
+# Ziel & Scope
+
+* **Messziel:** Zeit & Energie je Job (J, s), getrennt nach **kernel** (nur Compute im VRAM) und **e2e** (inkl. Transfers).
+* **Messquelle GPU:** **NVML TotalEnergy** (Differenzen bilden; kein Instant-Power).  ([NVIDIA Docs][1])
+* **Libs:** **cuBLAS** für die DOT-Reduction (Level-1 BLAS). ([NVIDIA Docs][2])
+* **Gerät:** **RTX 3090** (24 GB, **936 GB/s** VRAM-BW, PCIe 4.0 x16). ([EVGA][3])
+
+# 1) Voraussetzungen
+
+* **NVIDIA-Treiber + NVML** (Treiber bringt `libnvidia-ml.so` mit). NVML-Zähler `TotalEnergy` ist **akkumuliert seit Treiber-Reload** → **immer Δ bilden** (vor/nach Fenster).  ([NVIDIA Docs][1])
+* **CUDA/cuBLAS** installiert; DOT via `cublasSdot`/`cublasDdot`. ([NVIDIA Docs][2])
+* **Pinned Host-Memory** für Transfer-Pfad (falls ihr H2D/D2H separat messt).
+
+# 2) Build & Run (typisch)
+
+* **Build:** `nvcc -O3 -arch=sm_86 main.cu -lcublas -lnvidia-ml -o reduction_gpu`
+* **Run-Parameter:** analog eurer CPU-Variante (N-Liste, Zielzeit ~1 s, REPEATS, *kernel*/*e2e*).
+* **Median-Aggregation:** pro N **genau 2 Zeilen** (kernel/e2e), wie bei euch etabliert.
+
+# 3) Messfenster & Kalibrierung
+
+* **kernel:** nur die DOT-Schleife im VRAM (Synchronisation sicherstellen).
+* **e2e:** Host↔Device-Transfers + DOT (eure Variante: „mixed“ BW, Zähler=nur memcpy-Bytes; Nenner=e2e-Zeit).
+* **Kalibrierung je Modus/N** bis ~**1 s**; knapp darunter ist ok, **Median** zählt.
+* **REPEATS:** 5–10 (oder CI-Stoppregel), Median in CSV schreiben.
+
+# 4) Energie/Power (NVML)
+
+* Vor **und** nach jedem Fenster: `nvmlDeviceGetTotalEnergyConsumption()` lesen → **ΔE [mJ] → J**; **Power = ΔE/Δt**. Overflows/Resets loggen.  ([NVIDIA Docs][1])
+* **Temperatur/Clocks/Throttle:** ebenfalls via NVML (Temps, SM/Mem-Clocks, Reason-Flags) loggen.
+
+# 5) PCIe-Aspekte (AMD-Board)
+
+* **Link-Geschwindigkeit dokumentieren:** `pcie_gen_current`, `pcie_width_current` aus NVML in CSV schreiben.
+* **Gen4 vs. Gen3:** Für *faire Intel↔AMD E2E-Vergleiche* auf AMD einmal **Gen3 erzwingen** (BIOS „Force Gen3“) und einmal **Gen4** laufen lassen.
+
+  * Richtwerte pro Richtung: **Gen3 x16 ≈ 15.75 GB/s**, **Gen4 x16 ≈ 31.5 GB/s** (theoretisch; real `cudaMemcpy` typ. ~11–12 vs. ~25 GB/s). ([Wikipedia][4])
+  * **kernel** sollte **unabhängig vom PCIe-Gen** sein; **e2e** skaliert deutlich mit Gen.
+* **VRAM-BW-Kontext:** 3090 VRAM **936 GB/s** – wesentlich größer als PCIe. Kernel-BW limitiert i. d. R. durch **VRAM**/Compute, nicht durch PCIe. ([EVGA][3])
+
+# 6) CSV-Schema (identisch zur CPU/GPU-Variante)
+
+Ihr schreibt bereits den **Header 1:1** (siehe CPU-Code; identisch zur GPU-Reduction). Wichtigste Felder:
+`timestamp,host,gpu_name,matrix_size,mode,batches,seconds_target,seconds_gpu,seconds_wall,energy_j,avg_power_w,below_target,workload,impl,dtype,N,passes_kernel,passes_e2e,seconds_kernel,energy_kernel_j,avg_power_w_kernel,avg_power_w_e2e,bytes_total,bw_gb_s,time_mode,energy_mode,includes_transfer,device_name,driver_version,pcie_gen_current,pcie_width_current,pcie_rx_kbs,pcie_tx_kbs,clocks_sm_mhz,clocks_mem_mhz,temp_c,throttle_reasons,notes` 
+
+**Füll-Regeln (GPU):**
+
+* `workload=reduction`, `impl=cublas`, `dtype=fp32`/`fp64`.
+* `seconds_gpu = seconds_kernel` (beide Zeilen).
+* **kernel:** `seconds_wall=seconds_kernel`; `bytes_total = 2*N*elem_size*passes_kernel` (X & Ones).
+* **e2e (mixed):** `bytes_total = (H2D + evtl. D2H, je nach Implementierung)*passes_e2e`; falls nur H2D zählt: dokumentieren (`notes: e2e_bw=mixed`).
+* Energie/Leistung pro Zeile aus dem **passenden Fenster**; Felder ohne Bedeutung **-1** oder `NA` gemäß eurer Konvention.
+
+# 7) Fairness & Hygiene (AMD vs. Intel)
+
+* **Gleiche Methodik**: gleiche N-Liste, Zielzeit, Median, Warm-ups, „Vendor-Lib oder nix“. 
+* **Gleiche Umgebung**: Governor/Boost, Raumtemp, Lüfterprofil; GPU-Persistence an. 
+* **Dokumentation**: Notiert in `notes`: `pcie_gen/width`, Treiberversion, Temps/Clocks, Throttle-Reasons, „e2e_bw=mixed“. 
+
+# 8) Sanity-Checks (Quick QA)
+
+* **Rechenregeln** (Abw. <1 %):
+
+  * `avg_power_w == energy_j / seconds_(kernel|wall)`;
+  * `bw_gb_s == bytes_total / seconds_(kernel|wall) / 1e9`.
+* **Gen-Effekt (e2e):** Gen4 ≈ **2×** Gen3-Transfer-BW; **kernel** unverändert. ([Rambus][5])
+* **3090 Specs** in Log bestätigen: 24 GB / ~936 GB/s / PCIe 4.0. ([EVGA][3])
+
+# 9) Erwartungswerte (grobe Orientierung)
+
+* **kernel (große N):** häufig **VRAM-/Compute-limitiert**; Werte << 936 GB/s sind normal (DOT = Level-1; reduktions-/latency-sensitiv).
+* **e2e:** dominiert vom **PCIe-Link** und Host-RAM; erwartet grob **~11–12 GB/s (Gen3)** vs. **~22–25 GB/s (Gen4)** je Richtung bei `cudaMemcpy`. ([Rambus][5])
+
+# 10) Troubleshooting (kurz)
+
+* **Energy = -1 / 0:** NVML-Call gescheitert oder Reset/Overflow → Treiber prüfen, Logging aktivieren (Start/Ende-Energie, Uptime). 
+* **kernel schwankt:** fehlende `cudaDeviceSynchronize()`, konkurrierende Prozesse, Thermal-Throttling (check `throttle_reasons`).
+* **e2e zu langsam:** Host-Speicher (pageable vs. pinned), CPU-NUMA (große H2D-Kopien), PCIe im **Gen3**-Modus (gewollt/ungewollt).
+
+---
+
+Wenn du magst, geb’ ich dir noch eine **Ein-Zeilen-Checkliste** für die Runs (Gen3 vs. Gen4) und ein Beispiel-`notes`-Template, das ihr in beiden CSV-Zeilen (kernel/e2e) anhängt – aber methodisch bist du mit obigem genau auf eurer Linie. ✔️
+
+[1]: https://docs.nvidia.com/deploy/pdf/NVML_API_Reference_Guide.pdf?utm_source=chatgpt.com "NVML"
+[2]: https://docs.nvidia.com/cuda/pdf/CUBLAS_Library.pdf?utm_source=chatgpt.com "cuBLAS"
+[3]: https://www.evga.com/products/specs/gpu.aspx?pn=e2763314-163f-4391-8935-ea2c5dffd06b&utm_source=chatgpt.com "EVGA GeForce RTX 3090 FTW3 ULTRA GAMING, 24G-P5 ..."
+[4]: https://en.wikipedia.org/wiki/PCI_Express?utm_source=chatgpt.com "PCI Express"
+[5]: https://www.rambus.com/blogs/pci-express-4/?utm_source=chatgpt.com "What is PCIe 4.0? PCI Express 4 explained"
