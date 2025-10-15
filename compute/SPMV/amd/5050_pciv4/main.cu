@@ -80,9 +80,11 @@ static constexpr PatternSpec RUNS[] = {
 static constexpr int REPEATS = 50;
 static constexpr double TARGET_S = 1.1;
 static constexpr double SAFETY_FACTOR = 1.02;
-static constexpr double OOM_SAFETY = 0.70;  // Use 60% of free VRAM
+static constexpr double TARGET_LOW = 0.95;  // Lower bound of target envelope
+static constexpr size_t MIN_PASSES_SMALL = 100;  // For very small matrices
+static constexpr double OOM_SAFETY = 0.60;  // Use 60% of free VRAM
 
-const char* CSV_PATH = "data/raw/spmv.csv";
+const char* CSV_PATH = "data/raw/spmv_sweep.csv";
 
 // ============================================================================
 // Error Checking Macros
@@ -1151,7 +1153,41 @@ void writeCSVRow(std::ofstream& file,
                                                                        size_t passes = calibrateSpMV(handle, matA, vecX, vecY, d_buffer, stream);
                                                                        std::cout << passes << " passes\n";
 
-                                                                       // Calculate bytes transferred (theoretical CSR model)
+                                                                       // Ensure minimum passes for small matrices (to average out launch overhead)
+                                                                       if (mat.rows <= 4096) {
+                                                                           passes = std::max(passes, MIN_PASSES_SMALL);
+                                                                       }
+
+                                                                       // Adaptive validation: probe run with current passes
+                                                                       float ms_check = 0.0f;
+                                                                       {
+                                                                           CUDA_CHECK(cudaEventRecord(start_event, stream));
+                                                                           for (size_t p = 0; p < passes; ++p) {
+                                                                               CUSPARSE_CHECK(cusparseSpMV(handle, CUSPARSE_OPERATION_NON_TRANSPOSE,
+                                                                                                           &alpha, matA, vecX, &beta, vecY,
+                                                                                                           CUDA_R_32F, CUSPARSE_SPMV_ALG_DEFAULT, d_buffer));
+                                                                           }
+                                                                           CUDA_CHECK(cudaEventRecord(stop_event, stream));
+                                                                           CUDA_CHECK(cudaEventSynchronize(stop_event));
+                                                                           CUDA_CHECK(cudaEventElapsedTime(&ms_check, start_event, stop_event));
+                                                                       }
+                                                                       double seconds_check = ms_check / 1000.0;
+
+                                                                       // One-time adjustment if below target envelope
+                                                                       if (seconds_check < TARGET_LOW * TARGET_S) {
+                                                                           size_t passes_new = std::max(
+                                                                               passes + 1,
+                                                                               static_cast<size_t>(std::ceil(passes * TARGET_S / seconds_check * 1.02))
+                                                                           );
+                                                                           if (passes_new > passes) {
+                                                                               passes = passes_new;
+                                                                               std::cout << "Adjusted passes -> " << passes
+                                                                               << " (check=" << std::fixed << std::setprecision(4) << seconds_check << "s)\n";
+                                                                               size_notes += ";calibration_adjusted=1;passes=" + std::to_string(passes);
+                                                                           }
+                                                                       }
+
+                                                                       // Calculate bytes transferred (theoretical CSR model) - AFTER final passes
                                                                        // Per SpMV pass: nnz values, nnz col_idx, (rows+1) row_ptr, N x-vector, N y-vector
                                                                        size_t bytes_per_pass = mat.nnz * (sizeof(real) + sizeof(int)) +
                                                                        (mat.rows + 1) * sizeof(int) +
