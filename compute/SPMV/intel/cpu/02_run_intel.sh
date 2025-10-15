@@ -70,3 +70,8 @@ for THREADS in "${THREAD_COUNTS[@]}"; do
     fi
 done
 echo "========================================"
+echo "System will shutdown in 10 seconds..."
+echo "Press Ctrl+C to cancel"
+sleep 10
+
+sudo shutdown -h now

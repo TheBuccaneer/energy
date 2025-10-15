@@ -244,6 +244,54 @@ double deltaJoules(const RaplSnap& before, const RaplSnap& after) {
 }
 
 // ============================================================================
+// CPU Temperature Measurement
+// ============================================================================
+
+double readCPUTemperature() {
+    auto hwmon_dirs = globPaths("/sys/class/hwmon/hwmon*");
+    
+    for (const auto& hwmon_dir : hwmon_dirs) {
+        std::string name_path = hwmon_dir + "/name";
+        std::string name = readFile(name_path);
+        std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+        
+        bool is_cpu_sensor = (name.find("coretemp") != std::string::npos ||
+                             name.find("k10temp") != std::string::npos);
+        
+        if (!is_cpu_sensor) continue;
+        
+        auto temp_labels = globPaths(hwmon_dir + "/temp*_label");
+        
+        for (const auto& label_path : temp_labels) {
+            std::string label = readFile(label_path);
+            std::transform(label.begin(), label.end(), label.begin(), ::tolower);
+            
+            bool is_package = (label.find("package") != std::string::npos ||
+                              label.find("tdie") != std::string::npos ||
+                              label.find("tctl") != std::string::npos);
+            
+            if (is_package) {
+                size_t pos = label_path.find("_label");
+                if (pos != std::string::npos) {
+                    std::string input_path = label_path.substr(0, pos) + "_input";
+                    std::string temp_str = readFile(input_path);
+                    
+                    if (!temp_str.empty()) {
+                        try {
+                            int temp_milli = std::stoi(temp_str);
+                            return temp_milli / 1000.0;
+                        } catch (...) {
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    return -1.0;
+}
+
+// ============================================================================
 // CSR Matrix Structure
 // ============================================================================
 
@@ -723,7 +771,7 @@ void writeCSVHeader(std::ofstream& file) {
     file << "timestamp,host,cpu_model,backend,library,library_version,impl,workload,dtype,"
          << "pattern,nrows,ncols,nnz,num_threads,batches,"
          << "seconds_target,passes_kernel,seconds_kernel,"
-         << "energy_j,avg_power_w,below_target,bytes_total,bw_gb_s,time_mode,energy_mode,"
+         << "energy_j,avg_power_w,below_target,bytes_total,bw_gb_s,temp_c,time_mode,energy_mode,"
          << "omp_proc_bind,omp_places,energy_domain,numa_policy,notes\n";
 }
 
@@ -742,6 +790,7 @@ void writeCSVRow(std::ofstream& file,
                  double avg_power_w,
                  size_t bytes_total,
                  double bw_gb_s,
+                 double temp_c,
                  const std::string& notes) {
     
     int below_target = (seconds_kernel < TARGET_S * 0.95) ? 1 : 0;
@@ -781,8 +830,16 @@ void writeCSVRow(std::ofstream& file,
     
     file << below_target << ","
          << bytes_total << ","
-         << std::setprecision(2) << bw_gb_s << ","
-         << "kernel" << ","
+         << std::setprecision(2) << bw_gb_s << ",";
+    
+    if (temp_c >= 0) {
+        file << std::setprecision(1) << temp_c;
+    } else {
+        file << "NA";
+    }
+    file << ",";
+    
+    file << "kernel" << ","
          << "kernel" << ","
          << "spread" << ","
          << "cores" << ","
@@ -1068,12 +1125,14 @@ int main(int argc, char** argv) {
                 double energy_j = rapl.valid ? deltaJoules(snap0, snap1) : -1.0;
                 double avg_power_w = (energy_j >= 0.0) ? (energy_j / seconds_kernel) : -1.0;
                 
+                double temp_c = readCPUTemperature();
+                
                 double bw_gb_s = (bytes_total / 1e9) / seconds_kernel;
                 
                 // Write CSV
                 writeCSVRow(csv_file, getTimestamp(), hostname, cpu_model, library_version,
                            mat, spec, num_threads, repeat, passes, seconds_kernel,
-                           energy_j, avg_power_w, bytes_total, bw_gb_s, size_notes);
+                           energy_j, avg_power_w, bytes_total, bw_gb_s, temp_c, size_notes);
                 csv_file.flush();
                 
                 // Console output
@@ -1085,6 +1144,9 @@ int main(int argc, char** argv) {
                         if (avg_power_w >= 0) {
                             std::cout << " P=" << std::setprecision(0) << avg_power_w << "W";
                         }
+                    }
+                    if (temp_c >= 0) {
+                        std::cout << " T=" << std::setprecision(1) << temp_c << "°C";
                     }
                     std::cout << " | BW=" << std::setprecision(2) << bw_gb_s << " GB/s\n";
                 }
