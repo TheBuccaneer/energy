@@ -1,0 +1,143 @@
+Alles klar—hier ist eine **paper-taugliche Dokumentation** für euer SpMV-Benchmark-Programm auf **RTX 3090 (PCIe 3.0 x16, 330 W PL)** und **RTX 5050 (8 GB)**. Ich habe die **Kernmethoden und Hardwaredaten extern gegengecheckt** und die wichtigsten Aussagen mit Quellen belegt (CUDA Events, NVML-Energiezähler, cuSPARSE Generic API, PCIe-Bandbreiten, 3090/5050-Specs, HPCG/Graph500 für Muster).
+
+---
+
+# 1) Ziel & Scope
+
+Dieses Programm misst die **GPU-seitige SpMV-Leistung (CSR, FP32)** inklusive **Energie/Leistung** und **PCIe-Telemetrie**. Es ist für reproduzierbare, faire Vergleiche ausgelegt (konsistentes CSV-Schema; identische Matrizen/Seeds über Geräte hinweg).
+
+* **GPUs:**
+
+  * **RTX 3090** (24 GB GDDR6X, 384-bit, ~936 GB/s Peak BW) – Messungen auf **PCIe 3.0 x16**, Power-Limit **330 W**. ([NVIDIA][1])
+  * **RTX 5050 (Desktop)** – laut Ankündigung **8 GB GDDR6**, **~130 W**; eure Messplattform lief mit **PCIe 4.0 (x8 laut Programm-Telemetrie)**. ([The Verge][2])
+
+* **Operation:** cuSPARSE **Generic API** (`cusparseSpMV`) mit CUDA Events zur Zeitmessung. ([NVIDIA Docs][3])
+
+---
+
+# 2) Workloads (Muster)
+
+Alle Matrizen werden als **CSR** generiert/geladen, damit CPU/GPU später **format-fair** bleiben.
+
+* **Strukturiert:** 2D-5-Punkt-Stencil; **3D-7/27-Punkt-Stencil** (HPCG nutzt 27-Punkt). ([netlib.org][4])
+* **Banded:** Tri-Diagonal (konfigurierbare Bandbreite).
+* **Block-diagonal:** dichte 4×4/8×8-Blöcke entlang der Diagonale (SpMM-relevant).
+* **Irregular/Graphartig:** **R-MAT/Graph500-ähnlich** (Scale/Edge-Factor), optional **permuted** (P·A·Pᵀ) zur Lokalitäts-Kontrastierung. ([Graph 500 - The Graph 500 List][5])
+
+**Hinweis:** 3D-Stencils sind in der Literatur als „realitätsnäher“ anerkannt (HPCG). R-MAT repräsentiert Power-Law/Heavy-Tail-Zugriffsmuster (Graph500). ([netlib.org][4])
+
+---
+
+# 3) Messmethode
+
+## 3.1 Zeit
+
+* **CUDA Events**: `cudaEventRecord(start) → … → cudaEventRecord(stop); cudaEventSynchronize(stop); cudaEventElapsedTime(ms)` → `seconds_kernel`. Das ist der **offizielle** Weg zur präzisen GPU-Zeitmessung. ([NVIDIA Docs][6])
+* **Wall-Zeit** (optional): `std::chrono` um die Multi-Pass-Region, separat im CSV.
+
+## 3.2 Energie/Leistung
+
+* **NVML-Energiezähler**: `nvmlDeviceGetTotalEnergyConsumption` liefert **mJ seit letztem Treiber-Reload**; **Energie = Δ-Zähler/1000** (J). `avg_power_w = E / seconds_kernel`. (Die Zähler-Semantik ist offiziell so dokumentiert.) ([NVIDIA Docs][7])
+
+## 3.3 PCIe-Telemetrie
+
+* Log von **Link-Generation/Breite** und **RX/TX-Durchsatz** (NVML). Für **SpMV-Kernel-Zeit** erwartet man **nahe 0 RX/TX**, da Rechenarbeit auf der GPU verbleibt.
+
+---
+
+# 4) Kalibrierung & Stabilität
+
+* **Zielzeit:** `TARGET_S = 1.1 s`.
+* **Pro Konfiguration (Größe × Muster):**
+  1 Warm-up → 1 Kalibrier-Pass → `passes = ceil(TARGET / t_first * 1.02)` → **Probe-Run** um die komplette passes-Schleife → falls `< 0.95×TARGET`, **einmalig nachregeln** (passes erhöhen).
+* **Kleinstgrößen:** Mindest-`passes` (z. B. 100), um Launch-Overhead zu mitteln.
+* **Qualitätstor:** **CV** (Variationskoeffizient) der Kernelzeit **≤ 10–15 %** (typisch ≤ 2 %).
+* **Flag:** `below_target = 1`, wenn `seconds_kernel < 0.95×TARGET`.
+
+---
+
+# 5) CSV-Schema (wichtigste Felder)
+
+* **Bestand:** `timestamp, host, gpu_name, seconds_target, seconds_kernel, seconds_wall, energy_j, avg_power_w, bytes_total, bw_gb_s, below_target, workload, impl, dtype, ...`
+* **Sparse-Meta:** `rows, cols, nnz, op, sp_algo, backend=cuda, library=cusparse, library_version, matrix_id`
+* **Neue Musterfelder:** `pattern, permuted, band_width, block_size, avg_nnz_per_row, std_nnz_per_row`
+* **Telemetrie:** `pcie_gen_current, pcie_width_current, pcie_rx_kbs, pcie_tx_kbs, clocks_sm_mhz, clocks_mem_mhz, temp_c, throttle_reasons, notes`
+
+**Bandbreiten-Modell:**
+`bytes_pass = nnz*(4+4) + (rows+1)*4 + rows*4 + rows*4` (FP32; val/col/rowptr/x/y);
+`bw_gb_s = (passes*bytes_pass / 1e9) / seconds_kernel`.
+→ **Modell-BW** (wie STREAM), **kein DRAM-Counter**—darum können Werte > nomineller DRAM-BW auftreten (methodisch ok, in `notes` vermerkt).
+
+---
+
+# 6) Geräte-/Plattform-Spezifika
+
+## RTX 3090 (PCIe 3.0 x16, PL 330 W)
+
+* **Specs (offiziell):** 24 GB GDDR6X, 384-bit, Boost 1.70 GHz, **~936 GB/s** Peak BW. ([NVIDIA][1])
+* **PCIe:** 3.0 x16 → **~15.75 GB/s** je Richtung (payload-nah). Für **Kernel-only** SpMV nicht limitierend. ([enterprise-support.nvidia.com][8])
+* **Erwartung:** Durchschnittsleistung **≤ PL** (SpMV ist memory-bound); thermisch stabile Läufe ohne Throttle-Bits.
+
+## RTX 5050 (PCIe 4.0, Desktop)
+
+* **Angekündigt:** **8 GB GDDR6**, **~130 W** TBP/TGP-Klasse (Desktop); eure Plattform meldet **PCIe 4.0** (x8 laut Telemetrie). (Hinweis: 4.0 x8 hat **ähnliche Bandbreite** wie 3.0 x16 ~**15.75 GB/s**.) ([The Verge][2])
+* **VRAM-Budget:** 8 GB – bei sehr großen CSR-Fällen (inkl. cuSPARSE-Workspace) ist **OOM-Guard** aktiv (Programm setzt Headroom via `cudaMemGetInfo` + Buffer-Size-Check).
+
+---
+
+# 7) Reproduzierbarkeit (How-To)
+
+1. **Treiber/Toolkit** notieren (CUDA, cuSPARSE-Version).
+2. **Power-Limits** fixieren (3090: 330 W; 5050 ggf. Default).
+3. **Warm-up** + **Kalibrierung** aktiv lassen (Ziel 1.1 s).
+4. **N Läufe/Gruppe** (z. B. 25–50); **CV** berichten.
+5. **Energiepfad** prüfen: `avg_power_w ≈ energy_j / seconds_kernel` (Toleranz ≤ 2 %).
+6. **PCIe-Felder**: 3090-Runs sollten **gen=3, width=16**, 5050-Runs **gen=4, width=x8/x16** melden; **RX/TX ≈ 0** (Kernel-only).
+7. **CSV unverändert** lassen (nur am Ende erweitert), damit CPU-Vergleich 1:1 möglich ist.
+
+---
+
+# 8) Ergebnisdarstellung (fürs Paper)
+
+Berichtet je (Muster × Größe × Gerät):
+
+* **Median** & **IQR** der **`seconds_kernel`**, **CV** (%).
+* **Median** der **`bw_gb_s`** (Modell-BW), **energy_j** und **avg_power_w**.
+* **PCIe-Status** (gen/width) + ggf. Hinweis „includes_transfer=0“.
+* **Anmerkung:** 27-Punkt-Stencil (HPCG-repräsentativ); R-MAT (Graph500-artig). ([netlib.org][4])
+
+*(Falls ihr konkrete Zahlen einfügen möchtet, nehmt einfach die Mediane aus eurer CSV; die Dokumentation oben bleibt identisch.)*
+
+---
+
+# 9) Validitätschecks & typische Stolpersteine
+
+* **PSU/Transienten (3090):** knappe Netzteile können bei kombinierten Lastspitzen hart abschalten; Power-Limit + saubere Verkabelung (dedizierte PCIe-Kabel) minimieren das Risiko.
+* **Unterziel-Läufe:** falls noch < 0.95×Target vorkommen, `MIN_PASSES_SMALL` leicht erhöhen (z. B. 150).
+* **OOM-Sicherheit:** Workspace-Abfrage (`cusparseSpMV_bufferSize`) **vor** Allokation, danach Headroom prüfen.
+
+---
+
+# 10) Quellen (Kernpunkte)
+
+* **NVML Energiezähler:** mJ **seit Treiber-Reload** → Differenz = Energie Messfenster. ([NVIDIA Docs][7])
+* **CUDA Events** (Record/Synchronize/ElapsedTime) = empfohlene GPU-Zeitmessung. ([NVIDIA Docs][6])
+* **cuSPARSE Generic API** (SpMV/SpMM). ([NVIDIA Docs][3])
+* **RTX 3090 offizielle Specs** (24 GB GDDR6X, 384-bit, ~936 GB/s). ([NVIDIA][1])
+* **RTX 5050 Ankündigung (8 GB GDDR6, ~130 W)**. ([The Verge][2])
+* **PCIe Bandbreite (3.0×16 ≈ 15.75 GB/s; 4.0×8 ≈ ~gleich)**. ([Kingston Technology Company][9])
+* **HPCG 27-Punkt-Stencil**; **Graph500 / R-MAT**. ([netlib.org][4])
+
+---
+
+Wenn du möchtest, bastle ich dir das als **Markdown-Anhang** in euer Repo (README-paper.md) mit kleinen Platzhaltern (`<Median einfügen>`), damit ihr die Zahlen nur noch reinkopiert.
+
+[1]: https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090-3090ti/?utm_source=chatgpt.com "GeForce RTX 3090 Family"
+[2]: https://www.theverge.com/news/692045/nvidia-geforce-rtx-5050-desktop-laptop-gpu-gddr6-gddr7?utm_source=chatgpt.com "Nvidia's RTX 5050 GPU starts at $249 with last-gen GDDR6 VRAM"
+[3]: https://docs.nvidia.com/cuda/cusparse/?utm_source=chatgpt.com "1. Introduction — cuSPARSE 13.0 documentation"
+[4]: https://www.netlib.org/utk/people/JackDongarra/PAPERS/hpcg-a-new.pdf?utm_source=chatgpt.com "High-performance conjugate-gradient benchmark"
+[5]: https://graph500.org/?page_id=12&utm_source=chatgpt.com "Benchmark Specification"
+[6]: https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__EVENT.html?utm_source=chatgpt.com "CUDA Runtime API :: CUDA Toolkit Documentation"
+[7]: https://docs.nvidia.com/deploy/nvml-api/group__nvmlDeviceQueries.html?utm_source=chatgpt.com "5.16. Device Queries"
+[8]: https://enterprise-support.nvidia.com/s/article/understanding-pcie-configuration-for-maximum-performance?utm_source=chatgpt.com "Understanding PCIe Configuration for Maximum ..."
+[9]: https://www.kingston.com/en/blog/pc-performance/pcie-gen-4-explained?utm_source=chatgpt.com "What is the difference between PCIe Gen 3 and PCIe Gen 4?"
