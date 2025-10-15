@@ -1,0 +1,111 @@
+# Dokumentation: CPU-SpMV (OpenMP) – Messdesign, CSV, Plausibilitätsregeln
+
+## Ziel & Überblick
+
+Diese Doku beschreibt euren **CPU-Pfad für CSR-SpMV (FP32)** mit OpenMP: Messfenster ~**1.0 s** durch **Kalibrier-/Pass-Steuerung**, **50 Repeats** pro (Pattern × Größe), **Energie** via **RAPL ΔE/Δt**, feste **Thread-Bindung** und **NUMA First-Touch**, sowie das **CSV-Schema**. Die Regeln spiegeln übliche Benchmark-Best-Practices (Roofline/STREAM, Wiederholungen) und offizielle Dokus (powercap/OMP) wider. ([Wikipedia][1])
+
+---
+
+## Messprinzip
+
+### Zeitfenster & Repeats
+
+* **Kalibrierung**: 1 Probe-Pass → `passes = ceil(1.0s / t_first * 1.02)`; einmalige Nachregelung, falls `<0.95×1.0s`.
+* **Messung**: Danach **REPEATS=50** vollständige Messläufe je Kombination; pro Repeat wird Zeit und Energie neu erfasst; `batches` zählt 0…49.
+* **Warum Repeats?** Industriestandards (z. B. SPEC CPU2017) verwenden mehrere Läufe und wählen **Median aus 3** (bzw. langsamere von 2), um Varianz zu glätten; allgemeine Bench-Guides empfehlen ebenfalls Mehrfachläufe und Streuungsprüfung. ([spec.org][2])
+
+### Energie (RAPL/powercap)
+
+* **Quelle**: Linux **powercap/RAPL**: **Energiezähler** `energy_uj` und **Zählerbereich** `max_energy_range_uj`; **keine** Momentan-Watt-Attribute → Leistung immer als **ΔE/Δt** bilden (Wrap/Overflow berücksichtigen). ([docs.kernel.org][3])
+
+---
+
+## Threading, Frequenz, NUMA
+
+* **OpenMP-Bindung**: `OMP_PROC_BIND=spread`, `OMP_PLACES=cores` → feste Platzierung der Threads (Bind-ICV + Places). ([OpenMP][4])
+* **Frequenzstabilität**: CPU-Governor **performance** via `cpupower frequency-set`; vermeidet Drift durch Boost/Sparen während der Messung. ([Red Hat Docs][5])
+* **NUMA First-Touch**: Datenseiten werden bei **erstem Zugriff** zugewiesen; deshalb „First-Touch“ **parallel** über CSR-Arrays (`rowptr/colind/vals`) und Vektoren (`x/y`), damit Speicher lokal verteilt wird. ([man7.org][6])
+
+---
+
+## Implementierung & Library-Labeling
+
+* **Kernel**: CSR-SpMV als **OpenMP-Implementierung** (kein OpenBLAS-Sparse). OpenBLAS deckt **dichte** BLAS/LAPACK ab, **nicht** Sparse-BLAS; daher CSV-Felder `library=OpenMP`, `impl=omp`. ([GitHub][7])
+
+---
+
+## CSV-Schema (konkret)
+
+**Header (Auszug, in fester Reihenfolge):**
+`timestamp,host,cpu_model,backend,library,library_version,impl,workload,dtype,pattern,nrows,ncols,nnz,num_threads,batches,seconds_target,passes_kernel,seconds_kernel,energy_j,avg_power_w,below_target,bytes_total,bw_gb_s,time_mode,energy_mode,omp_proc_bind,omp_places,energy_domain,numa_policy,notes`
+
+**Feld-Semantik:**
+
+* `backend=cpu`, `workload=spmv`, `dtype=fp32`, `time_mode=kernel`, `energy_mode=kernel`.
+* `batches` = Repeat-Index (0…49).
+* `seconds_target=1.0`; `below_target=1`, falls `<0.95 s`.
+* `energy_domain=rapl_pkg`.
+* `omp_proc_bind=spread`, `omp_places=cores`; `numa_policy=first_touch`.
+* `bytes_total`/`bw_gb_s`: konservatives **CSR-Byte-Modell** (nnz*(val+col + 1×x-touch) + rowptr + 2×y).
+* `notes`: z. B. `byte_model=csr_theoretical; hint=off;`.
+
+---
+
+## Plausibilitäts-/Qualitätschecks (Go/No-Go vor Voll-Run)
+
+1. **Zielzeit**: `seconds_kernel` je Zeile ≈ **0.95–1.10 s**; `below_target` fast immer 0.
+2. **Konsistenz der Formeln**:
+   `avg_power_w ≈ energy_j / seconds_kernel` (Abweichung <~2 %),
+   `bw_gb_s ≈ bytes_total / (seconds_kernel·1e9)` (Abweichung <~1 %).
+3. **Streuung (50 Repeats)**: **CV ≤ 10–15 %** je (Pattern×Größe×Threads) ist gut; entspricht Benchmark-Praxis (Median, Varianz-Disziplin). ([spec.org][2])
+4. **Roofline-Realismus**:
+
+   * STREAM Triad misst **sustainable DRAM-Bandbreite** eures Systems (untere Deckenkurve im Roofline-Modell). CSR-SpMV ist **memory-bound** und liegt **deutlich unter** STREAM, v. a. bei irregulären Mustern (RMAT/PERM). ([cs.virginia.edu][8])
+   * **Warnsignal**: Wenn `bw_gb_s` ≥ STREAM-Wert eurer Maschine, ist euer **Byte-Modell** zu „scharf“ für den physikalischen Vergleich. Dann als **„model_bw_gb_s“** interpretieren (Effektiv-Durchsatz des **gewählten** CSR-Zugriffsmodells), nicht als physikalische DRAM-BW. ([cs.virginia.edu][8])
+
+---
+
+## Interpretation & Reporting
+
+* **Roofline-Lesart**: Verortet SpMV-Punkte mit niedriger **arithmetischer Intensität** unter der Bandbreiten-Decke; Optimierungen zielen auf **Lokalität/Koaleszierung**, nicht FLOP-Spitzen. ([People at EECS][9])
+* **STREAM-Bezug**: Optional zusätzlich STREAM laufen und **SpMV als % von STREAM** berichten („effektive Bandbreite relativ zum System-Deckel“). ([Intel][10])
+* **Statistik aus Repeats**: Wie bei SPEC üblich: **Median** je Konfiguration (oder Mittelwert ± Std/CI) als Hauptkennzahl reporten; Ausreißer begründen. ([spec.org][2])
+
+---
+
+## Betriebshinweise (Kurz)
+
+* **Governor setzen**: `sudo cpupower frequency-set --governor performance`. ([Ubuntu Documentation][11])
+* **Bindung & Threads** (vor 1. Parallelregion):
+  `OMP_PROC_BIND=spread`, `OMP_PLACES=cores`, `omp_set_dynamic(0)`, `omp_set_num_threads(N)`. ([OpenMP][4])
+* **RAPL-Rechte/Lesen**: `…/powercap/intel-rapl:*/{energy_uj,max_energy_range_uj}` auslesen; **Δ** mit Wrap-Behandlung bilden (kein `power_uw`). ([docs.kernel.org][3])
+
+---
+
+## Warum diese Regeln?
+
+* **RAPL** stellt **Energiezähler** und **Range** bereit, keine Instant-Power → **ΔE/Δt** ist korrekt; Zähler **overflowen** periodisch (Wrap). ([docs.kernel.org][3])
+* **OpenMP-Affinität** (PROC_BIND/PLACES) sichert Reproduzierbarkeit. ([OpenMP][4])
+* **STREAM & Roofline** sind etablierte Referenzen für **Speicherbandbreite** und **memory-bound** Verhalten. ([cs.virginia.edu][8])
+* **Mehrfachläufe** (Repeats) reduzieren Rauschen; **Median-Regel** ist Standard (SPEC). ([spec.org][2])
+* **OpenBLAS**: keine Sparse-BLAS-API; euer **OpenMP-CSR** ist daher korrekt als „OpenMP“ zu labeln. ([GitHub][7])
+
+---
+
+### TL;DR (Go/No-Go)
+
+Wenn **Zielzeit, Formeln, Streuung** passen und `bw_gb_s` **unter** eurer STREAM-Bandbreite bleibt (oder als **model_bw** deklariert wird), sind die Zahlen **plausibel** → **Voll-Run ok**. ([cs.virginia.edu][8])
+
+Wenn du willst, schreibe ich dir daraus noch eine **Kurzseite fürs Paper/Anhang** (Methodenabschnitt + Tabelle der CSV-Felder) – 1:1 druckfertig.
+
+[1]: https://en.wikipedia.org/wiki/Roofline_model?utm_source=chatgpt.com "Roofline model"
+[2]: https://www.spec.org/cpu2017/docs/runcpu.html?utm_source=chatgpt.com "runcpu - Using CPU 2017"
+[3]: https://docs.kernel.org/power/powercap/powercap.html?utm_source=chatgpt.com "Power Capping Framework"
+[4]: https://www.openmp.org/spec-html/5.0/openmpse52.html?utm_source=chatgpt.com "OMP_PROC_BIND"
+[5]: https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/power_management_guide/cpufreq_governors?utm_source=chatgpt.com "3.2. CPUfreq | Power Management Guide"
+[6]: https://man7.org/linux/man-pages/man2/set_mempolicy.2.html?utm_source=chatgpt.com "set_mempolicy(2) - Linux manual page"
+[7]: https://github.com/OpenMathLib/OpenBLAS/wiki/Faq/f27336f91a290020a587041f98e4ab5ec8876fe7?utm_source=chatgpt.com "Faq · OpenMathLib/OpenBLAS Wiki · GitHub"
+[8]: https://www.cs.virginia.edu/stream/?utm_source=chatgpt.com "MEMORY BANDWIDTH: STREAM BENCHMARK ..."
+[9]: https://people.eecs.berkeley.edu/~kubitron/cs252/handouts/papers/RooflineVyNoYellow.pdf?utm_source=chatgpt.com "Roofline: An Insightful Visual Performance Model for ..."
+[10]: https://www.intel.com/content/www/us/en/developer/articles/technical/optimizing-memory-bandwidth-on-stream-triad.html?utm_source=chatgpt.com "Optimizing Memory Bandwidth on Stream Triad"
+[11]: https://documentation.ubuntu.com/server/explanation/performance/perf-tune-cpupower/?utm_source=chatgpt.com "CPU Governors and the cpupower tool"
