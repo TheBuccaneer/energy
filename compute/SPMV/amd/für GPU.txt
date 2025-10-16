@@ -1,0 +1,137 @@
+hier ist eine **paper-taugliche Doku** für eure **GPU-Variante (RTX 3090 & RTX 5050)** – so kannst du sie 1:1 in euer Repo/Anhang übernehmen. Ich habe die Messmethode und die Hardware-Eckdaten mit offiziellen Quellen gegengeprüft und zitiere die Kernstellen.
+
+---
+
+# Titel
+
+Reproduzierbares GPU-Benchmarking von CSR-SpMV (FP32) mit cuSPARSE: Messmethode, Workloads und Telemetrie auf RTX 3090 & RTX 5050
+
+## 1. Ziel & Umfang
+
+Wir messen die **Sparse-Matrix-Vektor-Multiplikation (SpMV)** im **CSR-Format, FP32** auf NVIDIA-GPUs. Das Programm liefert **Kernel-Zeit**, **Energie/Leistung** und **PCIe-Telemetrie** in einem stabilen CSV-Schema und ist so ausgelegt, dass spätere CPU-Runs (oneMKL) **fair** vergleichbar sind (identische Matrizen/Seeds, identische Messlogik).
+
+* **SpMV-Backend:** cuSPARSE **Generic API** (`cusparseSpMV`) – der aktuelle, descriptor-basierte Weg für SpMV/SpMM. ([NVIDIA Docs][1])
+* **Zeiterfassung (GPU-Zeit):** **CUDA Events** (`cudaEventRecord`/`Synchronize`/`ElapsedTime`) – der offiziell empfohlene Timer für GPU-Kernels. ([NVIDIA Docs][2])
+* **Energie:** **NVML-Akkumulator** `nvmlDeviceGetTotalEnergyConsumption` (**mJ seit Treiber-Reload**); Energie = **Δ**/1000 J. ([NVIDIA Docs][3])
+* **PCIe-Telemetrie:** Link-Gen/Breite und **Durchsatz** via `nvmlDeviceGetPcieThroughput` (**KB/s über ein ~20 ms-Fenster**). ([NVIDIA Docs][3])
+
+## 2. Hardware (für Kontext & Spez-Abgleich)
+
+* **RTX 3090 (Ampere):** 24 GB **GDDR6X**, 384-bit, Boost ~1.70 GHz, **~936 GB/s** nominelle Speicherbandbreite; PCIe **4.0 ×16**. ([NVIDIA][4])
+* **RTX 5050 (Blackwell, Desktop):** **8 GB GDDR6**, **128-bit**, **2560 CUDA-Kerne**, Boost ca. **2.57 GHz** (offizielle Ankündigungsseite). ([NVIDIA][5])
+* **PCIe Referenzwerte:** **Gen3 ×16 ≈ 15.75 GB/s** je Richtung (128b/130b); **Gen4 ×16 ≈ 31.5 GB/s** je Richtung. ([Wikipedia][6])
+
+> Hinweis: Unsere **SpMV-Kernel-Messungen** sind **transferfrei** (`includes_transfer=0`), daher beeinflusst PCIe die **Kernel-Zeit** praktisch nicht; Link-Gen/Breite werden dennoch protokolliert. ([NVIDIA Docs][3])
+
+## 3. Workloads (synthetisch, CSR; Seeds fix)
+
+Wir erzeugen CSR-Matrizen mit verschiedenen Strukturen, um Lokalität und Irregularität abzudecken:
+
+* **STENCIL_5PT_2D**, **STENCIL_7PT_3D**, **STENCIL_27PT_3D** – 3D-27-Punkt ist u. a. Kern von **HPCG**. ([Netlib][7])
+* **BAND_TRIDIAG** (Bandbreite konfigurierbar).
+* **BLOCK_DIAGONAL** (dichte Blöcke, z. B. 8×8, entlang der Diagonale).
+* **IRREGULAR_20** (~20 nnz/Zeile, zufällig).
+* **RMAT_POWERLAW** (**Graph500/R-MAT**-artig; `scale, edge_factor`, optional **Permutation** `P·A·Pᵀ` zur Lokalitäts-Degradation). ([Graph 500 - The Graph 500 List][8])
+
+Alle Matrizen bleiben **CSR** (format-fair zum späteren CPU-Pfad).
+
+## 4. Messmethode & Stabilisierung
+
+**Zeit (GPU-Kernel):**
+
+* Events um **die komplette Mehrfach-Pass-Schleife** setzen: `Record(start) → for(passes){cusparseSpMV(...)} → Record(stop) → Synchronize(stop) → ElapsedTime(ms)`; `seconds_kernel = ms/1000`. ([NVIDIA Docs][2])
+
+**Energie/Leistung:**
+
+* Vor Start und nach Ende: `nvmlDeviceGetTotalEnergyConsumption` lesen, **Differenz** = Energie im Messfenster; `avg_power_w = energy_j / seconds_kernel`. (API liefert **mJ seit Treiber-Reload**.) ([NVIDIA Docs][3])
+
+**Zielzeit-Kalibrierung (~1.1 s):**
+
+1. **Warm-up** (ungetimed).
+2. **Probe-Pass** → `t_first`.
+3. `passes = ceil(TARGET / t_first * 1.02)`.
+4. **Probe-Run** (Events um gesamte `passes`-Schleife).
+5. Falls `seconds_kernel < 0.95·TARGET`: **einmalig nachregeln** (`passes ← ceil(passes·TARGET/seconds_kernel*1.02)`).
+6. Für sehr kleine Matrizen: `MIN_PASSES_SMALL` (z. B. ≥ 100) gegen Launch-Overhead.
+
+**Speicher-/Workspace-Safety:**
+
+* Allokations-Budget via `cudaMemGetInfo`; **zusätzlicher Check** nach `cusparseSpMV_bufferSize` (Workspace), erst dann `cudaMalloc(d_buffer)`. ([NVIDIA Docs][9])
+
+## 5. CSV-Schema (relevante Felder)
+
+**Allgemein:**
+`timestamp, host, gpu_name, backend=cuda, impl=cusparse, library=cusparse, library_version, dtype=fp32, seconds_target, seconds_kernel, seconds_wall, energy_j, avg_power_w, bytes_total, bw_gb_s, below_target, notes`
+
+**Sparse-Meta:**
+`rows, cols, nnz, op, sp_algo, matrix_id`
+
+**Musterzusatz (neu, *anhängen*):**
+`pattern, permuted, band_width, block_size, avg_nnz_per_row, std_nnz_per_row`
+
+**Telemetrie:**
+`pcie_gen_current, pcie_width_current, pcie_rx_kbs, pcie_tx_kbs, clocks_sm_mhz, clocks_mem_mhz, temp_c, throttle_reasons`
+
+**Bandbreiten-Modell (wichtig):**
+`bw_gb_s = (passes * bytes_per_pass / 1e9) / seconds_kernel`, mit
+`bytes_per_pass = nnz*(4+4) + (rows+1)*4 + rows*4 + rows*4` (FP32: val/col + rowptr + x + y).
+→ Das ist **Modell-BW** (analog zu STREAM), **kein DRAM-Counter**: Werte können **über** nomineller HBM-BW liegen, methodisch zulässig, wenn als Modell gekennzeichnet. (Wir führen `notes+=byte_model=csr_theoretical`.)
+
+## 6. Validität & Qualitätstore
+
+* **Mindestdauer:** ≥ 90 % der Konfigurationen sollten **1.0–1.2 s** Kernelzeit erreichen; `below_target = 1`, falls `<0.95·TARGET`.
+* **Stabilität:** **CV** der Kernelzeit pro Gruppe ≤ 10–15 % (typisch ≤ 2 %).
+* **Energie-Konsistenz:** Zeilenweise prüfen: `avg_power_w ≈ energy_j / seconds_kernel` (± ~2 %).
+* **PCIe-Plausibilität:** `pcie_gen_current`/`width_current` dem Board entsprechend (3090 meist **Gen4×16**; 5050 je nach Mainboard **Gen4×8/×16**). **RX/TX-KB/s** bei Kernel-Only erwartbar **nahe 0**; NVML gibt **20 ms-Fenster-Durchsatz** aus. ([NVIDIA Docs][3])
+* **Muster-Ordnung (Sanity):** strukturiert (**Stencil/Banded/Block**) **>** irregulär (**IRREGULAR/RMAT**); **Permutation** verschlechtert. (SpMV ist **memory-bound**, Lokalität dominiert.)
+
+## 7. Erwartete Größenordnungen (Specs-Abgleich)
+
+* **RTX 3090:** Unter SpMV-Last (speichergebunden) liegen **Durchschnittsleistungen** üblicherweise **unter dem Board-PL/TGP** (FE ~350 W); nominelle HBM-BW **~936 GB/s** – gut strukturierte Fälle können einen nennenswerten Bruchteil davon erreichen, irreguläre deutlich weniger. ([NVIDIA][4])
+* **RTX 5050:** 8 GB **GDDR6**, 128-bit; effektive Speicher-BW hängt vom Board-RAM-Takt ab (z. B. 20 Gb/s → ~320 GB/s). Erwartet **deutlich niedrigere** Modell-BW als 3090, aber gleiche Qualitativeffekte durch Muster/Lokalität. ([NVIDIA][10])
+* **PCIe:** Für **Kernel-Only** hat Gen3/4 praktisch **keinen Einfluss** auf `seconds_kernel`; für spätere **Transfer-Benchmarks** dienen **31.5 GB/s (Gen4×16)** bzw. **15.75 GB/s (Gen3×16)** als Obergrenzen für **payload-nahe** Einbahn-Durchsätze. ([Wikipedia][6])
+
+## 8. Reproduzierbarkeit (Checkliste)
+
+1. **Toolkit/Driver** protokollieren (CUDA, cuSPARSE-Version). ([NVIDIA Docs][1])
+2. **Power-Limit** dokumentieren (z. B. 3090: 330 W).
+3. **Warm-up + Kalibrierung** aktiv (Ziel 1.1 s, einmalige Nachregelung).
+4. **Passzahl/Bytes** erst **nach** finaler `passes`-Bestimmung berechnen/loggen.
+5. **NVML-Δ-Energie** (Start/Stop) → J; **PCIe-Zähler**/Link-State loggen (Gen/Breite, KB/s). ([NVIDIA Docs][3])
+6. **OOM-Guards:** `cudaMemGetInfo`-Budget + `cusparseSpMV_bufferSize` prüfen (Workspace), erst dann allokieren. ([NVIDIA Docs][9])
+7. **CSV-Schema** unverändert lassen (neue Felder nur **anhängen**), damit CPU-Port 1:1 vergleichbar bleibt.
+
+## 9. Grenzen & Hinweise
+
+* **Modell-BW ≠ DRAM-Counter:** Die ausgewiesenen `bw_gb_s` sind **abgeleitet**; zur DRAM-Counter-Verifikation wären Hardware-Spezialzähler nötig (außerhalb des Scopes).
+* **NVML-Energie:** Akkumulator seit Treiber-Reload – Unterschiede bilden; ältere Treiber/Modelle können Ausnahmen zeigen (bekannte Issues existieren, daher Driver-Version loggen). ([GitHub][11])
+* **PCIe-Durchsatz-Fenster:** `nvmlDeviceGetPcieThroughput` misst **KB/s über ~20 ms** – Momentanwerte schwanken; für Transfer-Benchmarks gesondert mitteln. ([NVIDIA Docs][3])
+
+## 10. Verwandte Benchmarks (Motivation der Muster)
+
+* **HPCG** nutzt **27-Punkt-Stencil** auf 3D-Gittern (repräsentativer als reine DAXPY/STREAM für reale Stencil-Codes). ([Netlib][7])
+* **Graph500**/R-MAT liefert **Power-Law**/Community-Strukturen für irreguläre Zugriffe – daher unser RMAT-Muster. ([Graph 500 - The Graph 500 List][8])
+
+---
+
+### Kurz-„How to cite“ im Paper
+
+> **Zeitmessung.** Wir messen GPU-Kernelzeit mit **CUDA Events** (Record/Synchronize/ElapsedTime). ([NVIDIA Docs][2])
+> **Energie.** GPU-Energie als **Δ** des NVML-Akkumulators `nvmlDeviceGetTotalEnergyConsumption` (mJ seit Treiber-Reload). ([NVIDIA Docs][3])
+> **SpMV-Backend.** cuSPARSE **Generic API** (`cusparseSpMV`). ([NVIDIA Docs][1])
+> **PCIe.** Link-State & Durchsatz via NVML; Gen3×16 ≈ 15.75 GB/s, Gen4×16 ≈ 31.5 GB/s (theoretisch, payload-nah). ([Wikipedia][6])
+> **Muster.** 3D-27-Punkt (HPCG) und R-MAT (Graph500) für strukturierte vs. irreguläre Lasten. ([Netlib][7])
+
+Wenn du magst, mach ich dir daraus noch eine **README-paper.md** (Markdown) mit Platzhaltern für Tabellen (Median-Zeit, CV, Energie) – du musst dann nur eure Zahlen aus der CSV einfügen.
+
+[1]: https://docs.nvidia.com/cuda/cusparse/?utm_source=chatgpt.com "1. Introduction — cuSPARSE 13.0 documentation"
+[2]: https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__EVENT.html?utm_source=chatgpt.com "CUDA Runtime API :: CUDA Toolkit Documentation"
+[3]: https://docs.nvidia.com/deploy/archive/R535/nvml-api/group__nvmlDeviceQueries.html?utm_source=chatgpt.com "4.15. Device Queries"
+[4]: https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090-3090ti/?utm_source=chatgpt.com "GeForce RTX 3090 Family"
+[5]: https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5050/?utm_source=chatgpt.com "GeForce RTX 5050 Graphics Cards"
+[6]: https://en.wikipedia.org/wiki/PCI_Express?utm_source=chatgpt.com "PCI Express"
+[7]: https://www.netlib.org/utk/people/JackDongarra/PAPERS/hpcg-a-new.pdf?utm_source=chatgpt.com "High-performance conjugate-gradient benchmark"
+[8]: https://graph500.org/?page_id=12&utm_source=chatgpt.com "Benchmark Specification"
+[9]: https://docs.nvidia.com/cuda/cusparse/generic-api/generic-api-functions.html?utm_source=chatgpt.com "Generic API Functions — cuSPARSE 12.6 documentation"
+[10]: https://www.nvidia.com/en-us/geforce/news/rtx-5050-desktop-gpu-and-laptops/?utm_source=chatgpt.com "GeForce RTX 5050 Desktop & Laptops GPUs Bring ..."
+[11]: https://github.com/mlco2/codecarbon/issues/586?utm_source=chatgpt.com "Issue #586 · mlco2/codecarbon"
