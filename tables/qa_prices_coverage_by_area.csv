@@ -1,0 +1,4 @@
+area,hours_present,expected_hours,missing_hours,coverage_pct
+DE,720,720,0,100.0
+FR,720,720,0,100.0
+PL,720,720,0,100.0

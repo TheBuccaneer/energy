@@ -1,0 +1,4 @@
+area,N,mean_g_per_kwh,median_g_per_kwh,min_g_per_kwh,p10_g_per_kwh,p90_g_per_kwh,max_g_per_kwh
+DE,8784,332.6,329.3,108.7,177.9,499.4,655.5
+FR,8784,31.2,26.0,12.8,17.5,56.0,93.6
+PL,8784,703.2,720.7,350.9,517.7,860.3,985.0

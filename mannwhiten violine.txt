@@ -1,0 +1,219 @@
+MANNWHITNEY
+
+Perfekt! Sehr klare Ergebnisse! 🎯
+
+## Paper-Sätze (für Results/Discussion):
+
+### Deutschland (DE):
+> "In Germany, CO₂ intensity during negative price hours (median: 181.9 g/kWh, n=40) was significantly lower than during non-negative price hours (median: 318.6 g/kWh, n=680; Mann-Whitney U=2793.5, p<0.001, Cliff's δ=-0.795, large effect). This indicates that negative prices coincide with periods of high renewable generation and low carbon intensity."
+
+### Frankreich (FR):
+> "In France, no significant difference in CO₂ intensity was observed between negative (median: 21.7 g/kWh, n=17) and non-negative price hours (median: 22.6 g/kWh, n=703; U=5581.5, p=0.64, δ=-0.066). France's consistently low carbon intensity—driven by nuclear baseload—remains stable regardless of price volatility."
+
+### Polen (PL):
+> "In Poland, CO₂ intensity during negative price hours (median: 531.4 g/kWh, n=26) was significantly lower than during non-negative hours (median: 675.2 g/kWh, n=694; U=3408.0, p<0.001, δ=-0.622, large effect). Despite Poland's coal-heavy grid, negative prices correlate with increased renewable dispatch and reduced carbon intensity."
+
+---
+
+## Key Insights:
+
+1. **DE + PL**: Starker Effekt (δ > -0.6) → Negative Preise = deutlich grüner
+2. **FR**: Kein Effekt → Nuklear-Baseload dominiert, Preissignal irrelevant für CO₂
+3. **Praktische Implikation**: In DE/PL lohnt sich **Zeit-Shifting** zu negativen Preisen (Geld sparen + CO₂ reduzieren)
+
+---
+
+## Nächste Schritte (optional):
+
+1. **Robustness Check**: RLM (Robust Linear Model) mit Huber Loss
+2. **Time-of-Day Analyse**: Wann treten negative Preise auf? (Solar peak?)
+3. **Scatter mit Highlights**: Negative-Price-Stunden farblich markieren
+
+**Sag "weiter" für einen dieser Schritte, oder bist du zufrieden?** ✅
+
+Stark – ich habe dein Ergebnis gelesen und bewerte es im Audit-Mode. Kurz, präzise, Minischritte.
+
+Was du soeben abgehakt hast
+
+To-Do „4) Hypothesentest: Mann-Whitney (CO₂ in negativen vs. nicht-negativen Preisstunden)“ ist erledigt – inkl. Effektgröße (Cliff’s δ). (Methodik: Mann-Whitney = nichtparametrischer Test für zwei unabhängige Stichproben; δ quantifiziert die Richtung/Stärke des Unterschieds. 
+docs.scipy.org
++1
+)
+
+Ergebnis (prüfbar & plausibel)
+
+Aus deiner CSV:
+
+DE — nneg=40, nnonneg=680, Median 181.9 vs 318.7 g/kWh, U=2793.5, p=2.84e-17, δ=−0.795 → sehr großer Effekt: CO₂ ist in Negativpreis-Stunden deutlich niedriger. (Richtwert-Schwellen für |δ|: ≈0.147 klein, 0.33 mittel, 0.474 groß.) 
+Cross Validated
+
+FR — nneg=17, nnonneg=703, Median 21.7 vs 22.6 g/kWh, p=0.642, δ=−0.066 → kein signifikanter Unterschied. 
+docs.scipy.org
+
+PL — nneg=26, nnonneg=694, Median 531.4 vs 675.2 g/kWh, p=6.99e-08, δ=−0.622 → großer Effekt: CO₂ niedriger bei Negativpreisen. 
+Cross Validated
+
+Einordnung: Negativpreise treten typischerweise bei EE-Überschuss (Wind/Sonne) und geringer Nachfrage auf; genau dann ist die Grid-CI oft niedriger – dein Muster (DE/PL stark ↓, FR kaum Effekt wegen ohnehin sehr niedriger CI) passt dazu. 
+emp.lbl.gov
++2
+ecohz.com
++2
+
+Gute Frage! Lass mich die bisherigen Erkenntnisse kritisch bewerten:
+✅ Was wir jetzt wissen (September 2024)
+1. Negative Preise ≠ Grüner Strom ist nicht universell
+
+DE/PL: Ja, negative Preise → deutlich grüner (-43% bzw. -21% CO₂)
+FR: Nein, null Effekt (nuklear dominiert)
+Überraschend? Nein, eigentlich erwartbar.
+
+2. Frankreich ist extrem stabil (~22 g/kWh immer)
+
+Keine Preissensitivität bei CO₂
+Relevant fürs Projekt? Nein - für dein Projekt (CPU/GPU-Scheduling) bedeutet das:
+
+In FR lohnt sich Zeit-Shifting wegen CO₂ nicht (immer grün)
+Nur Kosten-Optimierung sinnvoll
+
+
+
+3. Polen hat höchste absolute CO₂-Last (530-675 g/kWh)
+
+20-30× höher als FR
+Relevant? Ja, aber... - das wussten wir vorher (Kohle-dominant)
+
+
+VIOLIN
+
+Alles klar—hier ist die **ausführliche Doku** zu den drei Schritten **Scatter**, **Box/Violin** und **Mann-Whitney**. Ich schreibe es wie ein Repro-Kapitel: Zweck → Eingaben → Verarbeitung → Ausgaben → Erkenntnisse (+ belastbare Quellen).
+
+# 1) Scatter „Preis vs. CO₂-Intensität“ je Zone
+
+**Zweck.**
+Explorativ prüfen, ob (und wie) **Strompreis** (€/kWh) und **Grid-CO₂-Intensität** (g/kWh) zusammenhängen. Visualisiert mit `plt.scatter` (ein Punkt pro Stunde). Matplotlibs Scatter ist die Standard-API für Punktwolken. ([matplotlib.org][1])
+
+**Eingaben.**
+
+* Stunden-Datensatz **Sep 2024** mit Preisen je Zone in **€/kWh** und CI in **g/kWh**, z. B.
+  `day_ahead_sept2024_final.csv` (Preisspalten: `price_eur_kwh_de|fr|pl`),
+  `ci_DE_FR_PL_hourly.csv` (CI-Spalten: `*_ci_lifecycle_g_per_kwh`).
+* Quelle der Day-Ahead-Preise: **ENTSO-E Transparency**; Einheit im Export ist **EUR/MWh** → wir rechnen **÷1000 zu €/kWh**. ([transparency.entsoe.eu][2])
+* Kontext: Sep-2024 ist im Day-Ahead **stündlich (PT60M)**; die **15-Min-MTU** wurde erst **30.09.2025** im SDAC live geschaltet. ([epexspot.com][3])
+
+**Verarbeitung (Kernauswahl).**
+
+* Zeitachsen harmonisiert (TZ-Naive Merge auf Stunde).
+* Preise **EUR/MWh → €/kWh** (÷1000).
+* `dropna` auf den jeweiligen Preis/CI-Spalten pro Zone.
+* `matplotlib.pyplot.scatter(x=Preis, y=CI)`; Achsentitel, Raster, PNG-Export. ([matplotlib.org][1])
+
+**Ausgaben.**
+
+* `figs/scatter_price_vs_ci_de.png`
+* `figs/scatter_price_vs_ci_fr.png`
+* `figs/scatter_price_vs_ci_pl.png`
+
+**Erkenntnisse (aus deinen Plots).**
+
+* **FR**: extrem niedrige CI-Werte (≈ 17–40 g/kWh) und eher niedrige Preisbandbreite → kaum sichtbarer Zusammenhang.
+* **DE/PL**: breite Preisverteilung; visuell tritt bei sehr niedrigen/negativen Preisen häufig **niedrigere CI** auf (Clustering links unten).
+* **Negative Preise** in der Punktwolke sind **normal** und deuten auf **Überangebot** (v. a. EE-Spitzen). ([epexspot.com][4])
+
+---
+
+# 2) Box- und Violin-Plots: „CO₂ bei Preis < 0 vs. Preis ≥ 0“
+
+**Zweck.**
+Aus der Exploration eine **klare Verteilungsgegenüberstellung** machen: Wie unterscheidet sich die CI zwischen **Negativpreis-Stunden** und **Nicht-Negativpreis-Stunden**?
+
+* **Boxplot** zeigt Median, Quartile, Whisker (IQR-Regel), Ausreißer. ([matplotlib.org][5])
+* **Violinplot** zeigt zusätzlich die **Dichteform** (KDE) der Verteilungen. ([matplotlib.org][6])
+
+**Eingaben.**
+
+* Gemergter Stunden-Frame (Sep-2024) mit `price_eur_kwh_*`, `*_ci_lifecycle_g_per_kwh`.
+* Binarisierung: `neg = (Preis < 0)`.
+
+**Verarbeitung.**
+
+* Pro Zone zwei Arrays: `CI_neg` (Preis < 0), `CI_nonneg` (Preis ≥ 0).
+* `plt.boxplot([CI_neg, CI_nonneg], …)` und optional `plt.violinplot(...)`. ([matplotlib.org][5])
+* Export je Zone als PNG.
+
+**Ausgaben.**
+
+* `figs/box_ci_neg_vs_nonneg_{de|fr|pl}.png`
+* `figs/violin_ci_neg_vs_nonneg_{de|fr|pl}.png`
+
+**Erkenntnisse (aus deinen Grafiken).**
+
+* **DE**: Median **CI bei Preis < 0** deutlich geringer als bei **Preis ≥ 0** (enge Box links, breite/hohe Box rechts).
+* **PL**: analog zu DE, aber auf höherem CI-Niveau (polnischer Strommix).
+* **FR**: beide Buckets auf sehr niedrigem CI-Niveau; Unterschiede visueller kleiner – passt zur Kernkraft-Lastgang-Logik.
+
+**Hinweis Kontext.**
+Dass **Negativpreise** oft mit **niedriger CI** zusammenfallen, ist systemisch plausibel (EE-Überschuss, inflexible Konventionelle → Preise fallen, Mix wird „grüner“). ([epexspot.com][4])
+
+---
+
+# 3) Mann-Whitney-U-Test (Inferenz) + Effektgröße
+
+**Zweck.**
+Die Box/Violin-Eindrücke **statistisch testen**: Unterscheidet sich die CI-Verteilung in „Preis < 0“ vs. „Preis ≥ 0“ **signifikant**? Der **Mann-Whitney-U-Test** ist **nichtparametrisch** und prüft, ob zwei unabhängige Stichproben aus derselben Verteilung stammen (häufig als Test auf „Unterschied in Lage“ genutzt). ([docs.scipy.org][7])
+
+**Eingaben.**
+
+* Die gleichen zwei Buckets je Zone (`CI_neg`, `CI_nonneg`).
+* Test: `scipy.stats.mannwhitneyu(x, y, alternative="two-sided")`. ([docs.scipy.org][7])
+* Effektstärke: **Cliff’s δ** (Rangbasierte Effektgröße; grobe Schwellen: **0.147** klein, **0.33** mittel, **0.474** groß; Vorzeichen zeigt Richtung). ([Cross Validated][8])
+
+**Verarbeitung.**
+
+* Drop-NA, zwei-seitiger Test; Speicherung von **U**, **p-Wert**, **δ** in Tabelle.
+
+**Ausgaben.**
+
+* `figs/neg_vs_nonneg_mannwhitney.csv` mit Spalten: `zone, n_neg, n_nonneg, median_neg, median_nonneg, U, p_value, cliffs_delta`.
+
+**Erkenntnisse (dein Ergebnis).**
+
+* **DE**: *n*neg = 40, *n*nonneg = 680, Median **181.9** vs **318.7** g/kWh, **p = 2.84e−17**, **δ = −0.795** → **sehr großer** negativer Effekt (CI deutlich niedriger bei Negativpreisen).
+* **FR**: *n*neg = 17, *n*nonneg = 703, Median **21.7** vs **22.6**, **p = 0.642**, **δ = −0.066** → **kein signifikanter Unterschied**.
+* **PL**: *n*neg = 26, *n*nonneg = 694, Median **531.4** vs **675.2**, **p = 6.99e−08**, **δ = −0.622** → **großer** negativer Effekt.
+
+**Interpretation.**
+Die Inferenz bestätigt die Grafiken: **DE/PL** zeigen signifikant **niedrigere** CI in Negativpreis-Stunden; **FR** zeigt **keinen** belastbaren Unterschied (Mix ist ohnehin sehr CO₂-arm). Methodisch ist das Setup korrekt (zwei unabhängige Gruppen, keine Normalitätsannahme nötig). ([docs.scipy.org][7])
+
+---
+
+## Verarbeitungskette (kompakt & reproduzierbar)
+
+1. **Rohdaten laden:** ENTSO-E Day-Ahead (EUR/MWh), CI-Zeitreihe (g/kWh). ([transparency.entsoe.eu][2])
+2. **Zeit & Einheit normalisieren:** TZ harmonisieren; **EUR/MWh → €/kWh** (÷1000). (Sep-2024 ist **stündlich**; 15-Min-MTU erst ab **30.09.2025** im SDAC). ([epexspot.com][3])
+3. **Merge auf Stunde** (inner join).
+4. **Scatter** je Zone (Preis vs. CI). ([matplotlib.org][1])
+5. **Buckets** bilden: `Preis < 0` vs. `Preis ≥ 0`.
+6. **Box/Violin** je Zone. ([matplotlib.org][5])
+7. **Mann-Whitney** + **Cliff’s δ** je Zone; CSV exportieren. ([docs.scipy.org][7])
+
+---
+
+## Was man ins Paper schreiben kann (Kurzbausteine)
+
+* **Methoden.** „Wir untersuchten die Beziehung zwischen **Day-Ahead-Preis** (€/kWh) und **Grid-CO₂-Intensität** (g/kWh) im **September 2024** für **DE/FR/PL**. Nach Harmonisierung (TZ, EUR/MWh→€/kWh) erstellten wir **Scatter**, **Box/Violin** (Preis < 0 vs. ≥ 0) und führten den **Mann-Whitney-U-Test** (zweiseitig) durch; die Effektgröße berichten wir als **Cliff’s δ**.“ ([transparency.entsoe.eu][2])
+* **Ergebnisse.** „**DE** und **PL** zeigen signifikant **niedrigere** CO₂-Intensitäten in **Negativpreis-Stunden** (DE: p ≪ 0.001, δ≈−0.80; PL: p ≪ 0.001, δ≈−0.62), **FR** zeigt **keinen** signifikanten Unterschied (p≈0.64, δ≈−0.07).“
+* **Einordnung.** „Negativpreise deuten auf **Überangebot** (v. a. hohe EE-Einspeisung) hin; genau dann fällt die **Grid-CO₂-Intensität** häufig niedriger aus – konsistent mit unseren Befunden.“ ([epexspot.com][4])
+* **Limitation.** „Ergebnisse gelten für **Sep-2024 (PT60M)**; die spätere Einführung der **15-Min-MTU** im SDAC am **30.09.2025** betrifft diese Analysen nicht.“ ([epexspot.com][3])
+
+Wenn du magst, formatiere ich dir das direkt als **IMRaD-Abschnitt** oder generiere die **Tabelle + Grafiken** in einem kleinen „Results“-PDF. Sag einfach **„weiter“**.
+
+[1]: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html?utm_source=chatgpt.com "matplotlib.pyplot.scatter"
+[2]: https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide_prod_backup_06_11_2024.html?utm_source=chatgpt.com "Transparency Platform RESTful API - user guide"
+[3]: https://www.epexspot.com/en/news/15-minute-products-live-epex-spot-day-ahead-markets?utm_source=chatgpt.com "15-minute products live on EPEX SPOT Day-Ahead markets"
+[4]: https://www.epexspot.com/en/basicspowermarket?utm_source=chatgpt.com "Basics of the Power Market"
+[5]: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html?utm_source=chatgpt.com "matplotlib.pyplot.boxplot — Matplotlib 3.10.7 documentation"
+[6]: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.violinplot.html?utm_source=chatgpt.com "matplotlib.pyplot.violinplot — Matplotlib 3.10.7 documentation"
+[7]: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html?utm_source=chatgpt.com "mannwhitneyu — SciPy v1.16.2 Manual"
+[8]: https://stats.stackexchange.com/questions/240688/effect-size-interpretation-for-cliffs-delta-similar-to-cohens-small-medium-a?utm_source=chatgpt.com "Effect size interpretation for Cliff's delta similar to Cohen's ..."
+
+

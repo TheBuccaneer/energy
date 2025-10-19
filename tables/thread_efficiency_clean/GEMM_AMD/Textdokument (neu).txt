@@ -1,0 +1,270 @@
+# Analysis Scripts Documentation
+
+Übersicht der erstellten Analyse-Scripts für das CPU/GPU Energy-Paper.
+
+---
+
+## 1. `gpu_breakdown_analysis_multi.py`
+
+### Zweck
+Multi-Workload Analyse: Vergleicht CPU vs. 3090 vs. 5050 über alle Workloads hinweg.
+
+### Input
+- `GEMM_by_size.csv`
+- `STREAM_by_size.csv`
+- `REDUCTION_by_size.csv`
+- `SPMV_by_matrix.csv`
+
+### Output
+```
+gpu_analysis_multi/
+  ├── GEMM/
+  │   ├── energy_vs_size.png           # Energy consumption by problem size
+  │   ├── gpu_vs_cpu_ratio.png         # GPU/CPU efficiency ratio
+  │   └── power_distribution.png       # Power draw histograms
+  ├── SPMV/
+  │   └── (same plots)
+  └── combined_summary.csv             # Win-rates aggregated
+```
+
+### Key Features
+- **Automatische Size-Erkennung:** `matrix_size`, `effective_size`, `N`, `pattern`
+- **Hardware-Klassifikation:** CPU, 3090, 5050 aus `setup_id`
+- **Break-even Analyse:** Findet erste Size wo GPU < CPU
+- **Dual-Mode Plots:** Numeric (line) vs. Categorical (bar charts)
+- **Power-Charakterisierung:** Histogramme des durchschnittlichen Stromverbrauchs
+
+### Verwendung
+```bash
+python gpu_breakdown_analysis_multi.py
+```
+
+### Wichtige Erkenntnisse
+- CPU gewinnt bei 90%+ der Konfigurationen
+- 3090 nie kompetitiv (zu viel Idle-Power)
+- 5050 nur marginal bei GEMM (N≥64)
+
+---
+
+## 2. `figure7_cost_by_size.py`
+
+### Zweck
+Erstellt **Figure 7** für das Paper: Cost per Job über Problem-Größen.
+
+### Input
+Alle `*_by_size.csv` Dateien
+
+### Konfiguration
+```python
+PRICING_AREA = 'de'  # Options: 'de', 'fr', 'pl'
+```
+
+### Output
+```
+cost_analysis/
+  ├── figure7_cost_by_size_all_workloads.png     # Main figure (Median über alle)
+  ├── figure7b_cost_by_size_gemm.png             # GEMM-only Detail
+  ├── figure7c_cost_by_workload.png              # Faceted (2×2 Grid)
+  └── cost_by_size_detailed.csv                  # Rohdaten
+```
+
+### Key Features
+- **Multi-Workload Support:** Lädt alle verfügbaren Workloads
+- **Size-Column Auto-Detection:** Unterstützt verschiedene Spalten-Namen
+- **Median-Aggregation:** Über alle Workloads für Main Figure
+- **Break-even Statistik:** Findet Sizes wo GPU günstiger
+- **Cost in EUR Cents:** Bessere Lesbarkeit (0.01 statt 0.0001)
+
+### Verwendung
+```bash
+python figure7_cost_by_size.py
+```
+
+---
+
+## 3. `table4_annual_cost_scenarios.py`
+
+### Zweck
+Berechnet **jährliche Kosten** bei 1000 Jobs/Tag für Paper Table 4.
+
+### Input
+- `GEMM_by_size.csv` (als repräsentativer Workload)
+
+### Konfiguration
+```python
+JOBS_PER_DAY = 1000
+DAYS_PER_YEAR = 365
+```
+
+### Output
+```
+tables/
+  ├── table4_annual_costs_detailed.csv    # Pro Hardware/Area/Metrik
+  └── table4_annual_costs_formatted.csv   # Pivot-Format
+```
+
+**Plus:** LaTeX-Table direkt im Terminal
+
+### Key Features
+- **GPU-Mehrkosten vs. CPU:** Extra cost per year
+- **Cost-Ratio:** GPU kostet X× mehr als CPU
+- **Break-even Analyse:** Wann lohnt sich GPU-Invest?
+- **Multi-Area:** DE, FR, PL Preise
+
+### Verwendung
+```bash
+python table4_annual_cost_scenarios.py
+```
+
+### Wichtige Erkenntnisse
+- **3090:** +€12,000–16,000/Jahr vs. CPU (Deutschland/Polen)
+- **5050:** +€1,400–1,800/Jahr vs. CPU
+- **ROI:** GPU lohnt nur bei sustained high-volume + großen Sizes
+
+---
+
+## 4. `thread_efficiency_clean.py`
+
+### Zweck
+Analysiert **Thread-Scaling Effizienz** für Intel und AMD CPUs separat.
+
+### Input
+- `GEMM_by_size.csv`
+- `SPMV_by_matrix.csv`
+
+### Konfiguration
+```python
+MIN_SIZE = 512               # Nur große Sizes (weniger Overhead)
+INTEL_THREADS = [1,2,4,8,10,16,20]  # Intel Xeon mit HT
+AMD_THREADS = [1,2,4,8,16,32,64]    # AMD Ryzen/EPYC
+PRICING_AREA = 'de'
+```
+
+### Output
+```
+thread_efficiency_clean/
+  ├── GEMM_Intel/
+  │   ├── efficiency_bar_chart.png      # Jobs/Wh pro Thread-Count
+  │   ├── energy_scaling.png             # Normalized zu 1t
+  │   ├── efficiency_heatmap.png         # Threads × Size
+  │   └── sweet_spot_analysis.png        # Energy/Time/Cost combined
+  ├── GEMM_AMD/
+  │   └── (same plots)
+  ├── SPMV_Intel/
+  └── SPMV_AMD/
+```
+
+**Plus:** `thread_efficiency_summary.csv` mit Optimal-Thread-Counts
+
+### Key Features
+- **CPU-Separation:** Intel und AMD getrennt analysiert
+- **Thread-Filter:** CPU-spezifische Listen (nicht nur Power-of-2)
+- **4 Plot-Typen:**
+  1. Bar Chart (Jobs/Wh Vergleich)
+  2. Normalized Energy (Scaling zu 1t)
+  3. Heatmap (2D Overview)
+  4. Sweet-Spot (3 Metriken kombiniert)
+- **Optimal-Thread-Count:** Findet besten Thread-Count pro Size
+- **Top-4 Sizes:** Nur größte Sizes für cleane Plots
+
+### Verwendung
+```bash
+python thread_efficiency_clean.py
+```
+
+### Wichtige Erkenntnisse
+- **Kein lineares Scaling:** Mehr Threads ≠ proportional weniger Energie
+- **Sweet-Spot existiert:** Nicht immer "max threads = best"
+- **Size-abhängig:** Optimaler Thread-Count variiert mit Problem-Größe
+
+---
+
+## Gemeinsame Features aller Scripts
+
+### Hardware-Klassifikation
+```python
+def classify_hardware(setup_id):
+    if 'CPU-only' in setup_id:
+        return 'CPU'
+    elif '3090' in setup_id:
+        return '3090'
+    elif '5050' in setup_id:
+        return '5050'
+```
+
+### Size-Column Detection
+Automatische Erkennung von:
+- `matrix_size` (GEMM)
+- `effective_size` (SpMV: N²)
+- `N` (STREAM, Reduction)
+- `pattern` (SpMV kategorisch)
+
+### Plot-Styling
+- **High-DPI:** 200-300 dpi für Paper-Quality
+- **Colorblind-friendly:** Distinct colors (steelblue, coral, seagreen)
+- **Markers:** o, s, ^ für CPU, 3090, 5050
+- **Bold titles/labels:** Bessere Lesbarkeit
+
+---
+
+## Workflow-Empfehlung
+
+### Für Paper-Figures:
+1. **`gpu_breakdown_analysis_multi.py`** → Energy vs Size, GPU Ratios
+2. **`figure7_cost_by_size.py`** → Cost Comparison Figure
+3. **`thread_efficiency_clean.py`** → Thread-Scaling (Optional/Supplement)
+
+### Für Tables:
+1. **`table4_annual_cost_scenarios.py`** → Annual Cost Table
+2. **`step4_cpu_gpu_decision_matrix.py`** (bereits vorhanden) → Win-Rate Summary
+
+---
+
+## Troubleshooting
+
+### "No size column found"
+→ Script überspringt Workload automatisch (z.B. STREAM/REDUCTION mit N=0)
+
+### "No data after filtering"
+→ Kein CPU-only oder keine variierenden Sizes/Threads vorhanden
+
+### Plots leer
+→ Check ob Hardware-Klassifikation funktioniert: `print(df['setup_id'].unique())`
+
+### Thread-Efficiency zeigt keine Intel/AMD
+→ Prüfe ob `cpu_type` Column existiert oder in `setup_id` "Intel"/"AMD" steht
+
+---
+
+## Dependencies
+
+Alle Scripts benötigen:
+```python
+pandas
+numpy
+matplotlib
+pathlib (standard library)
+```
+
+Installation:
+```bash
+pip install pandas numpy matplotlib
+```
+
+---
+
+## Hinweise
+
+- **Append-Mode:** Alle Scripts erzeugen Outputs in neuen Ordnern (kein Überschreiben)
+- **Fehlertoleranz:** Scripts überspringen fehlende Files automatisch
+- **Console-Output:** Detailliertes Logging für Debugging
+- **CSV-Export:** Alle Plots haben zugehörige CSV mit Rohdaten
+
+---
+
+## Kontakt/Issues
+
+Bei Problemen mit den Scripts:
+1. Check Console-Output (detaillierte Error-Messages)
+2. Verify Input-Files existieren und haben korrekte Column-Namen
+3. Check Hardware-Klassifikation in `setup_id`

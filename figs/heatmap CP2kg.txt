@@ -1,0 +1,6 @@
+🎯 Paper-Sätze:
+
+"Germany shows the strongest potential for carbon-aware scheduling, with median CO₂ savings of 40% (greenest strategy) compared to random execution. France, dominated by nuclear baseload, exhibits minimal carbon variability (median savings <10%), making time-shifting ineffective for emissions reduction. Cost optimization potential varies significantly: shifting to the cheapest hours saves up to 5× the original cost in Germany and Poland, while France's low price volatility limits cost benefits to ~100% savings."
+
+
+"GEMM workloads account for 63% of total jobs and dominate both cost (54%) and carbon (52%) savings potential. Memory-bound workloads (STREAM) show less sensitivity to time-shifting, with cheapest and greenest strategies converging (overlap >80%), suggesting lower trade-offs for bandwidth-limited tasks."

@@ -1,0 +1,425 @@
+# Pipeline Scripts Dokumentation
+
+## Übersicht
+
+Die Pipeline-Scripts aggregieren Rohdaten aus Energie-/Performance-Messungen und reichern sie mit Preis- und CO₂-Informationen an. Es gibt vier spezialisierte Scripts für verschiedene Workload-Typen:
+
+- **`stream_pipeline.py`** - STREAM Triad (Memory Bandwidth)
+- **`gemm_pipeline.py`** - Matrix Multiplication (GEMM/BLAS)
+- **`reduction_pipeline.py`** - Array Reduction Operations
+- **`spmv_pipeline.py`** - Sparse Matrix-Vector Multiplication
+
+---
+
+## Gemeinsame Konzepte
+
+### Input-Dateien
+Alle Scripts erwarten **CSV-Dateien im deutschen Format** (Komma als Dezimaltrenner):
+- Dateinamen-Pattern: `<workload>_*.csv` (z.B. `stream_3090_amd_pciev3.csv`)
+- Die Dateien müssen bereits Preis- und CO₂-Spalten enthalten (von vorherigen `add_infos` und `add_co2` Scripts)
+
+### Setup-Identifikation
+Alle Scripts erstellen eine **`setup_id`**, die Hardware-Konfigurationen eindeutig identifiziert:
+
+```
+Format: <CPU-Typ>_<GPU/CPU-only>_[PCIe-Gen]_[Threads]
+
+Beispiele:
+- AMD_3090_PCIe3        (AMD CPU + RTX 3090 @ PCIe Gen 3)
+- Intel_5050_PCIe4      (Intel CPU + RTX 5050 @ PCIe Gen 4)
+- AMD_CPU-only_1t       (AMD CPU mit 1 Thread, keine GPU)
+- Intel_CPU-only_32t    (Intel CPU mit 32 Threads, keine GPU)
+```
+
+**Besonderheit PCIe-Generation:**
+- Wird primär aus der Datenspalte `pcie_gen_current` gelesen
+- **Fallback**: Wenn Spalte leer/0 ist, wird aus dem Dateinamen extrahiert (z.B. `pciev3` → 3)
+- Dies kompensiert einen Logging-Fehler in älteren Messdaten
+
+### Thread-Erkennung
+Für CPU-only Setups:
+1. Aus `num_threads` Spalte (falls vorhanden, z.B. bei SPMV)
+2. Fallback: Aus Dateinamen via Regex `cpu_(\d+)\.csv$`
+
+---
+
+## Datenverarbeitung
+
+### 1. Numerische Konvertierung
+**Float-Spalten** (mit deutscher Komma-Notation):
+- Energie: `energy_j`, `energy_per_pass_j`, `kWh_e2e`, `kWh_per_pass`
+- Preise: `de_price_eur_kwh_run`, `de_eur_job`, `de_eur_job_sync`, etc.
+- CO₂: `de_co2_job_kg`, `fr_co2_job_kg`, `pl_co2_job_kg`
+- Performance: `gflops`, `bw_gb_s`, `seconds_wall`
+
+**Integer-Spalten** (ohne Komma-Konvertierung):
+- `pcie_gen_current`, `pcie_width_current`
+- Als `Int64` (nullable integer) behandelt
+
+### 2. Datenbereinigung
+- **Kritisches Feld**: `energy_j` - Zeilen ohne gültige Energie werden entfernt
+- Zeilen mit `energy_j == NaN` werden gedroppt
+- Warnung bei > 5% Datenverlust
+
+### 3. Sync-Preise
+Alle Scripts erwarten **bereits berechnete Sync-Preise** in den Input-Daten:
+- `de_price_sync`, `fr_price_sync`, `pl_price_sync` (EUR/kWh)
+- `de_eur_job_sync`, `fr_eur_job_sync`, `pl_eur_job_sync` (EUR pro Job)
+
+**Sync = Synchronisierter Preis**: Durchschnittspreis über alle Messungen einer Session, um faire Vergleiche zu ermöglichen.
+
+---
+
+## Aggregationsebenen
+
+Jedes Script erzeugt **zwei Output-Tabellen**:
+
+### Aggregation 1: By Run (Setup-Level)
+**Dateiname**: `<WORKLOAD>_by_run.csv`
+
+Aggregiert alle Messungen pro Hardware-Setup (unabhängig von Problem-Size/Matrix).
+
+**Gruppierung**:
+```python
+["setup_id", "cpu_type", "gpu_name", "pcie_gen_current", "mode", "threads", 
+ "impl", "dtype", "backend", "library"]  # Spalten je nach Workload
+```
+
+**Aggregierte Metriken**:
+- **Energie/Kosten/CO₂**: `sum` (Gesamtverbrauch aller Messungen)
+  - `de_eur_job_sum`, `de_co2_job_kg_sum`, `kWh_e2e_sum`
+  - Analog für FR und PL, jeweils mit/ohne Sync
+- **Zeit/Performance**: `median` oder `mean`
+  - `seconds_wall_median`, `gflops_mean`, `bw_gb_s_mean`
+- **Metadaten**: 
+  - `n_measurements` (Anzahl aggregierter Messungen)
+  - `source_file` (ursprünglicher Dateiname)
+
+### Aggregation 2: By Size/Matrix (Granular)
+**Dateiname**: 
+- STREAM/GEMM/REDUCTION: `<WORKLOAD>_by_size.csv`
+- SPMV: `SPMV_by_matrix.csv`
+
+Aggregiert Messungen pro Problem-Size oder Matrix.
+
+**Gruppierung**:
+- STREAM/REDUCTION: `["setup_id", ..., "N", ...]` (Problem-Size N)
+- GEMM: `["setup_id", ..., "matrix_size", ...]`
+- SPMV: `["setup_id", ..., "pattern"/"matrix_id", ...]` (CPU nutzt `pattern`, GPU nutzt `matrix_id`)
+
+**Aggregierte Metriken**:
+- **Energie/Kosten/CO₂**: `median` (typischer Wert pro Size)
+  - `de_eur_job_median`, `de_co2_job_kg_median`, `kWh_e2e_median`
+- **Performance**: `median`
+  - `gflops_median`, `joule_per_gflop_median`, `bw_gb_s_median`
+- **Matrix-Properties** (nur SPMV):
+  - `nrows_first`, `ncols_first`, `nnz_first`, `avg_nnz_per_row_median`
+
+---
+
+## Workload-spezifische Details
+
+### STREAM Pipeline
+**Besonderheit**: Nutzt `passes_e2e` statt `batches` für Wiederholungszählung
+
+**Wichtige Spalten**:
+- `N` - Array-Größe (Anzahl Elemente)
+- `passes_e2e`, `passes_kernel` - Anzahl Kernel-Durchläufe
+- `bw_gb_s` - Memory Bandwidth (GB/s)
+- `gb_per_s_kernel`, `j_per_gb_kernel` - Effizienzmetriken
+
+**Aggregation by Size**: Gruppiert nach `N` (z.B. 10^6, 10^7, 10^8 Elemente)
+
+### GEMM Pipeline
+**Workload**: Dense Matrix Multiplication (BLAS)
+
+**Wichtige Spalten**:
+- `matrix_size` - Dimension M=N=K (quadratische Matrizen)
+- `mode` - Ausführungsmodus (z.B. "kernel" vs "e2e")
+- `gflops` - Giga-FLOPS (Performance)
+- `joule_per_gflop` - Energie-Effizienz
+
+**Aggregation by Size**: Gruppiert nach `matrix_size` (z.B. 1024, 2048, 4096)
+
+### REDUCTION Pipeline
+**Workload**: Array Sum/Max/Min Operations
+
+**Wichtige Spalten**:
+- `N` - Array-Größe
+- `impl` - Implementation (z.B. "cuda", "omp")
+- `dtype` - Datentyp (z.B. "fp32", "fp64")
+- `bw_gb_s` - Memory Bandwidth
+
+**Aggregation by Size**: Gruppiert nach `N`
+
+### SPMV Pipeline
+**Workload**: Sparse Matrix-Vector Multiplication
+
+**Besonderheiten**:
+- **CPU-Daten**: Nutzen `pattern` (z.B. "diagonal", "random")
+- **GPU-Daten**: Nutzen `matrix_id` (SuiteSparse Matrix-ID)
+- Matrix-Size-Spalten unterschiedlich:
+  - CPU: `nrows`, `ncols`, `nnz`
+  - GPU: `rows`, `cols`, `nnz`
+  - Scripts normalisieren automatisch auf `nrows`/`ncols`
+
+**Wichtige Spalten**:
+- `pattern` / `matrix_id` - Matrix-Identifikation
+- `nrows`, `ncols`, `nnz` - Matrix-Dimensionen
+- `avg_nnz_per_row` - Durchschnittliche Non-Zeros pro Zeile
+- `backend` - z.B. "cusparse", "omp"
+- `library`, `library_version` - BLAS/Sparse-Library
+
+**Aggregation by Matrix**: 
+- Gruppiert nach `pattern` (CPU) oder `matrix_id` (GPU)
+- Behält Matrix-Properties (`nrows`, `nnz`, etc.)
+
+---
+
+## Output-Format
+
+### CSV-Eigenschaften
+- **Dezimaltrenner**: `.` (Punkt, Standard-CSV)
+- **Encoding**: UTF-8
+- **Fehlende Werte**: Leer (nicht "NaN" String)
+
+### Rundung
+**Geld/CO₂** (sehr kleine Werte): 10 Dezimalstellen
+```
+de_eur_job_sum: 0.0000123456
+de_co2_job_kg_sum: 0.0000567890
+```
+
+**Performance/Zeit**: 4 Dezimalstellen
+```
+seconds_wall_median: 1.2345
+gflops_mean: 123.4567
+```
+
+### Sortierung
+Alle Output-Tabellen sortiert nach:
+```
+["cpu_type", "gpu_name", "threads", "N"/"matrix_size", "pcie_gen_current", "impl", "dtype"]
+```
+→ CPU-only Setups zuerst (nach Threads), dann GPUs (nach Namen)
+
+---
+
+## Preis- und CO₂-Spalten
+
+Alle Scripts verarbeiten **3 Marktgebiete**: Deutschland (DE), Frankreich (FR), Polen (PL)
+
+### Pro Area existieren:
+**Run-Time Prices** (zum Zeitpunkt der Messung):
+- `<area>_price_eur_kwh_run` - Preis EUR/kWh zur Laufzeit
+- `<area>_eur_job` - Kosten für diesen Job zur Laufzeit
+- `<area>_co2_job_kg` - CO₂-Emission für diesen Job
+
+**Sync Prices** (Session-Durchschnitt):
+- `<area>_price_sync` - Durchschnittspreis der Session (EUR/kWh)
+- `<area>_eur_job_sync` - Kosten basierend auf Sync-Preis
+
+### Warum Sync-Preise?
+Energiepreise schwanken minütlich. Sync-Preise erlauben fairen Vergleich zwischen Setups, die zu unterschiedlichen Zeiten gemessen wurden.
+
+**Beispiel**:
+```
+Messung 1 (10:00 Uhr): 0.30 EUR/kWh → 0.00030 EUR/Job
+Messung 2 (14:00 Uhr): 0.35 EUR/kWh → 0.00035 EUR/Job
+Sync-Preis (Session): 0.32 EUR/kWh → 0.00032 EUR/Job für beide
+```
+
+---
+
+## Console Output
+
+Während der Verarbeitung zeigen alle Scripts:
+
+```
+Found 4 STREAM files:
+  - stream_3090_amd_pciev3.csv
+  - stream_amd_cpu_1.csv
+  ...
+
+Processing stream_3090_amd_pciev3.csv...
+  📌 Detected PCIe Gen 3 from filename
+  Loaded 12345 rows
+  🔧 Fixed 12345 rows: set pcie_gen_current to 3 from filename
+  ✅ Valid energy_j values: 12345/12345
+  ✅ Found de_price_sync: 0.078310 EUR/kWh
+  ✅ Found fr_price_sync: 0.051857 EUR/kWh
+  ✅ Found pl_price_sync: 0.095013 EUR/kWh
+  ✅ Aggregated 15 size configurations
+
+======================================================================
+=== SAVING RESULTS ===
+======================================================================
+✅ tables/STREAM_by_run.csv
+  6 setup configurations
+✅ tables/STREAM_by_size.csv
+  45 size configurations
+
+======================================================================
+=== SUMMARY ===
+======================================================================
+Setups found: ['AMD_3090_PCIe3', 'AMD_CPU-only_1t', 'Intel_3090_PCIe3', ...]
+Problem sizes (N): [1000000, 10000000, 100000000]
+
+Implementations: ['cuda', 'omp']
+Data types: ['fp32']
+
+✅ DONE!
+```
+
+---
+
+## Verwendung
+
+### Voraussetzungen
+1. **Python 3.7+** mit `pandas`
+2. **Input-CSVs** bereits mit Preis/CO₂-Spalten angereichert
+3. Dateien im **aktuellen Verzeichnis** (oder `FREEZE` Path anpassen)
+
+### Ausführung
+```bash
+# Im Verzeichnis mit den CSV-Dateien
+python stream_pipeline.py
+python gemm_pipeline.py
+python reduction_pipeline.py
+python spmv_pipeline.py
+```
+
+### Output
+Alle Scripts erstellen Unterordner `tables/`:
+```
+tables/
+├── STREAM_by_run.csv
+├── STREAM_by_size.csv
+├── GEMM_by_run.csv
+├── GEMM_by_size.csv
+├── REDUCTION_by_run.csv
+├── REDUCTION_by_size.csv
+├── SPMV_by_run.csv
+└── SPMV_by_matrix.csv
+```
+
+---
+
+## Fehlerbehandlung
+
+### PCIe-Generation fehlt (0 oder leer)
+✅ **Automatischer Fix**: Script extrahiert aus Dateinamen (`pciev3` → 3)
+
+### Energie-Werte fehlen
+⚠️ **Warnung + Skip**: Zeilen ohne `energy_j` werden entfernt, Datei wird bei 100% Datenverlust übersprungen
+
+### Sync-Preise fehlen
+ℹ️ **Info**: Script prüft auf Sync-Preise und warnt, wenn nicht vorhanden (sollte aber nicht vorkommen)
+
+### Dezimaltrennzeichen-Probleme
+✅ **Gelöst**: `decimal=','` beim CSV-Lesen für deutsche Formate
+
+---
+
+## Best Practices
+
+### 1. Dateinamen-Konvention
+Nutze sprechende Dateinamen mit Hardware-Info:
+```
+<workload>_<gpu>_<cpu>_<pcie>.csv
+
+Gut:
+  stream_3090_amd_pciev3.csv
+  gemm_5050_intel_pciev4.csv
+  spmv_amd_cpu_32.csv
+
+Schlecht:
+  measurements.csv
+  data_final_v2.csv
+```
+
+### 2. Vor dem Pipelining
+Stelle sicher, dass:
+- ✅ `add_infos.py` gelaufen ist (fügt Preis-Spalten hinzu)
+- ✅ `add_co2.py` gelaufen ist (fügt CO₂-Spalten hinzu)
+- ✅ Sync-Preise berechnet wurden
+
+### 3. Quality Checks
+Nach dem Pipelining prüfen:
+- Anzahl Setups plausibel? (Console Summary)
+- Alle erwarteten Sizes vorhanden? 
+- `n_measurements` > 0 für alle Rows?
+
+### 4. Multi-Area Analysen
+Die Scripts erlauben direkten Vergleich zwischen Stromzonen:
+```python
+# Beispiel: Kosten-Vergleich DE vs PL
+df['cost_ratio_de_pl'] = df['de_eur_job_sum'] / df['pl_eur_job_sum']
+```
+
+---
+
+## Technische Details
+
+### Memory-Optimierung
+Scripts laden nur benötigte Spalten via `usecols` (spart RAM bei großen Files)
+
+### Nullable Integers
+`pcie_gen_current` als `Int64` statt `int` → erlaubt NaN-Werte ohne Float-Konvertierung
+
+### Groupby mit NaN
+`dropna=False` in `groupby()` → NaN-Werte werden als eigene Gruppe behandelt
+
+### Aggregation-Dictionary-Pattern
+```python
+agg_dict = {
+    "de_eur_job_sum": ("de_eur_job", "sum"),
+    "seconds_wall_median": ("seconds_wall", "median")
+}
+df.groupby(...).agg(**agg_dict)
+```
+→ Erlaubt unterschiedliche Aggregationsfunktionen pro Spalte
+
+---
+
+## Erweiterungen
+
+### Neues Marktgebiet hinzufügen
+1. Input-CSVs müssen `<area>_price_eur_kwh_run`, `<area>_eur_job`, `<area>_co2_job_kg` enthalten
+2. In `wanted` Liste hinzufügen
+3. In `agg_dict_run` und `agg_dict_size` loops: `for area in ["de", "fr", "pl", "NEW"]:` erweitern
+
+### Neue Metrik aggregieren
+```python
+# In agg_dict_run oder agg_dict_size:
+if "new_metric" in df.columns:
+    agg_dict_run["new_metric_median"] = ("new_metric", "median")
+```
+
+### Custom Setup-ID
+`make_setup_id()` Funktion anpassen:
+```python
+def make_setup_id(row):
+    parts = [row["cpu_type"]]
+    # Custom logic hier
+    if row.get("memory_type") == "HBM":
+        parts.append("HBM")
+    return "_".join(parts)
+```
+
+---
+
+## Zusammenfassung
+
+| Script | Workload | Input Pattern | Key Columns | Aggregation 2 Grouping |
+|--------|----------|---------------|-------------|------------------------|
+| `stream_pipeline.py` | Memory BW | `stream_*.csv` | `N`, `bw_gb_s`, `passes_e2e` | `N` (Array Size) |
+| `gemm_pipeline.py` | Dense MatMul | `gemm_*.csv` | `matrix_size`, `gflops` | `matrix_size` |
+| `reduction_pipeline.py` | Array Reduction | `reduction_*.csv` | `N`, `impl`, `dtype` | `N` (Array Size) |
+| `spmv_pipeline.py` | Sparse MatVec | `spmv_*.csv` | `pattern`/`matrix_id`, `nnz` | `pattern` / `matrix_id` |
+
+**Output**: 2 Tabellen pro Workload (by_run, by_size/matrix) im `tables/` Ordner
+
+**Preis/CO₂**: 3 Areas (DE, FR, PL) mit Run- und Sync-Preisen
+
+**Setup-ID**: Automatische Hardware-Identifikation aus Daten + Dateinamen

@@ -1,0 +1,217 @@
+workload,size,zone,current_hour,device,strategy,action,target_hour,delay_hours,expected_cost_saving_pct,expected_co2_saving_pct,rationale
+GEMM,512,DE,0,CPU,Wait for Cheap Window,DELAY,1,1,19.9,24.2,Wait 1h for cheapest window
+GEMM,512,DE,1,CPU,Execute Now (Cost-optimal),RUN,1,0,0.0,0.0,Currently in cheapest window
+GEMM,512,DE,2,CPU,Execute Now (Cost-optimal),RUN,2,0,0.0,0.0,Currently in cheapest window
+GEMM,512,DE,3,CPU,Execute Now (Cost-optimal),RUN,3,0,0.0,0.0,Currently in cheapest window
+GEMM,512,DE,4,CPU,Execute Now (Cost-optimal),RUN,4,0,0.0,0.0,Currently in cheapest window
+GEMM,512,DE,5,CPU,Execute Now (Cost-optimal),RUN,5,0,0.0,0.0,Currently in cheapest window
+GEMM,512,DE,6,CPU,Execute Now (Cost-optimal),RUN,6,0,0.0,0.0,Currently in cheapest window
+GEMM,512,DE,7,CPU,Wait for Green Window,DELAY,8,1,29.6,21.7,Wait 1h for greenest window
+GEMM,512,DE,8,CPU,Execute Now (Carbon-optimal),RUN,8,0,0.0,0.0,Currently in greenest window
+GEMM,512,DE,9,CPU,Execute Now (Carbon-optimal),RUN,9,0,0.0,0.0,Currently in greenest window
+GEMM,512,DE,10,CPU,Execute Now (Carbon-optimal),RUN,10,0,0.0,0.0,Currently in greenest window
+GEMM,512,DE,11,CPU,Execute Now (Carbon-optimal),RUN,11,0,0.0,0.0,Currently in greenest window
+GEMM,512,DE,12,CPU,Execute Now (Carbon-optimal),RUN,12,0,0.0,0.0,Currently in greenest window
+GEMM,512,DE,13,CPU,Execute Now (No Wait),RUN,13,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,DE,14,CPU,Execute Now (No Wait),RUN,14,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,DE,15,CPU,Execute Now (No Wait),RUN,15,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,DE,16,CPU,Execute Now (No Wait),RUN,16,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,DE,17,CPU,Wait for Cheap Window,DELAY,1,8,23.4,25.3,Wait 8h for cheapest window
+GEMM,512,DE,18,CPU,Wait for Cheap Window,DELAY,1,7,30.9,37.6,Wait 7h for cheapest window
+GEMM,512,DE,19,CPU,Wait for Cheap Window,DELAY,1,6,31.7,32.5,Wait 6h for cheapest window
+GEMM,512,DE,20,CPU,Wait for Cheap Window,DELAY,1,5,35.1,35.8,Wait 5h for cheapest window
+GEMM,512,DE,21,CPU,Wait for Cheap Window,DELAY,1,4,16.1,15.8,Wait 4h for cheapest window
+GEMM,512,DE,22,CPU,Wait for Cheap Window,DELAY,1,3,23.9,19.4,Wait 3h for cheapest window
+GEMM,512,DE,23,CPU,Wait for Cheap Window,DELAY,1,2,10.5,21.1,Wait 2h for cheapest window
+GEMM,512,FR,0,CPU,Execute Now (Carbon-optimal),RUN,0,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,1,CPU,Execute Now (Carbon-optimal),RUN,1,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,2,CPU,Execute Now (Carbon-optimal),RUN,2,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,3,CPU,Execute Now (Carbon-optimal),RUN,3,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,4,CPU,Execute Now (Carbon-optimal),RUN,4,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,5,CPU,Execute Now (Carbon-optimal),RUN,5,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,6,CPU,Execute Now (Carbon-optimal),RUN,6,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,7,CPU,Execute Now (Carbon-optimal),RUN,7,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,8,CPU,Execute Now (Carbon-optimal),RUN,8,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,9,CPU,Execute Now (Carbon-optimal),RUN,9,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,10,CPU,Execute Now (Carbon-optimal),RUN,10,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,11,CPU,Execute Now (Carbon-optimal),RUN,11,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,12,CPU,Execute Now (Carbon-optimal),RUN,12,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,13,CPU,Execute Now,RUN,13,0,0.0,0.0,Currently in optimal window (cheap + green)
+GEMM,512,FR,14,CPU,Execute Now,RUN,14,0,0.0,0.0,Currently in optimal window (cheap + green)
+GEMM,512,FR,15,CPU,Execute Now,RUN,15,0,0.0,0.0,Currently in optimal window (cheap + green)
+GEMM,512,FR,16,CPU,Execute Now (Carbon-optimal),RUN,16,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,17,CPU,Execute Now (Carbon-optimal),RUN,17,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,18,CPU,Execute Now (Carbon-optimal),RUN,18,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,19,CPU,Execute Now (Carbon-optimal),RUN,19,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,20,CPU,Execute Now (Carbon-optimal),RUN,20,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,21,CPU,Execute Now (Carbon-optimal),RUN,21,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,22,CPU,Execute Now (Carbon-optimal),RUN,22,0,0.0,0.0,Currently in greenest window
+GEMM,512,FR,23,CPU,Execute Now (Carbon-optimal),RUN,23,0,0.0,0.0,Currently in greenest window
+GEMM,512,PL,0,CPU,Execute Now,RUN,0,0,0.0,0.0,Currently in optimal window (cheap + green)
+GEMM,512,PL,1,CPU,Execute Now,RUN,1,0,0.0,0.0,Currently in optimal window (cheap + green)
+GEMM,512,PL,2,CPU,Execute Now,RUN,2,0,0.0,0.0,Currently in optimal window (cheap + green)
+GEMM,512,PL,3,CPU,Execute Now,RUN,3,0,0.0,0.0,Currently in optimal window (cheap + green)
+GEMM,512,PL,4,CPU,Execute Now,RUN,4,0,0.0,0.0,Currently in optimal window (cheap + green)
+GEMM,512,PL,5,CPU,Execute Now (No Wait),RUN,5,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,6,CPU,Execute Now (No Wait),RUN,6,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,7,CPU,Execute Now (No Wait),RUN,7,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,8,CPU,Execute Now (No Wait),RUN,8,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,9,CPU,Execute Now (No Wait),RUN,9,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,10,CPU,Execute Now (No Wait),RUN,10,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,11,CPU,Execute Now (No Wait),RUN,11,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,12,CPU,Execute Now (No Wait),RUN,12,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,13,CPU,Execute Now (No Wait),RUN,13,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,14,CPU,Execute Now (No Wait),RUN,14,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,15,CPU,Execute Now (No Wait),RUN,15,0,0.0,0.0,Optimal window too far (>8h delay)
+GEMM,512,PL,16,CPU,Wait for Cheap Window,DELAY,0,8,41.2,33.2,Wait 8h for cheapest window
+GEMM,512,PL,17,CPU,Wait for Cheap Window,DELAY,0,7,41.4,27.5,Wait 7h for cheapest window
+GEMM,512,PL,18,CPU,Wait for Cheap Window,DELAY,0,6,44.5,39.8,Wait 6h for cheapest window
+GEMM,512,PL,19,CPU,Wait for Cheap Window,DELAY,0,5,46.3,32.3,Wait 5h for cheapest window
+GEMM,512,PL,20,CPU,Wait for Cheap Window,DELAY,0,4,21.6,19.1,Wait 4h for cheapest window
+GEMM,512,PL,21,CPU,Wait for Cheap Window,DELAY,0,3,24.2,19.6,Wait 3h for cheapest window
+GEMM,512,PL,22,CPU,Wait for Cheap Window,DELAY,0,2,23.9,17.9,Wait 2h for cheapest window
+GEMM,512,PL,23,CPU,Wait for Cheap Window,DELAY,0,1,28.3,19.6,Wait 1h for cheapest window
+GEMM,2048,DE,0,GPU-5050,Wait for Cheap Window,DELAY,1,1,39.0,39.3,Wait 1h for cheapest window
+GEMM,2048,DE,1,GPU-5050,Execute Now (Cost-optimal),RUN,1,0,15.0,20.0,Currently in cheapest window
+GEMM,2048,DE,2,GPU-5050,Execute Now (Cost-optimal),RUN,2,0,15.0,20.0,Currently in cheapest window
+GEMM,2048,DE,3,GPU-5050,Execute Now (Cost-optimal),RUN,3,0,15.0,20.0,Currently in cheapest window
+GEMM,2048,DE,4,GPU-5050,Execute Now (Cost-optimal),RUN,4,0,15.0,20.0,Currently in cheapest window
+GEMM,2048,DE,5,GPU-5050,Execute Now (Cost-optimal),RUN,5,0,15.0,20.0,Currently in cheapest window
+GEMM,2048,DE,6,GPU-5050,Execute Now (Cost-optimal),RUN,6,0,15.0,20.0,Currently in cheapest window
+GEMM,2048,DE,7,GPU-5050,Wait for Green Window,DELAY,8,1,33.1,37.1,Wait 1h for greenest window
+GEMM,2048,DE,8,GPU-5050,Execute Now (Carbon-optimal),RUN,8,0,15.0,20.0,Currently in greenest window
+GEMM,2048,DE,9,GPU-5050,Execute Now (Carbon-optimal),RUN,9,0,15.0,20.0,Currently in greenest window
+GEMM,2048,DE,10,GPU-5050,Execute Now (Carbon-optimal),RUN,10,0,15.0,20.0,Currently in greenest window
+GEMM,2048,DE,11,GPU-5050,Execute Now (Carbon-optimal),RUN,11,0,15.0,20.0,Currently in greenest window
+GEMM,2048,DE,12,GPU-5050,Execute Now (Carbon-optimal),RUN,12,0,15.0,20.0,Currently in greenest window
+GEMM,2048,DE,13,GPU-5050,Execute Now (No Wait),RUN,13,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,DE,14,GPU-5050,Execute Now (No Wait),RUN,14,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,DE,15,GPU-5050,Execute Now (No Wait),RUN,15,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,DE,16,GPU-5050,Execute Now (No Wait),RUN,16,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,DE,17,GPU-5050,Wait for Cheap Window,DELAY,1,8,50.1,49.6,Wait 8h for cheapest window
+GEMM,2048,DE,18,GPU-5050,Wait for Cheap Window,DELAY,1,7,62.6,58.3,Wait 7h for cheapest window
+GEMM,2048,DE,19,GPU-5050,Wait for Cheap Window,DELAY,1,6,42.0,59.8,Wait 6h for cheapest window
+GEMM,2048,DE,20,GPU-5050,Wait for Cheap Window,DELAY,1,5,64.5,49.8,Wait 5h for cheapest window
+GEMM,2048,DE,21,GPU-5050,Wait for Cheap Window,DELAY,1,4,37.3,44.3,Wait 4h for cheapest window
+GEMM,2048,DE,22,GPU-5050,Wait for Cheap Window,DELAY,1,3,35.3,41.3,Wait 3h for cheapest window
+GEMM,2048,DE,23,GPU-5050,Wait for Cheap Window,DELAY,1,2,44.2,36.2,Wait 2h for cheapest window
+GEMM,2048,FR,0,GPU-5050,Execute Now (Carbon-optimal),RUN,0,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,1,GPU-5050,Execute Now (Carbon-optimal),RUN,1,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,2,GPU-5050,Execute Now (Carbon-optimal),RUN,2,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,3,GPU-5050,Execute Now (Carbon-optimal),RUN,3,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,4,GPU-5050,Execute Now (Carbon-optimal),RUN,4,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,5,GPU-5050,Execute Now (Carbon-optimal),RUN,5,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,6,GPU-5050,Execute Now (Carbon-optimal),RUN,6,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,7,GPU-5050,Execute Now (Carbon-optimal),RUN,7,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,8,GPU-5050,Execute Now (Carbon-optimal),RUN,8,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,9,GPU-5050,Execute Now (Carbon-optimal),RUN,9,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,10,GPU-5050,Execute Now (Carbon-optimal),RUN,10,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,11,GPU-5050,Execute Now (Carbon-optimal),RUN,11,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,12,GPU-5050,Execute Now (Carbon-optimal),RUN,12,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,13,GPU-5050,Execute Now,RUN,13,0,15.0,20.0,Currently in optimal window (cheap + green)
+GEMM,2048,FR,14,GPU-5050,Execute Now,RUN,14,0,15.0,20.0,Currently in optimal window (cheap + green)
+GEMM,2048,FR,15,GPU-5050,Execute Now,RUN,15,0,15.0,20.0,Currently in optimal window (cheap + green)
+GEMM,2048,FR,16,GPU-5050,Execute Now (Carbon-optimal),RUN,16,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,17,GPU-5050,Execute Now (Carbon-optimal),RUN,17,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,18,GPU-5050,Execute Now (Carbon-optimal),RUN,18,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,19,GPU-5050,Execute Now (Carbon-optimal),RUN,19,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,20,GPU-5050,Execute Now (Carbon-optimal),RUN,20,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,21,GPU-5050,Execute Now (Carbon-optimal),RUN,21,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,22,GPU-5050,Execute Now (Carbon-optimal),RUN,22,0,15.0,20.0,Currently in greenest window
+GEMM,2048,FR,23,GPU-5050,Execute Now (Carbon-optimal),RUN,23,0,15.0,20.0,Currently in greenest window
+GEMM,2048,PL,0,GPU-5050,Execute Now,RUN,0,0,15.0,20.0,Currently in optimal window (cheap + green)
+GEMM,2048,PL,1,GPU-5050,Execute Now,RUN,1,0,15.0,20.0,Currently in optimal window (cheap + green)
+GEMM,2048,PL,2,GPU-5050,Execute Now,RUN,2,0,15.0,20.0,Currently in optimal window (cheap + green)
+GEMM,2048,PL,3,GPU-5050,Execute Now,RUN,3,0,15.0,20.0,Currently in optimal window (cheap + green)
+GEMM,2048,PL,4,GPU-5050,Execute Now,RUN,4,0,15.0,20.0,Currently in optimal window (cheap + green)
+GEMM,2048,PL,5,GPU-5050,Execute Now (No Wait),RUN,5,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,6,GPU-5050,Execute Now (No Wait),RUN,6,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,7,GPU-5050,Execute Now (No Wait),RUN,7,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,8,GPU-5050,Execute Now (No Wait),RUN,8,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,9,GPU-5050,Execute Now (No Wait),RUN,9,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,10,GPU-5050,Execute Now (No Wait),RUN,10,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,11,GPU-5050,Execute Now (No Wait),RUN,11,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,12,GPU-5050,Execute Now (No Wait),RUN,12,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,13,GPU-5050,Execute Now (No Wait),RUN,13,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,14,GPU-5050,Execute Now (No Wait),RUN,14,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,15,GPU-5050,Execute Now (No Wait),RUN,15,0,15.0,20.0,Optimal window too far (>8h delay)
+GEMM,2048,PL,16,GPU-5050,Wait for Cheap Window,DELAY,0,8,55.5,53.9,Wait 8h for cheapest window
+GEMM,2048,PL,17,GPU-5050,Wait for Cheap Window,DELAY,0,7,53.6,52.6,Wait 7h for cheapest window
+GEMM,2048,PL,18,GPU-5050,Wait for Cheap Window,DELAY,0,6,35.1,57.0,Wait 6h for cheapest window
+GEMM,2048,PL,19,GPU-5050,Wait for Cheap Window,DELAY,0,5,37.6,55.4,Wait 5h for cheapest window
+GEMM,2048,PL,20,GPU-5050,Wait for Cheap Window,DELAY,0,4,30.6,38.1,Wait 4h for cheapest window
+GEMM,2048,PL,21,GPU-5050,Wait for Cheap Window,DELAY,0,3,31.6,44.8,Wait 3h for cheapest window
+GEMM,2048,PL,22,GPU-5050,Wait for Cheap Window,DELAY,0,2,25.1,40.9,Wait 2h for cheapest window
+GEMM,2048,PL,23,GPU-5050,Wait for Cheap Window,DELAY,0,1,30.4,35.1,Wait 1h for cheapest window
+SPMV,1024,DE,0,CPU,Wait for Cheap Window,DELAY,1,1,26.6,20.7,Wait 1h for cheapest window
+SPMV,1024,DE,1,CPU,Execute Now (Cost-optimal),RUN,1,0,0.0,0.0,Currently in cheapest window
+SPMV,1024,DE,2,CPU,Execute Now (Cost-optimal),RUN,2,0,0.0,0.0,Currently in cheapest window
+SPMV,1024,DE,3,CPU,Execute Now (Cost-optimal),RUN,3,0,0.0,0.0,Currently in cheapest window
+SPMV,1024,DE,4,CPU,Execute Now (Cost-optimal),RUN,4,0,0.0,0.0,Currently in cheapest window
+SPMV,1024,DE,5,CPU,Execute Now (Cost-optimal),RUN,5,0,0.0,0.0,Currently in cheapest window
+SPMV,1024,DE,6,CPU,Execute Now (Cost-optimal),RUN,6,0,0.0,0.0,Currently in cheapest window
+SPMV,1024,DE,7,CPU,Wait for Green Window,DELAY,8,1,20.6,19.7,Wait 1h for greenest window
+SPMV,1024,DE,8,CPU,Execute Now (Carbon-optimal),RUN,8,0,0.0,0.0,Currently in greenest window
+SPMV,1024,DE,9,CPU,Execute Now (Carbon-optimal),RUN,9,0,0.0,0.0,Currently in greenest window
+SPMV,1024,DE,10,CPU,Execute Now (Carbon-optimal),RUN,10,0,0.0,0.0,Currently in greenest window
+SPMV,1024,DE,11,CPU,Execute Now (Carbon-optimal),RUN,11,0,0.0,0.0,Currently in greenest window
+SPMV,1024,DE,12,CPU,Execute Now (Carbon-optimal),RUN,12,0,0.0,0.0,Currently in greenest window
+SPMV,1024,DE,13,CPU,Execute Now (No Wait),RUN,13,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,DE,14,CPU,Execute Now (No Wait),RUN,14,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,DE,15,CPU,Execute Now (No Wait),RUN,15,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,DE,16,CPU,Execute Now (No Wait),RUN,16,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,DE,17,CPU,Wait for Cheap Window,DELAY,1,8,33.0,26.9,Wait 8h for cheapest window
+SPMV,1024,DE,18,CPU,Wait for Cheap Window,DELAY,1,7,46.6,31.4,Wait 7h for cheapest window
+SPMV,1024,DE,19,CPU,Wait for Cheap Window,DELAY,1,6,20.2,25.7,Wait 6h for cheapest window
+SPMV,1024,DE,20,CPU,Wait for Cheap Window,DELAY,1,5,20.0,32.6,Wait 5h for cheapest window
+SPMV,1024,DE,21,CPU,Wait for Cheap Window,DELAY,1,4,27.8,15.1,Wait 4h for cheapest window
+SPMV,1024,DE,22,CPU,Wait for Cheap Window,DELAY,1,3,29.8,17.6,Wait 3h for cheapest window
+SPMV,1024,DE,23,CPU,Wait for Cheap Window,DELAY,1,2,16.7,18.4,Wait 2h for cheapest window
+SPMV,1024,FR,0,CPU,Execute Now (Carbon-optimal),RUN,0,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,1,CPU,Execute Now (Carbon-optimal),RUN,1,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,2,CPU,Execute Now (Carbon-optimal),RUN,2,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,3,CPU,Execute Now (Carbon-optimal),RUN,3,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,4,CPU,Execute Now (Carbon-optimal),RUN,4,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,5,CPU,Execute Now (Carbon-optimal),RUN,5,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,6,CPU,Execute Now (Carbon-optimal),RUN,6,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,7,CPU,Execute Now (Carbon-optimal),RUN,7,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,8,CPU,Execute Now (Carbon-optimal),RUN,8,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,9,CPU,Execute Now (Carbon-optimal),RUN,9,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,10,CPU,Execute Now (Carbon-optimal),RUN,10,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,11,CPU,Execute Now (Carbon-optimal),RUN,11,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,12,CPU,Execute Now (Carbon-optimal),RUN,12,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,13,CPU,Execute Now,RUN,13,0,0.0,0.0,Currently in optimal window (cheap + green)
+SPMV,1024,FR,14,CPU,Execute Now,RUN,14,0,0.0,0.0,Currently in optimal window (cheap + green)
+SPMV,1024,FR,15,CPU,Execute Now,RUN,15,0,0.0,0.0,Currently in optimal window (cheap + green)
+SPMV,1024,FR,16,CPU,Execute Now (Carbon-optimal),RUN,16,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,17,CPU,Execute Now (Carbon-optimal),RUN,17,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,18,CPU,Execute Now (Carbon-optimal),RUN,18,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,19,CPU,Execute Now (Carbon-optimal),RUN,19,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,20,CPU,Execute Now (Carbon-optimal),RUN,20,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,21,CPU,Execute Now (Carbon-optimal),RUN,21,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,22,CPU,Execute Now (Carbon-optimal),RUN,22,0,0.0,0.0,Currently in greenest window
+SPMV,1024,FR,23,CPU,Execute Now (Carbon-optimal),RUN,23,0,0.0,0.0,Currently in greenest window
+SPMV,1024,PL,0,CPU,Execute Now,RUN,0,0,0.0,0.0,Currently in optimal window (cheap + green)
+SPMV,1024,PL,1,CPU,Execute Now,RUN,1,0,0.0,0.0,Currently in optimal window (cheap + green)
+SPMV,1024,PL,2,CPU,Execute Now,RUN,2,0,0.0,0.0,Currently in optimal window (cheap + green)
+SPMV,1024,PL,3,CPU,Execute Now,RUN,3,0,0.0,0.0,Currently in optimal window (cheap + green)
+SPMV,1024,PL,4,CPU,Execute Now,RUN,4,0,0.0,0.0,Currently in optimal window (cheap + green)
+SPMV,1024,PL,5,CPU,Execute Now (No Wait),RUN,5,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,6,CPU,Execute Now (No Wait),RUN,6,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,7,CPU,Execute Now (No Wait),RUN,7,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,8,CPU,Execute Now (No Wait),RUN,8,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,9,CPU,Execute Now (No Wait),RUN,9,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,10,CPU,Execute Now (No Wait),RUN,10,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,11,CPU,Execute Now (No Wait),RUN,11,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,12,CPU,Execute Now (No Wait),RUN,12,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,13,CPU,Execute Now (No Wait),RUN,13,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,14,CPU,Execute Now (No Wait),RUN,14,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,15,CPU,Execute Now (No Wait),RUN,15,0,0.0,0.0,Optimal window too far (>8h delay)
+SPMV,1024,PL,16,CPU,Wait for Cheap Window,DELAY,0,8,23.6,33.9,Wait 8h for cheapest window
+SPMV,1024,PL,17,CPU,Wait for Cheap Window,DELAY,0,7,41.6,37.7,Wait 7h for cheapest window
+SPMV,1024,PL,18,CPU,Wait for Cheap Window,DELAY,0,6,25.7,27.8,Wait 6h for cheapest window
+SPMV,1024,PL,19,CPU,Wait for Cheap Window,DELAY,0,5,31.9,31.3,Wait 5h for cheapest window
+SPMV,1024,PL,20,CPU,Wait for Cheap Window,DELAY,0,4,12.2,23.1,Wait 4h for cheapest window
+SPMV,1024,PL,21,CPU,Wait for Cheap Window,DELAY,0,3,27.0,21.7,Wait 3h for cheapest window
+SPMV,1024,PL,22,CPU,Wait for Cheap Window,DELAY,0,2,11.5,16.5,Wait 2h for cheapest window
+SPMV,1024,PL,23,CPU,Wait for Cheap Window,DELAY,0,1,11.1,19.7,Wait 1h for cheapest window

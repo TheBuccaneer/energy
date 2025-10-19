@@ -1,0 +1,2 @@
+total_rows,areas,unique_hours,expected_hours,missing_hours,n_ts_nans,n_duplicates,time_range_start,time_range_end,total_issues
+720,3,720,720,0,0,0,2024-09-01 00:00:00+00:00,2024-09-30 23:00:00+00:00,0

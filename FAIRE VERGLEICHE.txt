@@ -1,0 +1,288 @@
+# Dokumentation: Neue Datenfelder nach Enrichment
+
+## Übersicht
+
+Die Measurement-CSVs werden in zwei Schritten angereichert:
+1. **add_infos_v2.py**: Fügt Day-Ahead Strompreise hinzu → `bak_*.csv`
+2. **add_co2_infos.py**: Fügt CO₂-Intensitäten hinzu → `kab_*.csv`
+
+---
+
+## 1. Preisfelder (add_infos_v2.py)
+
+### 1.1 Realized Prices (zeitabhängig, stündlich)
+
+Gewichteter Durchschnittspreis über die Laufzeit des Jobs, basierend auf tatsächlichen Day-Ahead Preisen.
+
+| Spalte | Einheit | Beschreibung |
+|--------|---------|--------------|
+| `de_price_eur_kwh_run` | €/kWh | Realized price für DE-Zone (time-weighted) |
+| `fr_price_eur_kwh_run` | €/kWh | Realized price für FR-Zone (time-weighted) |
+| `pl_price_eur_kwh_run` | €/kWh | Realized price für PL-Zone (time-weighted) |
+
+**Berechnung (Multi-Hour Runs):**
+```
+price_run = Σ(overlap_seconds_i / total_seconds × price_hour_i)
+```
+- Bei Runs < 1h, aber über Stundengrenze: Gewichtet über beide Stunden
+- Bei Runs ≥ 1h: Gewichtet über alle betroffenen Stunden
+
+---
+
+### 1.2 Realized Costs (pro Job)
+
+Tatsächliche Kosten basierend auf realized prices.
+
+| Spalte | Einheit | Beschreibung |
+|--------|---------|--------------|
+| `de_eur_job` | € | Kosten pro Job in DE-Zone |
+| `fr_eur_job` | € | Kosten pro Job in FR-Zone |
+| `pl_eur_job` | € | Kosten pro Job in PL-Zone |
+
+**Formel:**
+```
+{area}_eur_job = kWh_e2e × {area}_price_eur_kwh_run
+```
+
+---
+
+### 1.3 Sync Prices (zeit-neutral, Referenz)
+
+Fester Monatsreferenzpreis (September 2024 Mittelwert), identisch für alle Rows.
+
+| Spalte | Einheit | Beschreibung |
+|--------|---------|--------------|
+| `de_price_sync` | €/kWh | Sept 2024 Monatsmittel DE (~0.078 €/kWh) |
+| `fr_price_sync` | €/kWh | Sept 2024 Monatsmittel FR (~0.095 €/kWh) |
+| `pl_price_sync` | €/kWh | Sept 2024 Monatsmittel PL (~0.095 €/kWh) |
+
+**Verwendung:** Zeit-neutrale Hardware-Vergleiche (eliminiert Day-Ahead Volatilität).
+
+---
+
+### 1.4 Sync Costs (pro Job)
+
+Kosten basierend auf sync prices (Referenzwert).
+
+| Spalte | Einheit | Beschreibung |
+|--------|---------|--------------|
+| `de_eur_job_sync` | € | Sync-Kosten pro Job in DE |
+| `fr_eur_job_sync` | € | Sync-Kosten pro Job in FR |
+| `pl_eur_job_sync` | € | Sync-Kosten pro Job in PL |
+
+**Formel:**
+```
+{area}_eur_job_sync = kWh_e2e × {area}_price_sync
+```
+
+---
+
+### 1.5 Batch-Metriken (falls vorhanden)
+
+Wenn CSV `batches` und `kWh_batch` enthält:
+
+| Spalte | Einheit | Beschreibung |
+|--------|---------|--------------|
+| `{area}_price_eur_kwh_batch` | €/kWh | Batch-level price (= `_price_eur_kwh_run`) |
+| `{area}_eur_batch` | € | Kosten pro Batch (realized) |
+| `{area}_eur_batch_sync` | € | Kosten pro Batch (sync) |
+| `{area}_eur_job_from_batches` | € | Job-Kosten via Batches (QA-Check) |
+
+**QA-Regel:** `|eur_job - eur_job_from_batches| / eur_job` sollte < 1% sein.
+
+---
+
+### 1.6 Backward-Compatible Felder
+
+Für Kompatibilität mit alten Scripts (basieren auf `market_area`-Spalte):
+
+| Spalte | Beschreibung |
+|--------|--------------|
+| `price_eur_kwh_run` | = `{market_area}_price_eur_kwh_run` |
+| `eur_job` | = `{market_area}_eur_job` |
+| `price_sync` | = `{market_area}_price_sync` |
+| `eur_job_sync` | = `{market_area}_eur_job_sync` |
+
+---
+
+## 2. CO₂-Felder (add_co2_infos.py)
+
+### 2.1 Carbon Intensity (zeitabhängig, stündlich)
+
+Gewichtete durchschnittliche CO₂-Intensität über die Laufzeit des Jobs.
+
+| Spalte | Einheit | Beschreibung |
+|--------|---------|--------------|
+| `de_ci_g_per_kwh` | gCO₂/kWh | Grid carbon intensity DE (time-weighted) |
+| `fr_ci_g_per_kwh` | gCO₂/kWh | Grid carbon intensity FR (time-weighted) |
+| `pl_ci_g_per_kwh` | gCO₂/kWh | Grid carbon intensity PL (time-weighted) |
+
+**Quellen-Modi:**
+- `--ci-mode lifecycle`: Lifecycle emissions (default) – inkl. upstream
+- `--ci-mode direct`: Direct emissions only – nur Verbrennung
+
+**Berechnung (analog zu Preisen):**
+```
+ci_weighted = Σ(overlap_seconds_i / total_seconds × ci_hour_i)
+```
+
+---
+
+### 2.2 CO₂ Emissions (pro Job)
+
+Gesamte CO₂-Emissionen pro Job in Kilogramm.
+
+| Spalte | Einheit | Beschreibung |
+|--------|---------|--------------|
+| `de_co2_job_kg` | kgCO₂ | CO₂-Emissionen pro Job in DE |
+| `fr_co2_job_kg` | kgCO₂ | CO₂-Emissionen pro Job in FR |
+| `pl_co2_job_kg` | kgCO₂ | CO₂-Emissionen pro Job in PL |
+
+**Formel:**
+```
+{area}_co2_job_kg = kWh_e2e × {area}_ci_g_per_kwh / 1000
+```
+
+**Scope:** Scope 2 (location-based) gemäß GHG Protocol.
+
+---
+
+### 2.3 Batch-CO₂-Metriken (falls vorhanden)
+
+Wenn CSV `batches` und `kWh_batch` enthält:
+
+| Spalte | Einheit | Beschreibung |
+|--------|---------|--------------|
+| `{area}_co2_batch_kg` | kgCO₂ | CO₂ pro Batch |
+| `{area}_co2_job_from_batches_kg` | kgCO₂ | Job-CO₂ via Batches (QA) |
+
+**Formel:**
+```
+{area}_co2_batch_kg = kWh_batch × {area}_ci_g_per_kwh / 1000
+{area}_co2_job_from_batches_kg = {area}_co2_batch_kg × batches
+```
+
+**QA-Regel:** `|co2_job_kg - co2_job_from_batches_kg| / co2_job_kg` sollte < 1% sein.
+
+---
+
+## 3. Zeitstempel-Konvertierung
+
+**Beide Scripts** konvertieren automatisch:
+- **2025 → 2024**: Alle 2025-Timestamps werden zu 2024
+- **Oktober → September**: `2025-10-15` wird zu `2024-09-15`
+- **Rejection**: `2025-10-31` wird zu `NaT` (September hat nur 30 Tage)
+
+**Timezone:** Alle Timestamps in `Europe/Berlin` (CEST/CET).
+
+---
+
+## 4. Dateistruktur
+
+```
+Original:       measurement.csv
+    ↓
+Schritt 1:      bak_measurement.csv     (+ Preisfelder)
+    ↓
+Schritt 2:      kab_measurement.csv     (+ CO₂-Felder)
+```
+
+**Finales File (`kab_*.csv`) enthält:**
+- ✅ Alle Original-Spalten
+- ✅ 12 Preisfelder (3 Zonen × 4 Metriken)
+- ✅ 6 CO₂-Felder (3 Zonen × 2 Metriken)
+- ✅ Optional: Batch-Metriken für beide
+
+---
+
+## 5. Beispiel-Row (gekürzt)
+
+```csv
+timestamp,energy_j,kWh_e2e,seconds_wall,
+de_price_eur_kwh_run,de_eur_job,de_price_sync,de_eur_job_sync,
+fr_price_eur_kwh_run,fr_eur_job,fr_price_sync,fr_eur_job_sync,
+pl_price_eur_kwh_run,pl_eur_job,pl_price_sync,pl_eur_job_sync,
+de_ci_g_per_kwh,de_co2_job_kg,
+fr_ci_g_per_kwh,fr_co2_job_kg,
+pl_ci_g_per_kwh,pl_co2_job_kg
+
+2024-09-15T14:30:00+02:00,360000,0.1,45.2,
+0.08234,0.008234,0.078310,0.007831,
+0.09501,0.009501,0.095013,0.009501,
+0.09501,0.009501,0.095013,0.009501,
+185.4,0.01854,
+32.7,0.00327,
+745.2,0.07452
+```
+
+---
+
+## 6. Quality Assurance
+
+### Automatische Checks:
+
+1. **Plausibility Ranges:**
+   - Preise: -0.20 bis 1.00 €/kWh
+   - CI: 0 bis 1500 gCO₂/kWh
+
+2. **Batch Consistency:**
+   - `|job - job_from_batches| / job < 1%`
+
+3. **Formula Accuracy:**
+   - Numerische Differenzen < 10⁻⁹
+
+### Log-Files:
+
+- `price_join_issues.log`: Fehlende Preisdaten
+- `qa_warnings.log`: Batch-Inkonsistenzen
+- `co2_join_issues.log`: Fehlende CI-Daten
+- `co2_qa_warnings.log`: CO₂-Batch-Inkonsistenzen
+
+---
+
+## 7. Verwendung in Analysen
+
+### Hardware-Vergleiche (zeit-neutral):
+```python
+# CPU vs GPU - fair comparison
+cpu_cost = df[df['device']=='CPU']['de_eur_job_sync'].mean()
+gpu_cost = df[df['device']=='GPU']['de_eur_job_sync'].mean()
+```
+
+### Multi-Zone Comparison:
+```python
+# Welche Zone hat niedrigste CO₂-Emissionen?
+df[['de_co2_job_kg', 'fr_co2_job_kg', 'pl_co2_job_kg']].mean()
+```
+
+### Carbon-Cost Trade-offs:
+```python
+# €/kgCO₂ (Abatement Cost)
+df['abatement_cost'] = (df['de_eur_job'] - df['fr_eur_job']) / \
+                       (df['de_co2_job_kg'] - df['fr_co2_job_kg'])
+```
+
+---
+
+## 8. Wichtige Hinweise
+
+⚠️ **Realized vs. Sync:**
+- **Realized**: Echte Kosten/Emissionen zur Laufzeit
+- **Sync**: Referenzwert für faire Hardware-Vergleiche
+
+⚠️ **Multi-Zone Columns:**
+- Jede Metrik existiert für **alle 3 Zonen** parallel
+- Ermöglicht "Was-wäre-wenn" Analysen ohne Re-Processing
+
+⚠️ **Scope 2 (Location-based):**
+- CO₂-Werte sind **grid average** (keine Supplier-spezifischen Tarife)
+- Für Market-based: Eigene Supplier-Faktoren verwenden
+
+---
+
+## Referenzen
+
+- **Day-Ahead Preise**: ENTSO-E Transparency Platform (September 2024)
+- **CO₂-Intensitäten**: ElectricityMaps API (lifecycle/direct, September 2024)
+- **Methodik**: GHG Protocol Scope 2 Guidance (location-based)
+- **PUE**: Nicht inkludiert in aktuellen Daten (multipliziere `kWh_e2e` mit PUE falls nötig)
