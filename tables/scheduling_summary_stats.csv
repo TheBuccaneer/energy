@@ -1,0 +1,4 @@
+Zone,Avg Wait (Cheapest) [h],Avg Wait (Greenest) [h],Median Cost Savings [%],Median CO2 Savings [%],Max Cost Savings [%],Max CO2 Savings [%]
+DE,13.6,12.6,88.8,38.0,115.9,60.9
+FR,13.5,11.7,99.0,16.3,105.1,60.5
+PL,13.7,11.5,80.8,30.4,113.0,49.2
