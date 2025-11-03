@@ -234,9 +234,6 @@ void writeCSVHeader(std::ofstream& csv) {
         << "total_energy_j,"
         << "energy_per_batch_j,"
         << "energy_per_second_j,"
-        << "energy_per_flop_j,"
-        << "time_per_gemm_ms_kernel,"
-        << "time_per_gemm_ms_e2e,"
         << "flops_total,"
         << "gflops_per_s,"
         << "avg_power_w,"
@@ -264,13 +261,6 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
     double flops_total = flops_per_gemm * batches;
     double gflops_per_s = (gpu_kernel_time > 0) ? (flops_total / gpu_kernel_time / 1e9) : 0.0;
     
-    // NEW: Energy per FLOP (hardware- & N-neutral)
-    double energy_per_flop = (flops_total > 0) ? (total_energy / flops_total) : 0.0;
-    
-    // NEW: Time per GEMM (for latency comparisons)
-    double time_per_gemm_ms_kernel = (batches > 0) ? (1e3 * gpu_kernel_time / batches) : 0.0;
-    double time_per_gemm_ms_e2e = (batches > 0) ? (1e3 * gpu_e2e_time / batches) : 0.0;
-    
     // Ensure standard C locale for consistent number formatting (dot as decimal separator)
     csv.imbue(std::locale::classic());
     
@@ -287,9 +277,6 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
         << std::fixed << std::setprecision(6) << total_energy << ","
         << std::scientific << std::setprecision(6) << energy_per_batch << ","
         << std::fixed << std::setprecision(6) << energy_per_second << ","
-        << std::scientific << std::setprecision(6) << energy_per_flop << ","
-        << std::fixed << std::setprecision(6) << time_per_gemm_ms_kernel << ","
-        << std::fixed << std::setprecision(6) << time_per_gemm_ms_e2e << ","
         << std::scientific << std::setprecision(6) << flops_total << ","
         << std::fixed << std::setprecision(2) << gflops_per_s << ","
         << std::fixed << std::setprecision(2) << avg_power << ","
