@@ -20,7 +20,7 @@
 #include <locale>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <cstdlib>  // NEW: for setenv()
+#include <cstdlib>
 
 // ============================================================================
 // Configuration - RTX 3090 only (hardcoded)
@@ -234,6 +234,9 @@ void writeCSVHeader(std::ofstream& csv) {
         << "total_energy_j,"
         << "energy_per_batch_j,"
         << "energy_per_second_j,"
+        << "energy_per_flop_j,"
+        << "time_per_gemm_ms_kernel,"
+        << "time_per_gemm_ms_e2e,"
         << "flops_total,"
         << "gflops_per_s,"
         << "avg_power_w,"
@@ -261,6 +264,13 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
     double flops_total = flops_per_gemm * batches;
     double gflops_per_s = (gpu_kernel_time > 0) ? (flops_total / gpu_kernel_time / 1e9) : 0.0;
     
+    // NEW: Energy per FLOP (hardware- & N-neutral)
+    double energy_per_flop = (flops_total > 0) ? (total_energy / flops_total) : 0.0;
+    
+    // NEW: Time per GEMM (for latency comparisons)
+    double time_per_gemm_ms_kernel = (batches > 0) ? (1e3 * gpu_kernel_time / batches) : 0.0;
+    double time_per_gemm_ms_e2e = (batches > 0) ? (1e3 * gpu_e2e_time / batches) : 0.0;
+    
     // Ensure standard C locale for consistent number formatting (dot as decimal separator)
     csv.imbue(std::locale::classic());
     
@@ -277,6 +287,9 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
         << std::fixed << std::setprecision(6) << total_energy << ","
         << std::scientific << std::setprecision(6) << energy_per_batch << ","
         << std::fixed << std::setprecision(6) << energy_per_second << ","
+        << std::scientific << std::setprecision(6) << energy_per_flop << ","
+        << std::fixed << std::setprecision(6) << time_per_gemm_ms_kernel << ","
+        << std::fixed << std::setprecision(6) << time_per_gemm_ms_e2e << ","
         << std::scientific << std::setprecision(6) << flops_total << ","
         << std::fixed << std::setprecision(2) << gflops_per_s << ","
         << std::fixed << std::setprecision(2) << avg_power << ","
@@ -299,9 +312,7 @@ void cleanup_and_exit(cudaEvent_t start_event, cudaEvent_t stop_event,
                      float* h_A, float* h_B, float* h_C,
                      cudaStream_t stream, cublasHandle_t handle,
                      std::ofstream& csv_file) {
-    std::cout << "\n========================================\n";
-    std::cout << "Test mode: 5 rows written, exiting...\n";
-    std::cout << "========================================\n";
+    std::cout << "\n Test mode: 5 rows written! \n";
     
     csv_file.close();
     
@@ -333,20 +344,18 @@ int main(int argc, char** argv) {  // CHANGED: signature to accept args
     // NEW: Parse command line arguments for test mode
     bool test_mode = false;
     int total_rows = 0;
-    std::string output_file = "data/raw/GEMM_5050.csv";  // Default
+    std::string output_file = "data/raw/GEMM_3090.csv";  // Default
     
     for (int i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "--test") || !strcmp(argv[i], "-t")) {
             test_mode = true;
-            std::cout << "Test mode enabled: will write 5 rows and exit\n";
+            std::cout << "Test mode enabled\n";
         } else if ((!strcmp(argv[i], "--output") || !strcmp(argv[i], "-o")) && i + 1 < argc) {
             output_file = argv[++i];
         }
     }
     
-    std::cout << "========================================\n";
-    std::cout << "CUDA GEMM Energy Benchmark (RTX 3090)\n";
-    std::cout << "========================================\n\n";
+    std::cout << "\nCUDA GEMM Energy Benchmark (RTX 3090)\n";
     
     // NEW: Disable TF32 globally (best-effort)
     setenv("NVIDIA_TF32_OVERRIDE", "0", 1);
@@ -357,7 +366,7 @@ int main(int argc, char** argv) {  // CHANGED: signature to accept args
     std::cout << "Found " << device_count << " CUDA device(s)\n";
     
     if (device_count == 0) {
-        std::cerr << "Error: No CUDA devices found!\n";
+        std::cerr << "No CUDA devices found!\n";
         return EXIT_FAILURE;
     }
     
@@ -388,14 +397,9 @@ int main(int argc, char** argv) {  // CHANGED: signature to accept args
     cublasHandle_t handle;
     CHECK_CUBLAS(cublasCreate(&handle));
     
-    // NEW: Disable TF32 in cuBLAS (strict FP32)
-#ifdef CUBLAS_PEDANTIC_MATH
-    CHECK_CUBLAS(cublasSetMathMode(handle, CUBLAS_PEDANTIC_MATH));
-    std::cout << "TF32 disabled (pedantic FP32)\n";  // NEW: one-time stdout
-#else
-    CHECK_CUBLAS(cublasSetMathMode(handle, CUBLAS_DEFAULT_MATH));
-    std::cout << "TF32 disabled (default math mode)\n";  // NEW: one-time stdout
-#endif
+    // Force strict FP32 (no TF32 / Tensor Cores)
+    cublasSetMathMode(handle, CUBLAS_PEDANTIC_MATH);
+    std::cout << "TF32 disabled: using CUBLAS_PEDANTIC_MATH (strict FP32)\n";
     
     // Create CUDA stream
     cudaStream_t stream;
@@ -424,7 +428,7 @@ int main(int argc, char** argv) {  // CHANGED: signature to accept args
               << (3 * max_bytes / (1024*1024)) << " MB\n\n";
     
     // Initialize matrices once for maximum size
-    std::cout << "Initializing host matrices...\n";
+    std::cout << "Initializing host matrices\n";
     initializeMatrix(h_A, MAX_SIZE, MAX_SIZE, 42);
     initializeMatrix(h_B, MAX_SIZE, MAX_SIZE, 43);
     
@@ -434,7 +438,7 @@ int main(int argc, char** argv) {  // CHANGED: signature to accept args
     
     std::ofstream csv_file(output_file, std::ios::app);
     if (!csv_file.is_open()) {
-        std::cerr << "Error: Cannot open output file: " << output_file << "\n";
+        std::cerr << "Error: CANNOT open file: " << output_file << "\n";
         return EXIT_FAILURE;
     }
     
@@ -457,8 +461,7 @@ int main(int argc, char** argv) {  // CHANGED: signature to accept args
     // Main measurement loop: sweep over all sizes
     // ========================================================================
     
-    std::cout << "Starting measurements...\n";
-    std::cout << "========================================\n\n";
+    std::cout << "Starting measurements...\n\n";
     
     for (int size_idx = 0; size_idx < NUM_SIZES; size_idx++) {
         int n = GEMM_SIZES[size_idx];
@@ -467,7 +470,7 @@ int main(int argc, char** argv) {  // CHANGED: signature to accept args
         std::cout << "GEMM size " << n << "x" << n << "\n";
         
         // Determine batch size for this matrix size
-        std::cout << "  Determining batch size... " << std::flush;
+        std::cout << "  Determe batch size" << std::flush;
         BatchResult batch_result = determineBatchSize(handle, d_A, d_B, d_C, n, MAX_SIZE, 
                                                       TARGET_RUNTIME_S, stream);
         int batches = batch_result.batches;
@@ -608,18 +611,15 @@ int main(int argc, char** argv) {  // CHANGED: signature to accept args
         
         // Cooling pause after all 50 runs (except after last problem size)
         if (size_idx < NUM_SIZES - 1) {
-            std::cout << "  >>> Cooling down for 30 seconds...\n";
+            std::cout << "  Cooling down for 30 seconds\n";
             std::this_thread::sleep_for(std::chrono::seconds(30));
         }
         
         std::cout << "\n";
     }
     
-    std::cout << "========================================\n";
-    std::cout << "Benchmark complete!\n";
-    std::cout << "Results saved to: " << output_file << "\n";
-    std::cout << "Total measurements: " << (NUM_SIZES * MACRO_REPEATS) << "\n";
-    std::cout << "========================================\n";
+    std::cout << "\n\nBenchmark complete!\n";
+    std::cout << "Results saved to: " << output_file << "\n\n";
     
     // Cleanup
     csv_file.close();

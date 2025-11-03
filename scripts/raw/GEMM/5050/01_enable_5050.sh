@@ -20,21 +20,16 @@ for gpu_id in $(nvidia-smi --query-gpu=index --format=csv,noheader); do
     echo "Configuring GPU $gpu_id: $gpu_name"
     
     # Power Limit setzen (konservativ)
-    if [[ "$gpu_name" == *"3090"* ]]; then
-        sudo nvidia-smi -i $gpu_id -pl 350 2>/dev/null || echo "  Warning: Power limit not supported"
-    elif [[ "$gpu_name" == *"1080"* ]]; then
-        sudo nvidia-smi -i $gpu_id -pl 250 2>/dev/null || echo "  Warning: Power limit not supported"
+    if [[ "$gpu_name" == *"5050"* ]]; then
+        sudo nvidia-smi -i $gpu_id -pl 130 2>/dev/null || echo "  Warning: Power limit not supported"
     fi
     
     # Clock Locks (nur wenn aktiviert)
     if [[ "$LOCK_CLOCKS" == "1" ]]; then
         echo "  Locking clocks..."
-        if [[ "$gpu_name" == *"3090"* ]]; then
-            sudo nvidia-smi -i $gpu_id -lgc 1695 2>/dev/null || echo "  Warning: GPU clock lock not supported"
-            sudo nvidia-smi -i $gpu_id -lmc 9750 2>/dev/null || echo "  Warning: Memory clock lock not supported"
-        elif [[ "$gpu_name" == *"1080"* ]]; then
-            sudo nvidia-smi -i $gpu_id -lgc 1480 2>/dev/null || echo "  Warning: GPU clock lock not supported"
-            sudo nvidia-smi -i $gpu_id -lmc 5505 2>/dev/null || echo "  Warning: Memory clock lock not supported"
+        if [[ "$gpu_name" == *"5050"* ]]; then
+            sudo nvidia-smi -i $gpu_id -lgc 2850 2>/dev/null || echo "  Warning: GPU clock lock not supported"
+            sudo nvidia-smi -i $gpu_id -lmc 9500 2>/dev/null || echo "  Warning: Memory clock lock not supported"
         fi
     fi
 done
