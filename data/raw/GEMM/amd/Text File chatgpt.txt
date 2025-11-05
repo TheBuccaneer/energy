@@ -1,0 +1,100 @@
+Alles klar—ich habe deine AMD-Messungen im **Audit Mode (Deep Research)** geprüft, die Zahlen intern verifiziert und ein paar Plots erzeugt. Kurzfazit zuerst, Details danach.
+
+## Kurzfazit (Ryzen Threadripper 3970X)
+
+* **Interne Korrektheit:** Die wichtigsten berechneten Spalten stimmen:
+
+  * `flops_total = 2·N³·batches` ✔️
+  * `avg_power_w = total_energy_j / wall_time_s` ✔️
+  * `gflops_per_s = flops_total / wall_time_s / 1e9` ✔️
+  * `energy_per_flop_j = total_energy_j / flops_total` ✔️
+    (Ich habe das direkt über deine CSV verifiziert.)
+* **Präzision / Library:** Dein `main.cpp` nutzt **`cblas_sgemm` (FP32)**. Daher sind FP32-Peaks relevant (nicht DP). ✅
+* **Leistung (Plausibilität):** Max. **2.65 TFLOPS (FP32)** gemessen. Theoretischer FP32-Peak für 3970X (32 Kerne, **2×256-bit FMA pro Takt/Kern**) liegt grob bei **3.79–4.61 TFLOPS** (Basis 3.7 GHz bis Boost 4.5 GHz). Deine Effizienz liegt bei **~58–70 %**, was für OpenBLAS + SGEMM absolut plausibel ist. ([WikiChip Fuse][1])
+* **Leistungsaufnahme (Plausibilität):**
+
+  * Median bei 32 Threads: **~341 W** (über TDP, aber mit PPT/PBO auf TRX40 plausibel).
+  * Einzelne Läufe bis **~533 W** fallen auf—die sind **hoch**, aber intern konsistent (Energie/ Zeit passt). AMD spezifiziert **TDP 280 W**, und seriöse Reviews zeigen **~286 W** unter Volllast (je nach Messmethode). Werte deutlich >400 W deuten auf **angehobene PPT/PBO**, Board-Spezifika oder „plattformnahe“ Messung hin. Empfehlung: Gegencheck (s.u.). ([Arrow][2])
+* **Energieeffizienz:**
+
+  * Best-Case ca. **0.197 nJ/FLOP** (≈ 197 pJ/FLOP), Median über alle Punkte ~**0.49 nJ/FLOP**. Größenordnung ist für CPU-FLOPs realistisch (Literatur berichtet je nach Einbezug von Overheads **~25–200+ pJ/FLOP**). ([Jee Whan Choi][3])
+
+---
+
+## Was ich genau geprüft habe
+
+1. **Modell erkannt:** *AMD Ryzen Threadripper 3970X 32-Core* (Zen 2, 7 nm, 3.7/4.5 GHz, TDP 280 W). ([WikiChip][4])
+
+2. **Konsistenzchecks (alle bestanden):**
+
+* Formelgleichheiten (oben) stimmen zeilenweise.
+* Negative oder fehlende Energiewerte werden als **−1** protokolliert – solche Zeilen verfälschen Statistiken und sollten gefiltert werden.
+
+3. **Leistungs-Plausibilität vs. Architektur:**
+
+* Zen 2 hat **zwei 256-bit FMA-Einheiten pro Kern** ⇒ **32 SP-FLOPs/Takt/Kern**. Das deckt dein Verhältnis von gemessenem GFLOPS zu Peak sauber ab. ([WikiChip Fuse][1])
+* OpenBLAS erreicht bei SGEMM auf Zen-CPUs typischerweise **~60–80 %** des theoretischen Peaks; **AOCL-BLIS** (AMDs BLAS) kann mitunter etwas zulegen. Deine ~58–70 % sind also im grünen Bereich. ([AMD][5])
+
+4. **Power-Plausibilität & Ausreißer:**
+
+* **TDP** ist **280 W**, **Package-Power** in Reviews ~**286 W** flach ab einem bestimmten Lastniveau (AnandTech-Messkurve, referenziert). ([GIGAZINE][6])
+* Deine **Median-Werte ~340 W @32T** → plausibel, falls **PPT/PBO** (Mainboard/BIOS) offen ist.
+* **~533 W** ist hoch: intern passt Energie/ Zeit, aber ich würde validieren, ob
+
+  * im PowerCap-Baum mehrere **„package“-Zonen** summiert werden (Doppelzählung),
+  * BIOS **PPT/EDC/TDC** stark angehoben ist (PBO),
+  * oder ob die Messung „plattformnah“ statt **reiner Package-Energie** ist.
+    (AMD-Datenblatt/Reviews stützen **280–290 W** „stock“, höher → Board-Limits/OC.) ([Arrow][2])
+
+---
+
+## Deine Auswertungen als Grafiken
+
+* **GFLOPS/s vs Threads (größtes N)** – zeigt gutes Scaling bis zur Sättigung.
+  [Download](sandbox:/mnt/data/AMD_GFLOPS_vs_threads.png)
+* **Ø-Power vs Threads (größtes N)** – ansteigend, dann Plateau; Ausreißer sichtbar.
+  [Download](sandbox:/mnt/data/AMD_Power_vs_threads.png)
+* **nJ/FLOP vs Threads (größtes N)** – Effizienz verschlechtert sich bei suboptimalen Settings.
+  [Download](sandbox:/mnt/data/AMD_nJperFLOP_vs_threads.png)
+* **GFLOPS/s vs Problemgröße (32 Threads)** – zeigt, ab welcher Größe SGEMM „einrastet“.
+  [Download](sandbox:/mnt/data/AMD_GFLOPS_vs_N_threads32.png)
+* **nJ/FLOP vs Problemgröße (32 Threads)** – kleine N sind ineffizient (Overheads).
+  [Download](sandbox:/mnt/data/AMD_nJperFLOP_vs_N_threads32.png)
+
+*(Zwei tabellarische Übersichten habe ich dir oben eingeblendet: „AMD internal-consistency summary“ und „AMD grouped metrics“.)*
+
+---
+
+## Konkrete Empfehlungen (für „saubere“ AMD-Zahlen)
+
+1. **Filter:** Alles mit `avg_power_w <= 0` bzw. `total_energy_j <= 0` ausschließen (RAPL nicht lesbar).
+2. **RAPL-Zonen loggen:** Beim Start die **genaue PowerCap-Zone-Liste** (Namen) ins CSV schreiben (z. B. nur `package-0`). So erkennst du Doppelzählungen sofort.
+3. **PPT fixieren:** Für reproduzierbare Vergleiche **PPT/TDC/EDC** im BIOS auf **Stock (TDP-nah)** setzen; Messung mit identischen Limits wiederholen.
+4. **BLAS-Variante testen:** Gegenprobe mit **AOCL-BLIS** (AMD-optimiert). Ich erwarte bei großen N etwas höhere GFLOPS und ggf. bessere nJ/FLOP. ([AMD][5])
+5. **Cross-Check Power:** Einmal extern (Steckdosen-Wattmeter) und, wenn möglich, **SoC/DRAM** separat prüfen, um 500 W-Ausreißer einzuordnen.
+6. **Nur FP32 werten:** Dein Code nutzt **SGEMM** – Metriken/Peaks konsequent auf **FP32** beziehen.
+
+---
+
+## Quellen (für Plausibilitätsrahmen)
+
+* **Specs 3970X** (32C/64T, 3.7/4.5 GHz, **TDP 280 W**): AMD/WikiChip. ([Arrow][2])
+* **Zen 2 FPU-Durchsatz** (**2×256-bit FMA** → 16 DP bzw. **32 SP FLOPs/Takt/Kern**): WikiChip News; TU-Dresden-Analyse zu Zen 2. ([WikiChip Fuse][1])
+* **Gemessene Package-Power ~286 W** (Plateau unter Volllast, Review-Auswertung): Gigazine mit AnandTech-Kurve. ([GIGAZINE][6])
+* **AOCL-BLIS (AMD-optimierte BLAS)**: Offizielle AMD-Dokumente. ([AMD][5])
+* **Energie pro FLOP (Größenordnung)**: „Energy Roofline“-Arbeit (Overheads treiben pJ/FLOP in den Hunderter-Bereich). ([Jee Whan Choi][3])
+
+---
+
+### Verdict
+
+* **Numerisch korrekt & intern konsistent.**
+* **Leistung plausibel** für FP32-GEMM auf Zen 2 (OpenBLAS).
+* **Power meist plausibel**, aber **einige hohe Ausreißer** → bitte die oben genannten Checks (PPT/PBO, RAPL-Zonen) durchführen. Wenn du willst, filtere ich dir die CSV gleich und packe die „sauberen“ Stats/Plots in eine zweite Datei.
+
+[1]: https://fuse.wikichip.org/news/2458/a-look-at-the-amd-zen-2-core/2/?utm_source=chatgpt.com "A Look At The AMD Zen 2 Core"
+[2]: https://static6.arrow.com/aropdfconversion/72ff069de2e1a06466bff198b719e49df82eaf01/pgurl_100-100000011wof.pdf?utm_source=chatgpt.com "Technologies AMD Ryzen™ Threadripper™ 3970X ..."
+[3]: https://jeewhanchoi.github.io/publication/pdf/energy_roofline.pdf?utm_source=chatgpt.com "A Roofline Model of Energy - Jee Whan Choi"
+[4]: https://en.wikichip.org/wiki/amd/ryzen_threadripper/3970x?utm_source=chatgpt.com "Ryzen Threadripper 3970X - AMD"
+[5]: https://www.amd.com/en/developer/aocl.html?utm_source=chatgpt.com "AMD Optimizing CPU Libraries (AOCL)"
+[6]: https://gigazine.net/gsc_news/en/20191126-amd-3rd-gen-ryzen-threadripper/?utm_source=chatgpt.com "AMD's 3rd generation Ryzen Threadripper 3960X / 3970X ..."

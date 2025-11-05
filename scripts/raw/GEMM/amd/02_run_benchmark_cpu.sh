@@ -35,11 +35,11 @@ echo ""
 
 # Check RAPL access
 echo "Checking RAPL energy access..."
-if [ -r /sys/class/powercap/intel-rapl:0/energy_uj ]; then
+if [ -r /sys/class/powercap/intel-rapl:0/energy_uj ] || [ -r /sys/class/powercap/amd-rapl:0/energy_uj ]; then
     echo "✓ RAPL accessible"
 else
     echo "WARNING: RAPL not accessible (energy will be -1)"
-    echo "Fix with: sudo chmod -R a+r /sys/class/powercap/intel-rapl*"
+    echo "Fix with: sudo chmod -R a+r /sys/class/powercap/*rapl*"
 fi
 echo ""
 
@@ -50,7 +50,7 @@ if [ "$GOVERNOR" == "performance" ]; then
     echo "✓ CPU governor: performance"
 else
     echo "WARNING: CPU governor is '$GOVERNOR' (not 'performance')"
-    echo "Run: sudo bash 01_enable_CPU_Intel.sh"
+    echo "Run: sudo bash 01_enable_CPU_Intel.sh (works for AMD too)"
 fi
 echo ""
 
@@ -73,3 +73,21 @@ echo ""
 echo "========================================"
 echo "Benchmark complete!"
 echo "========================================"
+echo ""
+
+# Automatic shutdown after benchmark
+echo "⚠️  SYSTEM WILL SHUTDOWN IN 30 SECONDS  ⚠️"
+echo ""
+echo "Press Ctrl+C NOW to cancel shutdown!"
+echo ""
+
+for i in {30..1}; do
+    echo -ne "Shutting down in $i seconds...\r"
+    sleep 1
+done
+
+echo ""
+echo "Shutting down NOW..."
+
+# Force shutdown (doesn't wait for user processes)
+sudo shutdown -h now
