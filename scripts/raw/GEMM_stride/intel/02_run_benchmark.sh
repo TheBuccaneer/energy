@@ -23,7 +23,8 @@ echo ""
 
 # Compile
 echo "Compiling cpu_bench..."
-g++ -O3 -march=native -std=c++17 -Wall -Wextra -o cpu_bench main.cpp -lopenblas
+g++ -O3 -march=native -fopenmp main.cpp -lopenblas -o cpu_benchmark
+
 
 if [ $? -ne 0 ]; then
     echo "ERROR: Compilation failed!"
