@@ -1,0 +1,59 @@
+=== cublasSgemmStridedBatched call (±15 lines) ===
+    int batches = 1;
+    
+    long long strideA = 0;
+    long long strideB = 0;
+    long long strideC = (long long)lda * (long long)n;
+    
+    size_t needed_bytes = sizeof(float) * (size_t)lda * (size_t)n * (size_t)batch_count;
+    ensureCapacity(d_C, cap_bytes, needed_bytes);
+    
+    cudaEvent_t start, stop;
+    CHECK_CUDA(cudaEventCreate(&start));
+    CHECK_CUDA(cudaEventCreate(&stop));
+    
+    // Warmup: 2 calls
+    for (int w = 0; w < 2; w++) {
+        CHECK_CUBLAS(cublasSgemmStridedBatched(handle, CUBLAS_OP_T, CUBLAS_OP_T,
+                                               n, n, n, &alpha,
+                                               d_A, lda, strideA,
+                                               d_B, lda, strideB,
+                                               &beta,
+                                               *d_C, lda, strideC,
+                                               batch_count));
+    }
+    CHECK_CUDA(cudaStreamSynchronize(stream));
+    
+    // ADAPTIVE: Iteratively double batches until target_seconds is reached (like main.cu)
+    while (batches <= MAX_BATCH_SIZE) {
+        // Measure E2E time for current batches (with H2D + compute + D2H)
+        size_t src_pitch = size_t(lda) * sizeof(float);
+        size_t dst_pitch = size_t(lda) * sizeof(float);
+        size_t width_in_bytes = size_t(n) * sizeof(float);
+        size_t height = size_t(n);
+        
+        CHECK_CUDA(cudaEventRecord(start, stream));
+        
+
+=== lines mentioning strides/ld* ===
+void initializeMatrix(float* mat, int n, int lda, unsigned int seed) {
+            mat[i * lda + j] = dist(gen);
+                               size_t* cap_bytes, int n, int lda, int batch_count,
+    long long strideA = 0;
+    long long strideB = 0;
+    long long strideC = (long long)lda * (long long)n;
+    size_t needed_bytes = sizeof(float) * (size_t)lda * (size_t)n * (size_t)batch_count;
+                                               d_A, lda, strideA,
+                                               d_B, lda, strideB,
+                                               *d_C, lda, strideC,
+        size_t src_pitch = size_t(lda) * sizeof(float);
+        size_t dst_pitch = size_t(lda) * sizeof(float);
+                                                   d_A, lda, strideA,
+                                                   d_B, lda, strideB,
+                                                   *d_C, lda, strideC,
+            long long strideA = 0;
+            long long strideB = 0;
+            long long strideC = (long long)MAX_SIZE * (long long)n;
+                                                       d_A, MAX_SIZE, strideA,
+                                                       d_B, MAX_SIZE, strideB,
+                                                       d_C, MAX_SIZE, strideC,

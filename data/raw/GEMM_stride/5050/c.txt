@@ -1,0 +1,83 @@
+Alles klar, ich habe deine CSV und den dazugehörigen `main.cu`-Code geprüft — einmal auf **formale Korrektheit/Konsistenz** und einmal auf **Plausibilität** gegenüber der Hardware und NVML/cUBLAS-Semantik.
+
+**Kurzfazit:**
+
+* **Formale Checks:** sauber. Die berechneten Felder stimmen zueinander, kein Spaltenchaos.
+* **Plausibilität:** Die gemessene Leistung und Energie passen zu einer **aktiven Power-Begrenzung (~130 W, NVML Throttle=0x4)**. Bei 130 W sind ~9 TFLOPS median absolut plausibel; auf 350 W hochskaliert läge das im erwartbaren Bereich unterhalb des 3090-FP32-Peaks (35.6 TFLOPS).
+
+---
+
+# Was ich konkret geprüft habe
+
+## 1) CSV-Schema & interne Konsistenz
+
+* **Spalten:** alle erwarteten Felder vorhanden; **ein Extra**: `num_threads` (stört nicht).
+* **Energie = Leistung × Zeit (wall):** exakt — mittlerer und maximaler relativer Fehler **0.0000**.
+* **`flops_total`:** enthält **`batch_count`** (korrekt für strided-batched).
+* **`gflops_per_s`:** exakt **= `flops_total` / `gpu_kernel_time_s`**.
+* **`time_per_gemm_ms_kernel`:** korrekt **/(`batches`×`batch_count`)**.
+* **`below_target`** (Ziel ~1 s): 0 Inkonsistenzen vs. `wall_time_s<1.0`.
+* **Throttle-Reasons:** 816× **`0x4`**, 34× `0x0` → überwiegend **SW Power Cap aktiv**. NVML dokumentiert `0x0000000000000004` als **`nvmlClocksThrottleReasonSwPowerCap`**, d. h. die Software-Power-Regelung drosselt Takte/Leistung.
+
+👉 Die wichtigsten Tabellen habe ich dir als interaktive Ansichten ausgegeben:
+
+* **CSV schema check**, **Consistency checks**, **Per-size medians**, **Timing-Ratios**, sowie **Power/Temperatur-Verteilung**.
+
+Zusätzlich:
+
+* Plot **GFLOPs/s (Median) vs. Größe**: [Download PNG](sandbox:/mnt/data/gflops_vs_size.png)
+
+## 2) Code-Spot-Check (`main.cu`)
+
+* **cublasSgemmStridedBatched** wird mit **`strideA=0`, `strideB=0`** (Broadcast der Inputs) und **`strideC=lda*n`** (in Elementen) aufgerufen; `transA=transB=CUBLAS_OP_T` passt zur üblichen Row-Major-Handhabung.
+* **Math-Mode:** `CUBLAS_PEDANTIC_MATH` gesetzt (TF32 aus) → echtes FP32.
+* **Energie:** Nutzung **`nvmlDeviceGetTotalEnergyConsumption`** (direkter Energiewert; empfohlen ab Volta).
+
+Ich habe dir die relevante Aufrufstelle/Umgebung extrahiert:
+[Download `cublas`-Snippet](sandbox:/mnt/data/cublas_call_snippet.txt)
+
+## 3) Plausibilität vs. Hardware/Settings
+
+* **Leistung:** Peak-Median über Größen: **≈ 9.1 TFLOPS @ n=4096** (GFLOPs/s-Plot).
+* **Leistung/Power-Kontext:** Median-Power **≈ 129 W**, 90-Perzentil **≈ 133 W** → klarer Hinweis auf **aktiven Power-Cap**. Mit 350 W (typische 3090-Leistungsaufnahme) wäre rein proportional grob **~24 TFLOPS** zu erwarten — realistisch unterhalb der theoretischen 35.6 TFLOPS FP32-Spitze der RTX 3090. (3090 Spezifikationen: ~350 W TBP/TDP, FP32-Peak ≈ 35.6 TFLOPS).
+* **Temperatur:** Median **~78 °C** ist für Workloads mit längerem Dauerdurchsatz und reduziertem Power-Limit unkritisch.
+* **Kernel vs. E2E:** Median-Verhältnis `kernel/e2e` liegt je nach Größe **~0.89–1.00** (kleinere n näher 1.0; bei n=16384 ~0.89), `e2e/wall` ~0.999 — d. h. Event-Timing ≈ E2E, zusätzliche Host-Overheads sind gering (gut).
+
+**NVML-Semantik (Referenzen):**
+
+* **Energy-API:** `nvmlDeviceGetTotalEnergyConsumption` liefert kumulierte Energie (seit Boot/Init) — genau das nutzt du.
+* **Throttle=`0x4`:** **Soft Power Cap** aktiv → Takte werden unter gewünschte Clocks abgesenkt, wenn Power-Budget erreicht ist.
+
+**cuBLAS (Strided-Batched) Hinweise:**
+
+* Strides sind **in Elementen**; 0-Stride für A/B bedeutet *jedes Batch nutzt dieselbe Matrix* (Broadcast) — genau dein Fall. (Allg. Strided-Batched Doku/Blog).
+
+---
+
+# Bewertung
+
+**Korrektheit (intern):** ✅
+Formeln und Kennzahlen sind stimmig, `batch_count` ist sauber in FLOPs/Zeiten berücksichtigt, Flags sind konsistent.
+
+**Plausibilität (extern):** ✅
+Die beobachteten ~9 TFLOPS bei ~130 W und NVML-Throttle `0x4` passen sehr gut zu einem **Power-limitierten 3090-Run**. Hochskaliert aufs typische 3090-Power-Budget landet man in einem plausiblen Leistungsfenster deutlich unter dem theoretischen Peak (FP32), wie man es von cuBLAS (ohne TF32) erwarten würde.
+
+---
+
+# Kleine Empfehlungen
+
+1. **Power-Cap dokumentieren:** Füge die aktuelle **Power-Limit-Einstellung (W)** als Spalte hinzu; das macht spätere Gerätevergleiche einfacher (du hast bereits `throttle_reasons=0x4`, aber die Zahl in W ist nützlich). NVML liefert Limits/Defaults per `nvmlDeviceGetPowerManagementLimit`.
+2. **Warmups für kleine n:** Für n ≤ 256 **4–8 Warmups** (du machst das teils schon) stabilisieren Clocks/Boost (geringere Varianz).
+3. **Optional CSV-Erweiterungen:** `power_limit_w`, `fan_rpm`, `driver_version`, `cuda_version`, `cublas_version` — helfen bei Reproduzierbarkeit.
+
+Wenn du magst, kann ich dir die CSV direkt um die Power-Limit-Spalte ergänzen (aus den Logs/`nvidia-smi -q` geparst) oder weitere Grafiken (z. B. pJ/Flop vs. Größe) erzeugen.
+
+**Artefakte:**
+
+* GFLOPs-Plot: [Download](sandbox:/mnt/data/gflops_vs_size.png)
+* Audit-Kurzreport (Modusdetektion): [Download](sandbox:/mnt/data/audit_summary.txt)
+
+**Referenzen (für die Schlüsselbehauptungen):**
+NVML Energy-API & Praxis:  · NVML Throttle-Reasons (`0x4` = SwPowerCap):  · RTX 3090 Specs (350 W TBP/TDP, FP32 35.58 TFLOPS):  · cuBLAS Strided-Batched (Stride-Semantik & Best-Practice):
+
+Sollen wir als Nächstes noch **pJ/Flop vs. n** und **GFLOPs/W** plotten und outlier-Runs markieren?

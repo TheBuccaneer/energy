@@ -1,0 +1,2 @@
+flops_total mode: includes_batch_count
+time_per_gemm_ms_kernel mode: divides_by_batches_x_batch_count

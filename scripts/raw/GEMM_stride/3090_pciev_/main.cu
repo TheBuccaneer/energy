@@ -17,6 +17,8 @@
 #include <random>
 #include <algorithm>
 #include <filesystem>
+#include <vector>
+#include <map>
 #include <locale>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -31,14 +33,24 @@
 constexpr double TARGET_RUNTIME_S = 1.0;
 constexpr int    MAX_BATCH_SIZE   = 250000;
 constexpr int    MACRO_REPEATS    = 50;
-constexpr int    BATCH_COUNT      = 8;  // Hardcoded strided-batched count
 
-// GEMM sizes only (2^x steps: 64 to 16384)
-static const int GEMM_SIZES[] = {
-    64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384
+// Problem sizes and their batch_counts (canonical)
+// batch_count = parallel GEMM instances per cuBLAS call (FIXED)
+// batches = how many times to repeat the call (ADAPTIVE, calculated to reach ~1s)
+static const std::map<int, std::vector<int>> SIZE_TO_BATCH_COUNTS = {
+    {64,    {512, 1024}},
+    {128,   {256, 512}},
+    {256,   {128, 256}},
+    {512,   {64, 128}},
+    {1024,  {32, 64}},
+    {2048,  {16, 32}},
+    {4096,  {4, 8}},
+    {8192,  {1, 2}},
+    {16384, {1}}
 };
-static const int NUM_SIZES = sizeof(GEMM_SIZES) / sizeof(GEMM_SIZES[0]);
-static const int MAX_SIZE = *std::max_element(std::begin(GEMM_SIZES), std::end(GEMM_SIZES));
+
+static const std::vector<int> GEMM_SIZES = {64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384};
+static const int MAX_SIZE = 16384;
 
 // ============================================================================
 // Error Checking Macros
@@ -121,12 +133,18 @@ void ensureCapacity(float** d_C, size_t* cap_bytes, size_t needed_bytes) {
             exit(EXIT_FAILURE);
         }
         
-        // RAM guard (check against total GPU memory)
-        cudaDeviceProp prop;
-        CHECK_CUDA(cudaGetDeviceProperties(&prop, 0));
-        if (needed_bytes > prop.totalGlobalMem / 2) {  // Safety margin: use max 50% of GPU RAM
-            fprintf(stderr, "ERROR: Allocation exceeds 50%% GPU memory: %zu bytes (available: %zu)\n",
-                    needed_bytes, prop.totalGlobalMem);
+        // Dynamic VRAM guard: Check available GPU memory (80% of free)
+        size_t free_bytes = 0;
+        size_t total_bytes = 0;
+        CHECK_CUDA(cudaMemGetInfo(&free_bytes, &total_bytes));
+        
+        size_t max_allowed = static_cast<size_t>(free_bytes * 0.8);  // 80% of currently free memory
+        
+        if (needed_bytes > max_allowed) {
+            fprintf(stderr, "ERROR: Allocation exceeds 80%% of free GPU memory:\n");
+            fprintf(stderr, "  Requested: %zu bytes (%.2f MB)\n", needed_bytes, needed_bytes / (1024.0 * 1024.0));
+            fprintf(stderr, "  Free: %zu bytes (%.2f MB)\n", free_bytes, free_bytes / (1024.0 * 1024.0));
+            fprintf(stderr, "  Max allowed (80%% of free): %zu bytes (%.2f MB)\n", max_allowed, max_allowed / (1024.0 * 1024.0));
             exit(EXIT_FAILURE);
         }
         
@@ -139,8 +157,9 @@ void ensureCapacity(float** d_C, size_t* cap_bytes, size_t needed_bytes) {
         CHECK_CUDA(cudaMalloc((void**)d_C, needed_bytes));
         *cap_bytes = needed_bytes;
         
-        fprintf(stderr, "INFO: Reallocated d_C to %zu bytes (%.2f MB)\n",
-                needed_bytes, needed_bytes / (1024.0 * 1024.0));
+        fprintf(stderr, "INFO: Reallocated d_C to %zu bytes (%.2f MB), %.1f%% of free VRAM\n",
+                needed_bytes, needed_bytes / (1024.0 * 1024.0), 
+                (needed_bytes * 100.0) / free_bytes);
     }
 }
 
@@ -201,11 +220,12 @@ GPUTelemetry getGPUTelemetry(nvmlDevice_t device) {
 }
 
 // ============================================================================
-// Auto-Batch Determination (Strided-Batched)
+// Auto-Batch Determination (Strided-Batched) - ADAPTIVE like main.cu
 // ============================================================================
 
 struct BatchResult {
     int batches;
+    bool below_target;
 };
 
 BatchResult determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, float** d_C,
@@ -239,50 +259,66 @@ BatchResult determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, fl
     }
     CHECK_CUDA(cudaStreamSynchronize(stream));
     
-    // Measure E2E time for single call (with H2D + compute + D2H)
-    size_t src_pitch = size_t(lda) * sizeof(float);
-    size_t dst_pitch = size_t(lda) * sizeof(float);
-    size_t width_in_bytes = size_t(n) * sizeof(float);
-    size_t height = size_t(n);
-    
-    CHECK_CUDA(cudaEventRecord(start, stream));
-    
-    CHECK_CUDA(cudaMemcpy2DAsync(d_A, dst_pitch, h_A, src_pitch,
-                                 width_in_bytes, height,
-                                 cudaMemcpyHostToDevice, stream));
-    CHECK_CUDA(cudaMemcpy2DAsync(d_B, dst_pitch, h_B, src_pitch,
-                                 width_in_bytes, height,
-                                 cudaMemcpyHostToDevice, stream));
-    
-    CHECK_CUBLAS(cublasSgemmStridedBatched(handle, CUBLAS_OP_T, CUBLAS_OP_T,
-                                           n, n, n, &alpha,
-                                           d_A, lda, strideA,
-                                           d_B, lda, strideB,
-                                           &beta,
-                                           *d_C, lda, strideC,
-                                           batch_count));
-    
-    CHECK_CUDA(cudaMemcpy2DAsync(h_C, src_pitch, *d_C, dst_pitch,
-                                 width_in_bytes, height,
-                                 cudaMemcpyDeviceToHost, stream));
-    
-    CHECK_CUDA(cudaEventRecord(stop, stream));
-    CHECK_CUDA(cudaEventSynchronize(stop));
-    
-    float ms = 0;
-    CHECK_CUDA(cudaEventElapsedTime(&ms, start, stop));
-    float t_call = ms / 1000.0f;
-    
-    batches = (int)std::ceil(target_seconds / t_call);
-    batches = std::max(1, batches);
-    
-    if (batches > MAX_BATCH_SIZE) {
-        batches = MAX_BATCH_SIZE;
+    // ADAPTIVE: Iteratively double batches until target_seconds is reached (like main.cu)
+    while (batches <= MAX_BATCH_SIZE) {
+        // Measure E2E time for current batches (with H2D + compute + D2H)
+        size_t src_pitch = size_t(lda) * sizeof(float);
+        size_t dst_pitch = size_t(lda) * sizeof(float);
+        size_t width_in_bytes = size_t(n) * sizeof(float);
+        size_t height = size_t(n);
+        
+        CHECK_CUDA(cudaEventRecord(start, stream));
+        
+        CHECK_CUDA(cudaMemcpy2DAsync(d_A, dst_pitch, h_A, src_pitch,
+                                     width_in_bytes, height,
+                                     cudaMemcpyHostToDevice, stream));
+        CHECK_CUDA(cudaMemcpy2DAsync(d_B, dst_pitch, h_B, src_pitch,
+                                     width_in_bytes, height,
+                                     cudaMemcpyHostToDevice, stream));
+        
+        // Run 'batches' iterations
+        for (int b = 0; b < batches; b++) {
+            CHECK_CUBLAS(cublasSgemmStridedBatched(handle, CUBLAS_OP_T, CUBLAS_OP_T,
+                                                   n, n, n, &alpha,
+                                                   d_A, lda, strideA,
+                                                   d_B, lda, strideB,
+                                                   &beta,
+                                                   *d_C, lda, strideC,
+                                                   batch_count));
+        }
+        
+        CHECK_CUDA(cudaMemcpy2DAsync(h_C, src_pitch, *d_C, dst_pitch,
+                                     width_in_bytes, height,
+                                     cudaMemcpyDeviceToHost, stream));
+        
+        CHECK_CUDA(cudaEventRecord(stop, stream));
+        CHECK_CUDA(cudaEventSynchronize(stop));
+        
+        float ms = 0;
+        CHECK_CUDA(cudaEventElapsedTime(&ms, start, stop));
+        float elapsed = ms / 1000.0f;
+        
+        // Check if we reached target
+        if (elapsed >= target_seconds) {
+            CHECK_CUDA(cudaEventDestroy(start));
+            CHECK_CUDA(cudaEventDestroy(stop));
+            return {batches, false};  // Target reached
+        }
+        
+        // Check if we hit max limit
+        if (batches >= MAX_BATCH_SIZE) {
+            CHECK_CUDA(cudaEventDestroy(start));
+            CHECK_CUDA(cudaEventDestroy(stop));
+            return {batches, true};  // Below target (hit max batch limit)
+        }
+        
+        // Double batches for next iteration
+        batches = std::min(batches * 2, MAX_BATCH_SIZE);
     }
     
     CHECK_CUDA(cudaEventDestroy(start));
     CHECK_CUDA(cudaEventDestroy(stop));
-    return {batches};
+    return {batches, false};
 }
 
 // ============================================================================
@@ -290,7 +326,7 @@ BatchResult determineBatchSize(cublasHandle_t handle, float* d_A, float* d_B, fl
 // ============================================================================
 
 void writeCSVHeader(std::ofstream& csv) {
-    csv << "timestamp,run_id_global,run_id_per_size,device_name,num_threads,problem_size,batches,"
+    csv << "timestamp,run_id_global,run_id_per_size,device_name,num_threads,problem_size,batches,batch_count,"
         << "gpu_e2e_time_s,gpu_kernel_time_s,wall_time_s,"
         << "total_energy_j,energy_per_batch_j,energy_per_second_j,energy_per_flop_j,"
         << "time_per_gemm_ms_kernel,time_per_gemm_ms_e2e,"
@@ -328,6 +364,7 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
         << num_threads << ","  // Empty for GPU
         << n << ","
         << batches << ","
+        << batch_count << ","
         << std::scientific << std::setprecision(6)
         << gpu_time_s << ","
         << kernel_time_s << ","
@@ -336,8 +373,10 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
         << energy_per_batch << ","
         << energy_per_second << ","
         << energy_per_flop << ","
+        << std::fixed << std::setprecision(6)
         << time_per_gemm_ms_kernel << ","
         << time_per_gemm_ms_e2e << ","
+        << std::scientific << std::setprecision(6)
         << flops_total << ","
         << std::fixed << std::setprecision(2)
         << gflops_per_s << ","
@@ -357,11 +396,13 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
 // ============================================================================
 
 void cleanup_and_exit(cudaEvent_t start_event, cudaEvent_t stop_event,
-                     cudaEvent_t start_kernel, cudaEvent_t stop_kernel,
-                     float* d_A, float* d_B, float* d_C,
-                     float* h_A, float* h_B, float* h_C,
-                     cudaStream_t stream, cublasHandle_t handle,
-                     std::ofstream& csv_file) {
+                      cudaEvent_t start_kernel, cudaEvent_t stop_kernel,
+                      float* d_A, float* d_B, float* d_C,
+                      float* h_A, float* h_B, float* h_C,
+                      cudaStream_t stream, cublasHandle_t handle,
+                      std::ofstream& csv_file) {
+    std::cout << "\nTest mode: 5 rows written. Exiting...\n";
+    
     csv_file.close();
     
     CHECK_CUDA(cudaEventDestroy(start_event));
@@ -371,7 +412,9 @@ void cleanup_and_exit(cudaEvent_t start_event, cudaEvent_t stop_event,
     
     CHECK_CUDA(cudaFree(d_A));
     CHECK_CUDA(cudaFree(d_B));
-    CHECK_CUDA(cudaFree(d_C));
+    if (d_C != nullptr) {
+        CHECK_CUDA(cudaFree(d_C));
+    }
     
     CHECK_CUDA(cudaFreeHost(h_A));
     CHECK_CUDA(cudaFreeHost(h_B));
@@ -385,77 +428,66 @@ void cleanup_and_exit(cudaEvent_t start_event, cudaEvent_t stop_event,
 }
 
 // ============================================================================
-// MAIN
+// Main Program
 // ============================================================================
 
 int main(int argc, char** argv) {
     bool test_mode = false;
-    std::string output_file = "data/GPU/gemm_bench_RTX_3090.csv";
+    std::string output_file = "./data/raw/gpu_gemm_measurements_strided.csv";
     
-    // Parse arguments
+    // Parse command line arguments
     for (int i = 1; i < argc; i++) {
-        std::string arg = argv[i];
-        if (arg == "--test" || arg == "-t") {
+        if (strcmp(argv[i], "--test") == 0 || strcmp(argv[i], "-t") == 0) {
             test_mode = true;
-        } else if (arg == "--output" || arg == "-o") {
-            if (i + 1 < argc) {
-                output_file = argv[++i];
-            }
+            output_file = "./data/raw/gpu_gemm_test_strided.csv";
+        } else if ((strcmp(argv[i], "--output") == 0 || strcmp(argv[i], "-o") == 0) && i + 1 < argc) {
+            output_file = argv[++i];
         }
     }
     
-    // Print configuration
-    std::cout << "\n=== CUDA GEMM Benchmark (Strided-Batched) ===\n";
-    std::cout << "Batch Count (per call): " << BATCH_COUNT << "\n";
-    std::cout << "Target Runtime: " << TARGET_RUNTIME_S << " seconds\n";
-    std::cout << "Macro Repeats: " << MACRO_REPEATS << "\n";
-    std::cout << "Output: " << output_file << "\n";
     if (test_mode) {
-        std::cout << "TEST MODE: Will stop after 5 measurements\n";
+        std::cout << "TEST MODE: Will write 5 rows and exit\n";
     }
-    std::cout << "\n";
-    
-    // Initialize CUDA
-    int device_count;
-    CHECK_CUDA(cudaGetDeviceCount(&device_count));
-    if (device_count == 0) {
-        std::cerr << "Error: No CUDA devices found\n";
-        return EXIT_FAILURE;
-    }
-    
-    CHECK_CUDA(cudaSetDevice(0));
-    
-    cudaDeviceProp prop;
-    CHECK_CUDA(cudaGetDeviceProperties(&prop, 0));
-    std::cout << "GPU: " << prop.name << "\n";
-    std::cout << "Compute Capability: " << prop.major << "." << prop.minor << "\n\n";
+    std::cout << "Output file: " << output_file << "\n\n";
     
     // Initialize NVML
     CHECK_NVML(nvmlInit());
+    
     nvmlDevice_t nvml_device;
     CHECK_NVML(nvmlDeviceGetHandleByIndex(0, &nvml_device));
+    
     std::string device_name = getGPUName(nvml_device);
+    std::cout << "GPU: " << device_name << "\n";
     
-    // Create cuBLAS handle and stream
-    cublasHandle_t handle;
+    // Check energy measurement support
+    unsigned long long test_energy = getGPUEnergy(nvml_device);
+    if (test_energy == 0) {
+        std::cerr << "Warning: Energy measurement not supported on this GPU\n";
+    }
+    
+    // Initialize CUDA
+    CHECK_CUDA(cudaSetDevice(0));
+    
     cudaStream_t stream;
-    CHECK_CUBLAS(cublasCreate(&handle));
     CHECK_CUDA(cudaStreamCreate(&stream));
+    
+    cublasHandle_t handle;
+    CHECK_CUBLAS(cublasCreate(&handle));
     CHECK_CUBLAS(cublasSetStream(handle, stream));
+    CHECK_CUBLAS(cublasSetMathMode(handle, CUBLAS_PEDANTIC_MATH));  // Disable TF32
     
-    // Set PEDANTIC_MATH (disable TF32)
-    CHECK_CUBLAS(cublasSetMathMode(handle, CUBLAS_PEDANTIC_MATH));
+    // Allocate pinned host memory (maximum size for all problem sizes)
+    size_t max_bytes = sizeof(float) * size_t(MAX_SIZE) * size_t(MAX_SIZE);
     
-    // Allocate host memory (pinned) - maximum size
     float *h_A, *h_B, *h_C;
-    size_t max_bytes = size_t(MAX_SIZE) * size_t(MAX_SIZE) * sizeof(float);
     CHECK_CUDA(cudaMallocHost((void**)&h_A, max_bytes));
     CHECK_CUDA(cudaMallocHost((void**)&h_B, max_bytes));
     CHECK_CUDA(cudaMallocHost((void**)&h_C, max_bytes));
     
-    // Initialize matrices (once)
+    // Initialize matrices (full MAX_SIZE × MAX_SIZE)
     initializeMatrix(h_A, MAX_SIZE, MAX_SIZE, 42);
-    initializeMatrix(h_B, MAX_SIZE, MAX_SIZE, 123);
+    initializeMatrix(h_B, MAX_SIZE, MAX_SIZE, 43);
+    initializeMatrix(h_C, MAX_SIZE, MAX_SIZE, 44);
     
     // Allocate device memory (maximum size for A, B)
     float *d_A, *d_B, *d_C;
@@ -500,35 +532,43 @@ int main(int argc, char** argv) {
     
     std::cout << "Starting measurements...\n\n";
     
-    for (int size_idx = 0; size_idx < NUM_SIZES; size_idx++) {
-        int n = GEMM_SIZES[size_idx];
-        int run_id_per_size = 1;
+    // Outer loop: over problem sizes
+    for (int n : GEMM_SIZES) {
+        auto it = SIZE_TO_BATCH_COUNTS.find(n);
+        if (it == SIZE_TO_BATCH_COUNTS.end()) {
+            std::cerr << "ERROR: No batch_counts defined for size " << n << "\n";
+            continue;
+        }
         
-        std::cout << "GEMM size " << n << "x" << n << " (batch_count=" << BATCH_COUNT << ")\n";
+        const std::vector<int>& batch_counts = it->second;
+        int run_id_per_size = 1;  // Reset counter for each new problem size
         
-        // Strides for strided-batched
-        long long strideA = 0;  // Broadcast A
-        long long strideB = 0;  // Broadcast B
-        long long strideC = (long long)MAX_SIZE * (long long)n;
-        
-        // Determine batch size for this matrix size
-        std::cout << "  Determine batch size..." << std::flush;
-        BatchResult batch_result = determineBatchSize(handle, d_A, d_B, &d_C,
-                                                      h_A, h_B, h_C,
-                                                      &d_C_capacity_bytes,
-                                                      n, MAX_SIZE, BATCH_COUNT,
-                                                      TARGET_RUNTIME_S, stream);
-        int batches = batch_result.batches;
-        
-        std::cout << " using " << batches << " batches\n";
-        
-        // Run MACRO_REPEATS measurements
-        for (int rep = 0; rep < MACRO_REPEATS; rep++) {
-            // ================================================================
-            // E2E Measurement Start
-            // ================================================================
+        // Inner loop: over batch_counts for this size
+        for (int batch_count : batch_counts) {
+            std::cout << "GEMM size " << n << "x" << n << " (batch_count=" << batch_count << ")\n";
             
-            // Prepare 2D copy parameters for n×n submatrix
+            long long strideA = 0;
+            long long strideB = 0;
+            long long strideC = (long long)MAX_SIZE * (long long)n;
+            
+            // ADAPTIVE: Determine batches for this batch_count (like main.cu)
+            std::cout << "  Determine batch size (adaptive)..." << std::flush;
+            BatchResult batch_result = determineBatchSize(handle, d_A, d_B, &d_C,
+                                                          h_A, h_B, h_C,
+                                                          &d_C_capacity_bytes,
+                                                          n, MAX_SIZE, batch_count,
+                                                          TARGET_RUNTIME_S, stream);
+            int batches = batch_result.batches;
+            bool below_target_size = batch_result.below_target;
+            
+            std::cout << " using " << batches << " batches";
+            if (below_target_size) {
+                std::cout << " (!) below target";
+            }
+            std::cout << "\n";
+            
+            // MACRO_REPEATS measurements with the determined configuration
+            for (int rep = 0; rep < MACRO_REPEATS; rep++) {
             size_t src_pitch = size_t(MAX_SIZE) * sizeof(float);
             size_t dst_pitch = size_t(MAX_SIZE) * sizeof(float);
             size_t width_in_bytes = size_t(n) * sizeof(float);
@@ -537,10 +577,8 @@ int main(int argc, char** argv) {
             auto wall_start = std::chrono::steady_clock::now();
             unsigned long long energy_before = getGPUEnergy(nvml_device);
             
-            // GPU E2E timing starts HERE (before H2D)
             CHECK_CUDA(cudaEventRecord(start_event, stream));
             
-            // H2D transfers (pinned, async) - 2D copy for upper-left n×n submatrix
             CHECK_CUDA(cudaMemcpy2DAsync(d_A, dst_pitch,
                                          h_A, src_pitch,
                                          width_in_bytes, height,
@@ -550,43 +588,32 @@ int main(int argc, char** argv) {
                                          width_in_bytes, height,
                                          cudaMemcpyHostToDevice, stream));
             
-            // Kernel timing starts HERE (after H2D)
             CHECK_CUDA(cudaEventRecord(start_kernel, stream));
             
-            // GPU kernel (strided-batched calls)
             for (int b = 0; b < batches; b++) {
                 CHECK_CUBLAS(cublasSgemmStridedBatched(handle, CUBLAS_OP_T, CUBLAS_OP_T,
                                                        n, n, n, &alpha,
-                                                       d_B, MAX_SIZE, strideB,
                                                        d_A, MAX_SIZE, strideA,
+                                                       d_B, MAX_SIZE, strideB,
                                                        &beta,
                                                        d_C, MAX_SIZE, strideC,
-                                                       BATCH_COUNT));
+                                                       batch_count));
             }
             
-            // Kernel timing ends HERE (before D2H)
             CHECK_CUDA(cudaEventRecord(stop_kernel, stream));
             
-            // D2H transfer - only first instance C[0] (offset 0)
             CHECK_CUDA(cudaMemcpy2DAsync(h_C, src_pitch,
-                                         d_C, dst_pitch,  // Offset 0 = first instance
+                                         d_C, dst_pitch,
                                          width_in_bytes, height,
                                          cudaMemcpyDeviceToHost, stream));
             
-            // GPU E2E timing ends HERE (after D2H)
             CHECK_CUDA(cudaEventRecord(stop_event, stream));
             
-            // Synchronize and measure
             CHECK_CUDA(cudaDeviceSynchronize());
             
             unsigned long long energy_after = getGPUEnergy(nvml_device);
             auto wall_end = std::chrono::steady_clock::now();
             
-            // ================================================================
-            // E2E Measurement End
-            // ================================================================
-            
-            // Calculate timings
             float gpu_ms = 0;
             CHECK_CUDA(cudaEventElapsedTime(&gpu_ms, start_event, stop_event));
             float gpu_time_s = gpu_ms / 1000.0f;
@@ -598,40 +625,33 @@ int main(int argc, char** argv) {
             std::chrono::duration<double> wall_duration = wall_end - wall_start;
             float wall_time_s = wall_duration.count();
             
-            // Calculate energy (convert mJ to J) and power
             double energy_j = 0.0;
             double avg_power_w = 0.0;
             
             if (energy_after > energy_before) {
                 unsigned long long energy_mj = energy_after - energy_before;
-                energy_j = energy_mj / 1000.0;  // mJ to J
+                energy_j = energy_mj / 1000.0;
                 avg_power_w = energy_j / wall_time_s;
             }
             
-            // Check if this run is below target
             bool below_target = (gpu_time_s < TARGET_RUNTIME_S);
             
-            // Get GPU telemetry
             GPUTelemetry telem = getGPUTelemetry(nvml_device);
             
-            // Write to CSV
-            writeCSVRow(csv_file, run_id_global, run_id_per_size, device_name, "", n, batches, BATCH_COUNT,
+            writeCSVRow(csv_file, run_id_global, run_id_per_size, device_name, "", n, batches, batch_count,
                        gpu_time_s, kernel_time_s, wall_time_s, energy_j, avg_power_w, 
                        below_target, telem);
             csv_file.flush();
             
-            // Increment counters
             run_id_global++;
             run_id_per_size++;
             
-            // Test mode check
             ++total_rows;
             if (test_mode && total_rows >= 5) {
                 cleanup_and_exit(start_event, stop_event, start_kernel, stop_kernel,
                                d_A, d_B, d_C, h_A, h_B, h_C, stream, handle, csv_file);
             }
             
-            // Console progress
             char check = below_target ? '!' : '+';
             std::cout << "  " << check << " Run " << (rep + 1) << "/" 
                      << MACRO_REPEATS << ": "
@@ -648,16 +668,13 @@ int main(int argc, char** argv) {
                 std::cout << " (!)";
             }
             std::cout << "\n";
-        }
+        }  // End of MACRO_REPEATS loop
         
-        // Cooling pause after all 50 runs (except after last problem size)
-        if (size_idx < NUM_SIZES - 1) {
-            std::cout << "  Cooling down for 30 seconds\n";
-            std::this_thread::sleep_for(std::chrono::seconds(30));
-        }
-        
+        std::cout << "  Cooling down for 30 seconds\n";
+        std::this_thread::sleep_for(std::chrono::seconds(30));
         std::cout << "\n";
-    }
+        }  // End of inner loop (batch_counts)
+    }  // End of outer loop (problem sizes)
     
     std::cout << "\n\nBenchmark complete!\n";
     std::cout << "Results saved to: " << output_file << "\n\n";
