@@ -28,7 +28,7 @@
 // ============================================================================
 
 constexpr float TARGET_RUNTIME_S = 1.0f;
-constexpr int COOLDOWN_MS = 30000; // 30s cooldown like GPU
+constexpr int COOLDOWN_MS = 60000; // 30s cooldown like GPU
 constexpr int REPETITIONS = 50;    // 50 measurements per (n, batch_count)
 constexpr int MAX_SIZE = 16384;
 
