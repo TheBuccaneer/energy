@@ -1,14 +1,14 @@
 
 ==============NVSMI LOG==============
 
-Timestamp                                 : Tue Nov 11 13:14:38 2025
+Timestamp                                 : Tue Nov 11 19:25:25 2025
 Driver Version                            : 580.95.05
 CUDA Version                              : 13.0
 
 Attached GPUs                             : 1
-GPU 00000000:17:00.0
+GPU 00000000:01:00.0
     Temperature
-        GPU Current Temp                  : 44 C
+        GPU Current Temp                  : 43 C
         GPU T.Limit Temp                  : N/A
         GPU Shutdown Temp                 : 98 C
         GPU Slowdown Temp                 : 95 C
@@ -17,19 +17,19 @@ GPU 00000000:17:00.0
         Memory Current Temp               : N/A
         Memory Max Operating Temp         : N/A
     GPU Power Readings
-        Average Power Draw                : 40.94 W
-        Instantaneous Power Draw          : 22.80 W
+        Average Power Draw                : 32.52 W
+        Instantaneous Power Draw          : 30.30 W
         Current Power Limit               : 350.00 W
         Requested Power Limit             : 350.00 W
         Default Power Limit               : 370.00 W
         Min Power Limit                   : 100.00 W
         Max Power Limit                   : 390.00 W
     Power Samples
-        Duration                          : 29.18 sec
+        Duration                          : 33.25 sec
         Number of Samples                 : 119
-        Max                               : 76.25 W
-        Min                               : 22.16 W
-        Avg                               : 26.48 W
+        Max                               : 51.32 W
+        Min                               : 30.00 W
+        Avg                               : 33.59 W
     GPU Memory Power Readings 
         Average Power Draw                : N/A
         Instantaneous Power Draw          : N/A

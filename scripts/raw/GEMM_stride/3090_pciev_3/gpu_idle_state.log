@@ -1,14 +1,14 @@
 
 ==============NVSMI LOG==============
 
-Timestamp                                 : Tue Nov 11 13:15:40 2025
+Timestamp                                 : Tue Nov 11 20:00:09 2025
 Driver Version                            : 580.95.05
 CUDA Version                              : 13.0
 
 Attached GPUs                             : 1
-GPU 00000000:17:00.0
+GPU 00000000:01:00.0
     Temperature
-        GPU Current Temp                  : 59 C
+        GPU Current Temp                  : 41 C
         GPU T.Limit Temp                  : N/A
         GPU Shutdown Temp                 : 98 C
         GPU Slowdown Temp                 : 95 C
@@ -17,19 +17,19 @@ GPU 00000000:17:00.0
         Memory Current Temp               : N/A
         Memory Max Operating Temp         : N/A
     GPU Power Readings
-        Average Power Draw                : 259.99 W
-        Instantaneous Power Draw          : 140.06 W
-        Current Power Limit               : 350.00 W
-        Requested Power Limit             : 350.00 W
+        Average Power Draw                : 31.20 W
+        Instantaneous Power Draw          : 31.13 W
+        Current Power Limit               : 370.00 W
+        Requested Power Limit             : 370.00 W
         Default Power Limit               : 370.00 W
         Min Power Limit                   : 100.00 W
         Max Power Limit                   : 390.00 W
     Power Samples
-        Duration                          : 2.36 sec
+        Duration                          : 30.08 sec
         Number of Samples                 : 119
-        Max                               : 404.09 W
-        Min                               : 114.23 W
-        Avg                               : 264.79 W
+        Max                               : 138.72 W
+        Min                               : 31.11 W
+        Avg                               : 50.38 W
     GPU Memory Power Readings 
         Average Power Draw                : N/A
         Instantaneous Power Draw          : N/A
@@ -42,10 +42,10 @@ GPU 00000000:17:00.0
         Min Power Limit                   : N/A
         Max Power Limit                   : N/A
     Clocks
-        Graphics                          : 1965 MHz
-        SM                                : 1965 MHz
-        Memory                            : 9751 MHz
-        Video                             : 1725 MHz
+        Graphics                          : 210 MHz
+        SM                                : 210 MHz
+        Memory                            : 405 MHz
+        Video                             : 555 MHz
     Applications Clocks
         Graphics                          : N/A
         Memory                            : N/A
