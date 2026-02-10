@@ -1,0 +1,39 @@
+
+
+**Wie testen:**
+
+1. Einmal im **Idle** laufen lassen → du siehst, welche `rapl`-Domains es gibt und wie sie heißen (z. B. `package-0`).
+2. Dann **während dein Reduction-Benchmark läuft** nochmal ausführen:
+
+   * Die `energy_uj`-Werte der Package-Domains müssen **deutlich steigen**.
+   * Die Domain-Namen (z. B. `package-0`) sollten genau die sein, die dein C-Code auswählt.
+
+Wenn das passt und deine CSV `total_energy_j` **> 0** enthält, ist dein Messpfad so, wie wir ihn im Projekt vorgesehen haben.
+
+
+
+Den kannst du 1:1 in deine `docs/` oder README übernehmen:
+
+> ### CPU Energy Measurement (RAPL / powercap)
+>
+> On CPUs we obtain energy readings via the Linux `powercap` RAPL interface under `/sys/class/powercap`.
+>
+> Concretely, at startup we:
+>
+> * iterate over all entries matching `/sys/class/powercap/*rapl*/`,
+> * read their `name` files and select only **package domains** (e.g., `package-0`, `package-1`),
+> * for each selected domain we use:
+>
+>   * `energy_uj` as the current energy counter (microjoules),
+>   * `max_energy_range_uj` to handle counter wrap-around.
+>
+> For every benchmark run we:
+>
+> * read all selected `energy_uj` counters **before** the workload,
+> * read them again **after** the workload,
+> * compute per-domain deltas with wrap-around handling and sum them up to obtain a total package energy in joules (`total_energy_j`),
+> * derive `avg_power_w`, `energy_per_batch_j`, `energy_per_second_j`, and `energy_per_flop_j` from `total_energy_j` and the measured wall-time.
+>
+> If no suitable RAPL domains are found or the counters cannot be read, we set `total_energy_j = -1.0` and all derived energy metrics to `-1.0` as a sentinel. This approach works on both Intel and AMD systems as long as the kernel exposes CPU package energy via the `powercap`/RAPL subsystem.
+
+Wenn du willst, kann ich dir noch eine Mini-Version davon auf Deutsch formulieren, aber für Repo/Docs ist das hier in Englisch ziemlich ideal.

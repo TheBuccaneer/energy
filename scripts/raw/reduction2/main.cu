@@ -237,75 +237,92 @@ void writeCSVRow(std::ofstream& file, int run_id_global, int run_id_per_size,
 }
 
 // ============================================================================
-// Adaptive Batch Size Determination (E2E-based: H2D + Kernel + D2H)
+// Adaptive Batch Size Determination (Iterative, like CPU version)
 // ============================================================================
 
-struct BatchResult {
-    int batches;
-    bool below_target;
-};
-
-BatchResult determineBatchSize(cublasHandle_t handle, const float* d_x, const float* d_ones,
-                               float* d_result, const float* h_x, const float* h_ones,
-                               float* h_result, int n, cudaStream_t stream) {
-    // Quick test run with small number of batches to estimate E2E time
-    // E2E = H2D + Kernel×batches + D2H (like actual measurement runs)
-    int test_batches = 10;
+int determineBatchSize(cublasHandle_t handle, float* d_x, float* d_ones,
+                       float* d_result, int n, cudaStream_t stream) {
+    const double MIN_TIME = TARGET_RUNTIME_S;        // Minimum for stable measurement
+    const double MAX_TIME = TARGET_RUNTIME_S * 3.0;  // Maximum to avoid thermal drift
     
     cudaEvent_t start, stop;
     CHECK_CUDA(cudaEventCreate(&start));
     CHECK_CUDA(cudaEventCreate(&stop));
     
-    // E2E timing: includes H2D, kernel calls, and D2H
-    CHECK_CUDA(cudaEventRecord(start, stream));
-    
-    // H2D copy
-    CHECK_CUDA(cudaMemcpyAsync(d_x, h_x, n * sizeof(float), 
-                              cudaMemcpyHostToDevice, stream));
-    CHECK_CUDA(cudaMemcpyAsync(d_ones, h_ones, n * sizeof(float), 
-                              cudaMemcpyHostToDevice, stream));
-    
-    // Kernel calls
-    for (int b = 0; b < test_batches; b++) {
+    // 1) WARMUP (not measured!) - critical for CUDA/cuBLAS initialization
+    for (int w = 0; w < 5; w++) {
         CHECK_CUBLAS(cublasSdot(handle, n, d_x, 1, d_ones, 1, d_result));
     }
+    CHECK_CUDA(cudaDeviceSynchronize());
     
-    // D2H copy
-    CHECK_CUDA(cudaMemcpyAsync(h_result, d_result, sizeof(float), 
-                              cudaMemcpyDeviceToHost, stream));
+    // 2) Adaptive starting point based on problem size
+    int batches;
+    if (n >= 128000000) {
+        batches = 50;
+    } else if (n >= 64000000) {
+        batches = 100;
+    } else if (n >= 16000000) {
+        batches = 500;
+    } else if (n >= 4000000) {
+        batches = 2000;
+    } else {
+        batches = 5000;
+    }
     
-    CHECK_CUDA(cudaEventRecord(stop, stream));
-    CHECK_CUDA(cudaEventSynchronize(stop));
-    
-    float elapsed_ms = 0;
-    CHECK_CUDA(cudaEventElapsedTime(&elapsed_ms, start, stop));
-    float elapsed_s = elapsed_ms / 1000.0f;
+    // 3) Iteratively scale until we're in the target window
+    while (batches <= MAX_BATCH_SIZE) {
+        CHECK_CUDA(cudaEventRecord(start, stream));
+        
+        for (int b = 0; b < batches; b++) {
+            CHECK_CUBLAS(cublasSdot(handle, n, d_x, 1, d_ones, 1, d_result));
+        }
+        
+        CHECK_CUDA(cudaEventRecord(stop, stream));
+        CHECK_CUDA(cudaEventSynchronize(stop));
+        
+        float elapsed_ms = 0;
+        CHECK_CUDA(cudaEventElapsedTime(&elapsed_ms, start, stop));
+        double measured_time = elapsed_ms / 1000.0;
+        
+        // Guard against near-zero measurements (timer granularity issues)
+        // Just scale up aggressively and retry
+        if (measured_time < 1e-6) {
+            batches = std::min(batches * 10, MAX_BATCH_SIZE);
+            continue;
+        }
+        
+        // If we're in the acceptable range, use this batch size
+        if (measured_time >= MIN_TIME) {
+            // If we're under max_time, perfect
+            if (measured_time <= MAX_TIME) {
+                CHECK_CUDA(cudaEventDestroy(start));
+                CHECK_CUDA(cudaEventDestroy(stop));
+                return batches;
+            }
+            // If we exceeded max_time, scale back proportionally
+            int scaled_batches = static_cast<int>(batches * (MIN_TIME / measured_time));
+            CHECK_CUDA(cudaEventDestroy(start));
+            CHECK_CUDA(cudaEventDestroy(stop));
+            return std::max(1, scaled_batches);
+        }
+        
+        // Scale up: estimate how many batches needed for min_time
+        double time_per_batch = measured_time / batches;
+        int needed_batches = static_cast<int>(std::ceil((MIN_TIME * 1.05) / time_per_batch));
+        
+        // Make sure we make progress (at least 2x)
+        if (needed_batches <= batches) {
+            needed_batches = batches * 2;
+        }
+        
+        batches = std::min(needed_batches, MAX_BATCH_SIZE);
+    }
     
     CHECK_CUDA(cudaEventDestroy(start));
     CHECK_CUDA(cudaEventDestroy(stop));
     
-    float time_per_batch = elapsed_s / test_batches;
-    if (time_per_batch <= 0) {
-        time_per_batch = 1e-9;  // Safeguard
-    }
-    
-    // Estimate batches needed for target runtime
-    int estimated_batches = static_cast<int>(TARGET_RUNTIME_S / time_per_batch);
-    
-    // Clamp to reasonable range
-    if (estimated_batches < 1) estimated_batches = 1;
-    if (estimated_batches > MAX_BATCH_SIZE) estimated_batches = MAX_BATCH_SIZE;
-    
-    // Check if we're below target even at max batches
-    float estimated_runtime = estimated_batches * time_per_batch;
-    bool below_target = (estimated_runtime < TARGET_RUNTIME_S) && 
-                       (estimated_batches >= MAX_BATCH_SIZE);
-    
-    BatchResult result;
-    result.batches = estimated_batches;
-    result.below_target = below_target;
-    
-    return result;
+    // Hit max batch size without reaching min_time - accept it
+    return MAX_BATCH_SIZE;
 }
 
 // ============================================================================
@@ -362,7 +379,7 @@ int run_benchmark(const char* output_file, bool test_mode, int device_index) {
     initializeVector(h_x, MAX_N, 42);
     std::fill(h_ones, h_ones + MAX_N, 1.0f);
     
-    // Copy to device (one-time)
+    // Copy to device (one-time for initial setup)
     std::cout << "Copying to device..." << std::endl;
     CHECK_CUDA(cudaMemcpy(d_x, h_x, MAX_N * sizeof(float), cudaMemcpyHostToDevice));
     CHECK_CUDA(cudaMemcpy(d_ones, h_ones, MAX_N * sizeof(float), cudaMemcpyHostToDevice));
@@ -411,24 +428,14 @@ int run_benchmark(const char* output_file, bool test_mode, int device_index) {
         std::cout << "Problem size: " << n << " elements" << std::endl;
         std::cout << "========================================" << std::endl;
         
-        // Adaptive batch size determination (E2E-based: H2D + Kernel + D2H)
-        std::cout << "Determining batch size (adaptive, E2E-based)..." << std::flush;
-        BatchResult batch_result = determineBatchSize(handle, d_x, d_ones, d_result,
-                                                     h_x, h_ones, h_result, n, stream);
-        int batches = batch_result.batches;
-        bool below_target_flag = batch_result.below_target;
-        
-        std::cout << " using " << batches << " batches";
-        if (below_target_flag) {
-            std::cout << " (!) below target";
-        }
-        std::cout << std::endl;
+        // Adaptive batch size determination (iterative, like CPU version)
+        std::cout << "  Determining batch size... " << std::flush;
+        int batches = determineBatchSize(handle, d_x, d_ones, d_result, n, stream);
+        std::cout << "using " << batches << " batches" << std::endl;
         
         int run_id_per_size = 0;
         
         // Run REPEATS measurements with this batch size
-        std::cout << "Running " << REPEATS << " measurements..." << std::endl;
-        
         for (int rep = 0; rep < REPEATS; rep++) {
             run_id_global++;
             run_id_per_size++;
@@ -442,9 +449,7 @@ int run_benchmark(const char* output_file, bool test_mode, int device_index) {
             // E2E timing: includes H2D + kernel + D2H
             CHECK_CUDA(cudaEventRecord(start_event, stream));
             
-            // Optional: H2D copy per run (for consistency with E2E measurement)
-            // For reduction, we can skip this if data doesn't change
-            // But for E2E measurement consistency, we include it:
+            // H2D copy per run (for consistency with E2E measurement)
             CHECK_CUDA(cudaMemcpyAsync(d_x, h_x, n * sizeof(float), 
                                       cudaMemcpyHostToDevice, stream));
             CHECK_CUDA(cudaMemcpyAsync(d_ones, h_ones, n * sizeof(float), 
@@ -496,46 +501,47 @@ int run_benchmark(const char* output_file, bool test_mode, int device_index) {
             // Read telemetry
             GPUTelemetry telem = getGPUTelemetry(nvml_device);
             
+            // Check if actual runtime is below target (with 5% tolerance)
+            bool below_target = (gpu_kernel_time_s < TARGET_RUNTIME_S * 0.95);
+            
             // Write CSV row for this single run
-            // below_target comes from batch determination, same for all 50 runs
             writeCSVRow(csv_file, run_id_global, run_id_per_size, device_name,
                        n, batches, gpu_e2e_time_s, gpu_kernel_time_s, wall_time_s,
-                       total_energy_j, below_target_flag, telem);
+                       total_energy_j, below_target, telem);
             csv_file.flush();
             
-            // Console output (verbose in test mode)
-            if (test_mode) {
-                double gflops = (gpu_kernel_time_s > 0) ? 
-                    (static_cast<double>(n) * batches / gpu_kernel_time_s / 1e9) : 0.0;
-                double power = (total_energy_j >= 0 && wall_time_s > 0) ? 
-                    (total_energy_j / wall_time_s) : -1.0;
-                
-                std::cout << "  [" << rep + 1 << "/" << REPEATS << "] "
-                         << std::fixed << std::setprecision(3) 
-                         << gpu_e2e_time_s << "s (E2E), "
-                         << gpu_kernel_time_s << "s (kernel), "
-                         << std::setprecision(2) << gflops << " GFLOPS";
-                if (total_energy_j >= 0) {
-                    std::cout << ", " << std::setprecision(1) << total_energy_j << " J";
-                    if (power >= 0) {
-                        std::cout << ", " << std::setprecision(0) << power << " W";
-                    }
-                }
-                std::cout << ", " << telem.temp << "°C";
-                if (telem.throttle_reasons != 0) {
-                    std::cout << " [THROTTLE]";
-                }
-                std::cout << std::endl;
+            // Console output for EVERY measurement (like CPU version)
+            double gflops = (gpu_kernel_time_s > 0) ? 
+                (static_cast<double>(n) * batches / gpu_kernel_time_s / 1e9) : 0.0;
+            double power = (total_energy_j >= 0 && wall_time_s > 0) ? 
+                (total_energy_j / wall_time_s) : -1.0;
+            
+            char check = below_target ? '!' : '+';
+            std::cout << "  " << check << " Run " << rep + 1 << "/" << REPEATS << ": "
+                     << std::fixed << std::setprecision(3) 
+                     << gpu_kernel_time_s << "s (kernel) "
+                     << gpu_e2e_time_s << "s (E2E)";
+            
+            if (total_energy_j >= 0) {
+                std::cout << " | E=" << std::setprecision(1) << total_energy_j << "J";
             }
-        }
-        
-        if (!test_mode) {
-            std::cout << "→ Completed " << REPEATS << " runs for n=" << n << std::endl;
+            if (power >= 0) {
+                std::cout << " P=" << std::setprecision(0) << power << "W";
+            }
+            std::cout << " | " << std::setprecision(2) << gflops << " GFLOPS";
+            std::cout << " | T=" << telem.temp << "°C";
+            if (telem.throttle_reasons != 0) {
+                std::cout << " [THROTTLE]";
+            }
+            if (below_target) {
+                std::cout << " (!)";
+            }
+            std::cout << std::endl;
         }
         
         // Cooldown (except for last size)
         if (n != sizes_to_test.back()) {
-            std::cout << "Cooling down for 30 seconds..." << std::endl;
+            std::cout << "  Cooling down for 30 seconds..." << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(30));
         }
         
@@ -619,21 +625,30 @@ int main(int argc, char** argv) {
 }
 
 // ============================================================================
-// Key Features
+// Key Changes from Original (to match CPU version)
 // ============================================================================
 /*
- * [✓] GPU Reduction using cublasSdot with ones vector (float32)
- * [✓] Adaptive batch size based on E2E time (H2D + Kernel + D2H, TARGET_RUNTIME_S = 1.0s)
- * [✓] CSV output according to CSV_COLUMNS.md (26 columns)
- * [✓] Variante A: Each of 50 runs writes its own CSV row (no aggregation)
- * [✓] NVML for energy, telemetry (PCIe, clocks, temp, throttle)
- * [✓] CUDA Events for precise E2E and kernel timing
- * [✓] run_id_global increments for each CSV row (each run)
- * [✓] run_id_per_size resets for each new problem_size
- * [✓] below_target flag from batch determination (same for all 50 runs per config)
- * [✓] FLOPs calculation: 1 FLOP per element (reduction = additions only)
- * [✓] Test mode with --test flag
- * [✓] Device selection with --device flag
- * [✓] Loop order: outer=problem_size, inner=REPEATS
- * [✓] 30s cooldown between sizes
+ * [UPDATED] determineBatchSize(): Now uses iterative scaling like CPU:
+ *           - Warmup (5 cublasSdot calls, not measured)
+ *           - Adaptive starting point based on problem size
+ *           - Iterative loop until MIN_TIME (1.0s) is reached
+ *           - Uses std::ceil with 5% buffer for scaling
+ *           - Guard against near-zero measurements
+ *           - Scales back if exceeding MAX_TIME (3.0s)
+ *           - Simplified signature (no H2D/D2H in calibration, kernel-only)
+ *
+ * [UPDATED] Console output: Every measurement now prints a line (like CPU)
+ *           - Shows +/! prefix (+ = OK, ! = below target)
+ *           - Shows kernel time, E2E time, energy, power, GFLOPS, temperature
+ *
+ * [UPDATED] below_target: Now based on actual measured kernel time 
+ *           (< 0.95 * TARGET) instead of batch limit check
+ *
+ * [UNCHANGED] Everything else:
+ *           - NVML energy measurement logic
+ *           - CSV format and columns (26 columns per CSV_COLUMNS.md)
+ *           - Problem sizes
+ *           - 50 repetitions per configuration
+ *           - CUDA Events for E2E and kernel timing
+ *           - H2D/D2H in actual measurement runs
  */

@@ -45,7 +45,7 @@ static const int PROBLEM_SIZES[] = {
 static const int NUM_SIZES = sizeof(PROBLEM_SIZES) / sizeof(PROBLEM_SIZES[0]);
 static const int MAX_N = *std::max_element(std::begin(PROBLEM_SIZES), std::end(PROBLEM_SIZES));
 
-static const char* DEFAULT_OUTPUT_FILE = "reduction_cpu_amd.csv";
+static const char* DEFAULT_OUTPUT_FILE = "reduction_cpu_intel.csv";
 
 // ============================================================================
 // Utility Functions
@@ -263,32 +263,71 @@ void run_batched_reduction(const float* x, const float* ones, int n, int batches
 }
 
 // ============================================================================
-// Adaptive Batch Size Determination (based on TARGET_RUNTIME_S)
+// Adaptive Batch Size Determination (Iterative, like GEMM)
 // ============================================================================
 
 int determine_batch_size(const float* x, const float* ones, int n, double target_runtime_s) {
-    // Quick test run with small number of batches to estimate time
-    int test_batches = 10;
+    const double MIN_TIME = target_runtime_s;        // Minimum for stable measurement
+    const double MAX_TIME = target_runtime_s * 3.0;  // Maximum to avoid thermal drift
     
-    auto start = std::chrono::steady_clock::now();
-    run_batched_reduction(x, ones, n, test_batches);
-    auto end = std::chrono::steady_clock::now();
+    // 1) WARMUP (not measured!) - critical for OpenBLAS thread pool init
+    run_batched_reduction(x, ones, n, 5);
     
-    std::chrono::duration<double> duration = end - start;
-    double time_per_batch = duration.count() / test_batches;
-    
-    if (time_per_batch <= 0) {
-        time_per_batch = 1e-9; // Safeguard
+    // 2) Adaptive starting point based on problem size
+    int batches;
+    if (n >= 128000000) {
+        batches = 50;
+    } else if (n >= 64000000) {
+        batches = 100;
+    } else if (n >= 16000000) {
+        batches = 500;
+    } else if (n >= 4000000) {
+        batches = 2000;
+    } else {
+        batches = 5000;
     }
     
-    // Estimate batches needed for target runtime
-    int estimated_batches = static_cast<int>(target_runtime_s / time_per_batch);
+    // 3) Iteratively scale until we're in the target window
+    while (batches <= MAX_BATCH_SIZE) {
+        auto start = std::chrono::steady_clock::now();
+        run_batched_reduction(x, ones, n, batches);
+        auto end = std::chrono::steady_clock::now();
+        
+        std::chrono::duration<double> elapsed = end - start;
+        double measured_time = elapsed.count();
+        
+        // Guard against near-zero measurements (timer granularity issues)
+        // Just scale up aggressively and retry
+        if (measured_time < 1e-6) {
+            batches = std::min(batches * 10, MAX_BATCH_SIZE);
+            continue;
+        }
+        
+        // If we're in the acceptable range, use this batch size
+        if (measured_time >= MIN_TIME) {
+            // If we're under max_time, perfect
+            if (measured_time <= MAX_TIME) {
+                return batches;
+            }
+            // If we exceeded max_time, scale back proportionally
+            int scaled_batches = static_cast<int>(batches * (MIN_TIME / measured_time));
+            return std::max(1, scaled_batches);
+        }
+        
+        // Scale up: estimate how many batches needed for min_time
+        double time_per_batch = measured_time / batches;
+        int needed_batches = static_cast<int>(std::ceil((MIN_TIME * 1.05) / time_per_batch));
+        
+        // Make sure we make progress (at least 2x)
+        if (needed_batches <= batches) {
+            needed_batches = batches * 2;
+        }
+        
+        batches = std::min(needed_batches, MAX_BATCH_SIZE);
+    }
     
-    // Clamp to reasonable range
-    if (estimated_batches < 1) estimated_batches = 1;
-    if (estimated_batches > MAX_BATCH_SIZE) estimated_batches = MAX_BATCH_SIZE;
-    
-    return estimated_batches;
+    // Hit max batch size without reaching min_time - accept it
+    return MAX_BATCH_SIZE;
 }
 
 // ============================================================================
@@ -348,18 +387,21 @@ void writeCSVRow(std::ofstream& file, int run_id_global, int run_id_per_size,
                 bool below_target) {
     // Compute derived metrics
     // For reduction: 1 FLOP per element (addition)
-    double flops_total = static_cast<double>(problem_size) * batches;
-    double energy_per_batch_j = (batches > 0) ? (energy_j / batches) : 0.0;
-    double energy_per_second_j = (time_s > 0) ? (energy_j / time_s) : 0.0;
-    double energy_per_flop_j = (flops_total > 0) ? (energy_j / flops_total) : 0.0;
-    double time_per_gemm_ms = (batches > 0) ? (1e3 * time_s / batches) : 0.0;
+    double total_instances = static_cast<double>(batches);
+    double flops_total = static_cast<double>(problem_size) * total_instances;
+    
+    double energy_per_batch_j = (energy_j >= 0 && batches > 0) ? (energy_j / batches) : -1.0;
+    double energy_per_second_j = (energy_j >= 0 && time_s > 0) ? (energy_j / time_s) : -1.0;
+    double energy_per_flop_j = (energy_j >= 0 && flops_total > 0) ? (energy_j / flops_total) : -1.0;
+    
+    double time_per_op_ms = (batches > 0) ? (1e3 * time_s / batches) : 0.0;
     double gflops_per_s = (time_s > 0) ? (flops_total / time_s / 1e9) : 0.0;
-    double avg_power_w = (time_s > 0 && energy_j >= 0) ? (energy_j / time_s) : -1.0;
+    double avg_power_w = (energy_j >= 0 && time_s > 0) ? (energy_j / time_s) : -1.0;
     
-    // Read current CPU frequency
-    int sm_clock_mhz = readCPUFrequencyMHz();
+    int cpu_freq_mhz = readCPUFrequencyMHz();
     
-    // For CPU: gpu_e2e_time_s, gpu_kernel_time_s, wall_time_s are all identical
+    // Write CSV row
+    // For CPU: gpu_e2e_time_s = gpu_kernel_time_s = wall_time_s (all identical)
     file << getTimestamp() << ","
          << run_id_global << ","
          << run_id_per_size << ","
@@ -368,8 +410,8 @@ void writeCSVRow(std::ofstream& file, int run_id_global, int run_id_per_size,
          << problem_size << ","
          << batches << ","
          << std::fixed << std::setprecision(6)
-         << time_s << ","  // gpu_e2e_time_s (identical to wall_time_s for CPU)
-         << time_s << ","  // gpu_kernel_time_s (identical to wall_time_s for CPU)
+         << time_s << ","  // gpu_e2e_time_s (= wall_time_s for CPU)
+         << time_s << ","  // gpu_kernel_time_s (= wall_time_s for CPU)
          << time_s << ","  // wall_time_s
          << energy_j << ","
          << std::scientific << std::setprecision(6)
@@ -379,60 +421,62 @@ void writeCSVRow(std::ofstream& file, int run_id_global, int run_id_per_size,
          << std::scientific << std::setprecision(6)
          << energy_per_flop_j << ","
          << std::fixed << std::setprecision(6)
-         << time_per_gemm_ms << ","  // time_per_gemm_ms_kernel (identical to e2e for CPU)
-         << time_per_gemm_ms << ","  // time_per_gemm_ms_e2e
+         << time_per_op_ms << ","  // time_per_gemm_ms_kernel
+         << time_per_op_ms << ","  // time_per_gemm_ms_e2e
          << std::scientific << std::setprecision(6)
          << flops_total << ","
          << std::fixed << std::setprecision(2)
          << gflops_per_s << ","
          << avg_power_w << ","
          << (below_target ? 't' : 'f') << ","
-         << "," // pcie_gen (empty for CPU)
-         << "," // pcie_width (empty for CPU)
-         << ((sm_clock_mhz > 0) ? std::to_string(sm_clock_mhz) : "") << ","
-         << "," // mem_clock_mhz (empty for CPU)
-         << ((temp_c > 0) ? std::to_string(temp_c) : "") << ","
-         << "\n"; // throttle_reasons (empty for CPU)
+         << ","  // pcie_gen (empty for CPU)
+         << ","  // pcie_width (empty for CPU)
+         << cpu_freq_mhz << ","  // sm_clock_mhz (use CPU freq)
+         << ","  // mem_clock_mhz (empty for CPU)
+         << temp_c << ","
+         << "\n";  // throttle_reasons (empty for CPU)
 }
 
 // ============================================================================
-// Main Benchmark Function
+// OpenBLAS Threading API
+// ============================================================================
+
+extern "C" {
+    void openblas_set_num_threads(int num_threads);
+    int  openblas_get_num_threads();
+}
+
+// ============================================================================
+// Benchmark Runner
 // ============================================================================
 
 void run_benchmark(const char* output_file, bool test_mode) {
-    // Get CPU info
-    std::string cpu_model = getCPUModel();
     std::cout << "=== CPU Reduction Benchmark (Adaptive Batching) ===" << std::endl;
+    
+    // CPU model
+    std::string cpu_model = getCPUModel();
     std::cout << "CPU: " << cpu_model << std::endl;
     std::cout << "Target runtime per measurement: " << TARGET_RUNTIME_S << "s" << std::endl;
     std::cout << "Repetitions per configuration: " << REPEATS << " (each writes a CSV row)" << std::endl;
     
-    // Initialize RAPL
+    // Discover RAPL zones
     std::vector<RAPLZone> rapl_zones = discoverRAPLZones();
     if (rapl_zones.empty()) {
-        std::cerr << "WARNING: RAPL not available. Make sure:\n"
-                  << "  1. You're on Linux with Intel/AMD CPU\n"
-                  << "  2. powercap module loaded: sudo modprobe intel_rapl_msr\n"
-                  << "  3. Permissions set: sudo chmod -R a+r /sys/class/powercap/\n"
-                  << "Energy measurements will be set to -1.0\n" << std::endl;
+        std::cout << "Warning: No RAPL zones found, energy measurements will be -1" << std::endl;
     } else {
-        std::cout << "RAPL: Found " << rapl_zones.size() << " package zone(s)" << std::endl;
-        for (const auto& zone : rapl_zones) {
-            std::cout << "  - " << zone.name << " (max_range: " 
-                     << (zone.max_energy_range_uj / 1e6) << " J)" << std::endl;
-        }
+        std::cout << "Found " << rapl_zones.size() << " RAPL package zone(s)" << std::endl;
     }
     
-    // Allocate vectors for maximum problem size
-    std::cout << "\nAllocating vectors (max size: " << MAX_N << " elements = "
-              << (MAX_N * sizeof(float) / (1024.0 * 1024.0)) << " MB)..." << std::endl;
+    // Allocate memory for maximum problem size
+    std::cout << "\nAllocating memory for max problem size: " << MAX_N 
+              << " elements (" << (MAX_N * sizeof(float) / (1024.0 * 1024.0)) 
+              << " MB per vector)..." << std::endl;
     
-    float* x_max = nullptr;
-    float* ones_max = nullptr;
+    float* x_max = (float*)aligned_alloc(64, MAX_N * sizeof(float));
+    float* ones_max = (float*)aligned_alloc(64, MAX_N * sizeof(float));
     
-    if (posix_memalign((void**)&x_max, 64, MAX_N * sizeof(float)) != 0 ||
-        posix_memalign((void**)&ones_max, 64, MAX_N * sizeof(float)) != 0) {
-        std::cerr << "ERROR: Failed to allocate aligned memory" << std::endl;
+    if (!x_max || !ones_max) {
+        std::cerr << "Error: Failed to allocate memory" << std::endl;
         return;
     }
     
@@ -487,30 +531,23 @@ void run_benchmark(const char* output_file, bool test_mode) {
             // Set OpenBLAS thread count
             openblas_set_num_threads(num_threads);
             
-            std::cout << "\n--- Thread count: " << num_threads << " ---" << std::endl;
+            std::cout << "\n--- Thread count: " << num_threads 
+                      << " (confirmed: " << openblas_get_num_threads() << ") ---" << std::endl;
             
-            // Adaptive batch size based on TARGET_RUNTIME_S
+            // Adaptive batch size based on TARGET_RUNTIME_S (iterative, like GEMM)
+            std::cout << "  Determining batch size... " << std::flush;
             int batches = determine_batch_size(x_max, ones_max, n, TARGET_RUNTIME_S);
-            
-            std::cout << "Determined batch size: " << batches << " (targeting ~" 
-                     << TARGET_RUNTIME_S << "s runtime)" << std::endl;
-            
-            // Check if we hit the target runtime (for below_target flag)
-            bool below_target = (batches >= MAX_BATCH_SIZE);
+            std::cout << "using " << batches << " batches" << std::endl;
             
             // Run REPEATS measurements with this batch size
-            std::cout << "Running " << REPEATS << " measurements (each writes a CSV row)..." << std::endl;
-            
             for (int rep = 0; rep < REPEATS; rep++) {
                 run_id_global++;
                 
                 MeasurementResult result = run_single_measurement(x_max, ones_max, n, 
                                                                   batches, rapl_zones);
                 
-                // Check if actual runtime is below target
-                if (below_target && result.time_s >= TARGET_RUNTIME_S) {
-                    below_target = false;  // We actually hit the target
-                }
+                // Check if actual runtime is below target (with 5% tolerance)
+                bool below_target = (result.time_s < TARGET_RUNTIME_S * 0.95);
                 
                 // Write CSV row for this single run
                 writeCSVRow(csv_file, run_id_global, run_id_per_size, cpu_model,
@@ -518,34 +555,32 @@ void run_benchmark(const char* output_file, bool test_mode) {
                            result.temp_c, below_target);
                 csv_file.flush();
                 
-                // Console output for each measurement (only in test mode for brevity)
-                if (test_mode) {
-                    double gflops = (result.time_s > 0) ? 
-                        (static_cast<double>(n) * batches / result.time_s / 1e9) : 0.0;
-                    double power = (result.time_s > 0 && result.energy_j >= 0) ? 
-                        (result.energy_j / result.time_s) : -1.0;
-                    
-                    std::cout << "  [" << (rep + 1) << "/" << REPEATS << "] "
-                             << std::fixed << std::setprecision(3) << result.time_s << "s, "
-                             << std::setprecision(2) << gflops << " GFLOPS";
-                    if (result.energy_j >= 0) {
-                        std::cout << ", " << std::setprecision(1) << result.energy_j << " J";
-                        if (power >= 0) {
-                            std::cout << ", " << std::setprecision(0) << power << " W";
-                        }
-                    }
-                    if (result.temp_c > 0) {
-                        std::cout << ", " << result.temp_c << "°C";
-                    }
-                    std::cout << std::endl;
+                // Console output for EVERY measurement (like GEMM)
+                double gflops = (result.time_s > 0) ? 
+                    (static_cast<double>(n) * batches / result.time_s / 1e9) : 0.0;
+                double power = (result.time_s > 0 && result.energy_j >= 0) ? 
+                    (result.energy_j / result.time_s) : -1.0;
+                
+                char check = below_target ? '!' : '+';
+                std::cout << "  " << check << " Run " << (rep + 1) << "/" << REPEATS << ": "
+                         << std::fixed << std::setprecision(3) << result.time_s << "s";
+                
+                if (result.energy_j >= 0) {
+                    std::cout << " | E=" << std::setprecision(1) << result.energy_j << "J";
                 }
+                if (power >= 0) {
+                    std::cout << " P=" << std::setprecision(0) << power << "W";
+                }
+                std::cout << " | " << std::setprecision(2) << gflops << " GFLOPS";
+                if (result.temp_c > 0) {
+                    std::cout << " | T=" << result.temp_c << "°C";
+                }
+                if (below_target) {
+                    std::cout << " (!)";
+                }
+                std::cout << std::endl;
                 
                 run_id_per_size++;  // Increment after each run within this problem size
-            }
-            
-            if (!test_mode) {
-                std::cout << "  → Completed " << REPEATS << " runs for n=" << n 
-                         << ", threads=" << num_threads << std::endl;
             }
         }
     }
@@ -614,21 +649,26 @@ int main(int argc, char** argv) {
 }
 
 // ============================================================================
-// Key Changes from Original main.cpp
+// Key Changes from Original
 // ============================================================================
 /*
- * [✓] Adaptive batch size based on TARGET_RUNTIME_S (like main2.cpp)
- * [✓] CSV output according to CSV_COLUMNS.md (26 columns)
- * [✓] 50 repetitions per configuration (REPEATS = 50)
- * [✓] Variante A: Each of the 50 runs writes its own CSV row (no median aggregation in code)
- * [✓] Hardcoded thread counts: 1, 2, 4, 8, 10, 16, 20
- * [✓] Hardcoded problem sizes (9 sizes from 1M to 256M elements)
- * [✓] Test mode: --test flag for reduced configurations with console output
- * [✓] RAPL logic preserved (discoverRAPLZones, per-zone overflow handling)
- * [✓] For CPU: gpu_e2e_time_s = gpu_kernel_time_s = wall_time_s (all identical)
- * [✓] run_id_global increments for each CSV row written (each individual run)
- * [✓] run_id_per_size resets to 0 for each new problem_size, increments for each run
- * [✓] below_target flag: 't' if runtime < target despite hitting MAX_BATCH_SIZE
- * [✓] FLOPs calculation: 1 FLOP per element (reduction = sum = additions only)
- * [✓] Loop order: outer=problem_size, middle=num_threads, inner=REPEATS
+ * [UPDATED] determine_batch_size(): Now uses iterative scaling like GEMM:
+ *           - Warmup (5 batches, not measured)
+ *           - Adaptive starting point based on problem size
+ *           - Iterative loop until MIN_TIME (1.0s) is reached
+ *           - Uses std::ceil with 5% buffer for scaling
+ *           - Scales back if exceeding MAX_TIME (3.0s)
+ *
+ * [UPDATED] Console output: Every measurement now prints a line (like GEMM)
+ *           - Shows +/! prefix (+ = OK, ! = below target)
+ *           - Shows time, energy, power, GFLOPS, temperature
+ *
+ * [UPDATED] below_target: Now based on actual measured time (< 0.95 * TARGET)
+ *           instead of batch limit check
+ *
+ * [UNCHANGED] Everything else:
+ *           - RAPL energy measurement logic
+ *           - CSV format and columns
+ *           - Problem sizes and thread counts
+ *           - 50 repetitions per configuration
  */
