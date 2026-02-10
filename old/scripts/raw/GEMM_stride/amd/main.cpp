@@ -33,7 +33,7 @@ constexpr int REPETITIONS = 50;    // 50 measurements per (n, batch_count)
 constexpr int MAX_SIZE = 16384;
 
 // Hardcoded thread counts for Intel CPU (as per CSV_COLUMNS.md)
-const std::vector<int> THREAD_COUNTS = {1, 2, 4, 8, 10, 16, 20, 32, 64};
+const std::vector<int> THREAD_COUNTS = {1,2,4,8,10,16,20,32,64};
 
 // Problem sizes
 const std::vector<int> PROBLEM_SIZES = {64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384};
