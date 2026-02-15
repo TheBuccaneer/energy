@@ -90,4 +90,4 @@ echo ""
 echo "Shutting down NOW..."
 
 # Force shutdown (doesn't wait for user processes)
-shutdown -h now
+sudo shutdown -h now
