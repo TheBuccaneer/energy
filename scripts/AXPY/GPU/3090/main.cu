@@ -1,7 +1,7 @@
-// main.cu - CUDA STREAM Triad Energy Benchmark for RTX 5050
-// Operation: a[i] = b[i] + scalar * c[i]
-// Compile: nvcc -O3 -std=c++17 -o stream_bench main.cu -lnvidia-ml
-// Usage: ./stream_bench [--test|-t] [--output|-o <path>] [--device|-d <id>]
+// main.cu - CUDA AXPY Energy Benchmark for RTX 3090
+// Operation: y[i] = alpha * x[i] + y[i]
+// Compile: nvcc -O3 -std=c++17 -o axpy_bench main.cu -lnvidia-ml
+// Usage: ./axpy_bench [--test|-t] [--output|-o <path>] [--device|-d <id>]
 
 #include <cuda_runtime.h>
 #include <nvml.h>
@@ -23,20 +23,20 @@
 #include <cstdlib>
 
 // ============================================================================
-// Configuration - RTX 5050 only (hardcoded)
+// Configuration - RTX 3090 only (hardcoded)
 // ============================================================================
 
 constexpr double TARGET_RUNTIME_S = 1.0;
 constexpr int    MAX_BATCH_SIZE   = 250000;
 constexpr int    MACRO_REPEATS    = 50;
 
-// STREAM Triad scalar constant
-constexpr float SCALAR = 3.0f;
+// AXPY scalar constant
+constexpr float ALPHA = 3.0f;
 
-// Problem sizes: vector lengths (matching CPU STREAM exactly)
+// Problem sizes: vector lengths
 static const long long PROBLEM_SIZES[] = {
     1000000LL, 2000000LL, 4000000LL, 8000000LL, 16000000LL, 32000000LL,
-    64000000LL, 128000000LL, 256000000LL
+    64000000LL, 128000000LL, 256000000LL, 512000000LL
 };
 static const int NUM_SIZES = sizeof(PROBLEM_SIZES) / sizeof(PROBLEM_SIZES[0]);
 static const long long MAX_N = *std::max_element(std::begin(PROBLEM_SIZES), std::end(PROBLEM_SIZES));
@@ -150,16 +150,15 @@ GPUTelemetry getGPUTelemetry(nvmlDevice_t device) {
 }
 
 // ============================================================================
-// STREAM Triad CUDA Kernel: a[i] = b[i] + scalar * c[i]
+// AXPY CUDA Kernel: y[i] = alpha * x[i] + y[i]
 // ============================================================================
 
-__global__ void stream_triad_kernel(float* __restrict__ a, 
-                                     const float* __restrict__ b,
-                                     const float* __restrict__ c,
-                                     float scalar, long long n) {
+__global__ void axpy_kernel(const float* __restrict__ x, 
+                            float* __restrict__ y,
+                            float alpha, long long n) {
     long long idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < n) {
-        a[idx] = b[idx] + scalar * c[idx];
+        y[idx] = alpha * x[idx] + y[idx];
     }
 }
 
@@ -172,11 +171,10 @@ struct BatchResult {
     bool below_target;
 };
 
-BatchResult determineBatchSize(float* d_a, float* d_b, float* d_c,
+BatchResult determineBatchSize(float* d_x, float* d_y,
                                long long n, float target_seconds, cudaStream_t stream) {
     int batch = 1;
     
-    // Kernel launch config
     int blockSize = 256;
     int numBlocks = (n + blockSize - 1) / blockSize;
     
@@ -188,7 +186,7 @@ BatchResult determineBatchSize(float* d_a, float* d_b, float* d_c,
         CHECK_CUDA(cudaEventRecord(start, stream));
         
         for (int b = 0; b < batch; b++) {
-            stream_triad_kernel<<<numBlocks, blockSize, 0, stream>>>(d_a, d_b, d_c, SCALAR, n);
+            axpy_kernel<<<numBlocks, blockSize, 0, stream>>>(d_x, d_y, ALPHA, n);
         }
         
         CHECK_CUDA(cudaEventRecord(stop, stream));
@@ -257,11 +255,10 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
                  float gpu_e2e_time, float gpu_kernel_time, float wall_time, 
                  double total_energy, double avg_power, bool below_target, 
                  const GPUTelemetry& telem) {
-    // Calculate derived metrics
     double energy_per_batch = (batches > 0) ? (total_energy / batches) : 0.0;
     double energy_per_second = (wall_time > 0) ? (total_energy / wall_time) : 0.0;
     
-    // Calculate FLOPs (for STREAM Triad: 2 * N per operation: mul + add)
+    // AXPY: 2 FLOPs per element (mul + add)
     double flops_per_op = 2.0 * n;
     double flops_total = flops_per_op * batches;
     double gflops_per_s = (gpu_kernel_time > 0) ? (flops_total / gpu_kernel_time / 1e9) : 0.0;
@@ -302,13 +299,13 @@ void writeCSVRow(std::ofstream& csv, int run_id_global, int run_id_per_size,
 }
 
 // ============================================================================
-// Cleanup Helper (for test mode early exit)
+// Cleanup Helper
 // ============================================================================
 
 void cleanup_and_exit(cudaEvent_t start_event, cudaEvent_t stop_event,
                      cudaEvent_t start_kernel, cudaEvent_t stop_kernel,
-                     float* d_a, float* d_b, float* d_c,
-                     float* h_a, float* h_b, float* h_c,
+                     float* d_x, float* d_y,
+                     float* h_x, float* h_y,
                      cudaStream_t stream,
                      std::ofstream& csv_file) {
     std::cout << "\n Test mode: 5 rows written! \n";
@@ -320,13 +317,11 @@ void cleanup_and_exit(cudaEvent_t start_event, cudaEvent_t stop_event,
     CHECK_CUDA(cudaEventDestroy(start_kernel));
     CHECK_CUDA(cudaEventDestroy(stop_kernel));
     
-    CHECK_CUDA(cudaFree(d_a));
-    CHECK_CUDA(cudaFree(d_b));
-    CHECK_CUDA(cudaFree(d_c));
+    CHECK_CUDA(cudaFree(d_x));
+    CHECK_CUDA(cudaFree(d_y));
     
-    free(h_a);
-    free(h_b);
-    free(h_c);
+    free(h_x);
+    free(h_y);
     
     CHECK_CUDA(cudaStreamDestroy(stream));
     nvmlShutdown();
@@ -339,11 +334,10 @@ void cleanup_and_exit(cudaEvent_t start_event, cudaEvent_t stop_event,
 // ============================================================================
 
 int main(int argc, char** argv) {
-    // Parse command line arguments
     bool test_mode = false;
     int total_rows = 0;
     int device_id = 0;
-    std::string output_file = "data/raw/STREAM_5050.csv";
+    std::string output_file = "data/raw/AXPY_3090.csv";
     
     for (int i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "--test") || !strcmp(argv[i], "-t")) {
@@ -356,8 +350,8 @@ int main(int argc, char** argv) {
         }
     }
     
-    std::cout << "\nCUDA STREAM Triad Energy Benchmark (RTX 5050)\n";
-    std::cout << "Operation: a[i] = b[i] + " << SCALAR << " * c[i]\n";
+    std::cout << "\nCUDA AXPY Energy Benchmark (RTX 3090)\n";
+    std::cout << "Operation: y[i] = " << ALPHA << " * x[i] + y[i]\n";
     
     // Initialize CUDA
     int device_count = 0;
@@ -393,21 +387,19 @@ int main(int argc, char** argv) {
     
     std::cout << "Device Name: " << device_name << "\n\n";
     
-    // Initialize run ID counters
     int run_id_global = 1;
     
     // Create CUDA stream
     cudaStream_t stream;
     CHECK_CUDA(cudaStreamCreate(&stream));
     
-    // Calculate memory requirements for maximum size
-    // STREAM Triad needs 3 arrays: a (output), b (input), c (input)
+    // AXPY needs 2 arrays: x (input), y (input/output)
     const size_t max_bytes = MAX_N * sizeof(float);
     
-    // Check if we have enough GPU memory
+    // Check GPU memory
     size_t free_mem, total_mem;
     CHECK_CUDA(cudaMemGetInfo(&free_mem, &total_mem));
-    size_t required_device_mem = 3 * max_bytes;
+    size_t required_device_mem = 2 * max_bytes;
     
     if (required_device_mem > free_mem) {
         std::cerr << "Warning: Not enough GPU memory for largest size.\n";
@@ -416,55 +408,46 @@ int main(int argc, char** argv) {
     }
     
     // Allocate host memory (regular malloc, not pinned)
-    float *h_a = nullptr, *h_b = nullptr, *h_c = nullptr;
+    float *h_x = nullptr, *h_y = nullptr;
     
-    h_a = (float*)malloc(max_bytes);
-    h_b = (float*)malloc(max_bytes);
-    h_c = (float*)malloc(max_bytes);
+    h_x = (float*)malloc(max_bytes);
+    h_y = (float*)malloc(max_bytes);
     
-    if (!h_a || !h_b || !h_c) {
+    if (!h_x || !h_y) {
         std::cerr << "Failed to allocate host memory\n";
-        free(h_a); free(h_b); free(h_c);
+        free(h_x); free(h_y);
         return EXIT_FAILURE;
     }
     
     std::cout << "Allocated host buffers: " 
-              << (3 * max_bytes / (1024*1024)) << " MB\n";
+              << (2 * max_bytes / (1024*1024)) << " MB\n";
     
     // Allocate device memory
-    float *d_a = nullptr, *d_b = nullptr, *d_c = nullptr;
+    float *d_x = nullptr, *d_y = nullptr;
+    cudaError_t alloc_err;
     
-    alloc_err = cudaMalloc(&d_a, max_bytes);
+    alloc_err = cudaMalloc(&d_x, max_bytes);
     if (alloc_err != cudaSuccess) {
-        std::cerr << "Failed to allocate device memory for d_a\n";
-        cudaFreeHost(h_a); cudaFreeHost(h_b); cudaFreeHost(h_c);
+        std::cerr << "Failed to allocate device memory for d_x\n";
+        free(h_x); free(h_y);
         return EXIT_FAILURE;
     }
     
-    alloc_err = cudaMalloc(&d_b, max_bytes);
+    alloc_err = cudaMalloc(&d_y, max_bytes);
     if (alloc_err != cudaSuccess) {
-        std::cerr << "Failed to allocate device memory for d_b\n";
-        cudaFree(d_a);
-        cudaFreeHost(h_a); cudaFreeHost(h_b); cudaFreeHost(h_c);
-        return EXIT_FAILURE;
-    }
-    
-    alloc_err = cudaMalloc(&d_c, max_bytes);
-    if (alloc_err != cudaSuccess) {
-        std::cerr << "Failed to allocate device memory for d_c\n";
-        cudaFree(d_a); cudaFree(d_b);
-        cudaFreeHost(h_a); cudaFreeHost(h_b); cudaFreeHost(h_c);
+        std::cerr << "Failed to allocate device memory for d_y\n";
+        cudaFree(d_x);
+        free(h_x); free(h_y);
         return EXIT_FAILURE;
     }
     
     std::cout << "Allocated device buffers: " 
-              << (3 * max_bytes / (1024*1024)) << " MB\n\n";
+              << (2 * max_bytes / (1024*1024)) << " MB\n\n";
     
-    // Initialize vectors (seed=42 for b, seed=43 for c, like CPU)
-    std::cout << "Initializing host vectors (seed=42 for b, seed=43 for c)\n";
-    initializeVector(h_b, MAX_N, 42);
-    initializeVector(h_c, MAX_N, 43);
-    std::fill(h_a, h_a + MAX_N, 0.0f);
+    // Initialize vectors (seed=42 for x, seed=43 for y)
+    std::cout << "Initializing host vectors (seed=42 for x, seed=43 for y)\n";
+    initializeVector(h_x, MAX_N, 42);
+    initializeVector(h_y, MAX_N, 43);
     
     // Prepare CSV output
     ensureDirectoryExists(output_file.c_str());
@@ -480,7 +463,7 @@ int main(int argc, char** argv) {
         writeCSVHeader(csv_file);
     }
     
-    // Create CUDA events for timing
+    // Create CUDA events
     cudaEvent_t start_event, stop_event;
     cudaEvent_t start_kernel, stop_kernel;
     CHECK_CUDA(cudaEventCreate(&start_event));
@@ -488,7 +471,6 @@ int main(int argc, char** argv) {
     CHECK_CUDA(cudaEventCreate(&start_kernel));
     CHECK_CUDA(cudaEventCreate(&stop_kernel));
     
-    // Kernel launch config
     int blockSize = 256;
     
     // ========================================================================
@@ -501,7 +483,7 @@ int main(int argc, char** argv) {
         long long n = PROBLEM_SIZES[size_idx];
         int run_id_per_size = 1;
         
-        std::cout << "STREAM Triad size " << n << " elements\n";
+        std::cout << "AXPY size " << n << " elements\n";
         
         size_t size_bytes = n * sizeof(float);
         if (size_bytes > max_bytes) {
@@ -514,12 +496,12 @@ int main(int argc, char** argv) {
         // Determine batch size
         std::cout << "  Determine batch size..." << std::flush;
         
-        // Pre-transfer data to device for batch determination
-        CHECK_CUDA(cudaMemcpyAsync(d_b, h_b, size_bytes, cudaMemcpyHostToDevice, stream));
-        CHECK_CUDA(cudaMemcpyAsync(d_c, h_c, size_bytes, cudaMemcpyHostToDevice, stream));
+        // Pre-transfer data for batch determination
+        CHECK_CUDA(cudaMemcpyAsync(d_x, h_x, size_bytes, cudaMemcpyHostToDevice, stream));
+        CHECK_CUDA(cudaMemcpyAsync(d_y, h_y, size_bytes, cudaMemcpyHostToDevice, stream));
         CHECK_CUDA(cudaStreamSynchronize(stream));
         
-        BatchResult batch_result = determineBatchSize(d_a, d_b, d_c, n, TARGET_RUNTIME_S, stream);
+        BatchResult batch_result = determineBatchSize(d_x, d_y, n, TARGET_RUNTIME_S, stream);
         int batches = batch_result.batches;
         bool below_target_size = batch_result.below_target;
         
@@ -531,6 +513,9 @@ int main(int argc, char** argv) {
         
         // Run MACRO_REPEATS measurements
         for (int rep = 0; rep < MACRO_REPEATS; rep++) {
+            // Re-initialize y on host before each measurement
+            initializeVector(h_y, n, 43);
+            
             // ================================================================
             // E2E Measurement Start
             // ================================================================
@@ -538,31 +523,26 @@ int main(int argc, char** argv) {
             auto wall_start = std::chrono::steady_clock::now();
             unsigned long long energy_before = getGPUEnergy(nvml_device);
             
-            // GPU E2E timing starts HERE (before H2D)
             CHECK_CUDA(cudaEventRecord(start_event, stream));
             
-            // H2D transfers (b and c only; a is output)
-            CHECK_CUDA(cudaMemcpyAsync(d_b, h_b, size_bytes, cudaMemcpyHostToDevice, stream));
-            CHECK_CUDA(cudaMemcpyAsync(d_c, h_c, size_bytes, cudaMemcpyHostToDevice, stream));
+            // H2D transfers (x and y)
+            CHECK_CUDA(cudaMemcpyAsync(d_x, h_x, size_bytes, cudaMemcpyHostToDevice, stream));
+            CHECK_CUDA(cudaMemcpyAsync(d_y, h_y, size_bytes, cudaMemcpyHostToDevice, stream));
             
-            // Kernel timing starts HERE (after H2D)
             CHECK_CUDA(cudaEventRecord(start_kernel, stream));
             
             // GPU kernel (batches)
             for (int b = 0; b < batches; b++) {
-                stream_triad_kernel<<<numBlocks, blockSize, 0, stream>>>(d_a, d_b, d_c, SCALAR, n);
+                axpy_kernel<<<numBlocks, blockSize, 0, stream>>>(d_x, d_y, ALPHA, n);
             }
             
-            // Kernel timing ends HERE (before D2H)
             CHECK_CUDA(cudaEventRecord(stop_kernel, stream));
             
-            // D2H transfer (a only, the output)
-            CHECK_CUDA(cudaMemcpyAsync(h_a, d_a, size_bytes, cudaMemcpyDeviceToHost, stream));
+            // D2H transfer (y only, the output)
+            CHECK_CUDA(cudaMemcpyAsync(h_y, d_y, size_bytes, cudaMemcpyDeviceToHost, stream));
             
-            // GPU E2E timing ends HERE (after D2H)
             CHECK_CUDA(cudaEventRecord(stop_event, stream));
             
-            // Synchronize and measure
             CHECK_CUDA(cudaDeviceSynchronize());
             
             unsigned long long energy_after = getGPUEnergy(nvml_device);
@@ -572,7 +552,6 @@ int main(int argc, char** argv) {
             // E2E Measurement End
             // ================================================================
             
-            // Calculate timings
             float gpu_ms = 0;
             CHECK_CUDA(cudaEventElapsedTime(&gpu_ms, start_event, stop_event));
             float gpu_time_s = gpu_ms / 1000.0f;
@@ -584,7 +563,6 @@ int main(int argc, char** argv) {
             std::chrono::duration<double> wall_duration = wall_end - wall_start;
             float wall_time_s = wall_duration.count();
             
-            // Calculate energy and power
             double energy_j = 0.0;
             double avg_power_w = 0.0;
             
@@ -594,30 +572,25 @@ int main(int argc, char** argv) {
                 avg_power_w = energy_j / wall_time_s;
             }
             
-            // Check if this run is below target (based on E2E time, like GEMM)
+            // below_target based on E2E time (like GEMM/STREAM)
             bool below_target = (gpu_time_s < TARGET_RUNTIME_S);
             
-            // Get GPU telemetry
             GPUTelemetry telem = getGPUTelemetry(nvml_device);
             
-            // Write to CSV
             writeCSVRow(csv_file, run_id_global, run_id_per_size, device_name, "", n, batches,
                        gpu_time_s, kernel_time_s, wall_time_s, energy_j, avg_power_w, 
                        below_target, telem);
             csv_file.flush();
             
-            // Increment counters
             run_id_global++;
             run_id_per_size++;
             
-            // Test mode check
             ++total_rows;
             if (test_mode && total_rows >= 5) {
                 cleanup_and_exit(start_event, stop_event, start_kernel, stop_kernel,
-                               d_a, d_b, d_c, h_a, h_b, h_c, stream, csv_file);
+                               d_x, d_y, h_x, h_y, stream, csv_file);
             }
             
-            // Console progress
             char check = below_target ? '!' : '+';
             std::cout << "  " << check << " Run " << (rep + 1) << "/" 
                      << MACRO_REPEATS << ": "
@@ -637,7 +610,6 @@ int main(int argc, char** argv) {
             std::cout << "\n";
         }
         
-        // Cooling pause (except after last size)
         if (size_idx < NUM_SIZES - 1) {
             std::cout << "  Cooling down for 30 seconds\n";
             std::this_thread::sleep_for(std::chrono::seconds(30));
@@ -657,13 +629,11 @@ int main(int argc, char** argv) {
     CHECK_CUDA(cudaEventDestroy(start_kernel));
     CHECK_CUDA(cudaEventDestroy(stop_kernel));
     
-    CHECK_CUDA(cudaFree(d_a));
-    CHECK_CUDA(cudaFree(d_b));
-    CHECK_CUDA(cudaFree(d_c));
+    CHECK_CUDA(cudaFree(d_x));
+    CHECK_CUDA(cudaFree(d_y));
     
-    free(h_a);
-    free(h_b);
-    free(h_c);
+    free(h_x);
+    free(h_y);
     
     CHECK_CUDA(cudaStreamDestroy(stream));
     nvmlShutdown();
