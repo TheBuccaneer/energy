@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT=$(cd "$(dirname "$0")/.." && pwd)
+ROOT=$(cd "$(dirname "$0")" && pwd)
 GPU_INDEX=${GPU_INDEX:-0}
 EXPECTED_GPU=${EXPECTED_GPU:-RTX 3090}
-SRC="$ROOT/scripts/GEMM/GPU/main_gemm.cu"
-BIN="$ROOT/scripts/GEMM/GPU/main_gemm"
-OUT="$ROOT/runs/GEMM/GPU/RTX_3090/gemm_3090_quickcheck.csv"
+SRC="$ROOT/scripts/GEMM/main_gemm.cu"
+BIN="$ROOT/scripts/GEMM/main_gemm"
+OUT="$ROOT/runs/GEMM/gemm_3090_quickcheck.csv"
 
 mkdir -p "$(dirname "$OUT")"
 rm -f "$OUT"

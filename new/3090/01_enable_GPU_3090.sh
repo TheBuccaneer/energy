@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT=$(cd "$(dirname "$0")/.." && pwd)
+ROOT=$(cd "$(dirname "$0")" && pwd)
 GPU_INDEX=${GPU_INDEX:-0}
 EXPECTED_GPU=${EXPECTED_GPU:-RTX 3090}
 WARMUP_DURATION=${WARMUP_DURATION:-60}
-LOGDIR="$ROOT/runs/GEMM/GPU/RTX_3090/qc"
-WARMUP_SRC="$ROOT/scripts/gpu_warmup_fp32.cu"
-WARMUP_BIN="$ROOT/scripts/gpu_warmup_fp32"
+LOGDIR="$ROOT/runs/GEMM/qc"
+WARMUP_SRC="$ROOT/gpu_warmup_fp32.cu"
+WARMUP_BIN="$ROOT/gpu_warmup_fp32"
 
 mkdir -p "$LOGDIR"
 

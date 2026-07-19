@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT=$(cd "$(dirname "$0")/.." && pwd)
+ROOT=$(cd "$(dirname "$0")" && pwd)
 STAMP=$(date +%Y%m%d_%H%M%S)
 REPS=${REPS:-10}
 SESSIONS=${SESSIONS:-5}
@@ -9,10 +9,10 @@ GPU_INDEX=${GPU_INDEX:-0}
 EXPECTED_GPU=${EXPECTED_GPU:-RTX 3090}
 POWER_OFF_AT_END=${POWER_OFF_AT_END:-1}
 
-SRC="$ROOT/scripts/GEMM/GPU/main_gemm.cu"
-BIN="$ROOT/scripts/GEMM/GPU/main_gemm"
-OUTDIR="$ROOT/runs/GEMM/GPU/RTX_3090"
-RESTORE="$ROOT/scripts/03_disable_GPU_3090.sh"
+SRC="$ROOT/scripts/GEMM/main_gemm.cu"
+BIN="$ROOT/scripts/GEMM/main_gemm"
+OUTDIR="$ROOT/runs/GEMM"
+RESTORE="$ROOT/03_disable_GPU_3090.sh"
 
 [[ -f "$SRC" ]] || { echo "ERROR: missing $SRC" >&2; exit 1; }
 [[ -f "$RESTORE" ]] || { echo "ERROR: missing $RESTORE" >&2; exit 1; }
