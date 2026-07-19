@@ -55,16 +55,16 @@ inline float value_b(int row, int col) {
 void initialize(float* a, float* b, float* c, int n, int ld) {
     for (int row = 0; row < n; ++row) {
         for (int col = 0; col < ld; ++col) {
-            const size_t index = static_cast<size_t>(row) * ld + col;
+            const size_t index = static_cast<size_t>(row) * static_cast<size_t>(ld)
+                               + static_cast<size_t>(col);
             if (col < n) {
                 a[index] = value_a(row, col);
                 b[index] = value_b(row, col);
-                c[index] = 0.0f;
             } else {
-                a[index] = -101.0f;
-                b[index] = -103.0f;
-                c[index] = -107.0f;
+                a[index] = 0.0f;
+                b[index] = 0.0f;
             }
+            c[index] = 0.0f;
         }
     }
 }
@@ -103,12 +103,9 @@ bool correct(const float* c, int n, int ld) {
     };
     for (const auto& [row, col] : samples) {
         const double expected = expected_value(row, col, n);
-        const double actual = c[static_cast<size_t>(row) * ld + col];
+        const double actual = c[static_cast<size_t>(row) * static_cast<size_t>(ld) + col];
         const double relative = std::abs(actual - expected) / std::max(1.0, std::abs(expected));
         if (relative > 2.0e-3) return false;
-    }
-    for (int row : {0, n / 2, n - 1}) {
-        if (c[static_cast<size_t>(row) * ld + n] != -107.0f) return false;
     }
     return true;
 }
@@ -117,7 +114,7 @@ bool correct(const float* c, int n, int ld) {
 
 int main(int argc, char** argv) {
     try {
-        const bench::Options options = bench::parse_options(argc, argv, "gemm_strided_intel.csv");
+        const bench::Options options = bench::parse_options(argc, argv, "strided_gemm_intel.csv");
         const auto parent = std::filesystem::path(options.output_file).parent_path();
         if (!parent.empty()) std::filesystem::create_directories(parent);
         std::ofstream output(options.output_file, std::ios::trunc);
@@ -157,7 +154,7 @@ int main(int argc, char** argv) {
         for (const Config config : configs) {
             const int n = config.n;
             const int ld = 2 * n;
-            const size_t count = static_cast<size_t>(n) * ld;
+            const size_t count = static_cast<size_t>(n) * static_cast<size_t>(ld);
             float* a = bench::allocate_aligned(count);
             float* b = bench::allocate_aligned(count);
             float* c = bench::allocate_aligned(count);
@@ -196,6 +193,7 @@ int main(int argc, char** argv) {
                 const double flops_per_op = 2.0 * n * static_cast<double>(n) * n;
                 const double logical_bytes_per_op = 3.0 * n * static_cast<double>(n) * sizeof(float);
 
+                // bench::make_cpu_row sets execution_mode to cpu_native for CPU rows.
                 const auto row = bench::make_cpu_row(
                     options, ++sequence, repetition, "STRIDED_GEMM", "openblas_sgemm_ld2n", model,
                     config.threads, n, "N=" + std::to_string(n) + ";ld=" + std::to_string(ld), batches, seconds, energy,

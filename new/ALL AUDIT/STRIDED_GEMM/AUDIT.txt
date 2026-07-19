@@ -1,0 +1,46 @@
+CPU STRIDED GEMM REPAIR PACKAGE AUDIT
+Generated: 2026-07-19T14:42:06+00:00
+
+[1] Shell syntax checks
+PASS bash -n: INTEL/scripts/02_run_CPU_Intel_STRIDED_GEMM_only.sh
+PASS bash -n: INTEL/scripts/quickcheck_CPU_Intel_STRIDED_GEMM.sh
+PASS bash -n: AMD/scripts/02_run_CPU_AMD_STRIDED_GEMM_only.sh
+PASS bash -n: AMD/scripts/quickcheck_CPU_AMD_STRIDED_GEMM.sh
+
+[2] Required C++ tokens
+PASS required tokens: INTEL/scripts/STRIDED_GEMM/main_gemm_strided_intel.cpp
+PASS required tokens: AMD/scripts/STRIDED_GEMM/main_gemm_strided_amd.cpp
+
+[3] Forbidden runner tokens
+PASS forbidden-token scan: INTEL/scripts/02_run_CPU_Intel_STRIDED_GEMM_only.sh
+PASS forbidden-token scan: INTEL/scripts/quickcheck_CPU_Intel_STRIDED_GEMM.sh
+PASS forbidden-token scan: AMD/scripts/02_run_CPU_AMD_STRIDED_GEMM_only.sh
+PASS forbidden-token scan: AMD/scripts/quickcheck_CPU_AMD_STRIDED_GEMM.sh
+
+[4] OpenMP source scan
+PASS no omp.h, OpenMP pragmas, or omp_set_* calls
+
+[5] Intel/AMD source equivalence
+--- /mnt/data/CPU_STRIDED_GEMM_REPAIR/INTEL/scripts/STRIDED_GEMM/main_gemm_strided_intel.cpp	2026-07-19 14:41:27.251615664 +0000
++++ /mnt/data/CPU_STRIDED_GEMM_REPAIR/AMD/scripts/STRIDED_GEMM/main_gemm_strided_amd.cpp	2026-07-19 14:41:27.262176633 +0000
+@@ -114,7 +114,7 @@
+ 
+ int main(int argc, char** argv) {
+     try {
+-        const bench::Options options = bench::parse_options(argc, argv, "strided_gemm_intel.csv");
++        const bench::Options options = bench::parse_options(argc, argv, "strided_gemm_amd.csv");
+         const auto parent = std::filesystem::path(options.output_file).parent_path();
+         if (!parent.empty()) std::filesystem::create_directories(parent);
+         std::ofstream output(options.output_file, std::ios::trunc);
+PASS sources differ only in default output filename
+
+[6] C++17 syntax-only compilation with interface stubs
+PASS C++ syntax: INTEL/scripts/STRIDED_GEMM/main_gemm_strided_intel.cpp
+PASS C++ syntax: AMD/scripts/STRIDED_GEMM/main_gemm_strided_amd.cpp
+
+[7] Campaign invariants
+PASS campaign defaults and success gates
+
+[8] Limit of local audit
+NOT RUN: hardware execution, RAPL reads, platform benchmark_common.hpp integration, and real OpenBLAS linking.
+Reason: the uploaded package did not include the platform headers/enable/restore scripts, and this container has no target hardware/OpenBLAS installation.
