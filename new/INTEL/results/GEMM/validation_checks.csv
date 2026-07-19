@@ -1,0 +1,35 @@
+category,check,severity,status,observed,expected
+campaign,session_files,FAIL,PASS,"[1, 2, 3, 4, 5]","[1, 2, 3, 4, 5]"
+schema,required_columns,FAIL,PASS,missing=[],all 45 cpu-gpu-v2 columns
+schema,column_order,WARN,PASS,identical,exact 45-column order
+schema,unexpected_columns,WARN,PASS,[],none
+schema,schema_version,FAIL,PASS,['cpu-gpu-v2'],cpu-gpu-v2
+coverage,rows_per_session,FAIL,PASS,"{'gemm_intel_20260719_085511_session1.csv': 630, 'gemm_intel_20260719_085511_session2.csv': 630, 'gemm_intel_20260719_085511_session3.csv': 630, 'gemm_intel_20260719_085511_session4.csv': 630, 'gemm_intel_20260719_085511_session5.csv': 630}",630 each
+coverage,problem_sizes,FAIL,PASS,"[np.int64(64), np.int64(128), np.int64(256), np.int64(512), np.int64(1024), np.int64(2048), np.int64(4096), np.int64(8192), np.int64(16384)]","[64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384]"
+coverage,thread_counts,FAIL,PASS,"[np.int64(1), np.int64(2), np.int64(4), np.int64(8), np.int64(10), np.int64(16), np.int64(20)]","[1, 2, 4, 8, 10, 16, 20]"
+coverage,duplicate_configuration_repetitions,FAIL,PASS,0,0
+coverage,repetitions_per_configuration,FAIL,PASS,"min=10, max=10",10
+coverage,repetition_ids,FAIL,PASS,bad_groups=0,"(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)"
+semantics,workload,FAIL,PASS,['GEMM'],GEMM
+semantics,implementation,FAIL,PASS,['openblas_sgemm'],openblas_sgemm
+semantics,execution_mode,FAIL,PASS,['cpu_native'],cpu_native
+correctness,checksum,FAIL,PASS,failed=0,0 failures
+correctness,finite_positive_measurements,FAIL,PASS,bad_rows=0,0
+formula,cpu_time_fields_equal,FAIL,PASS,failed_rows=0,0
+formula,total_energy_device_plus_dram,FAIL,PASS,failed_rows=0,0
+formula,energy_per_op,FAIL,PASS,failed_rows=0,0
+formula,energy_per_second,FAIL,PASS,failed_rows=0,0
+formula,time_per_op,FAIL,PASS,failed_rows=0,0
+formula,flops_total,FAIL,PASS,failed_rows=0,0
+formula,gflops_per_s,FAIL,PASS,failed_rows=0,0
+formula,logical_bytes,FAIL,PASS,failed_rows=0,0
+formula,avg_power,FAIL,PASS,failed_rows=0,0
+formula,runtime_status,FAIL,PASS,failed_rows=0,0
+plausibility,target_runtime_share,WARN,WARN,77.46%,>=90%
+plausibility,maximum_temperature,WARN,WARN,100.0 C,<95 C
+plausibility,package_power_range,WARN,PASS,43.56..179.67 W,1..500 W broad sanity range
+provenance,sequence_indices,FAIL,PASS,bad_sessions=0,0
+provenance,session_ids_match_filenames,FAIL,PASS,bad_sessions=0,0
+threading,no_catastrophic_multithread_slowdown,FAIL,PASS,flagged=0,no N>=2048 multithread runtime >=5x the 1-thread runtime
+threading,large_gemm_has_useful_parallel_speedup,FAIL,PASS,none,"for every N>=4096, at least one multithread configuration reaches >=1.25x"
+threading,large_gemm_moderate_thread_regressions,WARN,PASS,flagged=0,no 2..20-thread configuration at N>=4096 is >25% slower than 1 thread

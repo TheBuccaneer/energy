@@ -1,0 +1,3 @@
+platform,campaign,rows,target_runtime_share_pct,maximum_temperature_c,session_median_temperature_min_c,session_median_temperature_max_c,median_clock_drop_pct,robust_outlier_share_pct,runtime_unstable_configs,energy_unstable_configs
+AMD,20260719_085402,4050,81.09,96.0,77.0,78.0,0.28999516674722087,4.987654320987654,3,0
+INTEL,20260719_085511,3150,77.46,100.0,94.0,99.0,2.6930409914204003,7.0476190476190474,9,9

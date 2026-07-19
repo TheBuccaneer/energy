@@ -1,0 +1,7 @@
+Abschließende Einordnung der CPU-GEMM-Messungen
+
+Die Intel- und AMD-GEMM-Kampagnen sind vollständig, intern konsistent und frei vom früheren OpenBLAS-Threadingfehler. Alle Checks zu Abdeckung, Prüfsummen, Formeln und Skalierung wurden bestanden. Die Intel-Daten bilden dabei bewusst das thermisch begrenzte System im Dauerbetrieb ab; dies wird als bekannte Systemeigenschaft und Limitation dokumentiert.
+
+Tie-aware zeigt GEMM keinen allgemeinen Energie-Laufzeit-Zielkonflikt. Auf Intel überlappen die energie- und laufzeitoptimalen Leader-Sets bei allen neun Größen. Zehn Threads stellen bei großen Matrizen einen nahezu kostenlosen Laufzeitkompromiss gegenüber acht Threads dar. Auf AMD treten bei drei von neun Größen disjunkte Leader-Sets auf; besonders klar bei N=4096 und N=16384, wo 64 Threads energieoptimal und 32 Threads laufzeitoptimal sind.
+
+GEMM allein stützt die These „fastest ≠ greenest“ daher nur punktuell. Das ist für einen compute-bound Workload plausibel, da kürzere Laufzeit und geringere Energie häufig gekoppelt sind. Die zentrale Evidenz muss aus den memory-bound Workloads sowie dem anschließenden CPU-GPU-Vergleich kommen.
