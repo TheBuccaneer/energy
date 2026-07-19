@@ -1,9 +1,13 @@
 #include "benchmark_common.hpp"
 
 #include <cblas.h>
-#include <omp.h>
 
-extern "C" void openblas_set_num_threads(int);
+extern "C" {
+void openblas_set_num_threads(int);
+int openblas_get_num_threads();
+int openblas_get_parallel();
+char* openblas_get_config();
+}
 
 namespace {
 
@@ -15,6 +19,31 @@ struct Config {
     int threads;
 };
 
+std::vector<int> parse_filter(const char* name) {
+    const char* raw = std::getenv(name);
+    if (!raw || !*raw) return {};
+    std::vector<int> values;
+    std::stringstream stream(raw);
+    std::string token;
+    while (std::getline(stream, token, ',')) {
+        if (!token.empty()) values.push_back(std::stoi(token));
+    }
+    return values;
+}
+
+bool selected(int value, const std::vector<int>& filter) {
+    return filter.empty() || std::find(filter.begin(), filter.end(), value) != filter.end();
+}
+
+const char* openblas_backend_name(int mode) {
+    switch (mode) {
+        case 0: return "sequential";
+        case 1: return "pthreads";
+        case 2: return "openmp";
+        default: return "unknown";
+    }
+}
+
 inline float value_a(int row, int col) {
     return 0.5f + static_cast<float>((row * 3 + col * 5) % 17) * 0.03125f;
 }
@@ -25,7 +54,6 @@ inline float value_b(int row, int col) {
 
 void initialize(float* a, float* b, float* c, int n) {
     const size_t count = static_cast<size_t>(n) * n;
-#pragma omp parallel for schedule(static)
     for (size_t index = 0; index < count; ++index) {
         const int row = static_cast<int>(index / n);
         const int col = static_cast<int>(index % n);
@@ -90,12 +118,24 @@ int main(int argc, char** argv) {
         bench::Rapl rapl;
         bench::require_rapl(rapl);
         const std::string model = bench::cpu_model();
-        omp_set_dynamic(0);
+        const std::vector<int> size_filter = parse_filter("BENCH_SIZE_FILTER");
+        const std::vector<int> thread_filter = parse_filter("BENCH_THREAD_FILTER");
+        const int openblas_parallel = openblas_get_parallel();
+        if (openblas_parallel == 0) {
+            throw std::runtime_error("OpenBLAS library is sequential; a threaded build is required");
+        }
+        const char* openblas_config = openblas_get_config();
+        std::cout << "OpenBLAS backend=" << openblas_backend_name(openblas_parallel)
+                  << " | config=" << (openblas_config ? openblas_config : "unknown") << '\n';
 
         std::vector<Config> configs;
         for (int n : SIZES) {
-            for (int threads : bench::THREAD_COUNTS) configs.push_back({n, threads});
+            if (!selected(n, size_filter)) continue;
+            for (int threads : bench::THREAD_COUNTS) {
+                if (selected(threads, thread_filter)) configs.push_back({n, threads});
+            }
         }
+        if (configs.empty()) throw std::runtime_error("No configurations remain after BENCH_*_FILTER");
         bench::shuffle_configs(configs, options.seed);
 
         std::cout << "GEMM | " << model
@@ -116,8 +156,16 @@ int main(int argc, char** argv) {
                 throw std::runtime_error("Allocation failed for GEMM N=" + std::to_string(n));
             }
 
-            omp_set_num_threads(config.threads);
             openblas_set_num_threads(config.threads);
+            const int active_threads = openblas_get_num_threads();
+            if (active_threads != config.threads) {
+                free(a); free(b); free(c);
+                throw std::runtime_error(
+                    "OpenBLAS thread request not honored: requested=" + std::to_string(config.threads) +
+                    ", active=" + std::to_string(active_threads));
+            }
+            std::cout << "[OpenBLAS] requested=" << config.threads
+                      << " active=" << active_threads << '\n';
             initialize(a, b, c, n);
             const int batches = calibrate(a, b, c, n);
 
