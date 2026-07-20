@@ -1,0 +1,10 @@
+problem_size,tradeoff_class,package_energy_exact_best_threads,package_energy_leader_threads,package_energy_selection_status,runtime_exact_best_threads,runtime_leader_threads,runtime_selection_status,shared_leader_threads,energy_penalty_using_runtime_best_pct,runtime_penalty_using_energy_best_pct,total_energy_sensitivity_same_exact_thread,total_energy_sensitivity_exact_best_threads,total_energy_sensitivity_leader_threads
+64,shared_near_optimal_configuration,16,"16,2,1,10,8,4,20",tie_or_uncertain,16,"16,2,1,10,20,4,8",tie_or_uncertain,"1,2,4,8,10,16,20",0.0,0.0,True,16,"16,2,1,10,8,4,20"
+128,shared_near_optimal_configuration,4,4,clear_leader,8,"8,20,16,10,4",tie_or_uncertain,4,20.812409870439353,5.030959346713204,True,4,4
+256,shared_near_optimal_configuration,8,8,clear_leader,8,8,clear_leader,8,0.0,0.0,True,8,8
+512,shared_near_optimal_configuration,8,"8,16",tie_or_uncertain,16,"16,8",tie_or_uncertain,"8,16",2.9639697185950054,2.101030750687305,True,8,"8,16"
+1024,shared_near_optimal_configuration,8,8,clear_leader,8,"8,10,20",tie_or_uncertain,8,0.0,0.0,True,8,8
+2048,shared_near_optimal_configuration,8,8,clear_leader,8,"8,10",tie_or_uncertain,8,0.0,0.0,True,8,8
+4096,shared_near_optimal_configuration,8,"8,10",tie_or_uncertain,10,10,clear_leader,10,3.287955899648165,6.9952904119753745,True,8,"8,10"
+8192,shared_near_optimal_configuration,8,"8,10",tie_or_uncertain,10,"10,8",tie_or_uncertain,"8,10",0.6731079461061995,0.858613196625635,True,8,"8,10"
+16384,shared_near_optimal_configuration,8,8,clear_leader,10,"10,8",tie_or_uncertain,8,6.285814315018579,2.6150974287519446,True,8,8

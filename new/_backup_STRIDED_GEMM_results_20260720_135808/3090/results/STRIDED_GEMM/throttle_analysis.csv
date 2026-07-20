@@ -1,0 +1,3 @@
+throttle_mask,rows,hex_mask,decoded
+0,150,0x0,none
+4,300,0x4,software_power_cap

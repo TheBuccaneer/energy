@@ -1,0 +1,1 @@
+/home/rock/projects/energy/new/AMD/scripts/STRIDED_GEMM/main_gemm_strided_amd.cpp

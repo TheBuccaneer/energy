@@ -1,0 +1,1 @@
+/home/rock/projects/energy/new/3090/02_run_GPU_3090_STRIDED_GEMM_only.sh

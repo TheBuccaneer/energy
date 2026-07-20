@@ -1,0 +1,1 @@
+/home/rock/projects/energy/new/5060ti/scripts/02_run_GPU_5060ti_STRIDED_GEMM_only.sh

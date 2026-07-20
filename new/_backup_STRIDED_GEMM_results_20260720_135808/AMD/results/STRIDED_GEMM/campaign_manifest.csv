@@ -1,0 +1,6 @@
+platform,workload,campaign,session,file,rows,bytes,dram_available_rows
+AMD,STRIDED_GEMM,20260719_175453,1,strided_gemm_amd_20260719_175453_session1.csv,810,339413,0
+AMD,STRIDED_GEMM,20260719_175453,2,strided_gemm_amd_20260719_175453_session2.csv,810,339444,0
+AMD,STRIDED_GEMM,20260719_175453,3,strided_gemm_amd_20260719_175453_session3.csv,810,339399,0
+AMD,STRIDED_GEMM,20260719_175453,4,strided_gemm_amd_20260719_175453_session4.csv,810,339360,0
+AMD,STRIDED_GEMM,20260719_175453,5,strided_gemm_amd_20260719_175453_session5.csv,810,339380,0

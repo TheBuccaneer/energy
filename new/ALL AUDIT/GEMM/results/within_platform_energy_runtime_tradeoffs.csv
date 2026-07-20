@@ -1,0 +1,37 @@
+platform,platform_label,problem_size,energy_opt_configuration,runtime_opt_configuration,energy_leaders,runtime_leaders,leader_set_overlap,leader_sets_disjoint,energy_selection_status,runtime_selection_status,runtime_opt_energy_penalty_pct,runtime_opt_runtime_gain_pct,interpretation
+INTEL,Intel CPU,64,16T,16T,"1T,2T,4T,8T,10T,16T,20T","1T,2T,4T,8T,10T,16T,20T","10T,16T,1T,20T,2T,4T,8T",False,tie_or_uncertain,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+INTEL,Intel CPU,128,4T,10T,"1T,4T","4T,8T,10T,16T,20T",4T,False,tie_or_uncertain,tie_or_uncertain,18.342630789100014,4.759718647106781,no_tie_aware_conflict
+INTEL,Intel CPU,256,8T,8T,8T,8T,8T,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+INTEL,Intel CPU,512,8T,16T,"8T,16T","8T,10T,16T,20T","16T,8T",False,tie_or_uncertain,tie_or_uncertain,2.728742368673265,3.6876912353747127,no_tie_aware_conflict
+INTEL,Intel CPU,1024,8T,8T,8T,8T,8T,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+INTEL,Intel CPU,2048,8T,8T,8T,"8T,10T",8T,False,clear_leader,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+INTEL,Intel CPU,4096,8T,10T,"8T,10T","8T,10T","10T,8T",False,tie_or_uncertain,tie_or_uncertain,0.6014979101332862,7.247367151700301,no_tie_aware_conflict
+INTEL,Intel CPU,8192,8T,10T,"8T,10T",10T,10T,False,tie_or_uncertain,clear_leader,0.5427073029358631,12.92293926647481,no_tie_aware_conflict
+INTEL,Intel CPU,16384,8T,10T,"8T,10T","8T,10T","10T,8T",False,tie_or_uncertain,tie_or_uncertain,0.5664041104221473,7.633461928348306,no_tie_aware_conflict
+AMD,AMD CPU,64,8T,8T,"1T,2T,4T,8T,10T,16T,20T,32T,64T","1T,2T,4T,8T,10T,16T,20T,32T,64T","10T,16T,1T,20T,2T,32T,4T,64T,8T",False,tie_or_uncertain,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+AMD,AMD CPU,128,4T,4T,4T,4T,4T,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+AMD,AMD CPU,256,4T,16T,4T,"16T,32T,64T",,True,clear_leader,tie_or_uncertain,15.042562288528117,19.60669399604957,disjoint_but_at_least_one_uncertain
+AMD,AMD CPU,512,16T,16T,16T,"16T,32T",16T,False,clear_leader,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+AMD,AMD CPU,1024,16T,64T,16T,"16T,20T,32T,64T",16T,False,clear_leader,tie_or_uncertain,11.921927080961625,8.384734649474613,no_tie_aware_conflict
+AMD,AMD CPU,2048,64T,64T,64T,"32T,64T",64T,False,clear_leader,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+AMD,AMD CPU,4096,64T,32T,64T,32T,,True,clear_leader,clear_leader,7.728577911556078,6.6634820199773515,clear_configuration_tradeoff
+AMD,AMD CPU,8192,64T,32T,64T,"32T,64T",64T,False,clear_leader,tie_or_uncertain,13.194663968407916,4.7409161266133815,no_tie_aware_conflict
+AMD,AMD CPU,16384,64T,32T,64T,32T,,True,clear_leader,clear_leader,8.764814783946129,4.80452004834201,clear_configuration_tradeoff
+3090,RTX 3090,64,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+3090,RTX 3090,128,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+3090,RTX 3090,256,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+3090,RTX 3090,512,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+3090,RTX 3090,1024,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+3090,RTX 3090,2048,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+3090,RTX 3090,4096,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+3090,RTX 3090,8192,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+3090,RTX 3090,16384,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,64,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,128,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,256,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,512,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,1024,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,2048,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,4096,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,8192,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict
+5060ti,RTX 5060 Ti,16384,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,single_configuration,single_configuration,0.0,0.0,no_tie_aware_conflict

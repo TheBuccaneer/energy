@@ -1,0 +1,6 @@
+platform,workload,campaign,session,file,rows,bytes,dram_available_rows
+INTEL,STRIDED_GEMM,20260719_175326,1,strided_gemm_intel_20260719_175326_session1.csv,630,261067,630
+INTEL,STRIDED_GEMM,20260719_175326,2,strided_gemm_intel_20260719_175326_session2.csv,630,261216,630
+INTEL,STRIDED_GEMM,20260719_175326,3,strided_gemm_intel_20260719_175326_session3.csv,630,261090,630
+INTEL,STRIDED_GEMM,20260719_175326,4,strided_gemm_intel_20260719_175326_session4.csv,630,261276,630
+INTEL,STRIDED_GEMM,20260719_175326,5,strided_gemm_intel_20260719_175326_session5.csv,630,261293,630

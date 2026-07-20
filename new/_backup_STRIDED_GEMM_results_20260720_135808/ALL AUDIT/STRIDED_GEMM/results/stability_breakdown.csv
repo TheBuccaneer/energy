@@ -1,0 +1,5 @@
+platform,unstable_configurations,runtime_unstable,energy_unstable,throughput_unstable,platform_label
+INTEL,28,11,25,11,Intel CPU
+AMD,12,11,10,11,AMD CPU
+3090,0,0,0,0,RTX 3090
+5060ti,0,0,0,0,RTX 5060 Ti

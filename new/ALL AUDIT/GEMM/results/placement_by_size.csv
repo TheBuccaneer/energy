@@ -1,0 +1,10 @@
+problem_size,energy_exact_winner,energy_leaders,energy_selection_status,runtime_exact_winner,runtime_leaders,runtime_selection_status,edp_exact_winner,edp_leaders,edp_selection_status,energy_runtime_leader_overlap,placement_class
+64,INTEL,INTEL,clear_leader,INTEL,INTEL,clear_leader,INTEL,INTEL,clear_leader,INTEL,shared_energy_runtime_leader
+128,5060ti,5060ti,clear_leader,3090,3090,clear_leader,5060ti,5060ti,clear_leader,,clear_device_tradeoff
+256,5060ti,5060ti,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,,clear_device_tradeoff
+512,3090,"3090,5060ti",tie_or_uncertain,3090,3090,clear_leader,3090,3090,clear_leader,3090,shared_energy_runtime_leader
+1024,3090,3090,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,3090,shared_energy_runtime_leader
+2048,3090,3090,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,3090,shared_energy_runtime_leader
+4096,3090,3090,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,3090,shared_energy_runtime_leader
+8192,3090,3090,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,3090,shared_energy_runtime_leader
+16384,3090,3090,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,3090,shared_energy_runtime_leader
