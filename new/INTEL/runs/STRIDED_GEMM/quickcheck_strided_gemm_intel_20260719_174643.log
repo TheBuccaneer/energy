@@ -1,0 +1,18 @@
+OpenBLAS backend=pthreads | config=OpenBLAS 0.3.30 NO_LAPACKE DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=128
+STRIDED_GEMM(ld=2N) | Intel(R) Core(TM) i9-7900X CPU @ 3.30GHz | session=quickcheck_strided_gemm_intel_20260719_174643 | reps=3 | configs=4 | DRAM-RAPL=yes
+[OpenBLAS] requested=20 active=20
+[STRIDED_GEMM] N=4096 threads=20 rep=1 batches=6 time=1.113 s | package=155.957 J | dram=1.688386 | total=157.646 J | power=141.6 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=20 rep=2 batches=6 time=1.122 s | package=157.485 J | dram=1.675258 | total=159.160 J | power=141.8 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=20 rep=3 batches=6 time=1.088 s | package=153.210 J | dram=1.702477 | total=154.913 J | power=142.4 W | runtime=in_range | checksum=OK
+[OpenBLAS] requested=4 active=4
+[STRIDED_GEMM] N=4096 threads=4 rep=1 batches=5 time=1.049 s | package=96.054 J | dram=1.025192 | total=97.079 J | power=92.5 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=4 rep=2 batches=5 time=1.058 s | package=95.663 J | dram=0.998815 | total=96.662 J | power=91.4 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=4 rep=3 batches=5 time=1.064 s | package=96.758 J | dram=1.012309 | total=97.770 J | power=91.9 W | runtime=in_range | checksum=OK
+[OpenBLAS] requested=1 active=1
+[STRIDED_GEMM] N=4096 threads=1 rep=1 batches=2 time=1.339 s | package=70.025 J | dram=0.113940 | total=70.139 J | power=52.4 W | runtime=above | checksum=OK
+[STRIDED_GEMM] N=4096 threads=1 rep=2 batches=2 time=1.342 s | package=70.223 J | dram=0.122431 | total=70.345 J | power=52.4 W | runtime=above | checksum=OK
+[STRIDED_GEMM] N=4096 threads=1 rep=3 batches=2 time=1.343 s | package=70.633 J | dram=0.139031 | total=70.772 J | power=52.7 W | runtime=above | checksum=OK
+[OpenBLAS] requested=10 active=10
+[STRIDED_GEMM] N=4096 threads=10 rep=1 batches=8 time=1.004 s | package=138.994 J | dram=1.890009 | total=140.884 J | power=140.3 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=10 rep=2 batches=8 time=1.013 s | package=140.257 J | dram=1.921343 | total=142.178 J | power=140.3 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=10 rep=3 batches=8 time=1.013 s | package=140.524 J | dram=1.932818 | total=142.457 J | power=140.7 W | runtime=in_range | checksum=OK
