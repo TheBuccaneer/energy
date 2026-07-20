@@ -1,1 +1,0 @@
-/home/rock/projects/energy/new/AMD/scripts/02_run_CPU_AMD_STRIDED_GEMM_only.sh

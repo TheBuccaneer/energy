@@ -1,1 +1,0 @@
-/home/rock/projects/energy/new/5060ti/scripts/STRIDED_GEMM/main_strided_gemm.cu

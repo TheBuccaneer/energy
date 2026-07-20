@@ -1,1 +1,0 @@
-failed_formula,source_file,session_number,sequence_index,repetition,problem_size,num_threads,batches,e2e_time_s,kernel_time_s,total_energy_j,device_energy_j,dram_energy_j,time_per_op_ms_e2e,flops_total

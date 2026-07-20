@@ -1,0 +1,13 @@
+STREAM | AMD Ryzen Threadripper 3970X 32-Core Processor | platform=AMD | session=quickcheck_stream_amd | reps=3 | configs=3 | DRAM-RAPL=no
+[OpenMP] requested=1 active=1
+[STREAM] N=64000000 threads=1 rep=1 batches=28 time=1.027 s | package=87.912 J | dram=NA | total=87.912 J | power=85.6 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=1 rep=2 batches=28 time=1.023 s | package=90.786 J | dram=NA | total=90.786 J | power=88.7 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=1 rep=3 batches=28 time=1.024 s | package=91.356 J | dram=NA | total=91.356 J | power=89.2 W | runtime=in_range | checksum=OK
+[OpenMP] requested=64 active=64
+[STREAM] N=64000000 threads=64 rep=1 batches=47 time=1.063 s | package=165.631 J | dram=NA | total=165.631 J | power=155.8 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=64 rep=2 batches=47 time=1.030 s | package=161.796 J | dram=NA | total=161.796 J | power=157.1 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=64 rep=3 batches=47 time=1.042 s | package=163.714 J | dram=NA | total=163.714 J | power=157.2 W | runtime=in_range | checksum=OK
+[OpenMP] requested=32 active=32
+[STREAM] N=64000000 threads=32 rep=1 batches=50 time=1.025 s | package=164.071 J | dram=NA | total=164.071 J | power=160.1 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=32 rep=2 batches=50 time=1.029 s | package=163.603 J | dram=NA | total=163.603 J | power=159.0 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=32 rep=3 batches=50 time=1.022 s | package=160.674 J | dram=NA | total=160.674 J | power=157.1 W | runtime=in_range | checksum=OK

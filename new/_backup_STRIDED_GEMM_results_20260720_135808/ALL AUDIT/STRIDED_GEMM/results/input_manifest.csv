@@ -1,5 +1,0 @@
-platform,platform_label,device_kind,energy_domain,campaign,latest_complete_raw_campaign,validation_hard_failures,validation_warnings,raw_measurement_rows,session_median_rows,configurations,analysis_results_directory,run_directory
-INTEL,Intel CPU,CPU,CPU package RAPL,20260719_175326,20260719_175326,0,1,3150,315,63,/home/rock/projects/energy/new/INTEL/results/STRIDED_GEMM,/home/rock/projects/energy/new/INTEL/runs/STRIDED_GEMM
-AMD,AMD CPU,CPU,CPU package RAPL,20260719_175453,20260719_175453,0,2,4050,405,81,/home/rock/projects/energy/new/AMD/results/STRIDED_GEMM,/home/rock/projects/energy/new/AMD/runs/STRIDED_GEMM
-3090,RTX 3090,GPU,GPU board NVML,20260720_120846,20260720_120846,0,1,450,45,9,/home/rock/projects/energy/new/3090/results/STRIDED_GEMM,/home/rock/projects/energy/new/3090/runs/STRIDED_GEMM
-5060ti,RTX 5060 Ti,GPU,GPU board NVML,20260720_114819,20260720_114819,0,2,450,45,9,/home/rock/projects/energy/new/5060ti/results/STRIDED_GEMM,/home/rock/projects/energy/new/5060ti/runs/STRIDED_GEMM
