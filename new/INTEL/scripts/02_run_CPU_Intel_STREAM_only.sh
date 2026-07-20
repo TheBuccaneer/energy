@@ -251,10 +251,25 @@ for index, row in enumerate(rows, start=1):
         raise SystemExit(f"row {index}: kernel time/op identity failed")
     if not close(time_e2e, e2e * 1000.0 / batches):
         raise SystemExit(f"row {index}: e2e time/op identity failed")
-    if not close(gflops, flops_total / kernel / 1.0e9):
-        raise SystemExit(f"row {index}: GFLOP/s identity failed")
-    if not close(avg_power, energy / wall):
-        raise SystemExit(f"row {index}: average-power identity failed")
+    # GFLOP/s and average power are serialized with lower CSV precision.
+    if not math.isclose(
+        gflops,
+        flops_total / kernel / 1.0e9,
+        rel_tol=2.0e-3,
+        abs_tol=1.1e-2,
+    ):
+        raise SystemExit(
+            f"row {index}: GFLOP/s identity failed after rounding allowance"
+        )
+    if not math.isclose(
+        avg_power,
+        energy / wall,
+        rel_tol=2.0e-3,
+        abs_tol=1.1e-1,
+    ):
+        raise SystemExit(
+            f"row {index}: average-power identity failed after rounding allowance"
+        )
 
     if row["runtime_status"] not in {"below", "in_range", "above"}:
         raise SystemExit(

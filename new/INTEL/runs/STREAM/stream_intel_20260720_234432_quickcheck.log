@@ -1,0 +1,13 @@
+STREAM | Intel(R) Core(TM) i9-7900X CPU @ 3.30GHz | platform=INTEL | session=stream_intel_20260720_234432_quickcheck | reps=3 | configs=3 | DRAM-RAPL=yes
+[OpenMP] requested=10 active=10
+[STREAM] N=64000000 threads=10 rep=1 batches=35 time=1.002 s | package=102.447 J | dram=1.942503 | total=104.390 J | power=104.2 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=10 rep=2 batches=35 time=1.002 s | package=103.118 J | dram=1.924526 | total=105.042 J | power=104.8 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=10 rep=3 batches=35 time=1.002 s | package=102.814 J | dram=1.933231 | total=104.747 J | power=104.5 W | runtime=in_range | checksum=OK
+[OpenMP] requested=20 active=20
+[STREAM] N=64000000 threads=20 rep=1 batches=34 time=1.007 s | package=103.702 J | dram=2.229852 | total=105.932 J | power=105.2 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=20 rep=2 batches=34 time=1.007 s | package=105.052 J | dram=2.203430 | total=107.256 J | power=106.5 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=20 rep=3 batches=34 time=1.007 s | package=105.458 J | dram=2.183326 | total=107.641 J | power=106.9 W | runtime=in_range | checksum=OK
+[OpenMP] requested=1 active=1
+[STREAM] N=64000000 threads=1 rep=1 batches=20 time=1.015 s | package=42.608 J | dram=0.856662 | total=43.464 J | power=42.8 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=1 rep=2 batches=20 time=1.015 s | package=42.430 J | dram=0.844790 | total=43.274 J | power=42.6 W | runtime=in_range | checksum=OK
+[STREAM] N=64000000 threads=1 rep=3 batches=20 time=1.017 s | package=43.208 J | dram=0.861115 | total=44.069 J | power=43.3 W | runtime=in_range | checksum=OK

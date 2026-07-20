@@ -185,21 +185,43 @@ for index, row in enumerate(rows, start=1):
     expected_flops = 2.0 * size * batches
     expected_bytes = 12.0 * size
 
-    checks = [
+    strict_checks = [
         ("flops_total", flops_total, expected_flops),
         ("logical_bytes_per_op", logical_bytes, expected_bytes),
         ("energy_per_op_j", energy_per_op, energy / batches),
         ("time_per_op_ms_kernel", time_kernel, kernel * 1000.0 / batches),
         ("time_per_op_ms_e2e", time_e2e, e2e * 1000.0 / batches),
-        ("gflops_per_s", gflops, flops_total / kernel / 1.0e9),
-        ("avg_power_w", avg_power, energy / wall),
     ]
-    for name, actual, expected in checks:
+    for name, actual, expected in strict_checks:
         if not close(actual, expected):
             raise SystemExit(
                 f"row {index}: {name} identity failed: "
                 f"{actual} vs {expected}"
             )
+
+    # These two CSV fields are intentionally serialized with lower precision.
+    if not math.isclose(
+        gflops,
+        flops_total / kernel / 1.0e9,
+        rel_tol=2.0e-3,
+        abs_tol=1.1e-2,
+    ):
+        raise SystemExit(
+            f"row {index}: gflops_per_s identity failed after "
+            f"rounding allowance: {gflops} vs "
+            f"{flops_total / kernel / 1.0e9}"
+        )
+
+    if not math.isclose(
+        avg_power,
+        energy / wall,
+        rel_tol=2.0e-3,
+        abs_tol=1.1e-1,
+    ):
+        raise SystemExit(
+            f"row {index}: avg_power_w identity failed after "
+            f"rounding allowance: {avg_power} vs {energy / wall}"
+        )
 
     if row["runtime_status"] not in {"below", "in_range", "above"}:
         raise SystemExit(
