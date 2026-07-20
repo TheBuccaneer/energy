@@ -1,0 +1,1 @@
+/home/rock/projects/energy/new/5060ti/scripts/GEMM/main_gemm.cu

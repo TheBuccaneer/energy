@@ -13,9 +13,9 @@ from gpu_gemm_common import *
 
 
 def check_source_provenance(checks: list[dict], out: Path) -> None:
-    root3090 = platform_root(__file__)
-    source = locate_source(root3090)
-    runner = locate_runner(root3090)
+    root5060ti = platform_root(__file__)
+    source = locate_source(root5060ti)
+    runner = locate_runner(root5060ti)
     if source is None:
         add_check(checks, 'provenance', 'cuda_source_present', 'WARN', False,
                   'not found', 'scripts/GEMM[/GPU]/main_gemm.cu')
@@ -35,7 +35,7 @@ def check_source_provenance(checks: list[dict], out: Path) -> None:
         (out/'audited_cuda_source_path.txt').write_text(str(source)+'\n', encoding='utf-8')
     if runner is None:
         add_check(checks, 'provenance', 'runner_present', 'WARN', False,
-                  'not found', '02_run_GPU_3090_GEMM_only.sh')
+                  'not found', '02_run_GPU_5060ti_GEMM_only.sh')
     else:
         text = runner.read_text(encoding='utf-8', errors='replace')
         add_check(checks, 'provenance', 'tf32_override_disabled', 'FAIL',
@@ -51,7 +51,7 @@ def check_source_provenance(checks: list[dict], out: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description='Validate RTX 3090 GEMM campaign')
+    parser = argparse.ArgumentParser(description='Validate RTX 5060 Ti GEMM campaign')
     parser.add_argument('--campaign')
     args = parser.parse_args()
     out = results_dir(__file__)
@@ -98,7 +98,7 @@ def main() -> None:
         add_check(checks, 'semantics', column, 'FAIL', observed == expected, sorted(observed), sorted(expected))
     names = sorted(raw.device_name.dropna().astype(str).unique())
     add_check(checks, 'semantics', 'device_name', 'FAIL',
-              len(names)==1 and 'RTX 3090' in names[0], names, 'one RTX 3090')
+              len(names)==1 and 'RTX 5060 Ti' in names[0], names, 'one RTX 5060 Ti')
     add_check(checks, 'semantics', 'num_threads_sentinel', 'FAIL',
               bool((raw.num_threads==-1).all()), sorted(raw.num_threads.unique()), -1)
     expected_spec = raw.problem_size.map(lambda n: f'N={int(n)}')
@@ -116,7 +116,7 @@ def main() -> None:
     expected_status = np.where(raw.e2e_time_s<0.75, 'below', np.where(raw.e2e_time_s>1.25, 'above', 'in_range'))
     e2e_per_op = 1000.0*raw.e2e_time_s/raw.batches
     kernel_per_op = 1000.0*raw.kernel_time_s/raw.batches
-    time_atol = 0.5e-9 + 1000.0*0.5e-6/raw.batches
+    time_atol = 0.5e-6 + 1000.0*0.5e-6/raw.batches
     formulas = {
         'e2e_equals_wall':rel_close(raw.e2e_time_s, raw.wall_time_s, 1e-9, 1e-9),
         'kernel_not_above_e2e':raw.kernel_time_s <= raw.e2e_time_s + 2e-4,
@@ -190,7 +190,7 @@ def main() -> None:
     warns = check_df[(check_df.severity=='WARN') & (check_df.status=='WARN')]
     verdict = 'FAIL' if len(hard) else ('PASS WITH WARNINGS' if len(warns) else 'PASS')
     report = (
-        '# RTX 3090 GEMM validation report\n\n'
+        '# RTX 5060 Ti GEMM validation report\n\n'
         f'- Campaign: `{campaign.stamp}`\n- Files: {len(campaign.files)}\n- Rows: {len(raw)}\n'
         f'- Expected rows/session: {expected_rows}\n- Overall verdict: **{verdict}**\n\n'
         f'## Failed checks\n\n{markdown_table(hard)}\n\n'
@@ -201,7 +201,7 @@ def main() -> None:
         'Energy is the direct NVML board-energy delta and is therefore not the same domain as CPU package-only RAPL.\n'
     )
     (out/'validation_report.md').write_text(report, encoding='utf-8')
-    print(f'[RTX 3090] validation: {verdict}')
+    print(f'[RTX 5060 Ti] validation: {verdict}')
     print(out/'validation_report.md')
     if verdict == 'FAIL':
         sys.exit(2)

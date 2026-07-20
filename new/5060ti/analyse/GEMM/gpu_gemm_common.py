@@ -60,7 +60,7 @@ def project_root(script_file: str | Path) -> Path:
 
 
 def platform_root(script_file: str | Path) -> Path:
-    return project_root(script_file) / '3090'
+    return project_root(script_file) / '5060ti'
 
 
 def results_dir(script_file: str | Path) -> Path:
@@ -69,20 +69,20 @@ def results_dir(script_file: str | Path) -> Path:
     return out
 
 
-def find_run_dir(root3090: Path) -> Path:
+def find_run_dir(root5060ti: Path) -> Path:
     candidates = [
-        root3090/'runs'/'GEMM'/'GPU'/'RTX_3090',
-        root3090/'runs'/'GEMM',
-        root3090/'runs',
+        root5060ti/'runs'/'GEMM'/'GPU'/'RTX_5060_Ti',
+        root5060ti/'runs'/'GEMM',
+        root5060ti/'runs',
     ]
     for path in candidates:
-        if path.is_dir() and any(path.glob('gemm_3090_*_session*.csv')):
+        if path.is_dir() and any(path.glob('gemm_5060ti_*_session*.csv')):
             return path
     return candidates[0]
 
 
 def campaign_groups(run_dir: Path) -> dict[str, list[tuple[int, Path]]]:
-    pattern = re.compile(r'^gemm_3090_(\d{8}_\d{6})_session(\d+)\.csv$', re.I)
+    pattern = re.compile(r'^gemm_5060ti_(\d{8}_\d{6})_session(\d+)\.csv$', re.I)
     groups: dict[str, list[tuple[int, Path]]] = {}
     for path in sorted(run_dir.glob('*.csv')):
         match = pattern.match(path.name)
@@ -96,8 +96,8 @@ def select_campaign(script_file: str | Path, requested: str | None = None):
     groups = campaign_groups(run_dir)
     if not groups:
         raise FileNotFoundError(
-            f'Keine offizielle RTX-3090-Kampagne in {run_dir}. Erwartet: '
-            'gemm_3090_<YYYYMMDD_HHMMSS>_session1.csv ... session5.csv. '
+            f'Keine offizielle RTX-5060-Ti-Kampagne in {run_dir}. Erwartet: '
+            'gemm_5060ti_<YYYYMMDD_HHMMSS>_session1.csv ... session5.csv. '
             'Quickcheck-Dateien werden absichtlich ignoriert.'
         )
     if requested:
@@ -211,15 +211,15 @@ def markdown_table(frame: pd.DataFrame, max_rows=100) -> str:
     return '_None._' if frame.empty else frame.head(max_rows).to_markdown(index=False)
 
 
-def locate_source(root3090: Path) -> Path | None:
-    for path in [root3090/'scripts'/'GEMM'/'main_gemm.cu', root3090/'scripts'/'GEMM'/'GPU'/'main_gemm.cu']:
+def locate_source(root5060ti: Path) -> Path | None:
+    for path in [root5060ti/'scripts'/'GEMM'/'main_gemm.cu', root5060ti/'scripts'/'GEMM'/'GPU'/'main_gemm.cu']:
         if path.is_file():
             return path
     return None
 
 
-def locate_runner(root3090: Path) -> Path | None:
-    for path in [root3090/'02_run_GPU_3090_GEMM_only.sh', root3090/'scripts'/'02_run_GPU_3090_GEMM_only.sh']:
+def locate_runner(root5060ti: Path) -> Path | None:
+    for path in [root5060ti/'02_run_GPU_5060ti_GEMM_only.sh', root5060ti/'scripts'/'02_run_GPU_5060ti_GEMM_only.sh']:
         if path.is_file():
             return path
     return None

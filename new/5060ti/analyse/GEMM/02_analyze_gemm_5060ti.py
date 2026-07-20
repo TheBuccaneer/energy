@@ -48,7 +48,7 @@ def plot_metric(summary, metric, ylabel, filename, figdir, logy=True):
         plt.yscale('log')
     plt.xlabel('Matrix size N')
     plt.ylabel(ylabel)
-    plt.title(f'RTX 3090 GEMM: {ylabel}')
+    plt.title(f'RTX 5060 Ti GEMM: {ylabel}')
     plt.grid(True, which='both', alpha=0.3)
     plt.tight_layout()
     plt.savefig(figdir/filename, dpi=180)
@@ -56,13 +56,13 @@ def plot_metric(summary, metric, ylabel, filename, figdir, logy=True):
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description='Analyze RTX 3090 GEMM campaign')
+    parser = argparse.ArgumentParser(description='Analyze RTX 5060 Ti GEMM campaign')
     parser.add_argument('--campaign')
     args = parser.parse_args()
     out = results_dir(__file__)
     checks_path = out/'validation_checks.csv'
     if not checks_path.is_file():
-        raise SystemExit('Run 01_validate_gemm_3090.py first.')
+        raise SystemExit('Run 01_validate_gemm_5060ti.py first.')
     checks = pd.read_csv(checks_path)
     if ((checks.severity=='FAIL') & (checks.status=='FAIL')).any():
         raise SystemExit('Validation has hard failures; analysis aborted.')
@@ -112,7 +112,7 @@ def main() -> None:
     plt.xscale('log', base=2)
     plt.xlabel('Matrix size N')
     plt.ylabel('Median value')
-    plt.title('RTX 3090 GEMM: power and temperature')
+    plt.title('RTX 5060 Ti GEMM: power and temperature')
     plt.grid(True, which='both', alpha=0.3)
     plt.legend()
     plt.tight_layout()
@@ -126,7 +126,7 @@ def main() -> None:
     plt.xscale('log', base=2)
     plt.xlabel('Matrix size N')
     plt.ylabel('GFLOP/s')
-    plt.title('RTX 3090 GEMM: session repeatability')
+    plt.title('RTX 5060 Ti GEMM: session repeatability')
     plt.grid(True, which='both', alpha=0.3)
     plt.legend(ncol=2)
     plt.tight_layout()
@@ -141,7 +141,7 @@ def main() -> None:
     unavoidable = (df.batches==1) & (df.e2e_time_s>TARGET_HIGH_S)
     actionable = df.loc[~unavoidable]
     report = (
-        '# RTX 3090 GEMM scientific analysis\n\n'
+        '# RTX 5060 Ti GEMM scientific analysis\n\n'
         f'- Campaign: `{campaign.stamp}`\n- Measurements: {len(df)}\n- Sessions: {df.session_number.nunique()}\n'
         '- Mode: `gpu_resident`\n- Implementation: `cublas_gemm_ex_fp32_pedantic`\n\n'
         '## Quality and repeatability\n\n'
@@ -163,7 +163,7 @@ def main() -> None:
         'The five session medians are the primary repeatability units; the ten within-session repetitions are technical repetitions.\n'
     )
     (out/'scientific_summary.md').write_text(report, encoding='utf-8')
-    print(f'[RTX 3090] scientific analysis written to {out}')
+    print(f'[RTX 5060 Ti] scientific analysis written to {out}')
 
 if __name__ == '__main__':
     main()

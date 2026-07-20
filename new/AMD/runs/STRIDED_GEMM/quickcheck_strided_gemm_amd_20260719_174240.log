@@ -9,3 +9,14 @@ STRIDED_GEMM(ld=2N) | AMD Ryzen Threadripper 3970X 32-Core Processor | session=q
 [STRIDED_GEMM] N=4096 threads=4 rep=2 batches=4 time=1.202 s | package=164.135 J | dram=NA | total=164.135 J | power=136.5 W | runtime=in_range | checksum=OK
 [STRIDED_GEMM] N=4096 threads=4 rep=3 batches=4 time=1.210 s | package=163.347 J | dram=NA | total=163.347 J | power=135.0 W | runtime=in_range | checksum=OK
 [OpenBLAS] requested=10 active=10
+[STRIDED_GEMM] N=4096 threads=10 rep=1 batches=8 time=1.078 s | package=232.421 J | dram=NA | total=232.421 J | power=215.6 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=10 rep=2 batches=8 time=1.092 s | package=233.229 J | dram=NA | total=233.229 J | power=213.6 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=10 rep=3 batches=8 time=1.083 s | package=234.481 J | dram=NA | total=234.481 J | power=216.4 W | runtime=in_range | checksum=OK
+[OpenBLAS] requested=1 active=1
+[STRIDED_GEMM] N=4096 threads=1 rep=1 batches=1 time=1.093 s | package=93.930 J | dram=NA | total=93.930 J | power=86.0 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=1 rep=2 batches=1 time=1.094 s | package=95.017 J | dram=NA | total=95.017 J | power=86.8 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=1 rep=3 batches=1 time=1.088 s | package=91.957 J | dram=NA | total=91.957 J | power=84.5 W | runtime=in_range | checksum=OK
+[OpenBLAS] requested=32 active=32
+[STRIDED_GEMM] N=4096 threads=32 rep=1 batches=15 time=1.014 s | package=271.250 J | dram=NA | total=271.250 J | power=267.6 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=32 rep=2 batches=15 time=1.007 s | package=270.081 J | dram=NA | total=270.081 J | power=268.1 W | runtime=in_range | checksum=OK
+[STRIDED_GEMM] N=4096 threads=32 rep=3 batches=15 time=1.043 s | package=278.289 J | dram=NA | total=278.289 J | power=266.9 W | runtime=in_range | checksum=OK

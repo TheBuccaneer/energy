@@ -1,19 +1,19 @@
-# RTX 3090 GEMM audit pipeline
+# RTX 5060 Ti GEMM audit pipeline
 
-Install under `3090/analyse/GEMM/`. The scripts read the newest complete official
-5-session campaign from `3090/runs/GEMM/GPU/RTX_3090/`, `3090/runs/GEMM/`, or
-`3090/runs/`. Quickcheck CSVs are ignored.
+Install under `5060ti/analyse/GEMM/`. The scripts read the newest complete official
+5-session campaign from `5060ti/runs/GEMM/GPU/RTX_5060_Ti/`, `5060ti/runs/GEMM/`, or
+`5060ti/runs/`. Quickcheck CSVs are ignored.
 
 ```bash
 python3 -m pip install pandas numpy matplotlib tabulate
-cd ~/projects/energy/new/3090/analyse/GEMM
+cd ~/projects/energy/new/5060ti/analyse/GEMM
 ./run_all.sh
 ```
 
-Results are written to `3090/results/GEMM/`.
+Results are written to `5060ti/results/GEMM/`.
 
 The audit checks campaign coverage, 45-column `cpu-gpu-v2` data, formulas,
-checksums, RTX-3090 identity, resident execution, NVML board energy, pedantic FP32
+checksums, RTX-5060-Ti identity, resident execution, NVML board energy, pedantic FP32
 source provenance, TF32 disablement, PCIe telemetry, clocks, temperatures,
 throttle reasons, robust outliers and five-session reproducibility.
 
