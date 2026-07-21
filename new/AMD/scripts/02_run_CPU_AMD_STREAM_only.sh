@@ -247,10 +247,31 @@ for index, row in enumerate(rows, start=1):
         )
     if not close(energy_per_op, energy / batches):
         raise SystemExit(f"row {index}: energy_per_op_j identity failed")
-    if not close(time_kernel, kernel * 1000.0 / batches):
-        raise SystemExit(f"row {index}: kernel time/op identity failed")
-    if not close(time_e2e, e2e * 1000.0 / batches):
-        raise SystemExit(f"row {index}: e2e time/op identity failed")
+    expected_time_kernel = kernel * 1000.0 / batches
+    expected_time_e2e = e2e * 1000.0 / batches
+
+    # time_per_op_ms_* is serialized with six digits after the decimal point.
+    # Therefore a maximum rounding deviation of about 0.5e-6 ms is expected.
+    if not math.isclose(
+        time_kernel,
+        expected_time_kernel,
+        rel_tol=2.0e-5,
+        abs_tol=1.1e-6,
+    ):
+        raise SystemExit(
+            f"row {index}: kernel time/op identity failed after "
+            f"rounding allowance: {time_kernel} vs {expected_time_kernel}"
+        )
+    if not math.isclose(
+        time_e2e,
+        expected_time_e2e,
+        rel_tol=2.0e-5,
+        abs_tol=1.1e-6,
+    ):
+        raise SystemExit(
+            f"row {index}: e2e time/op identity failed after "
+            f"rounding allowance: {time_e2e} vs {expected_time_e2e}"
+        )
     # GFLOP/s and average power are serialized with lower CSV precision.
     if not math.isclose(
         gflops,
