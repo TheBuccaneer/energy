@@ -1,0 +1,10 @@
+platform,problem_size,working_set_gib,energy_opt_configuration,runtime_opt_configuration,energy_leaders,runtime_leaders,leader_set_overlap,leader_sets_disjoint,energy_selection_status,runtime_selection_status,runtime_opt_energy_penalty_pct,runtime_opt_runtime_gain_pct,interpretation
+AMD,1000000,0.011175870895385742,10T,16T,"8T,10T,16T,20T,64T","16T,20T,64T","16T,20T,64T",False,tie_or_uncertain,tie_or_uncertain,2.2328758571164453,3.2350538890345226,no_tie_aware_conflict
+AMD,2000000,0.022351741790771484,16T,20T,"10T,16T,20T,64T","16T,20T,64T","16T,20T,64T",False,tie_or_uncertain,tie_or_uncertain,3.0011119086820637,0.41793543807719935,no_tie_aware_conflict
+AMD,4000000,0.04470348358154297,16T,32T,"16T,32T",32T,32T,False,tie_or_uncertain,clear_leader,0.26536606154907716,7.271340065694831,no_tie_aware_conflict
+AMD,8000000,0.08940696716308594,32T,32T,"32T,64T",32T,32T,False,tie_or_uncertain,clear_leader,0.0,0.0,no_tie_aware_conflict
+AMD,16000000,0.17881393432617188,10T,10T,"8T,10T",10T,10T,False,tie_or_uncertain,clear_leader,0.0,0.0,no_tie_aware_conflict
+AMD,32000000,0.35762786865234375,4T,4T,"2T,4T","4T,8T",4T,False,tie_or_uncertain,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+AMD,64000000,0.7152557373046875,4T,4T,4T,"4T,8T",4T,False,clear_leader,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+AMD,128000000,1.430511474609375,4T,4T,4T,"4T,8T",4T,False,clear_leader,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+AMD,256000000,2.86102294921875,4T,4T,4T,"4T,8T",4T,False,clear_leader,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict

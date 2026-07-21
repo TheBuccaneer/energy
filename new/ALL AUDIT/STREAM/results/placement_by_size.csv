@@ -1,0 +1,10 @@
+problem_size,working_set_gib,runtime_s_exact_winner,runtime_s_leader_platforms,runtime_s_selection_status,energy_j_exact_winner,energy_j_leader_platforms,energy_j_selection_status,edp_j_s_exact_winner,edp_j_s_leader_platforms,edp_j_s_selection_status,logical_bandwidth_gb_s_exact_winner,logical_bandwidth_gb_s_leader_platforms,logical_bandwidth_gb_s_selection_status,logical_gb_per_j_exact_winner,logical_gb_per_j_leader_platforms,logical_gb_per_j_selection_status,fastest_equals_greenest_point,runtime_energy_leader_overlap,clear_device_tradeoff
+1000000,0.011175870895385742,5060ti,5060ti,clear_leader,5060ti,5060ti,clear_leader,5060ti,5060ti,clear_leader,5060ti,5060ti,clear_leader,5060ti,5060ti,clear_leader,True,5060ti,False
+2000000,0.022351741790771484,5060ti,5060ti,clear_leader,5060ti,5060ti,clear_leader,5060ti,5060ti,clear_leader,5060ti,5060ti,clear_leader,5060ti,5060ti,clear_leader,True,5060ti,False
+4000000,0.04470348358154297,AMD,AMD,clear_leader,5060ti,5060ti,clear_leader,AMD,AMD,clear_leader,AMD,AMD,clear_leader,5060ti,5060ti,clear_leader,False,,True
+8000000,0.08940696716308594,AMD,AMD,clear_leader,AMD,"5060ti,AMD",tie_or_uncertain,AMD,AMD,clear_leader,AMD,AMD,clear_leader,AMD,"5060ti,AMD",tie_or_uncertain,True,AMD,False
+16000000,0.17881393432617188,3090,3090,clear_leader,5060ti,5060ti,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,5060ti,5060ti,clear_leader,False,,True
+32000000,0.35762786865234375,3090,3090,clear_leader,5060ti,5060ti,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,5060ti,5060ti,clear_leader,False,,True
+64000000,0.7152557373046875,3090,3090,clear_leader,5060ti,5060ti,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,5060ti,5060ti,clear_leader,False,,True
+128000000,1.430511474609375,3090,3090,clear_leader,5060ti,5060ti,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,5060ti,5060ti,clear_leader,False,,True
+256000000,2.86102294921875,3090,3090,clear_leader,5060ti,5060ti,clear_leader,3090,3090,clear_leader,3090,3090,clear_leader,5060ti,5060ti,clear_leader,False,,True

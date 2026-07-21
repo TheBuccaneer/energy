@@ -1,0 +1,10 @@
+platform,problem_size,working_set_gib,energy_opt_configuration,runtime_opt_configuration,energy_leaders,runtime_leaders,leader_set_overlap,leader_sets_disjoint,energy_selection_status,runtime_selection_status,runtime_opt_energy_penalty_pct,runtime_opt_runtime_gain_pct,interpretation
+3090,1000000,0.011175870895385742,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+3090,2000000,0.022351741790771484,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+3090,4000000,0.04470348358154297,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+3090,8000000,0.08940696716308594,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+3090,16000000,0.17881393432617188,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+3090,32000000,0.35762786865234375,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+3090,64000000,0.7152557373046875,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+3090,128000000,1.430511474609375,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict
+3090,256000000,2.86102294921875,gpu_resident,gpu_resident,gpu_resident,gpu_resident,gpu_resident,False,clear_leader,clear_leader,0.0,0.0,no_tie_aware_conflict

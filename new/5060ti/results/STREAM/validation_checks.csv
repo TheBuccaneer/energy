@@ -1,0 +1,47 @@
+category,check,severity,status,observed,expected
+coverage,five_sessions,FAIL,PASS,"[1, 2, 3, 4, 5]","[1, 2, 3, 4, 5]"
+schema,exact_header,FAIL,PASS,"['schema_version', 'timestamp', 'session_id', 'sequence_index', 'run_id_global', 'repetition', 'workload', 'implementation', 'execution_mode', 'device_name', 'num_threads', 'problem_size', 'problem_spec', 'batches', 'e2e_time_s', 'kernel_time_s', 'wall_time_s', 'device_energy_j', 'total_energy_j', 'dram_energy_j', 'energy_per_op_j', 'energy_per_second_j', 'energy_per_flop_j', 'time_per_op_ms_kernel', 'time_per_op_ms_e2e', 'flops_total', 'gflops_per_s', 'logical_bytes_per_op', 'avg_power_w', 'runtime_status', 'pcie_gen', 'pcie_width', 'sm_clock_mhz', 'clock_before_mhz', 'clock_after_mhz', 'mem_clock_mhz', 'temp_c', 'temp_before_c', 'temp_after_c', 'throttle_reasons', 'cpu_cycles', 'cpu_instructions', 'cpu_ipc', 'cpu_cache_misses', 'checksum_ok']","['schema_version', 'timestamp', 'session_id', 'sequence_index', 'run_id_global', 'repetition', 'workload', 'implementation', 'execution_mode', 'device_name', 'num_threads', 'problem_size', 'problem_spec', 'batches', 'e2e_time_s', 'kernel_time_s', 'wall_time_s', 'device_energy_j', 'total_energy_j', 'dram_energy_j', 'energy_per_op_j', 'energy_per_second_j', 'energy_per_flop_j', 'time_per_op_ms_kernel', 'time_per_op_ms_e2e', 'flops_total', 'gflops_per_s', 'logical_bytes_per_op', 'avg_power_w', 'runtime_status', 'pcie_gen', 'pcie_width', 'sm_clock_mhz', 'clock_before_mhz', 'clock_after_mhz', 'mem_clock_mhz', 'temp_c', 'temp_before_c', 'temp_after_c', 'throttle_reasons', 'cpu_cycles', 'cpu_instructions', 'cpu_ipc', 'cpu_cache_misses', 'checksum_ok']"
+schema,schema_version,FAIL,PASS,['cpu-gpu-v2'],cpu-gpu-v2
+coverage,session_1_row_count,FAIL,PASS,90,90
+coverage,session_2_row_count,FAIL,PASS,90,90
+coverage,session_3_row_count,FAIL,PASS,90,90
+coverage,session_4_row_count,FAIL,PASS,90,90
+coverage,session_5_row_count,FAIL,PASS,90,90
+semantics,workload,FAIL,PASS,['STREAM'],STREAM
+semantics,implementation,FAIL,PASS,['cuda_stream_triad_fp32'],cuda_stream_triad_fp32
+semantics,execution_mode,FAIL,PASS,['gpu_resident'],gpu_resident
+semantics,device_name_consistent,FAIL,PASS,['NVIDIA GeForce RTX 5060 Ti'],one non-empty device name
+coverage,problem_sizes,FAIL,PASS,"[np.int64(1000000), np.int64(2000000), np.int64(4000000), np.int64(8000000), np.int64(16000000), np.int64(32000000), np.int64(64000000), np.int64(128000000), np.int64(256000000)]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+coverage,thread_grid,FAIL,PASS,[np.int64(-1)],[-1]
+semantics,problem_spec,FAIL,PASS,0,0
+coverage,no_duplicate_measurements,FAIL,PASS,0,0
+coverage,ten_repetitions_per_configuration,FAIL,PASS,"bad=0, groups=45","0 bad, 45 groups"
+coverage,sequence_and_run_ids,FAIL,PASS,0,0
+numeric,positive_batches,FAIL,PASS,0,0
+numeric,positive_e2e_time_s,FAIL,PASS,0,0
+numeric,positive_kernel_time_s,FAIL,PASS,0,0
+numeric,positive_wall_time_s,FAIL,PASS,0,0
+numeric,positive_device_energy_j,FAIL,PASS,0,0
+numeric,positive_total_energy_j,FAIL,PASS,0,0
+numeric,positive_energy_per_op_j,FAIL,PASS,0,0
+numeric,positive_flops_total,FAIL,PASS,0,0
+numeric,positive_gflops_per_s,FAIL,PASS,0,0
+numeric,positive_logical_bytes_per_op,FAIL,PASS,0,0
+numeric,positive_avg_power_w,FAIL,PASS,0,0
+correctness,all_checksums,FAIL,PASS,0,0
+formula,flops_total,FAIL,PASS,0,0
+formula,logical_bytes_per_op,FAIL,PASS,0,0
+formula,energy_per_op_j,FAIL,PASS,0,0
+formula,time_per_op_ms_kernel,FAIL,PASS,0,0
+formula,time_per_op_ms_e2e,FAIL,PASS,0,0
+formula,gflops_per_s,FAIL,PASS,0,0
+formula,avg_power_w,FAIL,PASS,0,0
+runtime,runtime_status_formula,FAIL,PASS,0,0
+runtime,all_runtime_in_target,WARN,PASS,{'in_range': 450},all in_range preferred
+timing,gpu_kernel_not_materially_above_e2e,FAIL,PASS,"{'rows': 0, 'max_kernel_minus_e2e_ms': 0.013000000000040757, 'max_kernel_over_e2e': 1.000012999987}","{'rows': 0, 'tolerance': 'max(0.5 ms, 0.5% of e2e_time_s)'}"
+timing,gpu_kernel_slightly_above_e2e,WARN,WARN,"{'rows': 108, 'max_kernel_minus_e2e_ms': 0.013000000000040757, 'max_kernel_over_e2e': 1.000012999987}",small cross-clock differences are allowed; report them
+energy,gpu_device_equals_total,FAIL,PASS,0,0
+energy,gpu_dram_sentinel,FAIL,PASS,[np.float64(-1.0)],-1
+gpu,pcie_metadata_present,WARN,PASS,"{'gen': [np.int64(4)], 'width': [np.int64(8)]}",positive PCIe generation and width
+provenance,source_present,FAIL,PASS,/home/rock/projects/energy/new/5060ti/scripts/STREAM/main_stream.cu,present
+provenance,runner_present,FAIL,PASS,/home/rock/projects/energy/new/5060ti/scripts/02_run_GPU_5060ti_STREAM_only.sh,present

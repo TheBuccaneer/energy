@@ -1,0 +1,1 @@
+/home/rock/projects/energy/new/5060ti/scripts/STREAM/main_stream.cu

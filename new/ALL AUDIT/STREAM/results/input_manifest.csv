@@ -1,0 +1,5 @@
+platform,campaign,raw_rows,session_median_rows,configurations,energy_domain,result_directory
+INTEL,20260720_234432,3150,315,63,CPU package RAPL,/home/rock/projects/energy/new/INTEL/results/STREAM
+AMD,20260721_095517,4050,405,81,CPU package RAPL,/home/rock/projects/energy/new/AMD/results/STREAM
+3090,20260721_112843,450,45,9,GPU board NVML,/home/rock/projects/energy/new/3090/results/STREAM
+5060ti,20260721_114533,450,45,9,GPU board NVML,/home/rock/projects/energy/new/5060ti/results/STREAM

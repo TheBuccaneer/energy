@@ -1,0 +1,40 @@
+platform,category,check,severity,status,observed,expected
+INTEL,inputs,required_platform_outputs,FAIL,PASS,all present,all required files
+INTEL,validation,no_hard_failures,FAIL,PASS,0,0
+INTEL,validation,warnings_recorded,WARN,PASS,0,0
+INTEL,freshness,complete_raw_campaign,FAIL,PASS,['20260720_234432'],at least one
+INTEL,freshness,analysis_matches_latest_complete,FAIL,PASS,manifest=20260720_234432; latest=20260720_234432,same
+INTEL,coverage,size_grid,FAIL,PASS,"[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+INTEL,coverage,five_session_medians,FAIL,PASS,"min=5, max=5",5
+AMD,inputs,required_platform_outputs,FAIL,PASS,all present,all required files
+AMD,validation,no_hard_failures,FAIL,PASS,0,0
+AMD,validation,warnings_recorded,WARN,WARN,1,0
+AMD,freshness,complete_raw_campaign,FAIL,PASS,['20260721_095517'],at least one
+AMD,freshness,analysis_matches_latest_complete,FAIL,PASS,manifest=20260721_095517; latest=20260721_095517,same
+AMD,coverage,size_grid,FAIL,PASS,"[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+AMD,coverage,five_session_medians,FAIL,PASS,"min=5, max=5",5
+3090,inputs,required_platform_outputs,FAIL,PASS,all present,all required files
+3090,validation,no_hard_failures,FAIL,PASS,0,0
+3090,validation,warnings_recorded,WARN,WARN,1,0
+3090,freshness,complete_raw_campaign,FAIL,PASS,['20260721_112843'],at least one
+3090,freshness,analysis_matches_latest_complete,FAIL,PASS,manifest=20260721_112843; latest=20260721_112843,same
+3090,coverage,size_grid,FAIL,PASS,"[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+3090,coverage,five_session_medians,FAIL,PASS,"min=5, max=5",5
+5060ti,inputs,required_platform_outputs,FAIL,PASS,all present,all required files
+5060ti,validation,no_hard_failures,FAIL,PASS,0,0
+5060ti,validation,warnings_recorded,WARN,WARN,1,0
+5060ti,freshness,complete_raw_campaign,FAIL,PASS,['20260721_114533'],at least one
+5060ti,freshness,analysis_matches_latest_complete,FAIL,PASS,manifest=20260721_114533; latest=20260721_114533,same
+5060ti,coverage,size_grid,FAIL,PASS,"[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+5060ti,coverage,five_session_medians,FAIL,PASS,"min=5, max=5",5
+CPU,provenance,cpu_sources_present,FAIL,PASS,"[PosixPath('/home/rock/projects/energy/new/AMD/scripts/STREAM/main_stream_amd.cpp'), PosixPath('/home/rock/projects/energy/new/INTEL/scripts/STREAM/main_stream_intel.cpp')]",both
+GPU,provenance,gpu_sources_present,FAIL,PASS,"[PosixPath('/home/rock/projects/energy/new/3090/scripts/STREAM/main_stream.cu'), PosixPath('/home/rock/projects/energy/new/5060ti/scripts/STREAM/main_stream.cu')]",both
+CPU,provenance,cpu_sources_semantically_identical,FAIL,PASS,"['444bcf0588e04b1935c7779f0425fe344dcb13ad1c787cbbe26d457604f64311', '6a0bd24c5abdcd28e63926d05e1df1072668eae1074846a9eed4f09188596c53']",identical except platform label/default output
+GPU,provenance,gpu_sources_byte_identical,FAIL,PASS,"['0c92e4e1d40d9dac618b516db4b578c2bc8918495c75d0bb6de07c80de8d137c', '0c92e4e1d40d9dac618b516db4b578c2bc8918495c75d0bb6de07c80de8d137c']",same SHA-256
+3090,provenance,gpu_required_tokens,FAIL,PASS,all present,"['stream_triad_kernel', 'initialize_stream_vectors', 'SCALAR', 'BENCH_SIZE_FILTER', 'BENCH_EXPECTED_GPU', 'nvmlDeviceGetTotalEnergyConsumption', 'gpu_resident', 'cuda_stream_triad_fp32', 'nvmlDeviceGetHandleByPciBusId']"
+5060ti,provenance,gpu_required_tokens,FAIL,PASS,all present,"['stream_triad_kernel', 'initialize_stream_vectors', 'SCALAR', 'BENCH_SIZE_FILTER', 'BENCH_EXPECTED_GPU', 'nvmlDeviceGetTotalEnergyConsumption', 'gpu_resident', 'cuda_stream_triad_fp32', 'nvmlDeviceGetHandleByPciBusId']"
+ALL,statistics,session_median_primary_unit,FAIL,PASS,five session medians,no n=50 pseudoreplication
+ALL,statistics,native_best_is_descriptive,WARN,WARN,selection and summary use same five sessions,descriptive post-selection
+ALL,semantics,logical_not_physical_bandwidth,WARN,WARN,12*N logical bytes,must never be called measured DRAM/VRAM traffic
+ALL,semantics,energy_domain_asymmetry,WARN,WARN,CPU package RAPL; GPU board NVML,must remain explicit
+ALL,semantics,gpu_resident_scope,WARN,WARN,allocations and PCIe excluded,must remain explicit
