@@ -1,0 +1,25 @@
+REDUCTION(sum) | Intel | Intel(R) Core(TM) i9-7900X CPU @ 3.30GHz | session=reduction_intel_20260721_164131_quickcheck | reps=2 | configs=6 | DRAM-RAPL=yes
+[REDUCTION] N=256000000 threads=20 rep=1 batches=36 time=1.032 s | package=107.117 J | dram=1.546922 | total=108.664 J | power=105.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=2 batches=36 time=1.100 s | package=113.304 J | dram=1.531775 | total=114.836 J | power=104.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=64000000 threads=1 rep=1 batches=63 time=1.013 s | package=39.184 J | dram=0.416267 | total=39.600 J | power=39.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=2 batches=63 time=1.026 s | package=42.144 J | dram=0.467170 | total=42.612 J | power=41.5 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=1000000 threads=1 rep=1 batches=6735 time=1.003 s | package=40.744 J | dram=0.005539 | total=40.749 J | power=40.6 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=2 batches=6735 time=1.003 s | package=40.648 J | dram=0.005248 | total=40.654 J | power=40.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=1 batches=92400 time=1.002 s | package=106.064 J | dram=0.003764 | total=106.068 J | power=105.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=2 batches=92400 time=1.017 s | package=107.682 J | dram=0.004207 | total=107.686 J | power=105.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=256000000 threads=1 rep=1 batches=16 time=1.037 s | package=41.051 J | dram=0.430787 | total=41.482 J | power=40.0 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=2 batches=16 time=1.038 s | package=40.969 J | dram=0.430909 | total=41.400 J | power=39.9 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=64000000 threads=20 rep=1 batches=140 time=1.031 s | package=107.433 J | dram=1.478087 | total=108.911 J | power=105.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=2 batches=140 time=1.044 s | package=108.597 J | dram=1.484391 | total=110.081 J | power=105.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08

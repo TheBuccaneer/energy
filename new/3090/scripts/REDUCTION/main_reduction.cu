@@ -357,7 +357,7 @@ void write_header(std::ofstream& output) {
         << "schema_version,timestamp,session_id,sequence_index,run_id_global,"
         << "repetition,workload,implementation,execution_mode,device_name,"
         << "num_threads,problem_size,problem_spec,batches,e2e_time_s,"
-        << "kernel_time_s,wall_time_s,total_energy_j,device_energy_j,"
+        << "kernel_time_s,wall_time_s,device_energy_j,total_energy_j,"
         << "dram_energy_j,energy_per_op_j,energy_per_second_j,"
         << "energy_per_flop_j,time_per_op_ms_kernel,time_per_op_ms_e2e,"
         << "flops_total,gflops_per_s,logical_bytes_per_op,avg_power_w,"
