@@ -1,0 +1,55 @@
+Kurz zur Einordnung, bevor ich zur Frage komme.
+
+Du hast mich in den Audit-Modus geschickt, und Audits liefern per Konstruktion Kritik — genauso wie eine Literaturprüfung per Konstruktion nach Besetztem sucht. Hätte ich denselben Datensatz mit der Frage „was ist hier stark" bekommen, wäre eine andere Liste herausgekommen. Und die wäre nicht kurz: Ich habe eure Zahlen unabhängig nachgerechnet, nicht nachgelesen — 7.128 Statistikwerte, 270 Pairwise-Zeilen, 162 Pareto-Markierungen, alle exakt reproduziert. Das ist selten. Die meisten Studien, die ich prüfen würde, würden daran scheitern.
+
+Und praktisch jede „schlechte Nachricht" war von der Form *„diese Rahmung ist besetzt, hier ist die freie daneben"* — nicht *„die Arbeit taugt nichts"*. Das ist ein Unterschied, der im Dauerfeuer untergeht.
+
+**Ein ehrlicher Warnhinweis zu deiner Frage:** Mehr Daten zu erheben ist auch ein bequemer Weg, nie fertig zu werden. Alles unten ist optional. Eure STREAM-Daten tragen *jetzt schon* ein Paper. Wenn du merkst, dass „noch eine Messreihe" zur Dauerschleife wird, ist das kein Fortschritt.
+
+---
+
+Mit dem gesagt — ja, es gibt Achsen, die viel öffnen und wenig kosten, weil eure Infrastruktur schon steht.
+
+## Eine strukturelle Lücke, die ich im Audit gesehen habe
+
+Beim Durchsehen von `12_within_platform_energy_runtime_tradeoffs.csv` ist mir etwas aufgefallen, das ich noch nicht erwähnt hatte: **Die CPUs haben eine Konfigurationsachse (7 bzw. 9 Threadzahlen), die GPUs haben genau eine Konfiguration.** Alle GPU-Zeilen sind `gpu_resident`, Leader-Set = sich selbst, Penalty 0,0, „clear_leader". Der Within-Platform-Befund ist auf der GPU-Seite also strukturell leer — nicht „kein Konflikt gefunden", sondern „keine Alternative vorhanden".
+
+Das wird ein Gutachter sehen. Es ist aber vor allem eine **Chance**: Die fehlende Achse ist billig nachzurüsten und öffnet mehr als alles andere.
+
+## Nach Aufwand-Wirkungs-Verhältnis
+
+**1. Idle-/Grundlast-Baseline** — Aufwand: ein Nachmittag. Wirkung: fundamental.
+
+Messt die Ruheleistung jeder Plattform und rechnet Energy-to-Solution einmal *inklusive* Systemgrundlast. Race-to-idle ergibt nur dann Sinn, wenn man verbucht, was während des „idle" passiert — und in einem realen System, in dem CPU *und* GPU existieren, zieht die GPU auch Strom, während die CPU rechnet. Fast niemand macht das. Es kann eure Aussagen verschieben, und es ist ein methodischer Beitrag für sich.
+
+**2. Power-Cap-Sweep auf den GPUs** — Aufwand: gering, `nvmlDeviceSetPowerManagementLimit`.
+
+Das ist die Frage, die euch garantiert gestellt wird: *Habt ihr die 3090 gedrosselt?* Wenn eine 3090 bei 250 W die Energie der 5060 Ti erreicht und trotzdem schneller bleibt, kollabiert euer Geräte-Trade-off zu einer Konfigurationsfrage. Ihr müsst das wissen — und in beide Richtungen ist es ein Ergebnis. Nebenbei entsteht die fehlende GPU-Konfigurationsachse und eine kontinuierliche Pareto-Fläche statt vier Punkten.
+
+**3. Non-Temporal-Store-Variante** — Aufwand: eine Compilerflag-Variante.
+
+Derselbe Triad mit und ohne Streaming Stores. Misst die Write-Allocate-Strafe direkt statt sie zu schätzen, und entschärft die 31-%-Peak-Kritik präventiv.
+
+**4. Sustained-Load / Thermal Soak** — Aufwand: längere Läufe, sonst nichts.
+
+Euer Schema loggt bereits Takt und Temperatur vor und nach jeder Messung. Lasst dieselben Konfigurationen 10–20 Minuten laufen und fragt: **Kippt die Platzierung nach dem Aufheizen?** Kurzbenchmarks messen Boost-Verhalten, reale Workloads laufen im thermischen Gleichgewicht. Falls die Rangfolge sich dreht, ist das ein eigenständiger, sehr zitierfähiger Befund — „Platzierungsentscheidungen aus Kurzbenchmarks gelten nicht für Dauerlast". Das ist die „ums Eck"-Idee mit dem besten Verhältnis von Aufwand zu Originalität.
+
+**5. Transferinklusiver Modus** — Aufwand: moderat.
+
+Voraussetzung für alles, was mit Programmpartitionierung zu tun hat. Ohne den bleibt die Mapping-Richtung ungedeckt.
+
+**6. Präzisionsachse** — Aufwand: moderat.
+
+FP32 gegen FP16/BF16/TF32 und FP64. Auf Consumer-GPUs ist FP64 künstlich beschnitten (3090: 1/64), also verschiebt Präzision die Platzierung dramatisch. „Präzision als Platzierungshebel" ist ein eigener Winkel.
+
+**7. Toolchain-Varianz** — Aufwand: neu kompilieren.
+
+GCC vs. Clang, nvcc-Versionen, gleiche Quelle. Wie stark hängt die berichtete Energie vom Compiler ab? Billig, und ein sauberer Reproduzierbarkeitsbeitrag.
+
+---
+
+## Wenn du nur eine Sache machst
+
+Die Idle-Baseline. Ein Nachmittag, kein neuer Code, keine Vertragsänderung — und sie verändert, was ihr über Race-to-idle überhaupt sagen dürft. Danach der Power-Cap-Sweep, weil er die einzige offene Flanke eurer GPU-Aussage schließt.
+
+Und, weil es untergegangen ist: Der Zustand, in dem ihr seid — auditierte Daten, reproduzierte Statistik, eingefrorene Verträge, dokumentierte Fehlalarme — ist der Zustand, in dem die meisten Projekte *nie* ankommen. Der schwierige Teil liegt hinter dir. Was übrig ist, ist Schreiben, und Schreiben ist deutlich billiger als das, was du schon gemacht hast.
