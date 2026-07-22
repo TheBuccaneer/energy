@@ -1,0 +1,115 @@
+Berechtigter Einwand — und mein STREAM-only-Vorschlag war Risikomanagement, nicht Ambition. Die Frage nach dem Delta lässt sich aber nicht aus dem Bauch beantworten. Ich sehe im Feld einige Arbeiten, die euch gefährlich nahe kommen (hierarchische Roofline, Energy-Roofline, Device-Mapping-Prediction). Lass mich den aktuellen Stand prüfen, statt dir mein Trainingswissen als Literaturlage zu verkaufen.Energy-Roofline ist etabliert, und Choi et al. leiten bereits ab, *wann* ein Zeit-Energie-Tradeoff zu erwarten ist. Ich prüfe jetzt die Placement-/Device-Selection-Achse und die Race-to-idle-Frage.Der letzte Treffer ist potenziell kritisch — „Racing to Idle" (Juli 2025) macht GEMM auf heterogener CPU/GPU-Hardware mit Race-to-idle-Framing auf „widely accessible hardware". Das liegt sehr nah an eurem Vorhaben. Das muss ich genauer ansehen.Das ist aufschlussreich. Ein weiterer gezielter Check, ob jemand die Mehr-Workload-×-Größen-×-Ziel-Systematik schon gemacht hat.Du hast recht, und ich korrigiere mich: Mein STREAM-only-Vorschlag war Risikomanagement, keine inhaltliche Bewertung. Ein Ein-Workload-Paper wäre sauber und vergessenswert. Die Verknüpfung ist der Beitrag — die Frage ist nur, *gegen was* ihr sie positioniert. Ich habe die Literatur geprüft. Die Nachricht ist gemischt, aber am Ende gut.
+
+## Was euch weggenommen ist
+
+Beide Einzelachsen sind besetzt, teils seit über einem Jahrzehnt:
+
+**Energie-Roofline.** Choi et al. (IPDPS 2013) beschreiben ein energiebasiertes Analogon zum Roofline-Modell und leiten daraus explizit ab, unter welchen Bedingungen ein algorithmischer Zeit-Energie-Tradeoff zu erwarten ist und wie Algorithmeneigenschaften das Power-Management informieren können. Das ist begrifflich sehr nah an eurer Zielabhängigkeits-These. Inzwischen ist das Feld weit ausgebaut — Energy-Roofline-Varianten adressieren unter anderem explizit die Gültigkeit von Race-to-halt.
+
+**Cache-Regime.** Hierarchische und cache-aware Roofline-Modelle bilden genau ab, in welcher Speicherebene ein Working Set lebt. Eure LLC-Regel ist deren empirische Bestätigung, nicht deren Entdeckung.
+
+**Device-Placement.** Umfangreich bearbeitet; Mittal & Vetter halten bereits fest, dass das optimale Mapping mit Anwendung, Hardware-/Softwarekonfiguration und Eingabegröße variiert. Auch Crossover-Metriken existieren: eine Arbeit von November 2025 definiert Peak Ratio Crossover und Direct Ratio Crossover als Größen, ab welcher Batchgröße GPU-Durchsatz den CPU-Durchsatz übersteigt, und nutzt sie zur Geräteauswahl.
+
+**Fazit dazu:** „Ziel bestimmt Platzierung" oder „Cache-Fit bestimmt Crossover" als Hauptclaim → ihr werdet zerlegt. Beides ist bekannt.
+
+## Wo das Delta tatsächlich liegt
+
+Beim Suchen bin ich auf eine Arbeit gestoßen, die für euch ein Glücksfall ist: **Ansari & Ansari, „Racing to Idle: Energy Efficiency of Matrix Multiplication on Heterogeneous CPU and GPU Architectures" (arXiv 2507.20063, Juli 2025).**
+
+Sie messen GEMM auf Consumer-Hardware (Ryzen 7 5800H, GTX 1650, Vega iGPU) und schließen: die diskrete GPU ist nicht nur Performance-Leader mit 93,5-fachem Speedup, sondern auch am energieeffizientesten mit 2 % des CPU-Energieverbrauchs — eine praktische Demonstration des „Race to Idle"-Prinzips. Ihre zentrale Aussage: für eine bedeutende Klasse datenparalleler Anwendungen sollten Entwickler GPU-Offloading nicht nur als Performance-, sondern als Energiesparstrategie sehen.
+
+Drei Dinge daran sind für euch entscheidend.
+
+**Erstens: Ihr habt das Gegenbeispiel.** Deren Schluss beruht auf *einem* compute-gebundenen Kernel bei *einer* Größe. Eure STREAM-Daten falsifizieren die Verallgemeinerung direkt: Bei N≥16M ist die schnellste Karte (3090) nicht die sparsamste (5060 Ti) — 2,11–2,15× Bandbreite gegen 38,5–39,3 % weniger Energie, bei fünf von fünf Größen konsistent. Race-to-idle gilt dort unter EDP und bricht unter reiner Energie.
+
+**Zweitens: Sie formulieren eure Studie als offene Frage.** Ihr Future-Work-Abschnitt sagt wörtlich, der logische nächste Schritt sei, die Untersuchung auf weitere Berkeley-Dwarfs auszuweiten, insbesondere speichergebundene Workloads, um den Performance-Energie-Tradeoff-Raum vollständiger zu kartieren. Genau das ist euer Workload-Set. Eine publizierte offene Frage zu beantworten ist die sauberste Novelty-Begründung, die es gibt.
+
+**Drittens: Ihr seid methodisch zwei Klassen darüber.** Deren Setup: eine Problemgröße, offenbar Einzelläufe ohne Wiederholungsstatistik, naive OpenMP-GEMM ohne Blocking und ohne BLAS, naiver CUDA-Kernel ohne Tiling und ohne cuBLAS, `nvidia-smi`-Polling mit 10 Hz über einen 0,613-s-Kernel (also ~6 Samples), APU-Package-Messung, die CPU und iGPU vermischt. Der 93,5×-Speedup ist zu einem erheblichen Teil Implementierungsartefakt. Eure eingefrorenen Verträge, 5 Sessions × 10 Wiederholungen, Sessionmediane, exakte Bootstraps und NVML-Energiezähler sind dagegen belastbar.
+
+## Die These, die daraus wird
+
+Nicht „objective-dependent placement" (zu generisch, besetzt), sondern:
+
+> **Race-to-idle ist ein Regime, kein Prinzip — und seine Grenze ist a priori bestimmbar.** Bei compute-gebundenen Workloads fallen laufzeit-, energie- und EDP-optimale Platzierung zusammen; sobald der Workload bandbreitengebunden ist, zerfallen sie in drei verschiedene Antworten. Die Grenze liegt dort, wo das Working Set die LLC-Kapazität überschreitet, und ist damit ohne Messung vorhersagbar.
+
+Das ist falsifizierbar, hat eine benennbare Gegenpartei in der Literatur, und euer Workload-Set ist exakt das Testinstrument: GEMM zeigt, wo Race-to-idle hält, STREAM zeigt, wo es bricht, REDUCTION prüft die Synchronisationsachse, STRIDED_GEMM die Layoutachse, AXPY isoliert Write-Allocate, Conv2D den gemischten Fall.
+
+**Wichtig:** Damit ist die Regel *überprüfbar* statt illustriert, und ein negativer Befund bei REDUCTION wäre auch ein Ergebnis („die Synchronisationsachse bricht die Kapazitätsregel").
+
+## Zwei Risiken, die dadurch größer werden
+
+**Glashaus.** Wenn ihr deren 93,5× als Implementierungsartefakt angreift — was berechtigt ist —, dann sind eure 31 % Peak-Bandbreitenausnutzung auf Intel die erste Frage jedes Gutachters. Der Referenzlauf und die DIMM-Dokumentation sind ab jetzt nicht mehr „should", sondern Vorbedingung. Gleiches gilt für GEMM: Wenn dort nicht MKL/OpenBLAS gegen cuBLAS steht, wiederholt ihr genau den Fehler, den ihr kritisiert.
+
+**Umfang vs. Format.** Sechs Workloads passen nicht in ein Short Paper. Die thesengetriebene Fassung schon: zwei Anker im Detail (GEMM hält, STREAM bricht), der Rest als Bestätigungstabelle mit einer Zeile pro Workload. Damit bleibt ihr bei vier bis sechs Seiten und habt trotzdem den Cross-Workload-Claim.
+
+Ein Vorbehalt zur Literatur: Das ist eine gezielte Websuche, kein systematischer Survey über ACM DL und IEEE Xplore. Bevor ihr die Novelty-Behauptung festschreibt, solltet ihr dort noch mit den Begriffen *energy-delay product crossover*, *fastest versus greenest*, *objective-dependent device selection* und *race-to-idle regime* nachfassen. Ich würde aber nach dem, was ich sehe, sagen: Die Einzelbausteine sind vergeben, die Kombination aus Cross-Workload-Systematik, Zielkonflikt-Quantifizierung und dieser Messrigorosität auf Consumer-Hardware ist frei — und ihr habt mit „Racing to Idle" eine ideale Zielscheibe, die euch die Fragestellung selbst geliefert hat.
+
+Soll ich als Nächstes eine Related-Work-Positionierung in Absatzform entwerfen, die genau diese Abgrenzung trägt?
+
+
+Ich verstehe genau, worauf du hinauswillst: Die Messungen nicht als Ergebnis, sondern als **Kalibrierungsgrundlage für eine Mapping-Entscheidung** — Funktionsprofil rein, Platzierungsentscheidung raus. Das ist eine deutlich interessantere Frage als die Rangliste. Lass mich das gründlich recherchieren, inklusive der Frage, ob dort schon jemand sitzt.Das ist ein wichtiger Fund: „Heterogeneous Device Mapping" ist eine **kanonische Benchmark-Aufgabe** der ML-für-Compiler-Community — Grewe et al. definierten sie, und der Ben-Nun-Datensatz (256 OpenCL-Kernels, 670 gelabelte Punkte pro Gerät) wird bis heute von DeepTune, inst2vec, IR2Vec und MIREncoder (2024) als Standard-Benchmark verwendet. Entscheidend: Alle labeln nach **Laufzeit**. Ich prüfe, ob jemand energie-gelabelt hat.Das ist der entscheidende Fund. Die AIWC-Arbeit zur OpenCL-Performance-Vorhersage schreibt in ihrer Schlussfolgerung explizit: Ein ähnliches Modell könnte Energie oder Leistungsaufnahme vorhersagen, indem man die Zielvariable schlicht von Ausführungszeit auf Joule tauscht — aber sie hätten die dafür nötigen Energiemessungen noch nicht erhoben. Genau die habt ihr. Ich prüfe, ob diese Lücke inzwischen geschlossen wurde.Ja, ich verstehe genau — und die Idee trägt. Aber nicht in der Form, in der du sie formuliert hast, sondern in einer schärferen. Ich habe das recherchiert, und dabei ist etwas Besseres herausgekommen als die ursprüngliche Frage.
+
+## Die schlechte Nachricht zuerst
+
+Die naive Version — Kernel-Features rein, CPU-oder-GPU raus — ist seit 15 Jahren besetzt und zwar gründlich. Grewe und O'Boyle definierten die Aufgabe „Heterogeneous Device Mapping", und daraus ist eine **kanonische Benchmark-Aufgabe der ML-für-Compiler-Community** geworden. Der Ben-Nun-Datensatz mit 256 OpenCL-Kernels aus sieben Benchmark-Suites und rund 670 gelabelten Datenpunkten je Gerät ist der Standard, gegen den seither alles antritt: DeepTune, inst2vec, IR2Vec, bis hin zu MIREncoder 2024. Genauigkeiten liegen je nach Ansatz zwischen 77 % und 90 %.
+
+Wenn ihr da mit einem Predictor reingeht, konkurriert ihr mit einem Jahrzehnt Repräsentationslernen und verliert — ihr habt 54 Datenpunkte (6 Workloads × 9 Größen), nicht 670 Kernels.
+
+## Die gute Nachricht: Die Aufgabe selbst hat einen blinden Fleck
+
+Und zwar genau den, den eure Daten beleuchten.
+
+**Alle diese Modelle labeln „optimales Gerät" als „das schnellere Gerät".** Die Zielvariable ist Laufzeit. Immer. Das ist so tief eingebaut, dass es niemand mehr erwähnt.
+
+Eure STREAM-Daten zeigen, dass dieses Label objektabhängig ist: Bei sechs von neun Größen ist das schnellste Gerät nicht das sparsamste. Wenn das stimmt — und es ist bei euch mit exakten Bootstrap-Intervallen abgesichert —, dann **löst die gesamte Device-Mapping-Literatur eine laufzeitgelabelte Variante eines Problems, das sie als „optimal device mapping" bezeichnet.** Ein Modell mit 90 % Genauigkeit auf dem Grewe-Label kann unter einem Energieziel systematisch falsch entscheiden, ohne dass die Metrik das je anzeigt.
+
+Dass das keine erfundene Lücke ist, belegen die Autoren selbst. Die AIWC-Arbeit zur OpenCL-Performance-Vorhersage schreibt im Fazit, ein analoges Modell für Energie sei konstruierbar, indem man die Zielvariable von Ausführungszeit auf Joule tauscht — aber sie hätten die dafür nötigen Energiemessungen noch nicht erhoben. Die NLP-Device-Mapping-Arbeit nennt energieeffiziente Modelle als Future Work. Und selbst 2026 gilt das noch: Eine Arbeit über LLM-basierte CUDA-Kernel-Optimierung stellt fest, dass existierende LLM-Kernel-Agenten allein auf Latenz zielen, und behandelt Energie explizit als sekundäres Ziel unter lexikographischer Priorität — Speedup gewinnt immer, Energie bricht nur Gleichstände.
+
+Die Lücke ist also nicht „niemand hat daran gedacht", sondern **„alle haben daran gedacht und niemand hatte die Messungen"**. Ihr habt sie.
+
+## Was eure Daten dazu beitragen können — und was nicht
+
+Ehrlich getrennt:
+
+**Können sie:**
+- **Label-Disagreement quantifizieren.** Wie oft weicht das energieoptimale vom laufzeitoptimalen Label ab, und ist die Abweichung systematisch (regimeabhängig) oder Rauschen? Bei euch: systematisch, an Cache-Grenzen gekoppelt — also *lernbar*.
+- **Objective Regret messen.** Wenn ich das laufzeitoptimale Gerät wähle, aber Energie minimieren will: Was kostet das? Eure Zahlen liefern das für Geräte- *und* Threadebene (bis 50,3 % auf Intel).
+- **Die Oracle-Schranke bestimmen.** Und hier wird es interessant: Bei N≥16M ist die 3090 laufzeit- *und* EDP-optimal, durchgängig. Das heißt, im großen Regime ist die Platzierungsentscheidung **trivial** — eine statische „immer GPU"-Politik ist optimal. Die Vorhersage ist nur in einem schmalen Band um die Cache-Übergänge überhaupt wertvoll. Das ist ein provokantes, gut belegbares Ergebnis: *Placement Prediction lohnt sich nur regimenah; außerhalb schlägt eine triviale Politik jeden Predictor.* Das lässt sich aus euren Daten direkt ausrechnen.
+
+**Können sie nicht:**
+- Einen konkurrenzfähigen Predictor trainieren. 54 Punkte reichen nicht, und eure Workloads sind Mikrobenchmarks, keine 256 echten Kernels.
+- Die Feature-Seite liefern. Ihr habt die Messseite kalibriert, aber kein Werkzeug, das aus einer beliebigen Funktion ein Profil extrahiert. Dafür bräuchtet ihr AIWC, LLVM-IR-Features oder Hardware-Counter — ein eigenes, substanzielles Stück Arbeit.
+
+Die realistische Rolle eurer Daten ist deshalb **Motivations- und Positionsarbeit plus Datensatz-Artefakt**: „Hier ist der Beleg, dass das Label objektabhängig ist; hier ist ein Messprotokoll, mit dem man bestehende Datensätze energetisch nachlabeln kann; hier ist ein Seed-Datensatz." Das ist ehrlicher und zitierfähiger als ein schwacher Predictor.
+
+## Die harte Einschränkung deiner ursprünglichen Idee
+
+Du wolltest ein Programm in CUDA- und C++-Anteile splitten. Dafür ist eure Messbasis strukturell zu schmal, und zwar aus einem Grund, der genau in eurem Contract steht: **`gpu_resident` schließt Transfers aus.**
+
+Für eine Platzierungsentscheidung *innerhalb eines Programms* ist die Frage aber nie „welches Gerät ist für Funktion F schneller", sondern „welches Gerät ist schneller, **gegeben wo die Daten gerade liegen**, und was kostet es, sie dorthin zu bringen". Eine Funktion, die isoliert auf der GPU 3× schneller ist, kann im Programmkontext verlieren, weil ihre Vorgänger- und Nachfolgerfunktion auf der CPU laufen. Das ist der Grund, warum die Literatur von Partitioning und nicht von Per-Function-Selection spricht.
+
+Wenn ihr diese Richtung ernsthaft wollt, braucht ihr eine transferinklusive Messreihe als zweiten Modus — dieselben Workloads, aber `host_resident` mit H2D/D2H im Fenster. Das ist eine überschaubare Erweiterung eurer bestehenden Infrastruktur und würde die Mapping-Frage überhaupt erst beantwortbar machen. Ohne sie ist jede Aussage über Programmpartitionierung nicht gedeckt.
+
+## Fünf Winkel, an die du vielleicht nicht gedacht hast
+
+**1. Zeitabhängige Platzierung über Netz-Carbon-Intensität.** Das Optimierungsziel ist keine Konstante. Wenn man Energie mit der momentanen Netz-CO₂-Intensität gewichtet, verschiebt sich das Optimum im Tagesverlauf — bei viel Solarstrom ist Energie „billig" und Race-to-idle gewinnt, nachts kippt es. Eure Pareto-Daten plus öffentliche Carbon-Intensity-Zeitreihen ergeben „das grünste Gerät hängt von der Tageszeit ab", ohne eine einzige neue Messung. Für Sustainability-Venues ein sehr anschlussfähiges Thema.
+
+**2. Alte High-End- vs. neue Mid-Range-GPU als Beschaffungsfrage.** 3090 gegen 5060 Ti ist genau der Fall „behalten oder neu kaufen". Ihr habt: neue Mittelklasse gewinnt Energie, alte Oberklasse gewinnt Laufzeit und EDP. Kombiniert mit Embodied-Carbon-Daten wird daraus eine Amortisationsrechnung — wie lange muss die neue Karte laufen, bis ihre Herstellungsemissionen durch 39 % Betriebsersparnis eingespielt sind? Das ist eine Frage, die Leute außerhalb der HPC-Community interessiert.
+
+**3. Regime-Detektion aus billigen Countern.** Euer Schema führt bereits `cpu_cache_misses`. Die Frage „kann ich zur Laufzeit erkennen, in welchem Regime ich bin, und die Politik umschalten" ist die praktische Brücke zwischen eurer Regel und einem echten Scheduler — und deutlich realistischer als ein voller Predictor.
+
+**4. Validierung analytischer Modelle.** Sagt die Energie-Roofline eure gemessenen Crossover korrekt vorher? Choi et al. leiten ab, wann Zeit-Energie-Tradeoffs auftreten sollten; ihr könnt das empirisch prüfen. Ein Modellvalidierungspaper ist weniger sexy, aber sehr solide.
+
+**5. Der Write-Allocate-Anker.** Euer AXPY/STREAM-Paar misst die Write-Allocate-Strafe direkt (12N physisch vs. 16N), während die GPU bei ~90 % Peak nachweislich keinen RFO-Verkehr hat. Damit könnt ihr quantifizieren, wie viel eines publizierten CPU-vs-GPU-Energievorteils Messanker-Artefakt ist.
+
+## Meine Empfehlung
+
+Von diesen ist **die Zielblindheit des Device-Mapping-Benchmarks** mit Abstand die stärkste Karte. Gründe: Sie kritisiert eine etablierte, aktiv genutzte Benchmark-Aufgabe statt eine weitere Messung hinzuzufügen; die Lücke ist von den Betroffenen selbst dokumentiert; euer Beitrag ist genau das, was ihnen fehlte; und sie macht eure Messrigorosität zum Argument statt zum Beiwerk.
+
+Die Formulierung wäre ungefähr: *A decade of heterogeneous device-mapping models is evaluated against a runtime-derived ground truth. We show the ground truth is objective-dependent — the energy-optimal device differs from the runtime-optimal device in a substantial, regime-predictable fraction of cases — and provide the measurement protocol and seed data to re-label the task.*
+
+Und der Nebeneffekt: Damit wird aus deinen Messungen ein Werkzeug für andere, nicht nur ein Ergebnis. Das ist der Unterschied zwischen einem Paper, das gelesen wird, und einem, das benutzt wird.
+
+Ein Vorbehalt zum Schluss: Das war eine gezielte Websuche, kein systematischer Survey. Bevor ihr euch festlegt, solltet ihr in ACM DL und IEEE Xplore gezielt nach *energy-labeled device mapping*, *multi-objective kernel placement* und *objective-aware offload decision* nachfassen — und prüfen, ob jemand nach 2024 den Ben-Nun-Datensatz energetisch nachgelabelt hat. Wenn nicht, ist das Feld offen.
+
+Soll ich die transferinklusive Messerweiterung (`host_resident`-Modus) als Contract-Ergänzung skizzieren? Die wäre die Voraussetzung dafür, dass ihr die Mapping-Richtung überhaupt bedienen könnt.
