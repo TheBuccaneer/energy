@@ -1,0 +1,10 @@
+REDUCTION(sum) | NVIDIA GeForce RTX 5060 Ti | session=reduction_5060ti_20260722_050953_quickcheck | reps=2 | configs=3
+N=256000000 batches=416 kernel_s=1.00272 e2e_s=1.00305 energy_j=81.246 checksum=OK relative_error=3.455529e-09
+N=256000000 batches=416 kernel_s=1.00264 e2e_s=1.00296 energy_j=82.521 checksum=OK relative_error=3.455529e-09
+WARN: kernel_time_s exceeds e2e_time_s by 2.49605e-06 s
+N=1000000 batches=161508 kernel_s=1.00026 e2e_s=1.00026 energy_j=64.394 checksum=OK relative_error=6.410263e-08
+WARN: kernel_time_s exceeds e2e_time_s by 1.95168e-06 s
+N=1000000 batches=161508 kernel_s=0.992796 e2e_s=0.992794 energy_j=64.661 checksum=OK relative_error=6.410263e-08
+N=64000000 batches=1644 kernel_s=1.00043 e2e_s=1.00044 energy_j=82.537 checksum=OK relative_error=2.083333e-08
+WARN: kernel_time_s exceeds e2e_time_s by 1.16911e-06 s
+N=64000000 batches=1644 kernel_s=1.00044 e2e_s=1.00044 energy_j=82.504 checksum=OK relative_error=2.083333e-08

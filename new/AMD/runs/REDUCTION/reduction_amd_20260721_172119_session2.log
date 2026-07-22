@@ -1,0 +1,1621 @@
+REDUCTION(sum) | AMD | AMD Ryzen Threadripper 3970X 32-Core Processor | session=reduction_amd_20260721_172119_session2 | reps=10 | configs=81 | DRAM-RAPL=no
+[REDUCTION] N=1000000 threads=20 rep=1 batches=124809 time=1.003 s | package=152.287 J | dram=NA | total=152.287 J | power=151.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=2 batches=124809 time=1.012 s | package=153.479 J | dram=NA | total=153.479 J | power=151.7 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=3 batches=124809 time=1.012 s | package=153.240 J | dram=NA | total=153.240 J | power=151.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=4 batches=124809 time=1.009 s | package=153.518 J | dram=NA | total=153.518 J | power=152.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=5 batches=124809 time=1.008 s | package=152.940 J | dram=NA | total=152.940 J | power=151.7 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=6 batches=124809 time=1.008 s | package=152.947 J | dram=NA | total=152.947 J | power=151.7 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=7 batches=124809 time=1.007 s | package=152.972 J | dram=NA | total=152.972 J | power=151.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=8 batches=124809 time=1.006 s | package=152.937 J | dram=NA | total=152.937 J | power=152.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=9 batches=124809 time=1.006 s | package=152.881 J | dram=NA | total=152.881 J | power=151.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=20 rep=10 batches=124809 time=1.007 s | package=153.677 J | dram=NA | total=153.677 J | power=152.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=32000000 threads=64 rep=1 batches=2108 time=1.007 s | package=189.468 J | dram=NA | total=189.468 J | power=188.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=2 batches=2108 time=1.032 s | package=193.549 J | dram=NA | total=193.549 J | power=187.6 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=3 batches=2108 time=1.030 s | package=193.661 J | dram=NA | total=193.661 J | power=188.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=4 batches=2108 time=1.316 s | package=234.863 J | dram=NA | total=234.863 J | power=178.5 W | runtime=above | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=5 batches=2108 time=1.032 s | package=194.215 J | dram=NA | total=194.215 J | power=188.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=6 batches=2108 time=1.043 s | package=194.836 J | dram=NA | total=194.836 J | power=186.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=7 batches=2108 time=1.030 s | package=193.645 J | dram=NA | total=193.645 J | power=188.0 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=8 batches=2108 time=1.266 s | package=228.056 J | dram=NA | total=228.056 J | power=180.2 W | runtime=above | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=9 batches=2108 time=1.026 s | package=193.294 J | dram=NA | total=193.294 J | power=188.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=64 rep=10 batches=2108 time=1.034 s | package=193.845 J | dram=NA | total=193.845 J | power=187.5 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=1000000 threads=16 rep=1 batches=112408 time=1.008 s | package=141.604 J | dram=NA | total=141.604 J | power=140.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=2 batches=112408 time=1.029 s | package=145.315 J | dram=NA | total=145.315 J | power=141.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=3 batches=112408 time=1.015 s | package=143.746 J | dram=NA | total=143.746 J | power=141.6 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=4 batches=112408 time=1.018 s | package=143.400 J | dram=NA | total=143.400 J | power=140.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=5 batches=112408 time=1.012 s | package=142.113 J | dram=NA | total=142.113 J | power=140.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=6 batches=112408 time=1.012 s | package=142.102 J | dram=NA | total=142.102 J | power=140.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=7 batches=112408 time=1.012 s | package=142.059 J | dram=NA | total=142.059 J | power=140.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=8 batches=112408 time=1.002 s | package=141.381 J | dram=NA | total=141.381 J | power=141.1 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=9 batches=112408 time=1.002 s | package=141.356 J | dram=NA | total=141.356 J | power=141.1 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=16 rep=10 batches=112408 time=1.001 s | package=141.831 J | dram=NA | total=141.831 J | power=141.6 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=8000000 threads=64 rep=1 batches=55933 time=1.725 s | package=471.403 J | dram=NA | total=471.403 J | power=273.3 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=2 batches=55933 time=1.970 s | package=520.129 J | dram=NA | total=520.129 J | power=264.1 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=3 batches=55933 time=2.021 s | package=535.698 J | dram=NA | total=535.698 J | power=265.0 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=4 batches=55933 time=2.002 s | package=530.439 J | dram=NA | total=530.439 J | power=265.0 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=5 batches=55933 time=2.025 s | package=532.816 J | dram=NA | total=532.816 J | power=263.2 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=6 batches=55933 time=1.728 s | package=470.401 J | dram=NA | total=470.401 J | power=272.2 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=7 batches=55933 time=1.387 s | package=392.007 J | dram=NA | total=392.007 J | power=282.7 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=8 batches=55933 time=1.961 s | package=527.145 J | dram=NA | total=527.145 J | power=268.8 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=9 batches=55933 time=2.048 s | package=542.757 J | dram=NA | total=542.757 J | power=265.0 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=64 rep=10 batches=55933 time=1.828 s | package=498.140 J | dram=NA | total=498.140 J | power=272.5 W | runtime=above | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=32000000 threads=8 rep=1 batches=1136 time=0.992 s | package=115.900 J | dram=NA | total=115.900 J | power=116.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=2 batches=1136 time=1.018 s | package=117.653 J | dram=NA | total=117.653 J | power=115.5 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=3 batches=1136 time=1.005 s | package=115.199 J | dram=NA | total=115.199 J | power=114.6 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=4 batches=1136 time=1.012 s | package=114.780 J | dram=NA | total=114.780 J | power=113.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=5 batches=1136 time=1.010 s | package=115.451 J | dram=NA | total=115.451 J | power=114.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=6 batches=1136 time=1.005 s | package=114.285 J | dram=NA | total=114.285 J | power=113.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=7 batches=1136 time=0.993 s | package=112.949 J | dram=NA | total=112.949 J | power=113.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=8 batches=1136 time=1.007 s | package=114.142 J | dram=NA | total=114.142 J | power=113.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=9 batches=1136 time=1.005 s | package=114.619 J | dram=NA | total=114.619 J | power=114.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=8 rep=10 batches=1136 time=1.007 s | package=114.843 J | dram=NA | total=114.843 J | power=114.0 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=4000000 threads=20 rep=1 batches=45689 time=1.011 s | package=202.097 J | dram=NA | total=202.097 J | power=199.9 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=2 batches=45689 time=1.032 s | package=205.144 J | dram=NA | total=205.144 J | power=198.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=3 batches=45689 time=1.061 s | package=209.670 J | dram=NA | total=209.670 J | power=197.5 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=4 batches=45689 time=1.017 s | package=204.174 J | dram=NA | total=204.174 J | power=200.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=5 batches=45689 time=1.094 s | package=215.326 J | dram=NA | total=215.326 J | power=196.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=6 batches=45689 time=1.097 s | package=216.045 J | dram=NA | total=216.045 J | power=197.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=7 batches=45689 time=1.095 s | package=216.162 J | dram=NA | total=216.162 J | power=197.4 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=8 batches=45689 time=1.068 s | package=212.003 J | dram=NA | total=212.003 J | power=198.5 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=9 batches=45689 time=1.063 s | package=210.850 J | dram=NA | total=210.850 J | power=198.4 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=20 rep=10 batches=45689 time=1.020 s | package=204.919 J | dram=NA | total=204.919 J | power=200.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=1 batches=96051 time=1.304 s | package=346.283 J | dram=NA | total=346.283 J | power=265.6 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=2 batches=96051 time=1.578 s | package=386.264 J | dram=NA | total=386.264 J | power=244.8 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=3 batches=96051 time=1.459 s | package=367.325 J | dram=NA | total=367.325 J | power=251.8 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=4 batches=96051 time=1.314 s | package=346.957 J | dram=NA | total=346.957 J | power=264.1 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=5 batches=96051 time=1.306 s | package=344.303 J | dram=NA | total=344.303 J | power=263.7 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=6 batches=96051 time=1.318 s | package=348.902 J | dram=NA | total=348.902 J | power=264.7 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=7 batches=96051 time=1.329 s | package=350.586 J | dram=NA | total=350.586 J | power=263.8 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=8 batches=96051 time=1.314 s | package=346.230 J | dram=NA | total=346.230 J | power=263.5 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=9 batches=96051 time=1.301 s | package=344.857 J | dram=NA | total=344.857 J | power=265.0 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=64 rep=10 batches=96051 time=1.330 s | package=350.307 J | dram=NA | total=350.307 J | power=263.4 W | runtime=above | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=16000000 threads=10 rep=1 batches=5130 time=0.978 s | package=141.226 J | dram=NA | total=141.226 J | power=144.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=2 batches=5130 time=0.991 s | package=142.099 J | dram=NA | total=142.099 J | power=143.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=3 batches=5130 time=0.987 s | package=141.761 J | dram=NA | total=141.761 J | power=143.6 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=4 batches=5130 time=0.988 s | package=141.257 J | dram=NA | total=141.257 J | power=143.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=5 batches=5130 time=0.979 s | package=139.797 J | dram=NA | total=139.797 J | power=142.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=6 batches=5130 time=0.975 s | package=139.838 J | dram=NA | total=139.838 J | power=143.5 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=7 batches=5130 time=0.977 s | package=139.900 J | dram=NA | total=139.900 J | power=143.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=8 batches=5130 time=0.977 s | package=139.602 J | dram=NA | total=139.602 J | power=142.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=9 batches=5130 time=0.972 s | package=139.722 J | dram=NA | total=139.722 J | power=143.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=10 rep=10 batches=5130 time=0.972 s | package=139.386 J | dram=NA | total=139.386 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=64000000 threads=4 rep=1 batches=182 time=0.999 s | package=90.174 J | dram=NA | total=90.174 J | power=90.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=2 batches=182 time=1.018 s | package=92.895 J | dram=NA | total=92.895 J | power=91.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=3 batches=182 time=1.004 s | package=91.865 J | dram=NA | total=91.865 J | power=91.5 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=4 batches=182 time=1.006 s | package=91.889 J | dram=NA | total=91.889 J | power=91.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=5 batches=182 time=1.011 s | package=92.151 J | dram=NA | total=92.151 J | power=91.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=6 batches=182 time=1.006 s | package=91.816 J | dram=NA | total=91.816 J | power=91.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=7 batches=182 time=1.014 s | package=93.198 J | dram=NA | total=93.198 J | power=91.9 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=8 batches=182 time=1.004 s | package=91.581 J | dram=NA | total=91.581 J | power=91.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=9 batches=182 time=1.019 s | package=92.398 J | dram=NA | total=92.398 J | power=90.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=4 rep=10 batches=182 time=1.018 s | package=93.045 J | dram=NA | total=93.045 J | power=91.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=256000000 threads=2 rep=1 batches=32 time=1.015 s | package=82.313 J | dram=NA | total=82.313 J | power=81.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=2 batches=32 time=1.030 s | package=82.596 J | dram=NA | total=82.596 J | power=80.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=3 batches=32 time=1.028 s | package=82.367 J | dram=NA | total=82.367 J | power=80.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=4 batches=32 time=1.036 s | package=84.037 J | dram=NA | total=84.037 J | power=81.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=5 batches=32 time=1.025 s | package=83.196 J | dram=NA | total=83.196 J | power=81.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=6 batches=32 time=1.036 s | package=84.021 J | dram=NA | total=84.021 J | power=81.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=7 batches=32 time=1.027 s | package=83.406 J | dram=NA | total=83.406 J | power=81.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=8 batches=32 time=1.025 s | package=83.103 J | dram=NA | total=83.103 J | power=81.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=9 batches=32 time=1.029 s | package=83.373 J | dram=NA | total=83.373 J | power=81.0 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=2 rep=10 batches=32 time=1.026 s | package=83.119 J | dram=NA | total=83.119 J | power=81.0 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=8000000 threads=8 rep=1 batches=9334 time=1.019 s | package=131.317 J | dram=NA | total=131.317 J | power=128.8 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=2 batches=9334 time=1.036 s | package=133.388 J | dram=NA | total=133.388 J | power=128.8 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=3 batches=9334 time=1.034 s | package=133.746 J | dram=NA | total=133.746 J | power=129.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=4 batches=9334 time=1.013 s | package=132.779 J | dram=NA | total=132.779 J | power=131.0 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=5 batches=9334 time=1.032 s | package=133.290 J | dram=NA | total=133.290 J | power=129.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=6 batches=9334 time=1.029 s | package=133.282 J | dram=NA | total=133.282 J | power=129.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=7 batches=9334 time=1.036 s | package=134.037 J | dram=NA | total=134.037 J | power=129.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=8 batches=9334 time=1.027 s | package=132.417 J | dram=NA | total=132.417 J | power=129.0 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=9 batches=9334 time=1.027 s | package=131.622 J | dram=NA | total=131.622 J | power=128.1 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=8 rep=10 batches=9334 time=1.021 s | package=131.287 J | dram=NA | total=131.287 J | power=128.6 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=256000000 threads=4 rep=1 batches=47 time=1.023 s | package=92.440 J | dram=NA | total=92.440 J | power=90.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=2 batches=47 time=1.016 s | package=91.198 J | dram=NA | total=91.198 J | power=89.7 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=3 batches=47 time=1.025 s | package=92.455 J | dram=NA | total=92.455 J | power=90.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=4 batches=47 time=1.020 s | package=91.576 J | dram=NA | total=91.576 J | power=89.8 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=5 batches=47 time=1.021 s | package=91.450 J | dram=NA | total=91.450 J | power=89.5 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=6 batches=47 time=1.021 s | package=94.478 J | dram=NA | total=94.478 J | power=92.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=7 batches=47 time=1.021 s | package=92.026 J | dram=NA | total=92.026 J | power=90.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=8 batches=47 time=1.019 s | package=91.745 J | dram=NA | total=91.745 J | power=90.0 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=9 batches=47 time=1.025 s | package=92.166 J | dram=NA | total=92.166 J | power=89.9 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=4 rep=10 batches=47 time=1.020 s | package=91.811 J | dram=NA | total=91.811 J | power=90.0 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=1000000 threads=1 rep=1 batches=11520 time=1.011 s | package=69.635 J | dram=NA | total=69.635 J | power=68.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=2 batches=11520 time=1.016 s | package=70.086 J | dram=NA | total=70.086 J | power=69.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=3 batches=11520 time=1.008 s | package=69.018 J | dram=NA | total=69.018 J | power=68.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=4 batches=11520 time=1.020 s | package=70.022 J | dram=NA | total=70.022 J | power=68.6 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=5 batches=11520 time=1.018 s | package=69.966 J | dram=NA | total=69.966 J | power=68.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=6 batches=11520 time=1.015 s | package=70.002 J | dram=NA | total=70.002 J | power=69.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=7 batches=11520 time=1.022 s | package=70.682 J | dram=NA | total=70.682 J | power=69.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=8 batches=11520 time=1.022 s | package=70.209 J | dram=NA | total=70.209 J | power=68.7 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=9 batches=11520 time=1.009 s | package=69.629 J | dram=NA | total=69.629 J | power=69.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=10 batches=11520 time=1.009 s | package=69.783 J | dram=NA | total=69.783 J | power=69.1 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=16000000 threads=1 rep=1 batches=296 time=1.002 s | package=68.643 J | dram=NA | total=68.643 J | power=68.5 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=2 batches=296 time=1.018 s | package=71.042 J | dram=NA | total=71.042 J | power=69.8 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=3 batches=296 time=1.021 s | package=71.956 J | dram=NA | total=71.956 J | power=70.5 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=4 batches=296 time=1.014 s | package=70.755 J | dram=NA | total=70.755 J | power=69.8 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=5 batches=296 time=1.022 s | package=71.143 J | dram=NA | total=71.143 J | power=69.6 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=6 batches=296 time=1.014 s | package=70.772 J | dram=NA | total=70.772 J | power=69.8 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=7 batches=296 time=1.016 s | package=70.843 J | dram=NA | total=70.843 J | power=69.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=8 batches=296 time=1.019 s | package=71.397 J | dram=NA | total=71.397 J | power=70.1 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=9 batches=296 time=1.015 s | package=70.774 J | dram=NA | total=70.774 J | power=69.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=1 rep=10 batches=296 time=1.015 s | package=71.408 J | dram=NA | total=71.408 J | power=70.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=256000000 threads=20 rep=1 batches=49 time=1.019 s | package=117.798 J | dram=NA | total=117.798 J | power=115.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=2 batches=49 time=1.027 s | package=119.388 J | dram=NA | total=119.388 J | power=116.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=3 batches=49 time=1.020 s | package=120.266 J | dram=NA | total=120.266 J | power=117.9 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=4 batches=49 time=1.025 s | package=120.472 J | dram=NA | total=120.472 J | power=117.5 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=5 batches=49 time=1.020 s | package=121.090 J | dram=NA | total=121.090 J | power=118.7 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=6 batches=49 time=1.019 s | package=121.384 J | dram=NA | total=121.384 J | power=119.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=7 batches=49 time=1.020 s | package=121.226 J | dram=NA | total=121.226 J | power=118.9 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=8 batches=49 time=1.020 s | package=121.428 J | dram=NA | total=121.428 J | power=119.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=9 batches=49 time=1.020 s | package=121.336 J | dram=NA | total=121.336 J | power=119.0 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=20 rep=10 batches=49 time=1.020 s | package=121.503 J | dram=NA | total=121.503 J | power=119.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=8000000 threads=16 rep=1 batches=13485 time=1.011 s | package=169.113 J | dram=NA | total=169.113 J | power=167.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=2 batches=13485 time=1.021 s | package=169.759 J | dram=NA | total=169.759 J | power=166.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=3 batches=13485 time=1.005 s | package=167.990 J | dram=NA | total=167.990 J | power=167.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=4 batches=13485 time=1.033 s | package=172.281 J | dram=NA | total=172.281 J | power=166.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=5 batches=13485 time=1.022 s | package=169.568 J | dram=NA | total=169.568 J | power=166.0 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=6 batches=13485 time=1.019 s | package=170.015 J | dram=NA | total=170.015 J | power=166.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=7 batches=13485 time=1.030 s | package=171.492 J | dram=NA | total=171.492 J | power=166.6 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=8 batches=13485 time=1.027 s | package=170.231 J | dram=NA | total=170.231 J | power=165.8 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=9 batches=13485 time=1.025 s | package=169.919 J | dram=NA | total=169.919 J | power=165.7 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=16 rep=10 batches=13485 time=1.007 s | package=168.342 J | dram=NA | total=168.342 J | power=167.1 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=64000000 threads=2 rep=1 batches=126 time=1.007 s | package=79.329 J | dram=NA | total=79.329 J | power=78.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=2 batches=126 time=1.023 s | package=80.444 J | dram=NA | total=80.444 J | power=78.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=3 batches=126 time=1.009 s | package=80.269 J | dram=NA | total=80.269 J | power=79.5 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=4 batches=126 time=1.018 s | package=80.523 J | dram=NA | total=80.523 J | power=79.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=5 batches=126 time=1.015 s | package=79.967 J | dram=NA | total=79.967 J | power=78.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=6 batches=126 time=1.025 s | package=82.658 J | dram=NA | total=82.658 J | power=80.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=7 batches=126 time=1.028 s | package=80.594 J | dram=NA | total=80.594 J | power=78.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=8 batches=126 time=1.008 s | package=79.289 J | dram=NA | total=79.289 J | power=78.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=9 batches=126 time=1.023 s | package=80.062 J | dram=NA | total=80.062 J | power=78.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=2 rep=10 batches=126 time=1.049 s | package=83.993 J | dram=NA | total=83.993 J | power=80.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=32000000 threads=10 rep=1 batches=865 time=0.998 s | package=111.096 J | dram=NA | total=111.096 J | power=111.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=2 batches=865 time=1.015 s | package=112.483 J | dram=NA | total=112.483 J | power=110.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=3 batches=865 time=1.009 s | package=111.968 J | dram=NA | total=111.968 J | power=110.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=4 batches=865 time=1.012 s | package=112.328 J | dram=NA | total=112.328 J | power=111.0 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=5 batches=865 time=1.014 s | package=112.459 J | dram=NA | total=112.459 J | power=110.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=6 batches=865 time=1.018 s | package=112.908 J | dram=NA | total=112.908 J | power=111.0 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=7 batches=865 time=1.019 s | package=114.240 J | dram=NA | total=114.240 J | power=112.2 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=8 batches=865 time=1.013 s | package=114.220 J | dram=NA | total=114.220 J | power=112.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=9 batches=865 time=1.011 s | package=114.032 J | dram=NA | total=114.032 J | power=112.8 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=10 rep=10 batches=865 time=1.010 s | package=114.025 J | dram=NA | total=114.025 J | power=112.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=64000000 threads=32 rep=1 batches=221 time=1.000 s | package=143.330 J | dram=NA | total=143.330 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=2 batches=221 time=1.009 s | package=144.425 J | dram=NA | total=144.425 J | power=143.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=3 batches=221 time=1.014 s | package=145.075 J | dram=NA | total=145.075 J | power=143.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=4 batches=221 time=1.003 s | package=143.981 J | dram=NA | total=143.981 J | power=143.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=5 batches=221 time=1.004 s | package=144.267 J | dram=NA | total=144.267 J | power=143.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=6 batches=221 time=1.010 s | package=144.933 J | dram=NA | total=144.933 J | power=143.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=7 batches=221 time=1.002 s | package=144.084 J | dram=NA | total=144.084 J | power=143.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=8 batches=221 time=1.000 s | package=143.820 J | dram=NA | total=143.820 J | power=143.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=9 batches=221 time=1.003 s | package=144.160 J | dram=NA | total=144.160 J | power=143.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=32 rep=10 batches=221 time=1.003 s | package=144.489 J | dram=NA | total=144.489 J | power=144.0 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=1000000 threads=32 rep=1 batches=19641 time=0.999 s | package=146.011 J | dram=NA | total=146.011 J | power=146.1 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=2 batches=19641 time=1.011 s | package=147.094 J | dram=NA | total=147.094 J | power=145.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=3 batches=19641 time=1.015 s | package=147.566 J | dram=NA | total=147.566 J | power=145.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=4 batches=19641 time=1.006 s | package=146.742 J | dram=NA | total=146.742 J | power=145.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=5 batches=19641 time=1.003 s | package=146.317 J | dram=NA | total=146.317 J | power=145.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=6 batches=19641 time=1.009 s | package=147.671 J | dram=NA | total=147.671 J | power=146.3 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=7 batches=19641 time=1.011 s | package=147.791 J | dram=NA | total=147.791 J | power=146.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=8 batches=19641 time=1.015 s | package=147.501 J | dram=NA | total=147.501 J | power=145.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=9 batches=19641 time=0.999 s | package=145.849 J | dram=NA | total=145.849 J | power=146.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=32 rep=10 batches=19641 time=1.012 s | package=147.299 J | dram=NA | total=147.299 J | power=145.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=1 batches=35109 time=1.014 s | package=108.740 J | dram=NA | total=108.740 J | power=107.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=2 batches=35109 time=1.011 s | package=106.469 J | dram=NA | total=106.469 J | power=105.3 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=3 batches=35109 time=1.014 s | package=105.407 J | dram=NA | total=105.407 J | power=104.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=4 batches=35109 time=1.015 s | package=105.468 J | dram=NA | total=105.468 J | power=104.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=5 batches=35109 time=1.008 s | package=103.364 J | dram=NA | total=103.364 J | power=102.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=6 batches=35109 time=0.995 s | package=101.991 J | dram=NA | total=101.991 J | power=102.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=7 batches=35109 time=1.007 s | package=104.419 J | dram=NA | total=104.419 J | power=103.7 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=8 batches=35109 time=1.010 s | package=104.238 J | dram=NA | total=104.238 J | power=103.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=9 batches=35109 time=1.006 s | package=103.715 J | dram=NA | total=103.715 J | power=103.1 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=8 rep=10 batches=35109 time=0.997 s | package=102.352 J | dram=NA | total=102.352 J | power=102.6 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=128000000 threads=20 rep=1 batches=96 time=1.004 s | package=116.614 J | dram=NA | total=116.614 J | power=116.1 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=2 batches=96 time=1.005 s | package=116.957 J | dram=NA | total=116.957 J | power=116.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=3 batches=96 time=1.005 s | package=117.870 J | dram=NA | total=117.870 J | power=117.2 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=4 batches=96 time=1.006 s | package=119.172 J | dram=NA | total=119.172 J | power=118.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=5 batches=96 time=1.005 s | package=119.016 J | dram=NA | total=119.016 J | power=118.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=6 batches=96 time=1.004 s | package=119.188 J | dram=NA | total=119.188 J | power=118.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=7 batches=96 time=1.004 s | package=118.868 J | dram=NA | total=118.868 J | power=118.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=8 batches=96 time=1.005 s | package=119.006 J | dram=NA | total=119.006 J | power=118.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=9 batches=96 time=1.005 s | package=118.988 J | dram=NA | total=118.988 J | power=118.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=20 rep=10 batches=96 time=1.005 s | package=118.854 J | dram=NA | total=118.854 J | power=118.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=1000000 threads=2 rep=1 batches=18725 time=1.030 s | package=83.682 J | dram=NA | total=83.682 J | power=81.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=2 batches=18725 time=0.999 s | package=81.298 J | dram=NA | total=81.298 J | power=81.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=3 batches=18725 time=0.990 s | package=79.581 J | dram=NA | total=79.581 J | power=80.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=4 batches=18725 time=1.014 s | package=83.315 J | dram=NA | total=83.315 J | power=82.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=5 batches=18725 time=1.008 s | package=80.883 J | dram=NA | total=80.883 J | power=80.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=6 batches=18725 time=0.994 s | package=79.730 J | dram=NA | total=79.730 J | power=80.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=7 batches=18725 time=1.027 s | package=81.990 J | dram=NA | total=81.990 J | power=79.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=8 batches=18725 time=1.002 s | package=80.134 J | dram=NA | total=80.134 J | power=80.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=9 batches=18725 time=0.995 s | package=80.003 J | dram=NA | total=80.003 J | power=80.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=2 rep=10 batches=18725 time=1.013 s | package=81.107 J | dram=NA | total=81.107 J | power=80.1 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=64000000 threads=20 rep=1 batches=203 time=1.005 s | package=116.833 J | dram=NA | total=116.833 J | power=116.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=2 batches=203 time=1.010 s | package=119.264 J | dram=NA | total=119.264 J | power=118.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=3 batches=203 time=1.004 s | package=119.084 J | dram=NA | total=119.084 J | power=118.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=4 batches=203 time=1.004 s | package=119.621 J | dram=NA | total=119.621 J | power=119.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=5 batches=203 time=1.009 s | package=120.337 J | dram=NA | total=120.337 J | power=119.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=6 batches=203 time=1.004 s | package=119.877 J | dram=NA | total=119.877 J | power=119.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=7 batches=203 time=1.004 s | package=119.762 J | dram=NA | total=119.762 J | power=119.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=8 batches=203 time=1.005 s | package=120.419 J | dram=NA | total=120.419 J | power=119.9 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=9 batches=203 time=1.004 s | package=121.143 J | dram=NA | total=121.143 J | power=120.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=20 rep=10 batches=203 time=1.004 s | package=120.177 J | dram=NA | total=120.177 J | power=119.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=4000000 threads=16 rep=1 batches=19740 time=1.012 s | package=151.942 J | dram=NA | total=151.942 J | power=150.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=2 batches=19740 time=1.010 s | package=151.543 J | dram=NA | total=151.543 J | power=150.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=3 batches=19740 time=1.020 s | package=153.144 J | dram=NA | total=153.144 J | power=150.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=4 batches=19740 time=1.033 s | package=153.690 J | dram=NA | total=153.690 J | power=148.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=5 batches=19740 time=1.036 s | package=153.964 J | dram=NA | total=153.964 J | power=148.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=6 batches=19740 time=1.044 s | package=154.680 J | dram=NA | total=154.680 J | power=148.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=7 batches=19740 time=1.032 s | package=153.687 J | dram=NA | total=153.687 J | power=149.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=8 batches=19740 time=1.022 s | package=152.866 J | dram=NA | total=152.866 J | power=149.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=9 batches=19740 time=1.024 s | package=153.068 J | dram=NA | total=153.068 J | power=149.5 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=16 rep=10 batches=19740 time=1.018 s | package=152.606 J | dram=NA | total=152.606 J | power=149.9 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=64000000 threads=8 rep=1 batches=213 time=1.002 s | package=107.725 J | dram=NA | total=107.725 J | power=107.5 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=2 batches=213 time=1.016 s | package=108.855 J | dram=NA | total=108.855 J | power=107.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=3 batches=213 time=1.017 s | package=108.557 J | dram=NA | total=108.557 J | power=106.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=4 batches=213 time=1.014 s | package=108.532 J | dram=NA | total=108.532 J | power=107.0 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=5 batches=213 time=1.014 s | package=108.862 J | dram=NA | total=108.862 J | power=107.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=6 batches=213 time=1.003 s | package=108.617 J | dram=NA | total=108.617 J | power=108.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=7 batches=213 time=1.017 s | package=110.996 J | dram=NA | total=110.996 J | power=109.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=8 batches=213 time=1.016 s | package=111.769 J | dram=NA | total=111.769 J | power=110.0 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=9 batches=213 time=1.012 s | package=111.480 J | dram=NA | total=111.480 J | power=110.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=8 rep=10 batches=213 time=1.018 s | package=112.637 J | dram=NA | total=112.637 J | power=110.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=4000000 threads=1 rep=1 batches=1614 time=0.999 s | package=68.034 J | dram=NA | total=68.034 J | power=68.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=2 batches=1614 time=1.023 s | package=69.612 J | dram=NA | total=69.612 J | power=68.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=3 batches=1614 time=1.018 s | package=69.957 J | dram=NA | total=69.957 J | power=68.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=4 batches=1614 time=1.032 s | package=71.040 J | dram=NA | total=71.040 J | power=68.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=5 batches=1614 time=1.020 s | package=69.632 J | dram=NA | total=69.632 J | power=68.3 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=6 batches=1614 time=1.028 s | package=69.832 J | dram=NA | total=69.832 J | power=68.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=7 batches=1614 time=1.012 s | package=68.589 J | dram=NA | total=68.589 J | power=67.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=8 batches=1614 time=1.026 s | package=69.550 J | dram=NA | total=69.550 J | power=67.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=9 batches=1614 time=1.015 s | package=68.814 J | dram=NA | total=68.814 J | power=67.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=1 rep=10 batches=1614 time=1.031 s | package=69.835 J | dram=NA | total=69.835 J | power=67.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=1000000 threads=64 rep=1 batches=9160 time=1.024 s | package=147.348 J | dram=NA | total=147.348 J | power=143.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=2 batches=9160 time=1.041 s | package=149.279 J | dram=NA | total=149.279 J | power=143.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=3 batches=9160 time=1.045 s | package=149.807 J | dram=NA | total=149.807 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=4 batches=9160 time=1.064 s | package=152.515 J | dram=NA | total=152.515 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=5 batches=9160 time=1.092 s | package=156.227 J | dram=NA | total=156.227 J | power=143.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=6 batches=9160 time=1.047 s | package=150.934 J | dram=NA | total=150.934 J | power=144.1 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=7 batches=9160 time=1.050 s | package=151.126 J | dram=NA | total=151.126 J | power=144.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=8 batches=9160 time=1.050 s | package=151.144 J | dram=NA | total=151.144 J | power=143.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=9 batches=9160 time=1.137 s | package=162.345 J | dram=NA | total=162.345 J | power=142.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=10 batches=9160 time=1.049 s | package=151.334 J | dram=NA | total=151.334 J | power=144.3 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=16000000 threads=4 rep=1 batches=1383 time=1.002 s | package=100.238 J | dram=NA | total=100.238 J | power=100.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=2 batches=1383 time=1.009 s | package=100.557 J | dram=NA | total=100.557 J | power=99.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=3 batches=1383 time=1.011 s | package=100.929 J | dram=NA | total=100.929 J | power=99.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=4 batches=1383 time=1.009 s | package=100.586 J | dram=NA | total=100.586 J | power=99.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=5 batches=1383 time=1.014 s | package=100.762 J | dram=NA | total=100.762 J | power=99.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=6 batches=1383 time=1.009 s | package=100.431 J | dram=NA | total=100.431 J | power=99.5 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=7 batches=1383 time=1.004 s | package=100.024 J | dram=NA | total=100.024 J | power=99.6 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=8 batches=1383 time=0.999 s | package=99.810 J | dram=NA | total=99.810 J | power=99.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=9 batches=1383 time=1.005 s | package=99.876 J | dram=NA | total=99.876 J | power=99.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=4 rep=10 batches=1383 time=1.007 s | package=100.076 J | dram=NA | total=100.076 J | power=99.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=128000000 threads=4 rep=1 batches=92 time=1.003 s | package=90.904 J | dram=NA | total=90.904 J | power=90.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=2 batches=92 time=1.024 s | package=92.911 J | dram=NA | total=92.911 J | power=90.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=3 batches=92 time=1.012 s | package=92.093 J | dram=NA | total=92.093 J | power=91.0 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=4 batches=92 time=1.016 s | package=91.686 J | dram=NA | total=91.686 J | power=90.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=5 batches=92 time=1.021 s | package=92.943 J | dram=NA | total=92.943 J | power=91.1 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=6 batches=92 time=1.020 s | package=92.911 J | dram=NA | total=92.911 J | power=91.1 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=7 batches=92 time=1.014 s | package=91.934 J | dram=NA | total=91.934 J | power=90.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=8 batches=92 time=1.016 s | package=92.004 J | dram=NA | total=92.004 J | power=90.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=9 batches=92 time=1.002 s | package=91.524 J | dram=NA | total=91.524 J | power=91.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=4 rep=10 batches=92 time=1.017 s | package=92.520 J | dram=NA | total=92.520 J | power=91.0 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=16000000 threads=20 rep=1 batches=8380 time=1.026 s | package=192.368 J | dram=NA | total=192.368 J | power=187.5 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=2 batches=8380 time=1.026 s | package=193.128 J | dram=NA | total=193.128 J | power=188.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=3 batches=8380 time=1.030 s | package=194.341 J | dram=NA | total=194.341 J | power=188.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=4 batches=8380 time=1.035 s | package=193.815 J | dram=NA | total=193.815 J | power=187.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=5 batches=8380 time=1.016 s | package=192.666 J | dram=NA | total=192.666 J | power=189.6 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=6 batches=8380 time=1.032 s | package=193.853 J | dram=NA | total=193.853 J | power=187.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=7 batches=8380 time=1.021 s | package=192.954 J | dram=NA | total=192.954 J | power=188.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=8 batches=8380 time=1.027 s | package=193.804 J | dram=NA | total=193.804 J | power=188.8 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=9 batches=8380 time=1.017 s | package=192.392 J | dram=NA | total=192.392 J | power=189.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=20 rep=10 batches=8380 time=1.021 s | package=192.716 J | dram=NA | total=192.716 J | power=188.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=2000000 threads=4 rep=1 batches=17203 time=1.003 s | package=97.141 J | dram=NA | total=97.141 J | power=96.9 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=2 batches=17203 time=1.009 s | package=96.984 J | dram=NA | total=96.984 J | power=96.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=3 batches=17203 time=1.004 s | package=96.032 J | dram=NA | total=96.032 J | power=95.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=4 batches=17203 time=1.008 s | package=96.357 J | dram=NA | total=96.357 J | power=95.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=5 batches=17203 time=1.004 s | package=96.144 J | dram=NA | total=96.144 J | power=95.7 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=6 batches=17203 time=1.010 s | package=96.603 J | dram=NA | total=96.603 J | power=95.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=7 batches=17203 time=0.989 s | package=95.052 J | dram=NA | total=95.052 J | power=96.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=8 batches=17203 time=0.992 s | package=95.736 J | dram=NA | total=95.736 J | power=96.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=9 batches=17203 time=1.009 s | package=96.721 J | dram=NA | total=96.721 J | power=95.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=4 rep=10 batches=17203 time=0.999 s | package=95.580 J | dram=NA | total=95.580 J | power=95.7 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=1000000 threads=10 rep=1 batches=36142 time=1.012 s | package=111.147 J | dram=NA | total=111.147 J | power=109.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=2 batches=36142 time=1.042 s | package=114.265 J | dram=NA | total=114.265 J | power=109.6 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=3 batches=36142 time=1.030 s | package=113.158 J | dram=NA | total=113.158 J | power=109.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=4 batches=36142 time=1.031 s | package=113.426 J | dram=NA | total=113.426 J | power=110.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=5 batches=36142 time=1.033 s | package=113.410 J | dram=NA | total=113.410 J | power=109.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=6 batches=36142 time=1.004 s | package=113.022 J | dram=NA | total=113.022 J | power=112.6 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=7 batches=36142 time=1.014 s | package=110.922 J | dram=NA | total=110.922 J | power=109.4 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=8 batches=36142 time=1.039 s | package=113.157 J | dram=NA | total=113.157 J | power=108.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=9 batches=36142 time=1.047 s | package=114.010 J | dram=NA | total=114.010 J | power=108.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=10 rep=10 batches=36142 time=1.049 s | package=116.749 J | dram=NA | total=116.749 J | power=111.3 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=2000000 threads=1 rep=1 batches=5719 time=1.000 s | package=68.545 J | dram=NA | total=68.545 J | power=68.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=2 batches=5719 time=1.017 s | package=70.076 J | dram=NA | total=70.076 J | power=68.9 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=3 batches=5719 time=1.015 s | package=69.278 J | dram=NA | total=69.278 J | power=68.2 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=4 batches=5719 time=1.020 s | package=70.138 J | dram=NA | total=70.138 J | power=68.7 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=5 batches=5719 time=1.026 s | package=71.052 J | dram=NA | total=71.052 J | power=69.2 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=6 batches=5719 time=1.023 s | package=70.238 J | dram=NA | total=70.238 J | power=68.7 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=7 batches=5719 time=1.015 s | package=69.303 J | dram=NA | total=69.303 J | power=68.3 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=8 batches=5719 time=1.024 s | package=71.266 J | dram=NA | total=71.266 J | power=69.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=9 batches=5719 time=1.022 s | package=70.074 J | dram=NA | total=70.074 J | power=68.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=1 rep=10 batches=5719 time=1.012 s | package=69.152 J | dram=NA | total=69.152 J | power=68.4 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=8000000 threads=20 rep=1 batches=14353 time=1.004 s | package=179.357 J | dram=NA | total=179.357 J | power=178.7 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=2 batches=14353 time=1.023 s | package=181.159 J | dram=NA | total=181.159 J | power=177.1 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=3 batches=14353 time=1.017 s | package=180.470 J | dram=NA | total=180.470 J | power=177.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=4 batches=14353 time=1.037 s | package=182.178 J | dram=NA | total=182.178 J | power=175.7 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=5 batches=14353 time=1.026 s | package=181.409 J | dram=NA | total=181.409 J | power=176.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=6 batches=14353 time=1.006 s | package=179.623 J | dram=NA | total=179.623 J | power=178.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=7 batches=14353 time=1.012 s | package=181.244 J | dram=NA | total=181.244 J | power=179.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=8 batches=14353 time=1.018 s | package=181.636 J | dram=NA | total=181.636 J | power=178.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=9 batches=14353 time=1.011 s | package=180.525 J | dram=NA | total=180.525 J | power=178.6 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=20 rep=10 batches=14353 time=1.022 s | package=182.930 J | dram=NA | total=182.930 J | power=179.0 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=128000000 threads=10 rep=1 batches=104 time=1.003 s | package=115.799 J | dram=NA | total=115.799 J | power=115.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=2 batches=104 time=1.004 s | package=116.033 J | dram=NA | total=116.033 J | power=115.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=3 batches=104 time=1.010 s | package=116.416 J | dram=NA | total=116.416 J | power=115.2 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=4 batches=104 time=1.016 s | package=116.743 J | dram=NA | total=116.743 J | power=114.9 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=5 batches=104 time=1.010 s | package=116.053 J | dram=NA | total=116.053 J | power=114.9 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=6 batches=104 time=1.019 s | package=116.853 J | dram=NA | total=116.853 J | power=114.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=7 batches=104 time=1.005 s | package=115.668 J | dram=NA | total=115.668 J | power=115.1 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=8 batches=104 time=1.018 s | package=117.131 J | dram=NA | total=117.131 J | power=115.1 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=9 batches=104 time=1.018 s | package=117.188 J | dram=NA | total=117.188 J | power=115.1 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=10 rep=10 batches=104 time=1.010 s | package=117.461 J | dram=NA | total=117.461 J | power=116.2 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=2000000 threads=32 rep=1 batches=18661 time=1.005 s | package=154.195 J | dram=NA | total=154.195 J | power=153.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=2 batches=18661 time=1.018 s | package=155.527 J | dram=NA | total=155.527 J | power=152.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=3 batches=18661 time=1.021 s | package=156.493 J | dram=NA | total=156.493 J | power=153.2 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=4 batches=18661 time=1.028 s | package=156.258 J | dram=NA | total=156.258 J | power=152.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=5 batches=18661 time=1.017 s | package=156.477 J | dram=NA | total=156.477 J | power=153.9 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=6 batches=18661 time=1.029 s | package=157.211 J | dram=NA | total=157.211 J | power=152.7 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=7 batches=18661 time=1.025 s | package=156.135 J | dram=NA | total=156.135 J | power=152.3 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=8 batches=18661 time=1.026 s | package=157.450 J | dram=NA | total=157.450 J | power=153.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=9 batches=18661 time=1.028 s | package=157.710 J | dram=NA | total=157.710 J | power=153.4 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=32 rep=10 batches=18661 time=1.016 s | package=155.477 J | dram=NA | total=155.477 J | power=153.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=128000000 threads=32 rep=1 batches=107 time=1.005 s | package=143.872 J | dram=NA | total=143.872 J | power=143.2 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=2 batches=107 time=1.015 s | package=144.983 J | dram=NA | total=144.983 J | power=142.9 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=3 batches=107 time=1.011 s | package=144.780 J | dram=NA | total=144.780 J | power=143.2 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=4 batches=107 time=1.006 s | package=144.221 J | dram=NA | total=144.221 J | power=143.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=5 batches=107 time=1.006 s | package=144.263 J | dram=NA | total=144.263 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=6 batches=107 time=1.016 s | package=145.827 J | dram=NA | total=145.827 J | power=143.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=7 batches=107 time=1.016 s | package=146.719 J | dram=NA | total=146.719 J | power=144.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=8 batches=107 time=1.011 s | package=144.897 J | dram=NA | total=144.897 J | power=143.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=9 batches=107 time=1.007 s | package=144.609 J | dram=NA | total=144.609 J | power=143.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=32 rep=10 batches=107 time=1.008 s | package=144.563 J | dram=NA | total=144.563 J | power=143.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=8000000 threads=2 rep=1 batches=1485 time=1.013 s | package=82.423 J | dram=NA | total=82.423 J | power=81.3 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=2 batches=1485 time=1.033 s | package=83.567 J | dram=NA | total=83.567 J | power=80.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=3 batches=1485 time=1.036 s | package=83.618 J | dram=NA | total=83.618 J | power=80.7 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=4 batches=1485 time=1.015 s | package=82.286 J | dram=NA | total=82.286 J | power=81.0 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=5 batches=1485 time=1.010 s | package=81.308 J | dram=NA | total=81.308 J | power=80.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=6 batches=1485 time=1.003 s | package=80.705 J | dram=NA | total=80.705 J | power=80.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=7 batches=1485 time=1.011 s | package=81.352 J | dram=NA | total=81.352 J | power=80.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=8 batches=1485 time=1.012 s | package=82.174 J | dram=NA | total=82.174 J | power=81.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=9 batches=1485 time=1.013 s | package=81.438 J | dram=NA | total=81.438 J | power=80.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=2 rep=10 batches=1485 time=1.008 s | package=81.456 J | dram=NA | total=81.456 J | power=80.8 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=64000000 threads=16 rep=1 batches=222 time=1.003 s | package=118.021 J | dram=NA | total=118.021 J | power=117.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=2 batches=222 time=1.005 s | package=118.419 J | dram=NA | total=118.419 J | power=117.9 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=3 batches=222 time=1.008 s | package=118.564 J | dram=NA | total=118.564 J | power=117.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=4 batches=222 time=1.004 s | package=118.385 J | dram=NA | total=118.385 J | power=118.0 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=5 batches=222 time=1.003 s | package=118.374 J | dram=NA | total=118.374 J | power=118.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=6 batches=222 time=1.003 s | package=118.544 J | dram=NA | total=118.544 J | power=118.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=7 batches=222 time=1.004 s | package=118.652 J | dram=NA | total=118.652 J | power=118.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=8 batches=222 time=1.009 s | package=119.078 J | dram=NA | total=119.078 J | power=118.0 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=9 batches=222 time=1.014 s | package=119.625 J | dram=NA | total=119.625 J | power=118.0 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=16 rep=10 batches=222 time=1.010 s | package=120.539 J | dram=NA | total=120.539 J | power=119.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=256000000 threads=8 rep=1 batches=54 time=1.019 s | package=114.436 J | dram=NA | total=114.436 J | power=112.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=2 batches=54 time=1.021 s | package=114.757 J | dram=NA | total=114.757 J | power=112.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=3 batches=54 time=1.031 s | package=115.609 J | dram=NA | total=115.609 J | power=112.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=4 batches=54 time=1.020 s | package=114.641 J | dram=NA | total=114.641 J | power=112.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=5 batches=54 time=1.022 s | package=115.341 J | dram=NA | total=115.341 J | power=112.8 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=6 batches=54 time=1.020 s | package=115.889 J | dram=NA | total=115.889 J | power=113.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=7 batches=54 time=1.021 s | package=115.955 J | dram=NA | total=115.955 J | power=113.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=8 batches=54 time=1.019 s | package=115.864 J | dram=NA | total=115.864 J | power=113.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=9 batches=54 time=1.022 s | package=116.411 J | dram=NA | total=116.411 J | power=113.9 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=8 rep=10 batches=54 time=1.021 s | package=116.323 J | dram=NA | total=116.323 J | power=113.9 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=64000000 threads=64 rep=1 batches=209 time=1.009 s | package=158.122 J | dram=NA | total=158.122 J | power=156.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=2 batches=209 time=1.015 s | package=158.544 J | dram=NA | total=158.544 J | power=156.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=3 batches=209 time=1.010 s | package=157.907 J | dram=NA | total=157.907 J | power=156.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=4 batches=209 time=1.023 s | package=159.499 J | dram=NA | total=159.499 J | power=155.9 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=5 batches=209 time=1.012 s | package=158.631 J | dram=NA | total=158.631 J | power=156.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=6 batches=209 time=1.014 s | package=158.298 J | dram=NA | total=158.298 J | power=156.1 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=7 batches=209 time=1.011 s | package=158.140 J | dram=NA | total=158.140 J | power=156.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=8 batches=209 time=1.010 s | package=158.100 J | dram=NA | total=158.100 J | power=156.5 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=9 batches=209 time=1.024 s | package=159.363 J | dram=NA | total=159.363 J | power=155.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=10 batches=209 time=1.013 s | package=158.282 J | dram=NA | total=158.282 J | power=156.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=256000000 threads=64 rep=1 batches=53 time=1.019 s | package=160.614 J | dram=NA | total=160.614 J | power=157.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=2 batches=53 time=1.031 s | package=162.278 J | dram=NA | total=162.278 J | power=157.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=3 batches=53 time=1.025 s | package=161.596 J | dram=NA | total=161.596 J | power=157.7 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=4 batches=53 time=1.026 s | package=161.616 J | dram=NA | total=161.616 J | power=157.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=5 batches=53 time=1.020 s | package=160.842 J | dram=NA | total=160.842 J | power=157.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=6 batches=53 time=1.027 s | package=161.583 J | dram=NA | total=161.583 J | power=157.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=7 batches=53 time=1.023 s | package=161.340 J | dram=NA | total=161.340 J | power=157.7 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=8 batches=53 time=1.023 s | package=161.067 J | dram=NA | total=161.067 J | power=157.5 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=9 batches=53 time=1.025 s | package=161.499 J | dram=NA | total=161.499 J | power=157.5 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=10 batches=53 time=1.023 s | package=161.516 J | dram=NA | total=161.516 J | power=157.9 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=1 batches=53 time=1.020 s | package=127.846 J | dram=NA | total=127.846 J | power=125.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=2 batches=53 time=1.021 s | package=126.178 J | dram=NA | total=126.178 J | power=123.6 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=3 batches=53 time=1.022 s | package=126.040 J | dram=NA | total=126.040 J | power=123.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=4 batches=53 time=1.017 s | package=125.526 J | dram=NA | total=125.526 J | power=123.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=5 batches=53 time=1.031 s | package=128.694 J | dram=NA | total=128.694 J | power=124.8 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=6 batches=53 time=1.019 s | package=125.636 J | dram=NA | total=125.636 J | power=123.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=7 batches=53 time=1.015 s | package=125.064 J | dram=NA | total=125.064 J | power=123.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=8 batches=53 time=1.023 s | package=126.155 J | dram=NA | total=126.155 J | power=123.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=9 batches=53 time=1.016 s | package=125.165 J | dram=NA | total=125.165 J | power=123.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=10 rep=10 batches=53 time=1.012 s | package=124.688 J | dram=NA | total=124.688 J | power=123.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=2000000 threads=20 rep=1 batches=23769 time=0.996 s | package=137.003 J | dram=NA | total=137.003 J | power=137.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=2 batches=23769 time=1.006 s | package=136.838 J | dram=NA | total=136.838 J | power=136.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=3 batches=23769 time=1.012 s | package=138.363 J | dram=NA | total=138.363 J | power=136.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=4 batches=23769 time=1.018 s | package=139.843 J | dram=NA | total=139.843 J | power=137.3 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=5 batches=23769 time=1.011 s | package=138.481 J | dram=NA | total=138.481 J | power=137.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=6 batches=23769 time=1.006 s | package=137.769 J | dram=NA | total=137.769 J | power=136.9 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=7 batches=23769 time=1.000 s | package=137.160 J | dram=NA | total=137.160 J | power=137.2 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=8 batches=23769 time=1.008 s | package=138.134 J | dram=NA | total=138.134 J | power=137.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=9 batches=23769 time=1.014 s | package=137.941 J | dram=NA | total=137.941 J | power=136.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=20 rep=10 batches=23769 time=1.026 s | package=139.024 J | dram=NA | total=139.024 J | power=135.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=1 batches=25370 time=1.002 s | package=130.799 J | dram=NA | total=130.799 J | power=130.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=2 batches=25370 time=1.014 s | package=132.703 J | dram=NA | total=132.703 J | power=130.9 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=3 batches=25370 time=1.019 s | package=132.715 J | dram=NA | total=132.715 J | power=130.3 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=4 batches=25370 time=1.016 s | package=133.311 J | dram=NA | total=133.311 J | power=131.2 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=5 batches=25370 time=1.018 s | package=133.207 J | dram=NA | total=133.207 J | power=130.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=6 batches=25370 time=1.013 s | package=133.064 J | dram=NA | total=133.064 J | power=131.4 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=7 batches=25370 time=1.009 s | package=132.891 J | dram=NA | total=132.891 J | power=131.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=8 batches=25370 time=1.002 s | package=131.603 J | dram=NA | total=131.603 J | power=131.4 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=9 batches=25370 time=1.011 s | package=132.405 J | dram=NA | total=132.405 J | power=131.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=16 rep=10 batches=25370 time=1.022 s | package=133.872 J | dram=NA | total=133.872 J | power=131.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=64000000 threads=10 rep=1 batches=222 time=1.000 s | package=112.253 J | dram=NA | total=112.253 J | power=112.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=2 batches=222 time=1.012 s | package=113.275 J | dram=NA | total=113.275 J | power=111.9 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=3 batches=222 time=1.015 s | package=113.476 J | dram=NA | total=113.476 J | power=111.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=4 batches=222 time=1.014 s | package=114.304 J | dram=NA | total=114.304 J | power=112.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=5 batches=222 time=1.012 s | package=114.211 J | dram=NA | total=114.211 J | power=112.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=6 batches=222 time=1.005 s | package=113.888 J | dram=NA | total=113.888 J | power=113.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=7 batches=222 time=1.006 s | package=113.804 J | dram=NA | total=113.804 J | power=113.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=8 batches=222 time=1.017 s | package=114.670 J | dram=NA | total=114.670 J | power=112.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=9 batches=222 time=1.002 s | package=113.484 J | dram=NA | total=113.484 J | power=113.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=10 rep=10 batches=222 time=1.010 s | package=113.964 J | dram=NA | total=113.964 J | power=112.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=16000000 threads=64 rep=1 batches=7398 time=1.011 s | package=214.872 J | dram=NA | total=214.872 J | power=212.5 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=2 batches=7398 time=1.031 s | package=216.797 J | dram=NA | total=216.797 J | power=210.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=3 batches=7398 time=1.036 s | package=217.204 J | dram=NA | total=217.204 J | power=209.6 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=4 batches=7398 time=1.032 s | package=216.986 J | dram=NA | total=216.986 J | power=210.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=5 batches=7398 time=1.038 s | package=218.265 J | dram=NA | total=218.265 J | power=210.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=6 batches=7398 time=1.052 s | package=219.371 J | dram=NA | total=219.371 J | power=208.6 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=7 batches=7398 time=1.027 s | package=216.802 J | dram=NA | total=216.802 J | power=211.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=8 batches=7398 time=1.040 s | package=218.112 J | dram=NA | total=218.112 J | power=209.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=9 batches=7398 time=1.032 s | package=218.540 J | dram=NA | total=218.540 J | power=211.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=64 rep=10 batches=7398 time=1.034 s | package=218.675 J | dram=NA | total=218.675 J | power=211.5 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=8000000 threads=4 rep=1 batches=4947 time=0.997 s | package=102.196 J | dram=NA | total=102.196 J | power=102.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=2 batches=4947 time=1.027 s | package=106.134 J | dram=NA | total=106.134 J | power=103.3 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=3 batches=4947 time=1.014 s | package=104.256 J | dram=NA | total=104.256 J | power=102.8 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=4 batches=4947 time=1.012 s | package=102.792 J | dram=NA | total=102.792 J | power=101.6 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=5 batches=4947 time=1.006 s | package=101.096 J | dram=NA | total=101.096 J | power=100.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=6 batches=4947 time=1.025 s | package=105.073 J | dram=NA | total=105.073 J | power=102.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=7 batches=4947 time=1.006 s | package=102.782 J | dram=NA | total=102.782 J | power=102.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=8 batches=4947 time=1.012 s | package=102.983 J | dram=NA | total=102.983 J | power=101.7 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=9 batches=4947 time=0.995 s | package=100.926 J | dram=NA | total=100.926 J | power=101.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=4 rep=10 batches=4947 time=1.003 s | package=101.687 J | dram=NA | total=101.687 J | power=101.3 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=256000000 threads=32 rep=1 batches=54 time=1.006 s | package=143.260 J | dram=NA | total=143.260 J | power=142.5 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=2 batches=54 time=1.008 s | package=144.007 J | dram=NA | total=144.007 J | power=142.9 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=3 batches=54 time=1.009 s | package=144.190 J | dram=NA | total=144.190 J | power=143.0 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=4 batches=54 time=1.007 s | package=144.205 J | dram=NA | total=144.205 J | power=143.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=5 batches=54 time=1.008 s | package=144.333 J | dram=NA | total=144.333 J | power=143.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=6 batches=54 time=1.010 s | package=144.752 J | dram=NA | total=144.752 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=7 batches=54 time=1.009 s | package=144.819 J | dram=NA | total=144.819 J | power=143.5 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=8 batches=54 time=1.008 s | package=144.445 J | dram=NA | total=144.445 J | power=143.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=9 batches=54 time=1.009 s | package=144.549 J | dram=NA | total=144.549 J | power=143.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=32 rep=10 batches=54 time=1.008 s | package=144.650 J | dram=NA | total=144.650 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=8000000 threads=1 rep=1 batches=588 time=1.002 s | package=71.845 J | dram=NA | total=71.845 J | power=71.7 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=2 batches=588 time=1.018 s | package=72.781 J | dram=NA | total=72.781 J | power=71.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=3 batches=588 time=1.010 s | package=72.157 J | dram=NA | total=72.157 J | power=71.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=4 batches=588 time=1.016 s | package=73.406 J | dram=NA | total=73.406 J | power=72.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=5 batches=588 time=1.017 s | package=73.322 J | dram=NA | total=73.322 J | power=72.1 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=6 batches=588 time=1.012 s | package=72.498 J | dram=NA | total=72.498 J | power=71.6 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=7 batches=588 time=1.020 s | package=72.527 J | dram=NA | total=72.527 J | power=71.1 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=8 batches=588 time=1.015 s | package=72.276 J | dram=NA | total=72.276 J | power=71.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=9 batches=588 time=1.022 s | package=72.921 J | dram=NA | total=72.921 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=1 rep=10 batches=588 time=1.020 s | package=72.608 J | dram=NA | total=72.608 J | power=71.2 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=2000000 threads=2 rep=1 batches=10164 time=1.034 s | package=83.327 J | dram=NA | total=83.327 J | power=80.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=2 batches=10164 time=1.019 s | package=82.131 J | dram=NA | total=82.131 J | power=80.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=3 batches=10164 time=1.032 s | package=83.066 J | dram=NA | total=83.066 J | power=80.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=4 batches=10164 time=1.020 s | package=82.263 J | dram=NA | total=82.263 J | power=80.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=5 batches=10164 time=1.024 s | package=82.454 J | dram=NA | total=82.454 J | power=80.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=6 batches=10164 time=1.021 s | package=82.298 J | dram=NA | total=82.298 J | power=80.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=7 batches=10164 time=1.048 s | package=84.003 J | dram=NA | total=84.003 J | power=80.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=8 batches=10164 time=1.014 s | package=80.908 J | dram=NA | total=80.908 J | power=79.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=9 batches=10164 time=1.011 s | package=80.703 J | dram=NA | total=80.703 J | power=79.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=2 rep=10 batches=10164 time=1.018 s | package=81.191 J | dram=NA | total=81.191 J | power=79.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=16000000 threads=2 rep=1 batches=503 time=0.999 s | package=78.407 J | dram=NA | total=78.407 J | power=78.5 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=2 batches=503 time=1.016 s | package=79.516 J | dram=NA | total=79.516 J | power=78.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=3 batches=503 time=1.015 s | package=79.180 J | dram=NA | total=79.180 J | power=78.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=4 batches=503 time=1.020 s | package=79.559 J | dram=NA | total=79.559 J | power=78.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=5 batches=503 time=1.018 s | package=79.402 J | dram=NA | total=79.402 J | power=78.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=6 batches=503 time=1.020 s | package=79.936 J | dram=NA | total=79.936 J | power=78.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=7 batches=503 time=1.018 s | package=79.226 J | dram=NA | total=79.226 J | power=77.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=8 batches=503 time=1.015 s | package=79.232 J | dram=NA | total=79.232 J | power=78.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=9 batches=503 time=1.022 s | package=80.006 J | dram=NA | total=80.006 J | power=78.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=2 rep=10 batches=503 time=1.016 s | package=79.125 J | dram=NA | total=79.125 J | power=77.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=8000000 threads=10 rep=1 batches=10955 time=1.000 s | package=142.595 J | dram=NA | total=142.595 J | power=142.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=2 batches=10955 time=1.017 s | package=144.359 J | dram=NA | total=144.359 J | power=141.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=3 batches=10955 time=1.016 s | package=144.149 J | dram=NA | total=144.149 J | power=141.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=4 batches=10955 time=1.015 s | package=144.449 J | dram=NA | total=144.449 J | power=142.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=5 batches=10955 time=1.017 s | package=146.986 J | dram=NA | total=146.986 J | power=144.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=6 batches=10955 time=1.009 s | package=143.745 J | dram=NA | total=143.745 J | power=142.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=7 batches=10955 time=1.011 s | package=143.522 J | dram=NA | total=143.522 J | power=141.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=8 batches=10955 time=1.025 s | package=145.331 J | dram=NA | total=145.331 J | power=141.8 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=9 batches=10955 time=1.027 s | package=147.345 J | dram=NA | total=147.345 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=10 rep=10 batches=10955 time=1.018 s | package=145.429 J | dram=NA | total=145.429 J | power=142.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=128000000 threads=8 rep=1 batches=105 time=1.006 s | package=107.191 J | dram=NA | total=107.191 J | power=106.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=2 batches=105 time=1.021 s | package=111.808 J | dram=NA | total=111.808 J | power=109.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=3 batches=105 time=1.006 s | package=113.097 J | dram=NA | total=113.097 J | power=112.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=4 batches=105 time=1.007 s | package=113.229 J | dram=NA | total=113.229 J | power=112.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=5 batches=105 time=1.009 s | package=114.301 J | dram=NA | total=114.301 J | power=113.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=6 batches=105 time=1.008 s | package=113.544 J | dram=NA | total=113.544 J | power=112.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=7 batches=105 time=1.008 s | package=113.515 J | dram=NA | total=113.515 J | power=112.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=8 batches=105 time=1.007 s | package=113.259 J | dram=NA | total=113.259 J | power=112.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=9 batches=105 time=1.017 s | package=114.207 J | dram=NA | total=114.207 J | power=112.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=8 rep=10 batches=105 time=1.008 s | package=113.427 J | dram=NA | total=113.427 J | power=112.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=32000000 threads=16 rep=1 batches=1441 time=1.007 s | package=143.079 J | dram=NA | total=143.079 J | power=142.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=2 batches=1441 time=1.014 s | package=143.337 J | dram=NA | total=143.337 J | power=141.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=3 batches=1441 time=0.999 s | package=143.007 J | dram=NA | total=143.007 J | power=143.2 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=4 batches=1441 time=1.011 s | package=144.811 J | dram=NA | total=144.811 J | power=143.2 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=5 batches=1441 time=1.000 s | package=143.392 J | dram=NA | total=143.392 J | power=143.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=6 batches=1441 time=0.999 s | package=143.667 J | dram=NA | total=143.667 J | power=143.8 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=7 batches=1441 time=1.010 s | package=145.219 J | dram=NA | total=145.219 J | power=143.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=8 batches=1441 time=0.995 s | package=143.783 J | dram=NA | total=143.783 J | power=144.5 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=9 batches=1441 time=0.999 s | package=144.264 J | dram=NA | total=144.264 J | power=144.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=16 rep=10 batches=1441 time=1.004 s | package=144.532 J | dram=NA | total=144.532 J | power=144.0 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=4000000 threads=32 rep=1 batches=16297 time=1.001 s | package=169.365 J | dram=NA | total=169.365 J | power=169.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=2 batches=16297 time=1.028 s | package=172.330 J | dram=NA | total=172.330 J | power=167.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=3 batches=16297 time=1.021 s | package=172.428 J | dram=NA | total=172.428 J | power=168.9 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=4 batches=16297 time=1.034 s | package=173.888 J | dram=NA | total=173.888 J | power=168.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=5 batches=16297 time=1.027 s | package=172.315 J | dram=NA | total=172.315 J | power=167.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=6 batches=16297 time=1.030 s | package=173.081 J | dram=NA | total=173.081 J | power=168.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=7 batches=16297 time=1.027 s | package=172.786 J | dram=NA | total=172.786 J | power=168.2 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=8 batches=16297 time=1.022 s | package=172.180 J | dram=NA | total=172.180 J | power=168.4 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=9 batches=16297 time=1.023 s | package=172.521 J | dram=NA | total=172.521 J | power=168.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=32 rep=10 batches=16297 time=1.023 s | package=172.863 J | dram=NA | total=172.863 J | power=169.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=64000000 threads=1 rep=1 batches=73 time=0.999 s | package=72.260 J | dram=NA | total=72.260 J | power=72.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=2 batches=73 time=1.017 s | package=73.396 J | dram=NA | total=73.396 J | power=72.2 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=3 batches=73 time=1.019 s | package=73.862 J | dram=NA | total=73.862 J | power=72.5 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=4 batches=73 time=1.015 s | package=72.780 J | dram=NA | total=72.780 J | power=71.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=5 batches=73 time=1.014 s | package=72.869 J | dram=NA | total=72.869 J | power=71.9 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=6 batches=73 time=1.018 s | package=72.785 J | dram=NA | total=72.785 J | power=71.5 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=7 batches=73 time=1.015 s | package=72.823 J | dram=NA | total=72.823 J | power=71.8 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=8 batches=73 time=1.019 s | package=72.770 J | dram=NA | total=72.770 J | power=71.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=9 batches=73 time=1.015 s | package=72.462 J | dram=NA | total=72.462 J | power=71.4 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=10 batches=73 time=1.015 s | package=72.828 J | dram=NA | total=72.828 J | power=71.7 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=2000000 threads=64 rep=1 batches=9151 time=1.052 s | package=156.753 J | dram=NA | total=156.753 J | power=149.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=2 batches=9151 time=1.049 s | package=155.730 J | dram=NA | total=155.730 J | power=148.4 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=3 batches=9151 time=1.053 s | package=156.128 J | dram=NA | total=156.128 J | power=148.3 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=4 batches=9151 time=1.058 s | package=157.278 J | dram=NA | total=157.278 J | power=148.7 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=5 batches=9151 time=1.047 s | package=155.766 J | dram=NA | total=155.766 J | power=148.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=6 batches=9151 time=1.049 s | package=156.597 J | dram=NA | total=156.597 J | power=149.2 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=7 batches=9151 time=1.117 s | package=165.724 J | dram=NA | total=165.724 J | power=148.3 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=8 batches=9151 time=1.067 s | package=159.378 J | dram=NA | total=159.378 J | power=149.4 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=9 batches=9151 time=1.065 s | package=158.265 J | dram=NA | total=158.265 J | power=148.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=64 rep=10 batches=9151 time=1.067 s | package=158.087 J | dram=NA | total=158.087 J | power=148.2 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=1 batches=24786 time=0.993 s | package=114.201 J | dram=NA | total=114.201 J | power=115.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=2 batches=24786 time=1.015 s | package=115.911 J | dram=NA | total=115.911 J | power=114.2 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=3 batches=24786 time=1.012 s | package=115.911 J | dram=NA | total=115.911 J | power=114.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=4 batches=24786 time=1.009 s | package=114.512 J | dram=NA | total=114.512 J | power=113.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=5 batches=24786 time=1.007 s | package=114.185 J | dram=NA | total=114.185 J | power=113.4 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=6 batches=24786 time=1.012 s | package=116.560 J | dram=NA | total=116.560 J | power=115.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=7 batches=24786 time=1.009 s | package=116.106 J | dram=NA | total=116.106 J | power=115.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=8 batches=24786 time=1.012 s | package=115.278 J | dram=NA | total=115.278 J | power=113.9 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=9 batches=24786 time=1.001 s | package=114.187 J | dram=NA | total=114.187 J | power=114.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=8 rep=10 batches=24786 time=1.002 s | package=114.651 J | dram=NA | total=114.651 J | power=114.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=128000000 threads=1 rep=1 batches=37 time=1.014 s | package=70.346 J | dram=NA | total=70.346 J | power=69.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=2 batches=37 time=1.016 s | package=70.798 J | dram=NA | total=70.798 J | power=69.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=3 batches=37 time=1.033 s | package=71.420 J | dram=NA | total=71.420 J | power=69.2 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=4 batches=37 time=1.030 s | package=70.569 J | dram=NA | total=70.569 J | power=68.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=5 batches=37 time=1.040 s | package=71.368 J | dram=NA | total=71.368 J | power=68.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=6 batches=37 time=1.034 s | package=71.044 J | dram=NA | total=71.044 J | power=68.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=7 batches=37 time=1.034 s | package=70.752 J | dram=NA | total=70.752 J | power=68.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=8 batches=37 time=1.039 s | package=71.214 J | dram=NA | total=71.214 J | power=68.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=9 batches=37 time=1.035 s | package=70.660 J | dram=NA | total=70.660 J | power=68.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=1 rep=10 batches=37 time=1.033 s | package=70.629 J | dram=NA | total=70.629 J | power=68.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=4000000 threads=8 rep=1 batches=16070 time=0.998 s | package=122.669 J | dram=NA | total=122.669 J | power=122.9 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=2 batches=16070 time=1.013 s | package=124.784 J | dram=NA | total=124.784 J | power=123.2 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=3 batches=16070 time=1.026 s | package=125.678 J | dram=NA | total=125.678 J | power=122.5 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=4 batches=16070 time=1.030 s | package=125.196 J | dram=NA | total=125.196 J | power=121.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=5 batches=16070 time=1.014 s | package=123.395 J | dram=NA | total=123.395 J | power=121.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=6 batches=16070 time=1.021 s | package=124.215 J | dram=NA | total=124.215 J | power=121.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=7 batches=16070 time=1.017 s | package=123.672 J | dram=NA | total=123.672 J | power=121.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=8 batches=16070 time=1.027 s | package=125.449 J | dram=NA | total=125.449 J | power=122.2 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=9 batches=16070 time=1.014 s | package=124.934 J | dram=NA | total=124.934 J | power=123.2 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=8 rep=10 batches=16070 time=1.025 s | package=126.677 J | dram=NA | total=126.677 J | power=123.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=32000000 threads=4 rep=1 batches=369 time=1.000 s | package=88.524 J | dram=NA | total=88.524 J | power=88.5 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=2 batches=369 time=1.019 s | package=90.364 J | dram=NA | total=90.364 J | power=88.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=3 batches=369 time=1.017 s | package=89.728 J | dram=NA | total=89.728 J | power=88.2 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=4 batches=369 time=1.019 s | package=89.928 J | dram=NA | total=89.928 J | power=88.2 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=5 batches=369 time=1.016 s | package=89.796 J | dram=NA | total=89.796 J | power=88.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=6 batches=369 time=1.017 s | package=90.135 J | dram=NA | total=90.135 J | power=88.6 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=7 batches=369 time=1.018 s | package=89.891 J | dram=NA | total=89.891 J | power=88.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=8 batches=369 time=1.006 s | package=89.311 J | dram=NA | total=89.311 J | power=88.8 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=9 batches=369 time=1.023 s | package=90.331 J | dram=NA | total=90.331 J | power=88.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=4 rep=10 batches=369 time=1.026 s | package=90.336 J | dram=NA | total=90.336 J | power=88.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=128000000 threads=64 rep=1 batches=103 time=1.003 s | package=156.911 J | dram=NA | total=156.911 J | power=156.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=2 batches=103 time=1.019 s | package=158.836 J | dram=NA | total=158.836 J | power=155.8 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=3 batches=103 time=1.005 s | package=157.735 J | dram=NA | total=157.735 J | power=156.9 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=4 batches=103 time=1.008 s | package=158.371 J | dram=NA | total=158.371 J | power=157.1 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=5 batches=103 time=1.007 s | package=158.354 J | dram=NA | total=158.354 J | power=157.3 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=6 batches=103 time=1.009 s | package=158.456 J | dram=NA | total=158.456 J | power=157.0 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=7 batches=103 time=1.008 s | package=158.185 J | dram=NA | total=158.185 J | power=156.9 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=8 batches=103 time=1.006 s | package=158.081 J | dram=NA | total=158.081 J | power=157.2 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=9 batches=103 time=1.008 s | package=158.055 J | dram=NA | total=158.055 J | power=156.8 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=64 rep=10 batches=103 time=1.011 s | package=158.515 J | dram=NA | total=158.515 J | power=156.8 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=32000000 threads=1 rep=1 batches=148 time=1.004 s | package=72.742 J | dram=NA | total=72.742 J | power=72.5 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=2 batches=148 time=1.011 s | package=72.568 J | dram=NA | total=72.568 J | power=71.8 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=3 batches=148 time=1.013 s | package=72.522 J | dram=NA | total=72.522 J | power=71.6 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=4 batches=148 time=1.021 s | package=73.182 J | dram=NA | total=73.182 J | power=71.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=5 batches=148 time=1.015 s | package=72.626 J | dram=NA | total=72.626 J | power=71.6 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=6 batches=148 time=1.020 s | package=72.765 J | dram=NA | total=72.765 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=7 batches=148 time=1.020 s | package=72.670 J | dram=NA | total=72.670 J | power=71.2 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=8 batches=148 time=1.021 s | package=72.917 J | dram=NA | total=72.917 J | power=71.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=9 batches=148 time=1.022 s | package=72.819 J | dram=NA | total=72.819 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=1 rep=10 batches=148 time=1.021 s | package=72.621 J | dram=NA | total=72.621 J | power=71.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=16000000 threads=16 rep=1 batches=8385 time=1.011 s | package=185.701 J | dram=NA | total=185.701 J | power=183.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=2 batches=8385 time=1.039 s | package=188.010 J | dram=NA | total=188.010 J | power=181.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=3 batches=8385 time=1.038 s | package=187.296 J | dram=NA | total=187.296 J | power=180.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=4 batches=8385 time=1.043 s | package=187.492 J | dram=NA | total=187.492 J | power=179.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=5 batches=8385 time=1.043 s | package=187.080 J | dram=NA | total=187.080 J | power=179.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=6 batches=8385 time=1.020 s | package=184.812 J | dram=NA | total=184.812 J | power=181.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=7 batches=8385 time=1.018 s | package=184.679 J | dram=NA | total=184.679 J | power=181.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=8 batches=8385 time=1.026 s | package=185.373 J | dram=NA | total=185.373 J | power=180.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=9 batches=8385 time=1.025 s | package=185.783 J | dram=NA | total=185.783 J | power=181.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=16 rep=10 batches=8385 time=1.026 s | package=185.478 J | dram=NA | total=185.478 J | power=180.8 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=32000000 threads=32 rep=1 batches=1833 time=1.002 s | package=170.003 J | dram=NA | total=170.003 J | power=169.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=2 batches=1833 time=1.000 s | package=169.986 J | dram=NA | total=169.986 J | power=170.0 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=3 batches=1833 time=0.995 s | package=169.485 J | dram=NA | total=169.485 J | power=170.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=4 batches=1833 time=0.994 s | package=169.500 J | dram=NA | total=169.500 J | power=170.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=5 batches=1833 time=1.008 s | package=170.837 J | dram=NA | total=170.837 J | power=169.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=6 batches=1833 time=1.009 s | package=171.383 J | dram=NA | total=171.383 J | power=169.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=7 batches=1833 time=0.998 s | package=169.934 J | dram=NA | total=169.934 J | power=170.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=8 batches=1833 time=0.996 s | package=169.604 J | dram=NA | total=169.604 J | power=170.3 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=9 batches=1833 time=1.008 s | package=171.082 J | dram=NA | total=171.082 J | power=169.7 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=32 rep=10 batches=1833 time=1.011 s | package=171.445 J | dram=NA | total=171.445 J | power=169.5 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=4000000 threads=4 rep=1 batches=9842 time=0.992 s | package=97.871 J | dram=NA | total=97.871 J | power=98.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=2 batches=9842 time=1.002 s | package=99.194 J | dram=NA | total=99.194 J | power=99.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=3 batches=9842 time=1.020 s | package=99.788 J | dram=NA | total=99.788 J | power=97.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=4 batches=9842 time=1.009 s | package=98.914 J | dram=NA | total=98.914 J | power=98.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=5 batches=9842 time=1.020 s | package=99.604 J | dram=NA | total=99.604 J | power=97.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=6 batches=9842 time=1.019 s | package=99.855 J | dram=NA | total=99.855 J | power=98.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=7 batches=9842 time=1.022 s | package=99.886 J | dram=NA | total=99.886 J | power=97.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=8 batches=9842 time=1.021 s | package=99.919 J | dram=NA | total=99.919 J | power=97.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=9 batches=9842 time=1.018 s | package=99.089 J | dram=NA | total=99.089 J | power=97.4 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=4 rep=10 batches=9842 time=1.004 s | package=98.644 J | dram=NA | total=98.644 J | power=98.2 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=8000000 threads=32 rep=1 batches=13600 time=1.006 s | package=196.648 J | dram=NA | total=196.648 J | power=195.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=2 batches=13600 time=1.025 s | package=200.353 J | dram=NA | total=200.353 J | power=195.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=3 batches=13600 time=1.015 s | package=199.410 J | dram=NA | total=199.410 J | power=196.5 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=4 batches=13600 time=1.039 s | package=202.428 J | dram=NA | total=202.428 J | power=194.8 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=5 batches=13600 time=1.041 s | package=202.991 J | dram=NA | total=202.991 J | power=194.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=6 batches=13600 time=1.046 s | package=202.507 J | dram=NA | total=202.507 J | power=193.6 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=7 batches=13600 time=1.032 s | package=201.210 J | dram=NA | total=201.210 J | power=194.9 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=8 batches=13600 time=1.037 s | package=201.505 J | dram=NA | total=201.505 J | power=194.4 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=9 batches=13600 time=1.038 s | package=202.588 J | dram=NA | total=202.588 J | power=195.1 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=8000000 threads=32 rep=10 batches=13600 time=1.036 s | package=202.778 J | dram=NA | total=202.778 J | power=195.8 W | runtime=in_range | checksum=OK
+  relative_error=1.6e-07
+[REDUCTION] N=128000000 threads=2 rep=1 batches=63 time=1.006 s | package=83.369 J | dram=NA | total=83.369 J | power=82.9 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=2 batches=63 time=1.010 s | package=83.497 J | dram=NA | total=83.497 J | power=82.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=3 batches=63 time=1.024 s | package=84.976 J | dram=NA | total=84.976 J | power=82.9 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=4 batches=63 time=1.025 s | package=84.755 J | dram=NA | total=84.755 J | power=82.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=5 batches=63 time=1.015 s | package=83.557 J | dram=NA | total=83.557 J | power=82.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=6 batches=63 time=1.013 s | package=82.913 J | dram=NA | total=82.913 J | power=81.9 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=7 batches=63 time=1.020 s | package=83.067 J | dram=NA | total=83.067 J | power=81.4 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=8 batches=63 time=1.020 s | package=83.115 J | dram=NA | total=83.115 J | power=81.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=9 batches=63 time=1.029 s | package=83.923 J | dram=NA | total=83.923 J | power=81.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=2 rep=10 batches=63 time=1.018 s | package=82.962 J | dram=NA | total=82.962 J | power=81.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=256000000 threads=1 rep=1 batches=19 time=1.036 s | package=73.897 J | dram=NA | total=73.897 J | power=71.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=2 batches=19 time=1.048 s | package=74.867 J | dram=NA | total=74.867 J | power=71.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=3 batches=19 time=1.058 s | package=75.435 J | dram=NA | total=75.435 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=4 batches=19 time=1.058 s | package=75.473 J | dram=NA | total=75.473 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=5 batches=19 time=1.057 s | package=75.497 J | dram=NA | total=75.497 J | power=71.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=6 batches=19 time=1.047 s | package=74.802 J | dram=NA | total=74.802 J | power=71.4 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=7 batches=19 time=1.057 s | package=75.425 J | dram=NA | total=75.425 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=8 batches=19 time=1.054 s | package=75.158 J | dram=NA | total=75.158 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=9 batches=19 time=1.060 s | package=75.578 J | dram=NA | total=75.578 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=10 batches=19 time=1.057 s | package=75.352 J | dram=NA | total=75.352 J | power=71.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=32000000 threads=2 rep=1 batches=251 time=1.003 s | package=78.172 J | dram=NA | total=78.172 J | power=77.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=2 batches=251 time=1.022 s | package=80.597 J | dram=NA | total=80.597 J | power=78.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=3 batches=251 time=1.025 s | package=80.958 J | dram=NA | total=80.958 J | power=79.0 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=4 batches=251 time=1.027 s | package=81.133 J | dram=NA | total=81.133 J | power=79.0 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=5 batches=251 time=1.028 s | package=81.674 J | dram=NA | total=81.674 J | power=79.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=6 batches=251 time=1.030 s | package=81.450 J | dram=NA | total=81.450 J | power=79.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=7 batches=251 time=1.032 s | package=81.639 J | dram=NA | total=81.639 J | power=79.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=8 batches=251 time=1.017 s | package=80.436 J | dram=NA | total=80.436 J | power=79.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=9 batches=251 time=1.020 s | package=80.733 J | dram=NA | total=80.733 J | power=79.2 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=2 rep=10 batches=251 time=1.027 s | package=81.657 J | dram=NA | total=81.657 J | power=79.5 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=16000000 threads=8 rep=1 batches=5021 time=1.013 s | package=134.516 J | dram=NA | total=134.516 J | power=132.8 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=2 batches=5021 time=1.022 s | package=135.226 J | dram=NA | total=135.226 J | power=132.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=3 batches=5021 time=1.009 s | package=134.578 J | dram=NA | total=134.578 J | power=133.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=4 batches=5021 time=1.027 s | package=135.404 J | dram=NA | total=135.404 J | power=131.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=5 batches=5021 time=1.016 s | package=134.126 J | dram=NA | total=134.126 J | power=132.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=6 batches=5021 time=1.026 s | package=135.404 J | dram=NA | total=135.404 J | power=132.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=7 batches=5021 time=1.021 s | package=135.049 J | dram=NA | total=135.049 J | power=132.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=8 batches=5021 time=1.021 s | package=135.200 J | dram=NA | total=135.200 J | power=132.4 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=9 batches=5021 time=1.024 s | package=135.493 J | dram=NA | total=135.493 J | power=132.3 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=8 rep=10 batches=5021 time=1.011 s | package=134.621 J | dram=NA | total=134.621 J | power=133.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=4000000 threads=10 rep=1 batches=18085 time=1.008 s | package=134.480 J | dram=NA | total=134.480 J | power=133.4 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=2 batches=18085 time=1.008 s | package=133.679 J | dram=NA | total=133.679 J | power=132.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=3 batches=18085 time=1.020 s | package=134.180 J | dram=NA | total=134.180 J | power=131.5 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=4 batches=18085 time=1.027 s | package=136.179 J | dram=NA | total=136.179 J | power=132.5 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=5 batches=18085 time=1.024 s | package=134.736 J | dram=NA | total=134.736 J | power=131.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=6 batches=18085 time=1.031 s | package=135.825 J | dram=NA | total=135.825 J | power=131.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=7 batches=18085 time=1.039 s | package=137.008 J | dram=NA | total=137.008 J | power=131.9 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=8 batches=18085 time=1.023 s | package=135.623 J | dram=NA | total=135.623 J | power=132.6 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=9 batches=18085 time=1.029 s | package=135.697 J | dram=NA | total=135.697 J | power=131.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=10 rep=10 batches=18085 time=1.015 s | package=134.972 J | dram=NA | total=134.972 J | power=133.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=16000000 threads=32 rep=1 batches=10267 time=1.007 s | package=229.915 J | dram=NA | total=229.915 J | power=228.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=2 batches=10267 time=1.014 s | package=230.733 J | dram=NA | total=230.733 J | power=227.6 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=3 batches=10267 time=1.027 s | package=232.034 J | dram=NA | total=232.034 J | power=226.0 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=4 batches=10267 time=1.029 s | package=233.102 J | dram=NA | total=233.102 J | power=226.6 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=5 batches=10267 time=1.012 s | package=230.613 J | dram=NA | total=230.613 J | power=227.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=6 batches=10267 time=1.023 s | package=231.901 J | dram=NA | total=231.901 J | power=226.7 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=7 batches=10267 time=1.004 s | package=230.015 J | dram=NA | total=230.015 J | power=229.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=8 batches=10267 time=1.014 s | package=231.051 J | dram=NA | total=231.051 J | power=227.9 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=9 batches=10267 time=1.007 s | package=230.473 J | dram=NA | total=230.473 J | power=228.8 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=16000000 threads=32 rep=10 batches=10267 time=1.015 s | package=231.567 J | dram=NA | total=231.567 J | power=228.2 W | runtime=in_range | checksum=OK
+  relative_error=4.0e-08
+[REDUCTION] N=256000000 threads=16 rep=1 batches=55 time=1.005 s | package=132.825 J | dram=NA | total=132.825 J | power=132.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=2 batches=55 time=1.008 s | package=132.863 J | dram=NA | total=132.863 J | power=131.8 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=3 batches=55 time=1.007 s | package=132.414 J | dram=NA | total=132.414 J | power=131.5 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=4 batches=55 time=1.005 s | package=132.063 J | dram=NA | total=132.063 J | power=131.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=5 batches=55 time=1.006 s | package=132.037 J | dram=NA | total=132.037 J | power=131.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=6 batches=55 time=1.006 s | package=131.963 J | dram=NA | total=131.963 J | power=131.2 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=7 batches=55 time=1.006 s | package=131.870 J | dram=NA | total=131.870 J | power=131.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=8 batches=55 time=1.006 s | package=131.881 J | dram=NA | total=131.881 J | power=131.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=9 batches=55 time=1.015 s | package=132.663 J | dram=NA | total=132.663 J | power=130.7 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=16 rep=10 batches=55 time=1.006 s | package=131.830 J | dram=NA | total=131.830 J | power=131.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=32000000 threads=20 rep=1 batches=710 time=1.003 s | package=124.780 J | dram=NA | total=124.780 J | power=124.4 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=2 batches=710 time=1.002 s | package=124.415 J | dram=NA | total=124.415 J | power=124.2 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=3 batches=710 time=1.009 s | package=124.884 J | dram=NA | total=124.884 J | power=123.8 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=4 batches=710 time=1.001 s | package=124.079 J | dram=NA | total=124.079 J | power=123.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=5 batches=710 time=1.001 s | package=124.147 J | dram=NA | total=124.147 J | power=124.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=6 batches=710 time=1.007 s | package=125.002 J | dram=NA | total=125.002 J | power=124.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=7 batches=710 time=1.002 s | package=124.284 J | dram=NA | total=124.284 J | power=124.1 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=8 batches=710 time=1.004 s | package=124.432 J | dram=NA | total=124.432 J | power=123.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=9 batches=710 time=1.012 s | package=125.043 J | dram=NA | total=125.043 J | power=123.6 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=32000000 threads=20 rep=10 batches=710 time=1.003 s | package=124.295 J | dram=NA | total=124.295 J | power=123.9 W | runtime=in_range | checksum=OK
+  relative_error=3.4e-08
+[REDUCTION] N=128000000 threads=16 rep=1 batches=109 time=1.005 s | package=131.322 J | dram=NA | total=131.322 J | power=130.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=2 batches=109 time=1.007 s | package=131.467 J | dram=NA | total=131.467 J | power=130.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=3 batches=109 time=1.008 s | package=132.024 J | dram=NA | total=132.024 J | power=131.0 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=4 batches=109 time=1.008 s | package=131.569 J | dram=NA | total=131.569 J | power=130.5 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=5 batches=109 time=1.008 s | package=131.581 J | dram=NA | total=131.581 J | power=130.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=6 batches=109 time=1.007 s | package=131.511 J | dram=NA | total=131.511 J | power=130.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=7 batches=109 time=1.006 s | package=131.470 J | dram=NA | total=131.470 J | power=130.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=8 batches=109 time=1.007 s | package=131.512 J | dram=NA | total=131.512 J | power=130.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=9 batches=109 time=1.006 s | package=131.432 J | dram=NA | total=131.432 J | power=130.6 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=128000000 threads=16 rep=10 batches=109 time=1.006 s | package=131.517 J | dram=NA | total=131.517 J | power=130.7 W | runtime=in_range | checksum=OK
+  relative_error=3.9e-09
+[REDUCTION] N=1000000 threads=4 rep=1 batches=28109 time=0.993 s | package=91.893 J | dram=NA | total=91.893 J | power=92.5 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=2 batches=28109 time=1.007 s | package=92.334 J | dram=NA | total=92.334 J | power=91.7 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=3 batches=28109 time=1.013 s | package=92.401 J | dram=NA | total=92.401 J | power=91.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=4 batches=28109 time=1.001 s | package=90.933 J | dram=NA | total=90.933 J | power=90.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=5 batches=28109 time=1.006 s | package=89.812 J | dram=NA | total=89.812 J | power=89.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=6 batches=28109 time=1.018 s | package=91.495 J | dram=NA | total=91.495 J | power=89.9 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=7 batches=28109 time=1.018 s | package=91.681 J | dram=NA | total=91.681 J | power=90.1 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=8 batches=28109 time=1.006 s | package=91.530 J | dram=NA | total=91.530 J | power=91.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=9 batches=28109 time=1.006 s | package=91.413 J | dram=NA | total=91.413 J | power=90.8 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=4 rep=10 batches=28109 time=1.027 s | package=92.667 J | dram=NA | total=92.667 J | power=90.2 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=2000000 threads=10 rep=1 batches=26981 time=1.025 s | package=122.804 J | dram=NA | total=122.804 J | power=119.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=2 batches=26981 time=1.032 s | package=124.735 J | dram=NA | total=124.735 J | power=120.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=3 batches=26981 time=1.028 s | package=123.971 J | dram=NA | total=123.971 J | power=120.5 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=4 batches=26981 time=1.035 s | package=126.062 J | dram=NA | total=126.062 J | power=121.8 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=5 batches=26981 time=1.040 s | package=125.925 J | dram=NA | total=125.925 J | power=121.0 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=6 batches=26981 time=1.035 s | package=125.177 J | dram=NA | total=125.177 J | power=120.9 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=7 batches=26981 time=1.026 s | package=123.877 J | dram=NA | total=123.877 J | power=120.7 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=8 batches=26981 time=1.036 s | package=125.402 J | dram=NA | total=125.402 J | power=121.1 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=9 batches=26981 time=1.039 s | package=126.359 J | dram=NA | total=126.359 J | power=121.6 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=2000000 threads=10 rep=10 batches=26981 time=1.037 s | package=126.257 J | dram=NA | total=126.257 J | power=121.7 W | runtime=in_range | checksum=OK
+  relative_error=5.8e-08
+[REDUCTION] N=4000000 threads=2 rep=1 batches=5078 time=1.025 s | package=81.965 J | dram=NA | total=81.965 J | power=80.0 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=2 batches=5078 time=1.020 s | package=83.701 J | dram=NA | total=83.701 J | power=82.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=3 batches=5078 time=1.017 s | package=82.279 J | dram=NA | total=82.279 J | power=80.9 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=4 batches=5078 time=1.014 s | package=82.259 J | dram=NA | total=82.259 J | power=81.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=5 batches=5078 time=1.018 s | package=81.107 J | dram=NA | total=81.107 J | power=79.7 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=6 batches=5078 time=1.017 s | package=81.165 J | dram=NA | total=81.165 J | power=79.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=7 batches=5078 time=1.016 s | package=81.815 J | dram=NA | total=81.815 J | power=80.5 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=8 batches=5078 time=1.015 s | package=82.025 J | dram=NA | total=82.025 J | power=80.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=9 batches=5078 time=1.021 s | package=82.464 J | dram=NA | total=82.464 J | power=80.8 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
+[REDUCTION] N=4000000 threads=2 rep=10 batches=5078 time=1.014 s | package=82.208 J | dram=NA | total=82.208 J | power=81.1 W | runtime=in_range | checksum=OK
+  relative_error=4.5e-08
