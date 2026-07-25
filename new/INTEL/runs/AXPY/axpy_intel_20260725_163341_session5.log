@@ -1,0 +1,1324 @@
+AXPY | Intel(R) Core(TM) i9-7900X CPU @ 3.30GHz | platform=INTEL | implementation=openmp_axpy_inplace_fp32 | session=axpy_intel_20260725_163341_session5 | reps=10 | configs=63 | DRAM-RAPL=yes
+[CALIBRATION] N=2000000 threads=8 batches=8844
+[AXPY] N=2000000 threads=8 rep=1 batches=8844 e2e_time_s=1.010113 kernel_time_s=1.010113 device_energy_j=119.855772 avg_power_w=118.656 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=2 batches=8844 e2e_time_s=1.004706 kernel_time_s=1.004706 device_energy_j=119.679137 avg_power_w=119.119 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=3 batches=8844 e2e_time_s=0.996839 kernel_time_s=0.996839 device_energy_j=120.030943 avg_power_w=120.412 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=4 batches=8844 e2e_time_s=0.996322 kernel_time_s=0.996322 device_energy_j=120.370419 avg_power_w=120.815 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=5 batches=8844 e2e_time_s=0.996071 kernel_time_s=0.996071 device_energy_j=120.216184 avg_power_w=120.690 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=6 batches=8844 e2e_time_s=0.996148 kernel_time_s=0.996148 device_energy_j=120.501034 avg_power_w=120.967 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=7 batches=8844 e2e_time_s=0.996249 kernel_time_s=0.996249 device_energy_j=120.390988 avg_power_w=120.844 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=8 batches=8844 e2e_time_s=0.995836 kernel_time_s=0.995836 device_energy_j=120.460385 avg_power_w=120.964 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=9 batches=8844 e2e_time_s=0.995952 kernel_time_s=0.995952 device_energy_j=120.552364 avg_power_w=121.042 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=8 rep=10 batches=8844 e2e_time_s=0.995817 kernel_time_s=0.995817 device_energy_j=120.506100 avg_power_w=121.012 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=4000000 threads=16 batches=1529
+[AXPY] N=4000000 threads=16 rep=1 batches=1529 e2e_time_s=1.032171 kernel_time_s=1.032171 device_energy_j=106.971589 avg_power_w=103.637 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=2 batches=1529 e2e_time_s=1.033276 kernel_time_s=1.033276 device_energy_j=107.133698 avg_power_w=103.684 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=3 batches=1529 e2e_time_s=1.033396 kernel_time_s=1.033396 device_energy_j=107.608612 avg_power_w=104.131 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=4 batches=1529 e2e_time_s=1.032779 kernel_time_s=1.032779 device_energy_j=106.824738 avg_power_w=103.434 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=5 batches=1529 e2e_time_s=1.033083 kernel_time_s=1.033083 device_energy_j=107.438019 avg_power_w=103.997 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=6 batches=1529 e2e_time_s=1.032798 kernel_time_s=1.032798 device_energy_j=107.158905 avg_power_w=103.756 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=7 batches=1529 e2e_time_s=1.033213 kernel_time_s=1.033213 device_energy_j=106.634066 avg_power_w=103.206 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=8 batches=1529 e2e_time_s=1.036163 kernel_time_s=1.036163 device_energy_j=108.009245 avg_power_w=104.240 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=9 batches=1529 e2e_time_s=1.033844 kernel_time_s=1.033844 device_energy_j=107.403778 avg_power_w=103.888 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=16 rep=10 batches=1529 e2e_time_s=1.032812 kernel_time_s=1.032812 device_energy_j=106.854585 avg_power_w=103.460 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=4 batches=12
+[AXPY] N=256000000 threads=4 rep=1 batches=12 e2e_time_s=1.036532 kernel_time_s=1.036532 device_energy_j=70.252017 avg_power_w=67.776 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=2 batches=12 e2e_time_s=1.037223 kernel_time_s=1.037223 device_energy_j=68.545418 avg_power_w=66.086 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=3 batches=12 e2e_time_s=1.036742 kernel_time_s=1.036742 device_energy_j=69.239263 avg_power_w=66.785 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=4 batches=12 e2e_time_s=1.036834 kernel_time_s=1.036834 device_energy_j=69.072089 avg_power_w=66.618 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=5 batches=12 e2e_time_s=1.037837 kernel_time_s=1.037837 device_energy_j=68.463386 avg_power_w=65.967 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=6 batches=12 e2e_time_s=1.037211 kernel_time_s=1.037211 device_energy_j=69.216863 avg_power_w=66.734 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=7 batches=12 e2e_time_s=1.036712 kernel_time_s=1.036712 device_energy_j=69.514593 avg_power_w=67.053 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=8 batches=12 e2e_time_s=1.037150 kernel_time_s=1.037150 device_energy_j=69.301458 avg_power_w=66.819 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=9 batches=12 e2e_time_s=1.036887 kernel_time_s=1.036887 device_energy_j=69.574651 avg_power_w=67.100 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=4 rep=10 batches=12 e2e_time_s=1.036774 kernel_time_s=1.036774 device_energy_j=68.799689 avg_power_w=66.359 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=128000000 threads=2 batches=21
+[AXPY] N=128000000 threads=2 rep=1 batches=21 e2e_time_s=1.026301 kernel_time_s=1.026301 device_energy_j=56.971778 avg_power_w=55.512 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=2 batches=21 e2e_time_s=1.031891 kernel_time_s=1.031891 device_energy_j=57.578465 avg_power_w=55.799 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=3 batches=21 e2e_time_s=1.033844 kernel_time_s=1.033844 device_energy_j=57.787144 avg_power_w=55.895 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=4 batches=21 e2e_time_s=1.033537 kernel_time_s=1.033537 device_energy_j=56.310586 avg_power_w=54.483 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=5 batches=21 e2e_time_s=1.033419 kernel_time_s=1.033419 device_energy_j=56.560402 avg_power_w=54.731 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=6 batches=21 e2e_time_s=1.035311 kernel_time_s=1.035311 device_energy_j=57.207251 avg_power_w=55.256 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=7 batches=21 e2e_time_s=1.036177 kernel_time_s=1.036177 device_energy_j=56.471779 avg_power_w=54.500 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=8 batches=21 e2e_time_s=1.033882 kernel_time_s=1.033882 device_energy_j=56.913002 avg_power_w=55.048 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=9 batches=21 e2e_time_s=1.032265 kernel_time_s=1.032265 device_energy_j=56.811134 avg_power_w=55.035 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=2 rep=10 batches=21 e2e_time_s=1.033279 kernel_time_s=1.033279 device_energy_j=56.800636 avg_power_w=54.971 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=2000000 threads=16 batches=9480
+[AXPY] N=2000000 threads=16 rep=1 batches=9480 e2e_time_s=1.000809 kernel_time_s=1.000809 device_energy_j=122.059502 avg_power_w=121.961 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=2 batches=9480 e2e_time_s=1.002657 kernel_time_s=1.002657 device_energy_j=122.342643 avg_power_w=122.018 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=3 batches=9480 e2e_time_s=1.002123 kernel_time_s=1.002123 device_energy_j=122.235466 avg_power_w=121.976 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=4 batches=9480 e2e_time_s=1.003355 kernel_time_s=1.003355 device_energy_j=122.446220 avg_power_w=122.037 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=5 batches=9480 e2e_time_s=1.000588 kernel_time_s=1.000588 device_energy_j=122.133171 avg_power_w=122.061 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=6 batches=9480 e2e_time_s=1.000942 kernel_time_s=1.000942 device_energy_j=122.515373 avg_power_w=122.400 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=7 batches=9480 e2e_time_s=1.000313 kernel_time_s=1.000313 device_energy_j=122.470451 avg_power_w=122.432 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=8 batches=9480 e2e_time_s=1.000435 kernel_time_s=1.000435 device_energy_j=122.540031 avg_power_w=122.487 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=9 batches=9480 e2e_time_s=1.002673 kernel_time_s=1.002673 device_energy_j=122.640189 avg_power_w=122.313 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=16 rep=10 batches=9480 e2e_time_s=1.001201 kernel_time_s=1.001201 device_energy_j=122.702261 avg_power_w=122.555 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=32000000 threads=8 batches=97
+[AXPY] N=32000000 threads=8 rep=1 batches=97 e2e_time_s=1.014245 kernel_time_s=1.014245 device_energy_j=92.479866 avg_power_w=91.181 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=2 batches=97 e2e_time_s=1.014129 kernel_time_s=1.014129 device_energy_j=92.571357 avg_power_w=91.282 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=3 batches=97 e2e_time_s=1.014033 kernel_time_s=1.014033 device_energy_j=92.692329 avg_power_w=91.410 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=4 batches=97 e2e_time_s=1.015426 kernel_time_s=1.015426 device_energy_j=92.579475 avg_power_w=91.173 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=5 batches=97 e2e_time_s=1.012594 kernel_time_s=1.012594 device_energy_j=91.994698 avg_power_w=90.851 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=6 batches=97 e2e_time_s=1.010199 kernel_time_s=1.010199 device_energy_j=92.137826 avg_power_w=91.208 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=7 batches=97 e2e_time_s=1.010052 kernel_time_s=1.010052 device_energy_j=93.069585 avg_power_w=92.143 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=8 batches=97 e2e_time_s=1.009818 kernel_time_s=1.009818 device_energy_j=92.860114 avg_power_w=91.957 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=9 batches=97 e2e_time_s=1.014331 kernel_time_s=1.014331 device_energy_j=92.523383 avg_power_w=91.216 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=8 rep=10 batches=97 e2e_time_s=1.015503 kernel_time_s=1.015503 device_energy_j=92.795783 avg_power_w=91.379 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=8 batches=12
+[AXPY] N=256000000 threads=8 rep=1 batches=12 e2e_time_s=1.040251 kernel_time_s=1.040251 device_energy_j=95.693053 avg_power_w=91.990 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=2 batches=12 e2e_time_s=1.040571 kernel_time_s=1.040571 device_energy_j=95.835204 avg_power_w=92.099 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=3 batches=12 e2e_time_s=1.040043 kernel_time_s=1.040043 device_energy_j=95.562805 avg_power_w=91.884 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=4 batches=12 e2e_time_s=1.040231 kernel_time_s=1.040231 device_energy_j=95.972411 avg_power_w=92.261 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=5 batches=12 e2e_time_s=1.040493 kernel_time_s=1.040493 device_energy_j=96.451108 avg_power_w=92.698 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=6 batches=12 e2e_time_s=1.040477 kernel_time_s=1.040477 device_energy_j=95.785155 avg_power_w=92.059 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=7 batches=12 e2e_time_s=1.040146 kernel_time_s=1.040146 device_energy_j=96.051756 avg_power_w=92.345 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=8 batches=12 e2e_time_s=1.044337 kernel_time_s=1.044337 device_energy_j=96.105650 avg_power_w=92.026 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=9 batches=12 e2e_time_s=1.044784 kernel_time_s=1.044784 device_energy_j=96.182371 avg_power_w=92.060 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=8 rep=10 batches=12 e2e_time_s=1.048635 kernel_time_s=1.048635 device_energy_j=96.482419 avg_power_w=92.008 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=32000000 threads=4 batches=96
+[AXPY] N=32000000 threads=4 rep=1 batches=96 e2e_time_s=0.998907 kernel_time_s=0.998907 device_energy_j=68.043283 avg_power_w=68.118 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=2 batches=96 e2e_time_s=1.000495 kernel_time_s=1.000495 device_energy_j=69.690435 avg_power_w=69.656 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=3 batches=96 e2e_time_s=0.998088 kernel_time_s=0.998088 device_energy_j=68.455025 avg_power_w=68.586 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=4 batches=96 e2e_time_s=0.999175 kernel_time_s=0.999175 device_energy_j=67.855539 avg_power_w=67.912 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=5 batches=96 e2e_time_s=0.997497 kernel_time_s=0.997497 device_energy_j=68.881355 avg_power_w=69.054 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=6 batches=96 e2e_time_s=1.000357 kernel_time_s=1.000357 device_energy_j=67.905710 avg_power_w=67.881 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=7 batches=96 e2e_time_s=0.999220 kernel_time_s=0.999220 device_energy_j=67.729441 avg_power_w=67.782 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=8 batches=96 e2e_time_s=0.993824 kernel_time_s=0.993824 device_energy_j=66.167738 avg_power_w=66.579 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=9 batches=96 e2e_time_s=0.999572 kernel_time_s=0.999572 device_energy_j=67.389903 avg_power_w=67.419 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=4 rep=10 batches=96 e2e_time_s=0.998498 kernel_time_s=0.998498 device_energy_j=67.174450 avg_power_w=67.276 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=128000000 threads=10 batches=23
+[AXPY] N=128000000 threads=10 rep=1 batches=23 e2e_time_s=1.010043 kernel_time_s=1.010043 device_energy_j=103.086650 avg_power_w=102.062 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=2 batches=23 e2e_time_s=1.010138 kernel_time_s=1.010138 device_energy_j=102.769695 avg_power_w=101.738 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=3 batches=23 e2e_time_s=1.009993 kernel_time_s=1.009993 device_energy_j=102.233015 avg_power_w=101.222 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=4 batches=23 e2e_time_s=1.010075 kernel_time_s=1.010075 device_energy_j=102.955425 avg_power_w=101.929 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=5 batches=23 e2e_time_s=1.010305 kernel_time_s=1.010305 device_energy_j=102.003523 avg_power_w=100.963 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=6 batches=23 e2e_time_s=1.009994 kernel_time_s=1.009994 device_energy_j=103.133830 avg_power_w=102.113 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=7 batches=23 e2e_time_s=1.009926 kernel_time_s=1.009926 device_energy_j=102.494489 avg_power_w=101.487 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=8 batches=23 e2e_time_s=1.010018 kernel_time_s=1.010018 device_energy_j=103.025798 avg_power_w=102.004 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=9 batches=23 e2e_time_s=1.010268 kernel_time_s=1.010268 device_energy_j=103.003337 avg_power_w=101.956 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=10 rep=10 batches=23 e2e_time_s=1.009977 kernel_time_s=1.009977 device_energy_j=102.965556 avg_power_w=101.948 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=8000000 threads=20 batches=419
+[AXPY] N=8000000 threads=20 rep=1 batches=419 e2e_time_s=1.001125 kernel_time_s=1.001125 device_energy_j=102.855266 avg_power_w=102.740 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=2 batches=419 e2e_time_s=1.005488 kernel_time_s=1.005488 device_energy_j=103.218364 avg_power_w=102.655 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=3 batches=419 e2e_time_s=1.000849 kernel_time_s=1.000849 device_energy_j=103.001872 avg_power_w=102.914 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=4 batches=419 e2e_time_s=1.001385 kernel_time_s=1.001385 device_energy_j=102.883099 avg_power_w=102.741 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=5 batches=419 e2e_time_s=1.001053 kernel_time_s=1.001053 device_energy_j=102.934551 avg_power_w=102.826 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=6 batches=419 e2e_time_s=1.001678 kernel_time_s=1.001678 device_energy_j=102.909038 avg_power_w=102.737 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=7 batches=419 e2e_time_s=1.001367 kernel_time_s=1.001367 device_energy_j=102.915020 avg_power_w=102.775 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=8 batches=419 e2e_time_s=1.000678 kernel_time_s=1.000678 device_energy_j=102.867473 avg_power_w=102.798 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=9 batches=419 e2e_time_s=1.001481 kernel_time_s=1.001481 device_energy_j=103.085979 avg_power_w=102.933 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=20 rep=10 batches=419 e2e_time_s=1.000642 kernel_time_s=1.000642 device_energy_j=103.063334 avg_power_w=102.997 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=16000000 threads=16 batches=195
+[AXPY] N=16000000 threads=16 rep=1 batches=195 e2e_time_s=1.001228 kernel_time_s=1.001228 device_energy_j=97.585871 avg_power_w=97.466 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=2 batches=195 e2e_time_s=1.002158 kernel_time_s=1.002158 device_energy_j=97.359126 avg_power_w=97.149 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=3 batches=195 e2e_time_s=1.000757 kernel_time_s=1.000757 device_energy_j=97.462397 avg_power_w=97.389 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=4 batches=195 e2e_time_s=1.002204 kernel_time_s=1.002204 device_energy_j=97.620478 avg_power_w=97.406 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=5 batches=195 e2e_time_s=1.000855 kernel_time_s=1.000855 device_energy_j=97.429011 avg_power_w=97.346 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=6 batches=195 e2e_time_s=1.001351 kernel_time_s=1.001351 device_energy_j=97.347590 avg_power_w=97.216 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=7 batches=195 e2e_time_s=1.001758 kernel_time_s=1.001758 device_energy_j=97.526911 avg_power_w=97.356 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=8 batches=195 e2e_time_s=1.001295 kernel_time_s=1.001295 device_energy_j=97.436519 avg_power_w=97.310 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=9 batches=195 e2e_time_s=1.001175 kernel_time_s=1.001175 device_energy_j=97.490901 avg_power_w=97.377 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=16 rep=10 batches=195 e2e_time_s=1.000880 kernel_time_s=1.000880 device_energy_j=97.550715 avg_power_w=97.465 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=4000000 threads=4 batches=1213
+[AXPY] N=4000000 threads=4 rep=1 batches=1213 e2e_time_s=1.018401 kernel_time_s=1.018401 device_energy_j=71.079774 avg_power_w=69.795 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=2 batches=1213 e2e_time_s=1.018073 kernel_time_s=1.018073 device_energy_j=70.552065 avg_power_w=69.300 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=3 batches=1213 e2e_time_s=1.018554 kernel_time_s=1.018554 device_energy_j=69.922855 avg_power_w=68.649 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=4 batches=1213 e2e_time_s=1.019092 kernel_time_s=1.019092 device_energy_j=69.829167 avg_power_w=68.521 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=5 batches=1213 e2e_time_s=1.019176 kernel_time_s=1.019176 device_energy_j=70.991151 avg_power_w=69.655 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=6 batches=1213 e2e_time_s=1.017148 kernel_time_s=1.017148 device_energy_j=71.015992 avg_power_w=69.819 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=7 batches=1213 e2e_time_s=1.018104 kernel_time_s=1.018104 device_energy_j=71.447510 avg_power_w=70.177 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=8 batches=1213 e2e_time_s=1.017609 kernel_time_s=1.017609 device_energy_j=70.462100 avg_power_w=69.243 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=9 batches=1213 e2e_time_s=1.019333 kernel_time_s=1.019333 device_energy_j=71.086549 avg_power_w=69.738 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=4 rep=10 batches=1213 e2e_time_s=1.017809 kernel_time_s=1.017809 device_energy_j=71.058472 avg_power_w=69.815 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=128000000 threads=4 batches=24
+[AXPY] N=128000000 threads=4 rep=1 batches=24 e2e_time_s=1.027828 kernel_time_s=1.027828 device_energy_j=70.584048 avg_power_w=68.673 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=2 batches=24 e2e_time_s=1.026542 kernel_time_s=1.026542 device_energy_j=69.667730 avg_power_w=67.866 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=3 batches=24 e2e_time_s=1.026616 kernel_time_s=1.026616 device_energy_j=69.656194 avg_power_w=67.850 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=4 batches=24 e2e_time_s=1.026674 kernel_time_s=1.026674 device_energy_j=69.642216 avg_power_w=67.833 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=5 batches=24 e2e_time_s=1.026280 kernel_time_s=1.026280 device_energy_j=68.300057 avg_power_w=66.551 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=6 batches=24 e2e_time_s=1.033103 kernel_time_s=1.033103 device_energy_j=70.185368 avg_power_w=67.936 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=7 batches=24 e2e_time_s=1.029012 kernel_time_s=1.029012 device_energy_j=70.524173 avg_power_w=68.536 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=8 batches=24 e2e_time_s=1.029350 kernel_time_s=1.029350 device_energy_j=70.893251 avg_power_w=68.872 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=9 batches=24 e2e_time_s=1.035027 kernel_time_s=1.035027 device_energy_j=70.413088 avg_power_w=68.030 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=4 rep=10 batches=24 e2e_time_s=1.030296 kernel_time_s=1.030296 device_energy_j=70.192753 avg_power_w=68.129 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=32000000 threads=16 batches=93
+[AXPY] N=32000000 threads=16 rep=1 batches=93 e2e_time_s=1.002780 kernel_time_s=1.002780 device_energy_j=96.358030 avg_power_w=96.091 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=2 batches=93 e2e_time_s=1.002748 kernel_time_s=1.002748 device_energy_j=96.372190 avg_power_w=96.108 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=3 batches=93 e2e_time_s=1.003458 kernel_time_s=1.003458 device_energy_j=96.578244 avg_power_w=96.245 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=4 batches=93 e2e_time_s=1.002305 kernel_time_s=1.002305 device_energy_j=96.344785 avg_power_w=96.123 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=5 batches=93 e2e_time_s=1.002264 kernel_time_s=1.002264 device_energy_j=96.305661 avg_power_w=96.088 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=6 batches=93 e2e_time_s=1.002847 kernel_time_s=1.002847 device_energy_j=96.406430 avg_power_w=96.133 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=7 batches=93 e2e_time_s=1.004304 kernel_time_s=1.004304 device_energy_j=96.614377 avg_power_w=96.200 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=8 batches=93 e2e_time_s=1.003387 kernel_time_s=1.003387 device_energy_j=96.707333 avg_power_w=96.381 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=9 batches=93 e2e_time_s=1.002877 kernel_time_s=1.002877 device_energy_j=96.832271 avg_power_w=96.555 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=16 rep=10 batches=93 e2e_time_s=1.003495 kernel_time_s=1.003495 device_energy_j=96.755917 avg_power_w=96.419 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=2000000 threads=20 batches=9228
+[AXPY] N=2000000 threads=20 rep=1 batches=9228 e2e_time_s=1.000212 kernel_time_s=1.000212 device_energy_j=133.470422 avg_power_w=133.442 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=2 batches=9228 e2e_time_s=1.000196 kernel_time_s=1.000196 device_energy_j=133.395594 avg_power_w=133.370 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=3 batches=9228 e2e_time_s=1.001182 kernel_time_s=1.001182 device_energy_j=133.673730 avg_power_w=133.516 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=4 batches=9228 e2e_time_s=1.000033 kernel_time_s=1.000033 device_energy_j=133.532373 avg_power_w=133.528 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=5 batches=9228 e2e_time_s=1.002387 kernel_time_s=1.002387 device_energy_j=133.794336 avg_power_w=133.476 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=6 batches=9228 e2e_time_s=1.002892 kernel_time_s=1.002892 device_energy_j=133.966454 avg_power_w=133.580 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=7 batches=9228 e2e_time_s=0.999831 kernel_time_s=0.999831 device_energy_j=133.763817 avg_power_w=133.786 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=8 batches=9228 e2e_time_s=1.000972 kernel_time_s=1.000972 device_energy_j=134.051536 avg_power_w=133.921 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=9 batches=9228 e2e_time_s=1.002228 kernel_time_s=1.002228 device_energy_j=133.913049 avg_power_w=133.615 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=20 rep=10 batches=9228 e2e_time_s=1.001825 kernel_time_s=1.001825 device_energy_j=134.171227 avg_power_w=133.927 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=16000000 threads=8 batches=204
+[AXPY] N=16000000 threads=8 rep=1 batches=204 e2e_time_s=1.003527 kernel_time_s=1.003527 device_energy_j=92.867011 avg_power_w=92.541 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=2 batches=204 e2e_time_s=1.003752 kernel_time_s=1.003752 device_energy_j=92.469063 avg_power_w=92.123 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=3 batches=204 e2e_time_s=1.003839 kernel_time_s=1.003839 device_energy_j=93.353826 avg_power_w=92.997 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=4 batches=204 e2e_time_s=1.004057 kernel_time_s=1.004057 device_energy_j=92.662726 avg_power_w=92.288 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=5 batches=204 e2e_time_s=1.003660 kernel_time_s=1.003660 device_energy_j=92.951056 avg_power_w=92.612 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=6 batches=204 e2e_time_s=1.003883 kernel_time_s=1.003883 device_energy_j=92.715705 avg_power_w=92.357 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=7 batches=204 e2e_time_s=1.004692 kernel_time_s=1.004692 device_energy_j=92.979499 avg_power_w=92.545 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=8 batches=204 e2e_time_s=1.004088 kernel_time_s=1.004088 device_energy_j=93.483403 avg_power_w=93.103 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=9 batches=204 e2e_time_s=1.004085 kernel_time_s=1.004085 device_energy_j=92.818671 avg_power_w=92.441 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=8 rep=10 batches=204 e2e_time_s=1.008680 kernel_time_s=1.008680 device_energy_j=93.636479 avg_power_w=92.831 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=16 batches=12
+[AXPY] N=256000000 threads=16 rep=1 batches=12 e2e_time_s=1.070483 kernel_time_s=1.070483 device_energy_j=103.910195 avg_power_w=97.069 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=2 batches=12 e2e_time_s=1.069809 kernel_time_s=1.069809 device_energy_j=103.389750 avg_power_w=96.643 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=3 batches=12 e2e_time_s=1.070126 kernel_time_s=1.070126 device_energy_j=103.729959 avg_power_w=96.932 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=4 batches=12 e2e_time_s=1.070001 kernel_time_s=1.070001 device_energy_j=103.750711 avg_power_w=96.963 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=5 batches=12 e2e_time_s=1.069942 kernel_time_s=1.069942 device_energy_j=103.724465 avg_power_w=96.944 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=6 batches=12 e2e_time_s=1.070030 kernel_time_s=1.070030 device_energy_j=103.609781 avg_power_w=96.829 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=7 batches=12 e2e_time_s=1.070452 kernel_time_s=1.070452 device_energy_j=103.717813 avg_power_w=96.892 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=8 batches=12 e2e_time_s=1.070156 kernel_time_s=1.070156 device_energy_j=103.551492 avg_power_w=96.763 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=9 batches=12 e2e_time_s=1.069880 kernel_time_s=1.069880 device_energy_j=103.332194 avg_power_w=96.583 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=16 rep=10 batches=12 e2e_time_s=1.070066 kernel_time_s=1.070066 device_energy_j=103.157573 avg_power_w=96.403 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=16000000 threads=4 batches=204
+[AXPY] N=16000000 threads=4 rep=1 batches=204 e2e_time_s=1.002772 kernel_time_s=1.002772 device_energy_j=68.611458 avg_power_w=68.422 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=2 batches=204 e2e_time_s=1.005305 kernel_time_s=1.005305 device_energy_j=69.195135 avg_power_w=68.830 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=3 batches=204 e2e_time_s=1.005227 kernel_time_s=1.005227 device_energy_j=69.520757 avg_power_w=69.159 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=4 batches=204 e2e_time_s=1.008805 kernel_time_s=1.008805 device_energy_j=69.894963 avg_power_w=69.285 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=5 batches=204 e2e_time_s=1.008231 kernel_time_s=1.008231 device_energy_j=70.821779 avg_power_w=70.244 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=6 batches=204 e2e_time_s=1.004346 kernel_time_s=1.004346 device_energy_j=71.262574 avg_power_w=70.954 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=7 batches=204 e2e_time_s=1.003523 kernel_time_s=1.003523 device_energy_j=70.350650 avg_power_w=70.104 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=8 batches=204 e2e_time_s=1.006729 kernel_time_s=1.006729 device_energy_j=70.290958 avg_power_w=69.821 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=9 batches=204 e2e_time_s=1.007555 kernel_time_s=1.007555 device_energy_j=70.668032 avg_power_w=70.138 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=4 rep=10 batches=204 e2e_time_s=1.008430 kernel_time_s=1.008430 device_energy_j=70.352542 avg_power_w=69.764 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=16000000 threads=10 batches=196
+[AXPY] N=16000000 threads=10 rep=1 batches=196 e2e_time_s=1.000293 kernel_time_s=1.000293 device_energy_j=103.249248 avg_power_w=103.219 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=2 batches=196 e2e_time_s=1.000568 kernel_time_s=1.000568 device_energy_j=103.072490 avg_power_w=103.014 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=3 batches=196 e2e_time_s=1.000120 kernel_time_s=1.000120 device_energy_j=103.253641 avg_power_w=103.241 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=4 batches=196 e2e_time_s=1.000070 kernel_time_s=1.000070 device_energy_j=103.139018 avg_power_w=103.132 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=5 batches=196 e2e_time_s=1.000061 kernel_time_s=1.000061 device_energy_j=102.868450 avg_power_w=102.862 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=6 batches=196 e2e_time_s=1.000138 kernel_time_s=1.000138 device_energy_j=103.356120 avg_power_w=103.342 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=7 batches=196 e2e_time_s=0.999913 kernel_time_s=0.999913 device_energy_j=102.605695 avg_power_w=102.615 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=8 batches=196 e2e_time_s=1.000760 kernel_time_s=1.000760 device_energy_j=103.823953 avg_power_w=103.745 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=9 batches=196 e2e_time_s=1.000119 kernel_time_s=1.000119 device_energy_j=102.741498 avg_power_w=102.729 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=10 rep=10 batches=196 e2e_time_s=1.000418 kernel_time_s=1.000418 device_energy_j=103.342448 avg_power_w=103.299 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=8000000 threads=10 batches=453
+[AXPY] N=8000000 threads=10 rep=1 batches=453 e2e_time_s=1.002507 kernel_time_s=1.002507 device_energy_j=102.130537 avg_power_w=101.875 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=2 batches=453 e2e_time_s=1.002206 kernel_time_s=1.002206 device_energy_j=102.077924 avg_power_w=101.853 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=3 batches=453 e2e_time_s=1.002004 kernel_time_s=1.002004 device_energy_j=102.089094 avg_power_w=101.885 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=4 batches=453 e2e_time_s=1.002733 kernel_time_s=1.002733 device_energy_j=102.011335 avg_power_w=101.733 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=5 batches=453 e2e_time_s=1.002151 kernel_time_s=1.002151 device_energy_j=101.995161 avg_power_w=101.776 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=6 batches=453 e2e_time_s=1.008995 kernel_time_s=1.008995 device_energy_j=102.887798 avg_power_w=101.971 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=7 batches=453 e2e_time_s=1.002348 kernel_time_s=1.002348 device_energy_j=102.505474 avg_power_w=102.265 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=8 batches=453 e2e_time_s=1.002310 kernel_time_s=1.002310 device_energy_j=102.033797 avg_power_w=101.799 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=9 batches=453 e2e_time_s=1.002182 kernel_time_s=1.002182 device_energy_j=102.096113 avg_power_w=101.874 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=10 rep=10 batches=453 e2e_time_s=1.002382 kernel_time_s=1.002382 device_energy_j=102.267438 avg_power_w=102.024 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 threads=4 batches=12091
+[AXPY] N=1000000 threads=4 rep=1 batches=12091 e2e_time_s=1.000686 kernel_time_s=1.000686 device_energy_j=85.857507 avg_power_w=85.799 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=2 batches=12091 e2e_time_s=1.004770 kernel_time_s=1.004770 device_energy_j=86.336876 avg_power_w=85.927 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=3 batches=12091 e2e_time_s=1.007298 kernel_time_s=1.007298 device_energy_j=86.755271 avg_power_w=86.127 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=4 batches=12091 e2e_time_s=1.010038 kernel_time_s=1.010038 device_energy_j=86.932578 avg_power_w=86.069 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=5 batches=12091 e2e_time_s=1.007819 kernel_time_s=1.007819 device_energy_j=86.922080 avg_power_w=86.248 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=6 batches=12091 e2e_time_s=1.007794 kernel_time_s=1.007794 device_energy_j=86.365257 avg_power_w=85.697 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=7 batches=12091 e2e_time_s=1.010704 kernel_time_s=1.010704 device_energy_j=86.948081 avg_power_w=86.027 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=8 batches=12091 e2e_time_s=1.005602 kernel_time_s=1.005602 device_energy_j=86.747459 avg_power_w=86.264 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=9 batches=12091 e2e_time_s=1.005857 kernel_time_s=1.005857 device_energy_j=86.894797 avg_power_w=86.389 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=4 rep=10 batches=12091 e2e_time_s=1.005245 kernel_time_s=1.005245 device_energy_j=86.659629 avg_power_w=86.207 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=2000000 threads=10 batches=9600
+[AXPY] N=2000000 threads=10 rep=1 batches=9600 e2e_time_s=0.998259 kernel_time_s=0.998259 device_energy_j=134.252219 avg_power_w=134.486 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=2 batches=9600 e2e_time_s=1.000084 kernel_time_s=1.000084 device_energy_j=134.390281 avg_power_w=134.379 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=3 batches=9600 e2e_time_s=0.998848 kernel_time_s=0.998848 device_energy_j=134.266990 avg_power_w=134.422 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=4 batches=9600 e2e_time_s=1.002727 kernel_time_s=1.002727 device_energy_j=134.897177 avg_power_w=134.530 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=5 batches=9600 e2e_time_s=0.999363 kernel_time_s=0.999363 device_energy_j=134.572471 avg_power_w=134.658 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=6 batches=9600 e2e_time_s=0.999609 kernel_time_s=0.999609 device_energy_j=134.671347 avg_power_w=134.724 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=7 batches=9600 e2e_time_s=0.998843 kernel_time_s=0.998843 device_energy_j=134.672873 avg_power_w=134.829 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=8 batches=9600 e2e_time_s=0.999267 kernel_time_s=0.999267 device_energy_j=134.326561 avg_power_w=134.425 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=9 batches=9600 e2e_time_s=0.998482 kernel_time_s=0.998482 device_energy_j=134.545371 avg_power_w=134.750 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=10 rep=10 batches=9600 e2e_time_s=0.998758 kernel_time_s=0.998758 device_energy_j=134.589133 avg_power_w=134.757 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=128000000 threads=1 batches=14
+[AXPY] N=128000000 threads=1 rep=1 batches=14 e2e_time_s=1.024324 kernel_time_s=1.024324 device_energy_j=46.838991 avg_power_w=45.727 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=2 batches=14 e2e_time_s=1.025355 kernel_time_s=1.025355 device_energy_j=45.807317 avg_power_w=44.675 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=3 batches=14 e2e_time_s=1.025864 kernel_time_s=1.025864 device_energy_j=46.431155 avg_power_w=45.261 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=4 batches=14 e2e_time_s=1.025969 kernel_time_s=1.025969 device_energy_j=45.818425 avg_power_w=44.659 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=5 batches=14 e2e_time_s=1.025793 kernel_time_s=1.025793 device_energy_j=46.188053 avg_power_w=45.027 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=6 batches=14 e2e_time_s=1.025448 kernel_time_s=1.025448 device_energy_j=44.916389 avg_power_w=43.802 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=7 batches=14 e2e_time_s=1.026172 kernel_time_s=1.026172 device_energy_j=45.696416 avg_power_w=44.531 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=8 batches=14 e2e_time_s=1.025529 kernel_time_s=1.025529 device_energy_j=47.538331 avg_power_w=46.355 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=9 batches=14 e2e_time_s=1.025641 kernel_time_s=1.025641 device_energy_j=45.805485 avg_power_w=44.660 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=1 rep=10 batches=14 e2e_time_s=1.026074 kernel_time_s=1.026074 device_energy_j=45.471625 avg_power_w=44.316 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 threads=1 batches=3273
+[AXPY] N=1000000 threads=1 rep=1 batches=3273 e2e_time_s=1.000965 kernel_time_s=1.000965 device_energy_j=45.349677 avg_power_w=45.306 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=2 batches=3273 e2e_time_s=1.001293 kernel_time_s=1.001293 device_energy_j=45.295111 avg_power_w=45.237 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=3 batches=3273 e2e_time_s=1.001452 kernel_time_s=1.001452 device_energy_j=43.685741 avg_power_w=43.622 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=4 batches=3273 e2e_time_s=1.000500 kernel_time_s=1.000500 device_energy_j=43.568980 avg_power_w=43.547 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=5 batches=3273 e2e_time_s=1.001151 kernel_time_s=1.001151 device_energy_j=43.571543 avg_power_w=43.521 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=6 batches=3273 e2e_time_s=1.000735 kernel_time_s=1.000735 device_energy_j=44.081064 avg_power_w=44.049 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=7 batches=3273 e2e_time_s=1.001072 kernel_time_s=1.001072 device_energy_j=44.795845 avg_power_w=44.748 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=8 batches=3273 e2e_time_s=1.001403 kernel_time_s=1.001403 device_energy_j=45.922856 avg_power_w=45.859 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=9 batches=3273 e2e_time_s=1.000731 kernel_time_s=1.000731 device_energy_j=45.265997 avg_power_w=45.233 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=10 batches=3273 e2e_time_s=1.001341 kernel_time_s=1.001341 device_energy_j=45.388189 avg_power_w=45.327 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=32000000 threads=2 batches=85
+[AXPY] N=32000000 threads=2 rep=1 batches=85 e2e_time_s=1.008357 kernel_time_s=1.008357 device_energy_j=56.852089 avg_power_w=56.381 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=2 batches=85 e2e_time_s=1.005662 kernel_time_s=1.005662 device_energy_j=56.045328 avg_power_w=55.730 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=3 batches=85 e2e_time_s=1.006830 kernel_time_s=1.006830 device_energy_j=56.000894 avg_power_w=55.621 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=4 batches=85 e2e_time_s=1.006399 kernel_time_s=1.006399 device_energy_j=55.741983 avg_power_w=55.388 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=5 batches=85 e2e_time_s=1.006610 kernel_time_s=1.006610 device_energy_j=54.224837 avg_power_w=53.869 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=6 batches=85 e2e_time_s=1.006271 kernel_time_s=1.006271 device_energy_j=55.807718 avg_power_w=55.460 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=7 batches=85 e2e_time_s=1.006381 kernel_time_s=1.006381 device_energy_j=55.970133 avg_power_w=55.615 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=8 batches=85 e2e_time_s=1.006317 kernel_time_s=1.006317 device_energy_j=56.093606 avg_power_w=55.741 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=9 batches=85 e2e_time_s=1.006699 kernel_time_s=1.006699 device_energy_j=56.064127 avg_power_w=55.691 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=2 rep=10 batches=85 e2e_time_s=1.006436 kernel_time_s=1.006436 device_energy_j=54.796307 avg_power_w=54.446 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=4 batches=48
+[AXPY] N=64000000 threads=4 rep=1 batches=48 e2e_time_s=1.016274 kernel_time_s=1.016274 device_energy_j=67.923471 avg_power_w=66.836 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=2 batches=48 e2e_time_s=1.021111 kernel_time_s=1.021111 device_energy_j=69.479619 avg_power_w=68.043 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=3 batches=48 e2e_time_s=1.022448 kernel_time_s=1.022448 device_energy_j=69.222418 avg_power_w=67.703 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=4 batches=48 e2e_time_s=1.022997 kernel_time_s=1.022997 device_energy_j=71.425049 avg_power_w=69.819 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=5 batches=48 e2e_time_s=1.020433 kernel_time_s=1.020433 device_energy_j=70.705690 avg_power_w=69.290 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=6 batches=48 e2e_time_s=1.018051 kernel_time_s=1.018051 device_energy_j=68.086984 avg_power_w=66.880 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=7 batches=48 e2e_time_s=1.016377 kernel_time_s=1.016377 device_energy_j=68.687568 avg_power_w=67.581 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=8 batches=48 e2e_time_s=1.016659 kernel_time_s=1.016659 device_energy_j=68.015024 avg_power_w=66.901 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=9 batches=48 e2e_time_s=1.016318 kernel_time_s=1.016318 device_energy_j=68.522286 avg_power_w=67.422 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=4 rep=10 batches=48 e2e_time_s=1.016641 kernel_time_s=1.016641 device_energy_j=68.908027 avg_power_w=67.780 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=16000000 threads=1 batches=116
+[AXPY] N=16000000 threads=1 rep=1 batches=116 e2e_time_s=1.004685 kernel_time_s=1.004685 device_energy_j=44.567024 avg_power_w=44.359 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=2 batches=116 e2e_time_s=1.010897 kernel_time_s=1.010897 device_energy_j=44.583260 avg_power_w=44.103 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=3 batches=116 e2e_time_s=1.011630 kernel_time_s=1.011630 device_energy_j=44.415597 avg_power_w=43.905 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=4 batches=116 e2e_time_s=1.011847 kernel_time_s=1.011847 device_energy_j=44.901863 avg_power_w=44.376 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=5 batches=116 e2e_time_s=1.013708 kernel_time_s=1.013708 device_energy_j=45.209174 avg_power_w=44.598 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=6 batches=116 e2e_time_s=1.013448 kernel_time_s=1.013448 device_energy_j=45.077948 avg_power_w=44.480 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=7 batches=116 e2e_time_s=1.012779 kernel_time_s=1.012779 device_energy_j=45.258124 avg_power_w=44.687 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=8 batches=116 e2e_time_s=1.011854 kernel_time_s=1.011854 device_energy_j=43.120862 avg_power_w=42.616 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=9 batches=116 e2e_time_s=1.011657 kernel_time_s=1.011657 device_energy_j=44.376351 avg_power_w=43.865 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=1 rep=10 batches=116 e2e_time_s=1.012683 kernel_time_s=1.012683 device_energy_j=43.435863 avg_power_w=42.892 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=8000000 threads=4 batches=461
+[AXPY] N=8000000 threads=4 rep=1 batches=461 e2e_time_s=1.002227 kernel_time_s=1.002227 device_energy_j=67.088330 avg_power_w=66.939 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=2 batches=461 e2e_time_s=1.005896 kernel_time_s=1.005896 device_energy_j=66.912792 avg_power_w=66.521 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=3 batches=461 e2e_time_s=1.002174 kernel_time_s=1.002174 device_energy_j=66.876965 avg_power_w=66.732 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=4 batches=461 e2e_time_s=1.003388 kernel_time_s=1.003388 device_energy_j=67.125744 avg_power_w=66.899 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=5 batches=461 e2e_time_s=1.002805 kernel_time_s=1.002805 device_energy_j=66.456983 avg_power_w=66.271 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=6 batches=461 e2e_time_s=1.006361 kernel_time_s=1.006361 device_energy_j=67.481090 avg_power_w=67.055 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=7 batches=461 e2e_time_s=1.006669 kernel_time_s=1.006669 device_energy_j=69.452093 avg_power_w=68.992 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=8 batches=461 e2e_time_s=1.004953 kernel_time_s=1.004953 device_energy_j=67.582408 avg_power_w=67.249 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=9 batches=461 e2e_time_s=1.004427 kernel_time_s=1.004427 device_energy_j=67.247448 avg_power_w=66.951 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=4 rep=10 batches=461 e2e_time_s=1.004409 kernel_time_s=1.004409 device_energy_j=68.906379 avg_power_w=68.604 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=2 batches=42
+[AXPY] N=64000000 threads=2 rep=1 batches=42 e2e_time_s=1.017685 kernel_time_s=1.017685 device_energy_j=56.705421 avg_power_w=55.720 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=2 batches=42 e2e_time_s=1.021468 kernel_time_s=1.021468 device_energy_j=56.463357 avg_power_w=55.277 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=3 batches=42 e2e_time_s=1.027962 kernel_time_s=1.027962 device_energy_j=56.336830 avg_power_w=54.804 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=4 batches=42 e2e_time_s=1.028004 kernel_time_s=1.028004 device_energy_j=57.049598 avg_power_w=55.496 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=5 batches=42 e2e_time_s=1.022395 kernel_time_s=1.022395 device_energy_j=57.440649 avg_power_w=56.182 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=6 batches=42 e2e_time_s=1.022816 kernel_time_s=1.022816 device_energy_j=56.397744 avg_power_w=55.140 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=7 batches=42 e2e_time_s=1.024289 kernel_time_s=1.024289 device_energy_j=56.522743 avg_power_w=55.182 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=8 batches=42 e2e_time_s=1.018521 kernel_time_s=1.018521 device_energy_j=55.126141 avg_power_w=54.124 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=9 batches=42 e2e_time_s=1.016305 kernel_time_s=1.016305 device_energy_j=56.394876 avg_power_w=55.490 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=2 rep=10 batches=42 e2e_time_s=1.016655 kernel_time_s=1.016655 device_energy_j=56.315042 avg_power_w=55.393 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=4000000 threads=10 batches=1605
+[AXPY] N=4000000 threads=10 rep=1 batches=1605 e2e_time_s=1.155933 kernel_time_s=1.155933 device_energy_j=117.494267 avg_power_w=101.645 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=2 batches=1605 e2e_time_s=1.156396 kernel_time_s=1.156396 device_energy_j=117.507817 avg_power_w=101.616 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=3 batches=1605 e2e_time_s=1.157724 kernel_time_s=1.157724 device_energy_j=117.560307 avg_power_w=101.544 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=4 batches=1605 e2e_time_s=1.156807 kernel_time_s=1.156807 device_energy_j=117.972110 avg_power_w=101.981 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=5 batches=1605 e2e_time_s=1.156746 kernel_time_s=1.156746 device_energy_j=117.680241 avg_power_w=101.734 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=6 batches=1605 e2e_time_s=1.156800 kernel_time_s=1.156800 device_energy_j=118.061831 avg_power_w=102.059 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=7 batches=1605 e2e_time_s=1.156658 kernel_time_s=1.156658 device_energy_j=118.122073 avg_power_w=102.124 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=8 batches=1605 e2e_time_s=1.156568 kernel_time_s=1.156568 device_energy_j=117.864383 avg_power_w=101.909 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=9 batches=1605 e2e_time_s=1.156612 kernel_time_s=1.156612 device_energy_j=118.273074 avg_power_w=102.258 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=10 rep=10 batches=1605 e2e_time_s=1.161979 kernel_time_s=1.161979 device_energy_j=118.926942 avg_power_w=102.349 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=128000000 threads=16 batches=23
+[AXPY] N=128000000 threads=16 rep=1 batches=23 e2e_time_s=1.025278 kernel_time_s=1.025278 device_energy_j=97.592218 avg_power_w=95.186 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=2 batches=23 e2e_time_s=1.024877 kernel_time_s=1.024877 device_energy_j=97.668512 avg_power_w=95.298 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=3 batches=23 e2e_time_s=1.024577 kernel_time_s=1.024577 device_energy_j=97.699030 avg_power_w=95.356 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=4 batches=23 e2e_time_s=1.024835 kernel_time_s=1.024835 device_energy_j=97.414729 avg_power_w=95.054 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=5 batches=23 e2e_time_s=1.024517 kernel_time_s=1.024517 device_energy_j=97.327876 avg_power_w=94.999 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=6 batches=23 e2e_time_s=1.024722 kernel_time_s=1.024722 device_energy_j=97.737848 avg_power_w=95.380 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=7 batches=23 e2e_time_s=1.024331 kernel_time_s=1.024331 device_energy_j=97.294611 avg_power_w=94.984 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=8 batches=23 e2e_time_s=1.024319 kernel_time_s=1.024319 device_energy_j=97.476740 avg_power_w=95.162 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=9 batches=23 e2e_time_s=1.024272 kernel_time_s=1.024272 device_energy_j=97.045772 avg_power_w=94.746 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=16 rep=10 batches=23 e2e_time_s=1.024539 kernel_time_s=1.024539 device_energy_j=97.213252 avg_power_w=94.885 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=16000000 threads=2 batches=177
+[AXPY] N=16000000 threads=2 rep=1 batches=177 e2e_time_s=1.000907 kernel_time_s=1.000907 device_energy_j=55.670207 avg_power_w=55.620 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=2 batches=177 e2e_time_s=1.002538 kernel_time_s=1.002538 device_energy_j=55.668986 avg_power_w=55.528 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=3 batches=177 e2e_time_s=1.002528 kernel_time_s=1.002528 device_energy_j=55.534343 avg_power_w=55.394 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=4 batches=177 e2e_time_s=1.002267 kernel_time_s=1.002267 device_energy_j=54.684430 avg_power_w=54.561 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=5 batches=177 e2e_time_s=1.002028 kernel_time_s=1.002028 device_energy_j=55.684855 avg_power_w=55.572 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=6 batches=177 e2e_time_s=1.002270 kernel_time_s=1.002270 device_energy_j=54.058089 avg_power_w=53.936 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=7 batches=177 e2e_time_s=1.002790 kernel_time_s=1.002790 device_energy_j=56.050577 avg_power_w=55.895 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=8 batches=177 e2e_time_s=1.001957 kernel_time_s=1.001957 device_energy_j=55.202069 avg_power_w=55.094 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=9 batches=177 e2e_time_s=1.002231 kernel_time_s=1.002231 device_energy_j=55.516642 avg_power_w=55.393 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=2 rep=10 batches=177 e2e_time_s=1.001510 kernel_time_s=1.001510 device_energy_j=55.653727 avg_power_w=55.570 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=128000000 threads=8 batches=24
+[AXPY] N=128000000 threads=8 rep=1 batches=24 e2e_time_s=1.039165 kernel_time_s=1.039165 device_energy_j=94.801149 avg_power_w=91.228 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=2 batches=24 e2e_time_s=1.036528 kernel_time_s=1.036528 device_energy_j=94.872560 avg_power_w=91.529 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=3 batches=24 e2e_time_s=1.038065 kernel_time_s=1.038065 device_energy_j=95.282227 avg_power_w=91.788 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=4 batches=24 e2e_time_s=1.039570 kernel_time_s=1.039570 device_energy_j=95.305786 avg_power_w=91.678 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=5 batches=24 e2e_time_s=1.036939 kernel_time_s=1.036939 device_energy_j=94.850099 avg_power_w=91.471 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=6 batches=24 e2e_time_s=1.040035 kernel_time_s=1.040035 device_energy_j=95.503601 avg_power_w=91.827 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=7 batches=24 e2e_time_s=1.035973 kernel_time_s=1.035973 device_energy_j=95.456604 avg_power_w=92.142 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=8 batches=24 e2e_time_s=1.036160 kernel_time_s=1.036160 device_energy_j=95.810545 avg_power_w=92.467 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=9 batches=24 e2e_time_s=1.036341 kernel_time_s=1.036341 device_energy_j=95.560974 avg_power_w=92.210 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=8 rep=10 batches=24 e2e_time_s=1.040132 kernel_time_s=1.040132 device_energy_j=95.767516 avg_power_w=92.072 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=8 batches=47
+[AXPY] N=64000000 threads=8 rep=1 batches=47 e2e_time_s=1.004814 kernel_time_s=1.004814 device_energy_j=92.709052 avg_power_w=92.265 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=2 batches=47 e2e_time_s=1.004522 kernel_time_s=1.004522 device_energy_j=92.259774 avg_power_w=91.844 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=3 batches=47 e2e_time_s=1.004922 kernel_time_s=1.004922 device_energy_j=92.353218 avg_power_w=91.901 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=4 batches=47 e2e_time_s=1.004764 kernel_time_s=1.004764 device_energy_j=92.725470 avg_power_w=92.286 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=5 batches=47 e2e_time_s=1.004632 kernel_time_s=1.004632 device_energy_j=93.125677 avg_power_w=92.696 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=6 batches=47 e2e_time_s=1.004887 kernel_time_s=1.004887 device_energy_j=93.090460 avg_power_w=92.638 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=7 batches=47 e2e_time_s=1.004763 kernel_time_s=1.004763 device_energy_j=93.060553 avg_power_w=92.619 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=8 batches=47 e2e_time_s=1.004604 kernel_time_s=1.004604 device_energy_j=93.898869 avg_power_w=93.469 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=9 batches=47 e2e_time_s=1.004706 kernel_time_s=1.004706 device_energy_j=93.346746 avg_power_w=92.909 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=8 rep=10 batches=47 e2e_time_s=1.004733 kernel_time_s=1.004733 device_energy_j=92.827887 avg_power_w=92.391 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 threads=2 batches=5960
+[AXPY] N=1000000 threads=2 rep=1 batches=5960 e2e_time_s=1.002141 kernel_time_s=1.002141 device_energy_j=59.385895 avg_power_w=59.259 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=2 batches=5960 e2e_time_s=0.997133 kernel_time_s=0.997133 device_energy_j=58.576327 avg_power_w=58.745 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=3 batches=5960 e2e_time_s=0.989414 kernel_time_s=0.989414 device_energy_j=58.295383 avg_power_w=58.919 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=4 batches=5960 e2e_time_s=0.986130 kernel_time_s=0.986130 device_energy_j=57.977086 avg_power_w=58.793 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=5 batches=5960 e2e_time_s=0.985354 kernel_time_s=0.985354 device_energy_j=58.073825 avg_power_w=58.937 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=6 batches=5960 e2e_time_s=0.986573 kernel_time_s=0.986573 device_energy_j=58.201633 avg_power_w=58.994 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=7 batches=5960 e2e_time_s=0.988048 kernel_time_s=0.988048 device_energy_j=58.193027 avg_power_w=58.897 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=8 batches=5960 e2e_time_s=0.986351 kernel_time_s=0.986351 device_energy_j=58.337497 avg_power_w=59.145 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=9 batches=5960 e2e_time_s=0.986528 kernel_time_s=0.986528 device_energy_j=58.201572 avg_power_w=58.996 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=2 rep=10 batches=5960 e2e_time_s=0.986420 kernel_time_s=0.986420 device_energy_j=57.682408 avg_power_w=58.477 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=32000000 threads=1 batches=56
+[AXPY] N=32000000 threads=1 rep=1 batches=56 e2e_time_s=1.002705 kernel_time_s=1.002705 device_energy_j=42.934766 avg_power_w=42.819 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=2 batches=56 e2e_time_s=1.004824 kernel_time_s=1.004824 device_energy_j=45.331244 avg_power_w=45.114 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=3 batches=56 e2e_time_s=1.004890 kernel_time_s=1.004890 device_energy_j=44.846931 avg_power_w=44.629 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=4 batches=56 e2e_time_s=1.004346 kernel_time_s=1.004346 device_energy_j=44.631050 avg_power_w=44.438 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=5 batches=56 e2e_time_s=1.004725 kernel_time_s=1.004725 device_energy_j=44.234689 avg_power_w=44.027 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=6 batches=56 e2e_time_s=1.004971 kernel_time_s=1.004971 device_energy_j=45.812871 avg_power_w=45.586 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=7 batches=56 e2e_time_s=1.004796 kernel_time_s=1.004796 device_energy_j=44.633004 avg_power_w=44.420 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=8 batches=56 e2e_time_s=1.004858 kernel_time_s=1.004858 device_energy_j=44.780831 avg_power_w=44.564 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=9 batches=56 e2e_time_s=1.004698 kernel_time_s=1.004698 device_energy_j=44.770881 avg_power_w=44.562 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=1 rep=10 batches=56 e2e_time_s=1.005715 kernel_time_s=1.005715 device_energy_j=44.864875 avg_power_w=44.610 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=8000000 threads=16 batches=446
+[AXPY] N=8000000 threads=16 rep=1 batches=446 e2e_time_s=1.000337 kernel_time_s=1.000337 device_energy_j=95.817503 avg_power_w=95.785 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=2 batches=446 e2e_time_s=1.000649 kernel_time_s=1.000649 device_energy_j=95.895262 avg_power_w=95.833 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=3 batches=446 e2e_time_s=1.000673 kernel_time_s=1.000673 device_energy_j=95.952331 avg_power_w=95.888 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=4 batches=446 e2e_time_s=1.000502 kernel_time_s=1.000502 device_energy_j=96.065123 avg_power_w=96.017 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=5 batches=446 e2e_time_s=1.000603 kernel_time_s=1.000603 device_energy_j=96.131956 avg_power_w=96.074 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=6 batches=446 e2e_time_s=1.000331 kernel_time_s=1.000331 device_energy_j=96.208677 avg_power_w=96.177 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=7 batches=446 e2e_time_s=1.001104 kernel_time_s=1.001104 device_energy_j=96.187071 avg_power_w=96.081 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=8 batches=446 e2e_time_s=1.000418 kernel_time_s=1.000418 device_energy_j=96.223874 avg_power_w=96.184 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=9 batches=446 e2e_time_s=1.000385 kernel_time_s=1.000385 device_energy_j=96.085570 avg_power_w=96.049 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=16 rep=10 batches=446 e2e_time_s=1.000603 kernel_time_s=1.000603 device_energy_j=96.334043 avg_power_w=96.276 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 threads=10 batches=59052
+[AXPY] N=1000000 threads=10 rep=1 batches=59052 e2e_time_s=1.003597 kernel_time_s=1.003597 device_energy_j=148.547105 avg_power_w=148.015 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=2 batches=59052 e2e_time_s=1.002731 kernel_time_s=1.002731 device_energy_j=148.776291 avg_power_w=148.371 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=3 batches=59052 e2e_time_s=1.000361 kernel_time_s=1.000361 device_energy_j=148.459276 avg_power_w=148.406 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=4 batches=59052 e2e_time_s=1.002267 kernel_time_s=1.002267 device_energy_j=148.878098 avg_power_w=148.541 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=5 batches=59052 e2e_time_s=1.004879 kernel_time_s=1.004879 device_energy_j=149.492842 avg_power_w=148.767 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=6 batches=59052 e2e_time_s=1.003724 kernel_time_s=1.003724 device_energy_j=149.386703 avg_power_w=148.832 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=7 batches=59052 e2e_time_s=1.003532 kernel_time_s=1.003532 device_energy_j=149.358443 avg_power_w=148.833 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=8 batches=59052 e2e_time_s=1.002439 kernel_time_s=1.002439 device_energy_j=149.414718 avg_power_w=149.051 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=9 batches=59052 e2e_time_s=1.004566 kernel_time_s=1.004566 device_energy_j=149.865706 avg_power_w=149.184 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=10 rep=10 batches=59052 e2e_time_s=0.999408 kernel_time_s=0.999408 device_energy_j=149.236068 avg_power_w=149.324 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=2000000 threads=2 batches=2540
+[AXPY] N=2000000 threads=2 rep=1 batches=2540 e2e_time_s=0.999429 kernel_time_s=0.999429 device_energy_j=58.280734 avg_power_w=58.314 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=2 batches=2540 e2e_time_s=1.000762 kernel_time_s=1.000762 device_energy_j=58.097568 avg_power_w=58.053 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=3 batches=2540 e2e_time_s=1.000841 kernel_time_s=1.000841 device_energy_j=57.975743 avg_power_w=57.927 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=4 batches=2540 e2e_time_s=1.001200 kernel_time_s=1.001200 device_energy_j=57.987888 avg_power_w=57.918 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=5 batches=2540 e2e_time_s=0.999941 kernel_time_s=0.999941 device_energy_j=57.913426 avg_power_w=57.917 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=6 batches=2540 e2e_time_s=0.999340 kernel_time_s=0.999340 device_energy_j=57.984654 avg_power_w=58.023 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=7 batches=2540 e2e_time_s=0.999401 kernel_time_s=0.999401 device_energy_j=57.815281 avg_power_w=57.850 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=8 batches=2540 e2e_time_s=0.999392 kernel_time_s=0.999392 device_energy_j=58.027806 avg_power_w=58.063 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=9 batches=2540 e2e_time_s=1.000209 kernel_time_s=1.000209 device_energy_j=58.068332 avg_power_w=58.056 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=2 rep=10 batches=2540 e2e_time_s=1.001336 kernel_time_s=1.001336 device_energy_j=58.353611 avg_power_w=58.276 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=10 batches=12
+[AXPY] N=256000000 threads=10 rep=1 batches=12 e2e_time_s=1.053878 kernel_time_s=1.053878 device_energy_j=108.812038 avg_power_w=103.249 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=2 batches=12 e2e_time_s=1.054033 kernel_time_s=1.054033 device_energy_j=109.220241 avg_power_w=103.621 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=3 batches=12 e2e_time_s=1.054139 kernel_time_s=1.054139 device_energy_j=109.453272 avg_power_w=103.832 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=4 batches=12 e2e_time_s=1.055714 kernel_time_s=1.055714 device_energy_j=108.950283 avg_power_w=103.201 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=5 batches=12 e2e_time_s=1.053867 kernel_time_s=1.053867 device_energy_j=108.146207 avg_power_w=102.619 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=6 batches=12 e2e_time_s=1.054141 kernel_time_s=1.054141 device_energy_j=107.984953 avg_power_w=102.439 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=7 batches=12 e2e_time_s=1.054065 kernel_time_s=1.054065 device_energy_j=108.983181 avg_power_w=103.393 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=8 batches=12 e2e_time_s=1.054215 kernel_time_s=1.054215 device_energy_j=108.880337 avg_power_w=103.281 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=9 batches=12 e2e_time_s=1.054092 kernel_time_s=1.054092 device_energy_j=107.919340 avg_power_w=102.381 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=10 rep=10 batches=12 e2e_time_s=1.054115 kernel_time_s=1.054115 device_energy_j=109.526209 avg_power_w=103.903 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=8000000 threads=8 batches=464
+[AXPY] N=8000000 threads=8 rep=1 batches=464 e2e_time_s=1.005198 kernel_time_s=1.005198 device_energy_j=91.960213 avg_power_w=91.485 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=2 batches=464 e2e_time_s=1.005507 kernel_time_s=1.005507 device_energy_j=91.967722 avg_power_w=91.464 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=3 batches=464 e2e_time_s=1.005213 kernel_time_s=1.005213 device_energy_j=91.983835 avg_power_w=91.507 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=4 batches=464 e2e_time_s=1.004265 kernel_time_s=1.004265 device_energy_j=91.853403 avg_power_w=91.463 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=5 batches=464 e2e_time_s=1.004899 kernel_time_s=1.004899 device_energy_j=91.517465 avg_power_w=91.071 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=6 batches=464 e2e_time_s=1.004714 kernel_time_s=1.004714 device_energy_j=91.939096 avg_power_w=91.508 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=7 batches=464 e2e_time_s=1.005616 kernel_time_s=1.005616 device_energy_j=91.843026 avg_power_w=91.330 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=8 batches=464 e2e_time_s=1.006098 kernel_time_s=1.006098 device_energy_j=92.410225 avg_power_w=91.850 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=9 batches=464 e2e_time_s=1.005212 kernel_time_s=1.005212 device_energy_j=91.860604 avg_power_w=91.384 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=8 rep=10 batches=464 e2e_time_s=1.005018 kernel_time_s=1.005018 device_energy_j=92.172250 avg_power_w=91.712 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=16000000 threads=20 batches=184
+[AXPY] N=16000000 threads=20 rep=1 batches=184 e2e_time_s=1.001883 kernel_time_s=1.001883 device_energy_j=103.383585 avg_power_w=103.189 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=2 batches=184 e2e_time_s=1.001686 kernel_time_s=1.001686 device_energy_j=103.686807 avg_power_w=103.512 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=3 batches=184 e2e_time_s=1.002204 kernel_time_s=1.002204 device_energy_j=103.789102 avg_power_w=103.561 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=4 batches=184 e2e_time_s=1.001712 kernel_time_s=1.001712 device_energy_j=103.618204 avg_power_w=103.441 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=5 batches=184 e2e_time_s=1.002040 kernel_time_s=1.002040 device_energy_j=103.660257 avg_power_w=103.449 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=6 batches=184 e2e_time_s=1.001910 kernel_time_s=1.001910 device_energy_j=103.453776 avg_power_w=103.257 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=7 batches=184 e2e_time_s=1.002229 kernel_time_s=1.002229 device_energy_j=103.838418 avg_power_w=103.608 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=8 batches=184 e2e_time_s=1.001988 kernel_time_s=1.001988 device_energy_j=103.857522 avg_power_w=103.651 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=9 batches=184 e2e_time_s=1.002190 kernel_time_s=1.002190 device_energy_j=103.930764 avg_power_w=103.704 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=16000000 threads=20 rep=10 batches=184 e2e_time_s=1.001894 kernel_time_s=1.001894 device_energy_j=103.702127 avg_power_w=103.506 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=128000000 threads=20 batches=22
+[AXPY] N=128000000 threads=20 rep=1 batches=22 e2e_time_s=1.025440 kernel_time_s=1.025440 device_energy_j=107.131317 avg_power_w=104.474 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=2 batches=22 e2e_time_s=1.025327 kernel_time_s=1.025327 device_energy_j=106.820467 avg_power_w=104.182 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=3 batches=22 e2e_time_s=1.025288 kernel_time_s=1.025288 device_energy_j=106.765474 avg_power_w=104.132 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=4 batches=22 e2e_time_s=1.025301 kernel_time_s=1.025301 device_energy_j=107.013581 avg_power_w=104.373 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=5 batches=22 e2e_time_s=1.025350 kernel_time_s=1.025350 device_energy_j=106.853608 avg_power_w=104.212 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=6 batches=22 e2e_time_s=1.025345 kernel_time_s=1.025345 device_energy_j=107.072541 avg_power_w=104.426 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=7 batches=22 e2e_time_s=1.025536 kernel_time_s=1.025536 device_energy_j=107.097810 avg_power_w=104.431 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=8 batches=22 e2e_time_s=1.025378 kernel_time_s=1.025378 device_energy_j=107.040864 avg_power_w=104.392 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=9 batches=22 e2e_time_s=1.025225 kernel_time_s=1.025225 device_energy_j=107.196686 avg_power_w=104.559 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=128000000 threads=20 rep=10 batches=22 e2e_time_s=1.025317 kernel_time_s=1.025317 device_energy_j=107.128570 avg_power_w=104.483 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=8000000 threads=1 batches=251
+[AXPY] N=8000000 threads=1 rep=1 batches=251 e2e_time_s=1.006173 kernel_time_s=1.006173 device_energy_j=45.028022 avg_power_w=44.752 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=2 batches=251 e2e_time_s=1.021028 kernel_time_s=1.021028 device_energy_j=44.282235 avg_power_w=43.370 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=3 batches=251 e2e_time_s=1.017355 kernel_time_s=1.017355 device_energy_j=46.245487 avg_power_w=45.457 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=4 batches=251 e2e_time_s=1.018098 kernel_time_s=1.018098 device_energy_j=45.262762 avg_power_w=44.458 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=5 batches=251 e2e_time_s=1.017552 kernel_time_s=1.017552 device_energy_j=45.465093 avg_power_w=44.681 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=6 batches=251 e2e_time_s=1.016346 kernel_time_s=1.016346 device_energy_j=43.665294 avg_power_w=42.963 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=7 batches=251 e2e_time_s=1.019788 kernel_time_s=1.019788 device_energy_j=45.463995 avg_power_w=44.582 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=8 batches=251 e2e_time_s=1.021181 kernel_time_s=1.021181 device_energy_j=45.526922 avg_power_w=44.583 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=9 batches=251 e2e_time_s=1.018772 kernel_time_s=1.018772 device_energy_j=43.664317 avg_power_w=42.860 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=1 rep=10 batches=251 e2e_time_s=1.018279 kernel_time_s=1.018279 device_energy_j=45.472051 avg_power_w=44.656 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 threads=20 batches=51183
+[AXPY] N=1000000 threads=20 rep=1 batches=51183 e2e_time_s=1.010369 kernel_time_s=1.010369 device_energy_j=148.824632 avg_power_w=147.297 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=2 batches=51183 e2e_time_s=1.004902 kernel_time_s=1.004902 device_energy_j=148.589891 avg_power_w=147.865 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=3 batches=51183 e2e_time_s=1.000247 kernel_time_s=1.000247 device_energy_j=148.036853 avg_power_w=148.000 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=4 batches=51183 e2e_time_s=1.004357 kernel_time_s=1.004357 device_energy_j=148.656419 avg_power_w=148.012 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=5 batches=51183 e2e_time_s=1.004198 kernel_time_s=1.004198 device_energy_j=148.691270 avg_power_w=148.070 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=6 batches=51183 e2e_time_s=1.003919 kernel_time_s=1.003919 device_energy_j=148.797898 avg_power_w=148.217 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=7 batches=51183 e2e_time_s=1.003758 kernel_time_s=1.003758 device_energy_j=148.849350 avg_power_w=148.292 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=8 batches=51183 e2e_time_s=1.003604 kernel_time_s=1.003604 device_energy_j=149.007187 avg_power_w=148.472 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=9 batches=51183 e2e_time_s=1.006470 kernel_time_s=1.006470 device_energy_j=149.075607 avg_power_w=148.117 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=10 batches=51183 e2e_time_s=1.005444 kernel_time_s=1.005444 device_energy_j=149.081161 avg_power_w=148.274 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=1 batches=7
+[AXPY] N=256000000 threads=1 rep=1 batches=7 e2e_time_s=1.024044 kernel_time_s=1.024044 device_energy_j=45.710821 avg_power_w=44.638 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=2 batches=7 e2e_time_s=1.025188 kernel_time_s=1.025188 device_energy_j=45.481756 avg_power_w=44.364 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=3 batches=7 e2e_time_s=1.025130 kernel_time_s=1.025130 device_energy_j=44.718514 avg_power_w=43.622 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=4 batches=7 e2e_time_s=1.024846 kernel_time_s=1.024846 device_energy_j=45.622502 avg_power_w=44.516 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=5 batches=7 e2e_time_s=1.025180 kernel_time_s=1.025180 device_energy_j=45.588506 avg_power_w=44.469 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=6 batches=7 e2e_time_s=1.024799 kernel_time_s=1.024799 device_energy_j=45.767705 avg_power_w=44.660 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=7 batches=7 e2e_time_s=1.025180 kernel_time_s=1.025180 device_energy_j=45.263373 avg_power_w=44.152 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=8 batches=7 e2e_time_s=1.024938 kernel_time_s=1.024938 device_energy_j=45.590520 avg_power_w=44.481 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=9 batches=7 e2e_time_s=1.025193 kernel_time_s=1.025193 device_energy_j=44.942267 avg_power_w=43.838 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=10 batches=7 e2e_time_s=1.024961 kernel_time_s=1.024961 device_energy_j=44.975226 avg_power_w=43.880 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=8000000 threads=2 batches=393
+[AXPY] N=8000000 threads=2 rep=1 batches=393 e2e_time_s=1.001758 kernel_time_s=1.001758 device_energy_j=55.881754 avg_power_w=55.784 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=2 batches=393 e2e_time_s=1.003628 kernel_time_s=1.003628 device_energy_j=54.878766 avg_power_w=54.680 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=3 batches=393 e2e_time_s=1.002220 kernel_time_s=1.002220 device_energy_j=57.238562 avg_power_w=57.112 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=4 batches=393 e2e_time_s=1.002751 kernel_time_s=1.002751 device_energy_j=57.344580 avg_power_w=57.187 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=5 batches=393 e2e_time_s=1.001966 kernel_time_s=1.001966 device_energy_j=56.914711 avg_power_w=56.803 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=6 batches=393 e2e_time_s=1.001822 kernel_time_s=1.001822 device_energy_j=56.914710 avg_power_w=56.811 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=7 batches=393 e2e_time_s=1.002212 kernel_time_s=1.002212 device_energy_j=55.738565 avg_power_w=55.616 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=8 batches=393 e2e_time_s=1.005879 kernel_time_s=1.005879 device_energy_j=56.685158 avg_power_w=56.354 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=9 batches=393 e2e_time_s=1.007218 kernel_time_s=1.007218 device_energy_j=57.192114 avg_power_w=56.782 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=8000000 threads=2 rep=10 batches=393 e2e_time_s=1.006168 kernel_time_s=1.006168 device_energy_j=57.631201 avg_power_w=57.278 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=4000000 threads=2 batches=978
+[AXPY] N=4000000 threads=2 rep=1 batches=978 e2e_time_s=1.007492 kernel_time_s=1.007492 device_energy_j=59.227143 avg_power_w=58.787 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=2 batches=978 e2e_time_s=1.016404 kernel_time_s=1.016404 device_energy_j=58.467807 avg_power_w=57.524 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=3 batches=978 e2e_time_s=1.006190 kernel_time_s=1.006190 device_energy_j=56.141885 avg_power_w=55.797 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=4 batches=978 e2e_time_s=1.004981 kernel_time_s=1.004981 device_energy_j=56.107279 avg_power_w=55.829 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=5 batches=978 e2e_time_s=1.011178 kernel_time_s=1.011178 device_energy_j=56.835059 avg_power_w=56.207 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=6 batches=978 e2e_time_s=1.004406 kernel_time_s=1.004406 device_energy_j=57.221716 avg_power_w=56.971 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=7 batches=978 e2e_time_s=1.007204 kernel_time_s=1.007204 device_energy_j=57.153540 avg_power_w=56.745 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=8 batches=978 e2e_time_s=1.009158 kernel_time_s=1.009158 device_energy_j=56.720741 avg_power_w=56.206 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=9 batches=978 e2e_time_s=1.008992 kernel_time_s=1.008992 device_energy_j=57.062048 avg_power_w=56.554 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=2 rep=10 batches=978 e2e_time_s=1.008624 kernel_time_s=1.008624 device_energy_j=56.996619 avg_power_w=56.509 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=1 batches=28
+[AXPY] N=64000000 threads=1 rep=1 batches=28 e2e_time_s=1.020361 kernel_time_s=1.020361 device_energy_j=43.840830 avg_power_w=42.966 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=2 batches=28 e2e_time_s=1.021374 kernel_time_s=1.021374 device_energy_j=44.182932 avg_power_w=43.258 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=3 batches=28 e2e_time_s=1.021650 kernel_time_s=1.021650 device_energy_j=44.312142 avg_power_w=43.373 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=4 batches=28 e2e_time_s=1.022225 kernel_time_s=1.022225 device_energy_j=44.729866 avg_power_w=43.757 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=5 batches=28 e2e_time_s=1.021015 kernel_time_s=1.021015 device_energy_j=44.364877 avg_power_w=43.452 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=6 batches=28 e2e_time_s=1.022129 kernel_time_s=1.022129 device_energy_j=44.377694 avg_power_w=43.417 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=7 batches=28 e2e_time_s=1.021653 kernel_time_s=1.021653 device_energy_j=44.758674 avg_power_w=43.810 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=8 batches=28 e2e_time_s=1.021830 kernel_time_s=1.021830 device_energy_j=45.355963 avg_power_w=44.387 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=9 batches=28 e2e_time_s=1.021074 kernel_time_s=1.021074 device_energy_j=45.078559 avg_power_w=44.148 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=10 batches=28 e2e_time_s=1.021443 kernel_time_s=1.021443 device_energy_j=44.436532 avg_power_w=43.504 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 threads=8 batches=37105
+[AXPY] N=1000000 threads=8 rep=1 batches=37105 e2e_time_s=1.002747 kernel_time_s=1.002747 device_energy_j=129.038733 avg_power_w=128.685 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=2 batches=37105 e2e_time_s=1.007418 kernel_time_s=1.007418 device_energy_j=130.137423 avg_power_w=129.179 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=3 batches=37105 e2e_time_s=1.007838 kernel_time_s=1.007838 device_energy_j=130.276400 avg_power_w=129.263 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=4 batches=37105 e2e_time_s=1.003628 kernel_time_s=1.003628 device_energy_j=130.256442 avg_power_w=129.786 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=5 batches=37105 e2e_time_s=0.996896 kernel_time_s=0.996896 device_energy_j=130.505342 avg_power_w=130.912 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=6 batches=37105 e2e_time_s=0.994514 kernel_time_s=0.994514 device_energy_j=131.149323 avg_power_w=131.873 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=7 batches=37105 e2e_time_s=0.992220 kernel_time_s=0.992220 device_energy_j=130.851289 avg_power_w=131.877 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=8 batches=37105 e2e_time_s=0.994047 kernel_time_s=0.994047 device_energy_j=131.228912 avg_power_w=132.015 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=9 batches=37105 e2e_time_s=0.992215 kernel_time_s=0.992215 device_energy_j=130.913727 avg_power_w=131.941 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=8 rep=10 batches=37105 e2e_time_s=0.996552 kernel_time_s=0.996552 device_energy_j=131.293548 avg_power_w=131.748 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=32000000 threads=20 batches=87
+[AXPY] N=32000000 threads=20 rep=1 batches=87 e2e_time_s=1.000933 kernel_time_s=1.000933 device_energy_j=102.765911 avg_power_w=102.670 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=2 batches=87 e2e_time_s=1.000912 kernel_time_s=1.000912 device_energy_j=102.541913 avg_power_w=102.448 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=3 batches=87 e2e_time_s=1.000880 kernel_time_s=1.000880 device_energy_j=102.755719 avg_power_w=102.665 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=4 batches=87 e2e_time_s=1.000993 kernel_time_s=1.000993 device_energy_j=102.852092 avg_power_w=102.750 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=5 batches=87 e2e_time_s=1.000683 kernel_time_s=1.000683 device_energy_j=102.554425 avg_power_w=102.484 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=6 batches=87 e2e_time_s=1.000772 kernel_time_s=1.000772 device_energy_j=102.681988 avg_power_w=102.603 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=7 batches=87 e2e_time_s=1.000842 kernel_time_s=1.000842 device_energy_j=102.931133 avg_power_w=102.845 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=8 batches=87 e2e_time_s=1.000967 kernel_time_s=1.000967 device_energy_j=102.784771 avg_power_w=102.686 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=9 batches=87 e2e_time_s=1.001211 kernel_time_s=1.001211 device_energy_j=102.754375 avg_power_w=102.630 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=20 rep=10 batches=87 e2e_time_s=1.000719 kernel_time_s=1.000719 device_energy_j=102.797283 avg_power_w=102.723 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=2 batches=11
+[AXPY] N=256000000 threads=2 rep=1 batches=11 e2e_time_s=1.097784 kernel_time_s=1.097784 device_energy_j=60.345731 avg_power_w=54.970 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=2 batches=11 e2e_time_s=1.092493 kernel_time_s=1.092493 device_energy_j=59.648773 avg_power_w=54.599 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=3 batches=11 e2e_time_s=1.093801 kernel_time_s=1.093801 device_energy_j=61.463527 avg_power_w=56.193 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=4 batches=11 e2e_time_s=1.093057 kernel_time_s=1.093057 device_energy_j=59.845916 avg_power_w=54.751 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=5 batches=11 e2e_time_s=1.093156 kernel_time_s=1.093156 device_energy_j=60.507353 avg_power_w=55.351 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=6 batches=11 e2e_time_s=1.086851 kernel_time_s=1.086851 device_energy_j=61.033658 avg_power_w=56.156 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=7 batches=11 e2e_time_s=1.091783 kernel_time_s=1.091783 device_energy_j=60.668729 avg_power_w=55.568 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=8 batches=11 e2e_time_s=1.090871 kernel_time_s=1.090871 device_energy_j=61.229275 avg_power_w=56.129 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=9 batches=11 e2e_time_s=1.090635 kernel_time_s=1.090635 device_energy_j=61.514735 avg_power_w=56.403 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=2 rep=10 batches=11 e2e_time_s=1.087262 kernel_time_s=1.087262 device_energy_j=62.072167 avg_power_w=57.090 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=32000000 threads=10 batches=93
+[AXPY] N=32000000 threads=10 rep=1 batches=93 e2e_time_s=1.004212 kernel_time_s=1.004212 device_energy_j=102.001448 avg_power_w=101.574 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=2 batches=93 e2e_time_s=1.004286 kernel_time_s=1.004286 device_energy_j=102.277509 avg_power_w=101.841 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=3 batches=93 e2e_time_s=1.004564 kernel_time_s=1.004564 device_energy_j=101.703414 avg_power_w=101.241 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=4 batches=93 e2e_time_s=1.004328 kernel_time_s=1.004328 device_energy_j=101.719284 avg_power_w=101.281 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=5 batches=93 e2e_time_s=1.004202 kernel_time_s=1.004202 device_energy_j=101.926191 avg_power_w=101.500 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=6 batches=93 e2e_time_s=1.004179 kernel_time_s=1.004179 device_energy_j=102.957317 avg_power_w=102.529 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=7 batches=93 e2e_time_s=1.004180 kernel_time_s=1.004180 device_energy_j=102.263593 avg_power_w=101.838 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=8 batches=93 e2e_time_s=1.004054 kernel_time_s=1.004054 device_energy_j=102.343915 avg_power_w=101.931 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=9 batches=93 e2e_time_s=1.004249 kernel_time_s=1.004249 device_energy_j=101.818709 avg_power_w=101.388 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=32000000 threads=10 rep=10 batches=93 e2e_time_s=1.004092 kernel_time_s=1.004092 device_energy_j=102.058699 avg_power_w=101.643 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=4000000 threads=8 batches=1440
+[AXPY] N=4000000 threads=8 rep=1 batches=1440 e2e_time_s=1.105600 kernel_time_s=1.105600 device_energy_j=103.628153 avg_power_w=93.730 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=2 batches=1440 e2e_time_s=1.101446 kernel_time_s=1.101446 device_energy_j=103.077129 avg_power_w=93.583 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=3 batches=1440 e2e_time_s=1.101219 kernel_time_s=1.101219 device_energy_j=103.033305 avg_power_w=93.563 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=4 batches=1440 e2e_time_s=1.101025 kernel_time_s=1.101025 device_energy_j=103.105022 avg_power_w=93.645 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=5 batches=1440 e2e_time_s=1.098358 kernel_time_s=1.098358 device_energy_j=102.581951 avg_power_w=93.396 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=6 batches=1440 e2e_time_s=1.097947 kernel_time_s=1.097947 device_energy_j=102.717633 avg_power_w=93.554 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=7 batches=1440 e2e_time_s=1.098319 kernel_time_s=1.098319 device_energy_j=102.789776 avg_power_w=93.588 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=8 batches=1440 e2e_time_s=1.098481 kernel_time_s=1.098481 device_energy_j=102.892498 avg_power_w=93.668 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=9 batches=1440 e2e_time_s=1.098296 kernel_time_s=1.098296 device_energy_j=102.761700 avg_power_w=93.565 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=8 rep=10 batches=1440 e2e_time_s=1.098570 kernel_time_s=1.098570 device_energy_j=102.720440 avg_power_w=93.504 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 threads=16 batches=33436
+[AXPY] N=1000000 threads=16 rep=1 batches=33436 e2e_time_s=1.000003 kernel_time_s=1.000003 device_energy_j=131.576324 avg_power_w=131.576 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=2 batches=33436 e2e_time_s=1.001526 kernel_time_s=1.001526 device_energy_j=131.939360 avg_power_w=131.738 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=3 batches=33436 e2e_time_s=1.002936 kernel_time_s=1.002936 device_energy_j=132.014616 avg_power_w=131.628 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=4 batches=33436 e2e_time_s=1.000369 kernel_time_s=1.000369 device_energy_j=131.926054 avg_power_w=131.877 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=5 batches=33436 e2e_time_s=1.000167 kernel_time_s=1.000167 device_energy_j=132.162503 avg_power_w=132.140 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=6 batches=33436 e2e_time_s=1.000040 kernel_time_s=1.000040 device_energy_j=132.148527 avg_power_w=132.143 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=7 batches=33436 e2e_time_s=0.999936 kernel_time_s=0.999936 device_energy_j=132.195707 avg_power_w=132.204 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=8 batches=33436 e2e_time_s=1.000136 kernel_time_s=1.000136 device_energy_j=132.295377 avg_power_w=132.277 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=9 batches=33436 e2e_time_s=0.999422 kernel_time_s=0.999422 device_energy_j=132.343838 avg_power_w=132.420 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=16 rep=10 batches=33436 e2e_time_s=1.000718 kernel_time_s=1.000718 device_energy_j=132.504361 avg_power_w=132.409 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=4000000 threads=20 batches=1327
+[AXPY] N=4000000 threads=20 rep=1 batches=1327 e2e_time_s=1.027235 kernel_time_s=1.027235 device_energy_j=107.410919 avg_power_w=104.563 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=2 batches=1327 e2e_time_s=1.030127 kernel_time_s=1.030127 device_energy_j=107.609527 avg_power_w=104.462 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=3 batches=1327 e2e_time_s=1.030161 kernel_time_s=1.030161 device_energy_j=107.345062 avg_power_w=104.202 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=4 batches=1327 e2e_time_s=1.026902 kernel_time_s=1.026902 device_energy_j=107.186981 avg_power_w=104.379 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=5 batches=1327 e2e_time_s=1.028515 kernel_time_s=1.028515 device_energy_j=107.550079 avg_power_w=104.568 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=6 batches=1327 e2e_time_s=1.029554 kernel_time_s=1.029554 device_energy_j=107.685210 avg_power_w=104.594 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=7 batches=1327 e2e_time_s=1.027143 kernel_time_s=1.027143 device_energy_j=107.609954 avg_power_w=104.766 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=8 batches=1327 e2e_time_s=1.029224 kernel_time_s=1.029224 device_energy_j=107.610931 avg_power_w=104.555 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=9 batches=1327 e2e_time_s=1.038018 kernel_time_s=1.038018 device_energy_j=108.287259 avg_power_w=104.321 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=20 rep=10 batches=1327 e2e_time_s=1.030024 kernel_time_s=1.030024 device_energy_j=107.876860 avg_power_w=104.732 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=10 batches=46
+[AXPY] N=64000000 threads=10 rep=1 batches=46 e2e_time_s=1.009133 kernel_time_s=1.009133 device_energy_j=103.212748 avg_power_w=102.279 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=2 batches=46 e2e_time_s=1.008972 kernel_time_s=1.008972 device_energy_j=103.656534 avg_power_w=102.735 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=3 batches=46 e2e_time_s=1.008735 kernel_time_s=1.008735 device_energy_j=103.967873 avg_power_w=103.068 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=4 batches=46 e2e_time_s=1.008581 kernel_time_s=1.008581 device_energy_j=103.727030 avg_power_w=102.845 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=5 batches=46 e2e_time_s=1.008712 kernel_time_s=1.008712 device_energy_j=104.533729 avg_power_w=103.631 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=6 batches=46 e2e_time_s=1.008629 kernel_time_s=1.008629 device_energy_j=103.322612 avg_power_w=102.439 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=7 batches=46 e2e_time_s=1.008673 kernel_time_s=1.008673 device_energy_j=104.483008 avg_power_w=103.585 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=8 batches=46 e2e_time_s=1.008627 kernel_time_s=1.008627 device_energy_j=104.776832 avg_power_w=103.881 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=9 batches=46 e2e_time_s=1.008606 kernel_time_s=1.008606 device_energy_j=104.542579 avg_power_w=103.651 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=10 rep=10 batches=46 e2e_time_s=1.008674 kernel_time_s=1.008674 device_energy_j=104.060098 avg_power_w=103.165 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=4000000 threads=1 batches=576
+[AXPY] N=4000000 threads=1 rep=1 batches=576 e2e_time_s=1.009719 kernel_time_s=1.009719 device_energy_j=45.047797 avg_power_w=44.614 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=2 batches=576 e2e_time_s=1.033223 kernel_time_s=1.033223 device_energy_j=45.743413 avg_power_w=44.273 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=3 batches=576 e2e_time_s=1.045069 kernel_time_s=1.045069 device_energy_j=46.434878 avg_power_w=44.432 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=4 batches=576 e2e_time_s=1.044254 kernel_time_s=1.044254 device_energy_j=46.129154 avg_power_w=44.174 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=5 batches=576 e2e_time_s=1.040932 kernel_time_s=1.040932 device_energy_j=46.072514 avg_power_w=44.261 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=6 batches=576 e2e_time_s=1.042000 kernel_time_s=1.042000 device_energy_j=46.068669 avg_power_w=44.212 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=7 batches=576 e2e_time_s=1.041468 kernel_time_s=1.041468 device_energy_j=45.992192 avg_power_w=44.161 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=8 batches=576 e2e_time_s=1.043531 kernel_time_s=1.043531 device_energy_j=46.192448 avg_power_w=44.266 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=9 batches=576 e2e_time_s=1.047631 kernel_time_s=1.047631 device_energy_j=46.247196 avg_power_w=44.145 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=4000000 threads=1 rep=10 batches=576 e2e_time_s=1.044251 kernel_time_s=1.044251 device_energy_j=45.964727 avg_power_w=44.017 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=2000000 threads=4 batches=5165
+[AXPY] N=2000000 threads=4 rep=1 batches=5165 e2e_time_s=1.004399 kernel_time_s=1.004399 device_energy_j=83.095063 avg_power_w=82.731 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=2 batches=5165 e2e_time_s=1.004909 kernel_time_s=1.004909 device_energy_j=83.316254 avg_power_w=82.909 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=3 batches=5165 e2e_time_s=1.005860 kernel_time_s=1.005860 device_energy_j=83.122346 avg_power_w=82.638 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=4 batches=5165 e2e_time_s=1.007548 kernel_time_s=1.007548 device_energy_j=83.051728 avg_power_w=82.430 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=5 batches=5165 e2e_time_s=1.003270 kernel_time_s=1.003270 device_energy_j=83.126863 avg_power_w=82.856 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=6 batches=5165 e2e_time_s=1.005805 kernel_time_s=1.005805 device_energy_j=83.075654 avg_power_w=82.596 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=7 batches=5165 e2e_time_s=1.012542 kernel_time_s=1.012542 device_energy_j=83.219148 avg_power_w=82.188 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=8 batches=5165 e2e_time_s=1.011233 kernel_time_s=1.011233 device_energy_j=83.061677 avg_power_w=82.139 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=9 batches=5165 e2e_time_s=1.012479 kernel_time_s=1.012479 device_energy_j=83.247650 avg_power_w=82.222 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=4 rep=10 batches=5165 e2e_time_s=1.010580 kernel_time_s=1.010580 device_energy_j=83.101960 avg_power_w=82.232 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=2000000 threads=1 batches=1414
+[AXPY] N=2000000 threads=1 rep=1 batches=1414 e2e_time_s=1.003065 kernel_time_s=1.003065 device_energy_j=43.752024 avg_power_w=43.618 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=2 batches=1414 e2e_time_s=1.004905 kernel_time_s=1.004905 device_energy_j=44.021677 avg_power_w=43.807 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=3 batches=1414 e2e_time_s=1.005254 kernel_time_s=1.005254 device_energy_j=44.029550 avg_power_w=43.799 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=4 batches=1414 e2e_time_s=1.005320 kernel_time_s=1.005320 device_energy_j=44.061655 avg_power_w=43.829 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=5 batches=1414 e2e_time_s=1.004850 kernel_time_s=1.004850 device_energy_j=44.221139 avg_power_w=44.008 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=6 batches=1414 e2e_time_s=1.004934 kernel_time_s=1.004934 device_energy_j=44.665047 avg_power_w=44.446 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=7 batches=1414 e2e_time_s=1.005571 kernel_time_s=1.005571 device_energy_j=44.692879 avg_power_w=44.445 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=8 batches=1414 e2e_time_s=1.006811 kernel_time_s=1.006811 device_energy_j=44.416878 avg_power_w=44.116 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=9 batches=1414 e2e_time_s=1.004751 kernel_time_s=1.004751 device_energy_j=44.227670 avg_power_w=44.019 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=2000000 threads=1 rep=10 batches=1414 e2e_time_s=1.005515 kernel_time_s=1.005515 device_energy_j=44.176034 avg_power_w=43.934 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=16 batches=46
+[AXPY] N=64000000 threads=16 rep=1 batches=46 e2e_time_s=1.015988 kernel_time_s=1.015988 device_energy_j=97.018428 avg_power_w=95.492 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=2 batches=46 e2e_time_s=1.018246 kernel_time_s=1.018246 device_energy_j=97.274959 avg_power_w=95.532 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=3 batches=46 e2e_time_s=1.015724 kernel_time_s=1.015724 device_energy_j=96.706661 avg_power_w=95.210 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=4 batches=46 e2e_time_s=1.015668 kernel_time_s=1.015668 device_energy_j=96.762692 avg_power_w=95.270 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=5 batches=46 e2e_time_s=1.014987 kernel_time_s=1.014987 device_energy_j=96.515622 avg_power_w=95.091 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=6 batches=46 e2e_time_s=1.016125 kernel_time_s=1.016125 device_energy_j=97.089290 avg_power_w=95.549 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=7 batches=46 e2e_time_s=1.016166 kernel_time_s=1.016166 device_energy_j=97.178889 avg_power_w=95.633 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=8 batches=46 e2e_time_s=1.015815 kernel_time_s=1.015815 device_energy_j=96.886226 avg_power_w=95.378 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=9 batches=46 e2e_time_s=1.015474 kernel_time_s=1.015474 device_energy_j=97.021602 avg_power_w=95.543 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=16 rep=10 batches=46 e2e_time_s=1.015635 kernel_time_s=1.015635 device_energy_j=97.014827 avg_power_w=95.521 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=20 batches=43
+[AXPY] N=64000000 threads=20 rep=1 batches=43 e2e_time_s=1.002675 kernel_time_s=1.002675 device_energy_j=103.488871 avg_power_w=103.213 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=2 batches=43 e2e_time_s=1.002346 kernel_time_s=1.002346 device_energy_j=103.554972 avg_power_w=103.313 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=3 batches=43 e2e_time_s=1.002237 kernel_time_s=1.002237 device_energy_j=103.341959 avg_power_w=103.111 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=4 batches=43 e2e_time_s=1.002423 kernel_time_s=1.002423 device_energy_j=103.647318 avg_power_w=103.397 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=5 batches=43 e2e_time_s=1.002260 kernel_time_s=1.002260 device_energy_j=103.703226 avg_power_w=103.469 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=6 batches=43 e2e_time_s=1.002253 kernel_time_s=1.002253 device_energy_j=103.467631 avg_power_w=103.235 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=7 batches=43 e2e_time_s=1.002168 kernel_time_s=1.002168 device_energy_j=103.677713 avg_power_w=103.453 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=8 batches=43 e2e_time_s=1.002206 kernel_time_s=1.002206 device_energy_j=103.573770 avg_power_w=103.346 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=9 batches=43 e2e_time_s=1.002218 kernel_time_s=1.002218 device_energy_j=103.709268 avg_power_w=103.480 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=10 batches=43 e2e_time_s=1.002378 kernel_time_s=1.002378 device_energy_j=103.827798 avg_power_w=103.581 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=20 batches=11
+[AXPY] N=256000000 threads=20 rep=1 batches=11 e2e_time_s=1.021928 kernel_time_s=1.021928 device_energy_j=106.330782 avg_power_w=104.049 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=2 batches=11 e2e_time_s=1.021888 kernel_time_s=1.021888 device_energy_j=106.385592 avg_power_w=104.107 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=3 batches=11 e2e_time_s=1.021759 kernel_time_s=1.021759 device_energy_j=106.289828 avg_power_w=104.026 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=4 batches=11 e2e_time_s=1.021863 kernel_time_s=1.021863 device_energy_j=106.397372 avg_power_w=104.121 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=5 batches=11 e2e_time_s=1.021976 kernel_time_s=1.021976 device_energy_j=106.041660 avg_power_w=103.761 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=6 batches=11 e2e_time_s=1.021769 kernel_time_s=1.021769 device_energy_j=106.374849 avg_power_w=104.109 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=7 batches=11 e2e_time_s=1.021774 kernel_time_s=1.021774 device_energy_j=106.586031 avg_power_w=104.315 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=8 batches=11 e2e_time_s=1.021822 kernel_time_s=1.021822 device_energy_j=106.625154 avg_power_w=104.348 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=9 batches=11 e2e_time_s=1.021779 kernel_time_s=1.021779 device_energy_j=106.783540 avg_power_w=104.507 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=10 batches=11 e2e_time_s=1.021931 kernel_time_s=1.021931 device_energy_j=106.846467 avg_power_w=104.554 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00

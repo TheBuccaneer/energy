@@ -1,0 +1,32 @@
+AXPY | Intel(R) Core(TM) i9-7900X CPU @ 3.30GHz | platform=INTEL | implementation=openmp_axpy_inplace_fp32 | session=axpy_intel_20260725_163341_quickcheck | reps=2 | configs=6 | DRAM-RAPL=yes
+[CALIBRATION] N=1000000 threads=20 batches=82710
+[AXPY] N=1000000 threads=20 rep=1 batches=82710 e2e_time_s=1.000551 kernel_time_s=1.000551 device_energy_j=157.302942 avg_power_w=157.216 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=20 rep=2 batches=82710 e2e_time_s=0.997615 kernel_time_s=0.997615 device_energy_j=157.304651 avg_power_w=157.681 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=1 batches=28
+[AXPY] N=64000000 threads=1 rep=1 batches=28 e2e_time_s=1.019626 kernel_time_s=1.019626 device_energy_j=39.654135 avg_power_w=38.891 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=1 rep=2 batches=28 e2e_time_s=1.018450 kernel_time_s=1.018450 device_energy_j=40.851763 avg_power_w=40.112 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=1 batches=7
+[AXPY] N=256000000 threads=1 rep=1 batches=7 e2e_time_s=1.026166 kernel_time_s=1.026166 device_energy_j=40.043965 avg_power_w=39.023 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=1 rep=2 batches=7 e2e_time_s=1.026362 kernel_time_s=1.026362 device_energy_j=40.627948 avg_power_w=39.584 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 threads=1 batches=3297
+[AXPY] N=1000000 threads=1 rep=1 batches=3297 e2e_time_s=0.999780 kernel_time_s=0.999780 device_energy_j=40.786821 avg_power_w=40.796 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 threads=1 rep=2 batches=3297 e2e_time_s=1.000223 kernel_time_s=1.000223 device_energy_j=40.276203 avg_power_w=40.267 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 threads=20 batches=11
+[AXPY] N=256000000 threads=20 rep=1 batches=11 e2e_time_s=1.021421 kernel_time_s=1.021421 device_energy_j=96.073302 avg_power_w=94.058 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 threads=20 rep=2 batches=11 e2e_time_s=1.021579 kernel_time_s=1.021579 device_energy_j=95.595214 avg_power_w=93.576 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=64000000 threads=20 batches=43
+[AXPY] N=64000000 threads=20 rep=1 batches=43 e2e_time_s=1.002701 kernel_time_s=1.002701 device_energy_j=93.843754 avg_power_w=93.591 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 threads=20 rep=2 batches=43 e2e_time_s=1.002756 kernel_time_s=1.002756 device_energy_j=93.661382 avg_power_w=93.404 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[ANTI_COLLAPSE] N=1000000 threads=20 B_cal=84728 B_probe=21182 two_B_probe=42364 t1=0.249821743 t2=0.500042332 ratio=2.00159652 time_basis=wall_time_s checksum1=OK checksum2=OK gate=PASS

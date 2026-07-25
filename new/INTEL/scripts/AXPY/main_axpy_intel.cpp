@@ -46,11 +46,14 @@ const std::vector<size_t> SIZES{
     32000000, 64000000, 128000000, 256000000
 };
 
-// Platform CPU thread grid (contract 3.2). This is the only substantive
-// per-platform data table permitted to differ between the AMD and Intel
-// sources; it reflects real hardware core counts, not a style choice.
-const std::vector<int> THREAD_COUNTS{1, 2, 4, 8, 10, 16, 20};
-constexpr int PLATFORM_MAX_THREADS = 20;
+// PATCH F1: the thread grid is taken exclusively from the shared
+// bench::THREAD_COUNTS definition in the real benchmark_common.hpp. No
+// locally invented, platform-specific thread table is used here, so that
+// after normalizing only the platform label and default output filename,
+// the AMD and Intel sources are otherwise identical.
+int platform_max_threads() {
+    return *std::max_element(bench::THREAD_COUNTS.begin(), bench::THREAD_COUNTS.end());
+}
 
 struct Config {
     size_t n;
@@ -286,7 +289,7 @@ long long calibrate(float* x, float* y, size_t n) {
 
 void run_anti_collapse_probe() {
     const size_t n = 1000000;
-    const int threads = PLATFORM_MAX_THREADS;
+    const int threads = platform_max_threads();
 
     omp_set_num_threads(threads);
     require_thread_team(
@@ -318,19 +321,33 @@ void run_anti_collapse_probe() {
         return std::make_pair(seconds, checksum);
     };
 
-    // Deterministically grow B_probe if the 20 ms floor is not met, while
-    // 2*B_probe <= MAX_BATCHES (contract 12.4).
+    // PATCH F4: deterministically grow B_probe if the 20 ms floor is not
+    // met, while 2*B_probe <= MAX_BATCHES (contract 12.4). The previous
+    // version could recompute the same B_probe forever once it reached
+    // MAX_BATCHES/2 (min(B_probe*2, MAX_BATCHES/2) == B_probe again),
+    // looping without bound. This version hard-fails as soon as the cap
+    // is reached without success, and additionally asserts strict forward
+    // progress on every growth step as a defensive invariant.
+    const long long max_probe = MAX_BATCHES / 2;
     double t1 = 0.0;
     ChecksumResult c1;
     for (;;) {
-        if (2 * b_probe > MAX_BATCHES) {
-            throw std::runtime_error(
-                "Anti-collapse probe: cannot reach 20 ms floor without "
-                "exceeding 2*B_probe <= MAX_BATCHES");
-        }
         std::tie(t1, c1) = measure(b_probe);
         if (t1 >= 0.020) break;
-        b_probe = std::min<long long>(b_probe * 2, MAX_BATCHES / 2);
+
+        if (b_probe >= max_probe) {
+            throw std::runtime_error(
+                "Anti-collapse probe cannot reach minimum duration before "
+                "batch cap (B_probe=" + std::to_string(b_probe) +
+                ", max_probe=" + std::to_string(max_probe) + ")");
+        }
+        const long long next = std::min<long long>(b_probe * 2, max_probe);
+        if (next <= b_probe) {
+            throw std::runtime_error(
+                "Anti-collapse probe made no forward progress "
+                "(B_probe=" + std::to_string(b_probe) + ")");
+        }
+        b_probe = next;
     }
 
     const long long two_b_probe = 2 * b_probe;
@@ -464,14 +481,16 @@ void write_axpy_row(std::ofstream& output, const AxpyRow& row) {
     output << row.logical_bytes_per_op << ',';
     write_lossless_double(output, row.avg_power_w); output << ',';
 
+    // PATCH F2: pcie_gen, pcie_width, sm_clock_mhz, mem_clock_mhz are
+    // explicit -1 sentinels on CPU rows (contract 9.4), never blank cells.
     output << row.runtime_status << ','
-           << ',' << ','                       // pcie_gen, pcie_width (CPU: empty/-1 sentinel -> blank)
-           << ','                               // sm_clock_mhz (not meaningful on CPU)
+           << -1 << ',' << -1 << ','           // pcie_gen, pcie_width
+           << -1 << ','                        // sm_clock_mhz (not meaningful on CPU)
            << row.clock_before_mhz << ','
            << row.clock_after_mhz << ','
-           << ','                               // mem_clock_mhz (GPU-only sentinel -> blank)
+           << -1 << ','                        // mem_clock_mhz (GPU-only)
            << row.temp_c << ',' << row.temp_before_c << ',' << row.temp_after_c << ','
-           << ','                               // throttle_reasons (CPU: none observed)
+           << ','                               // throttle_reasons (CPU: none observed; blank permitted)
            << -1 << ',' << -1 << ',' << std::fixed << std::setprecision(6) << -1.0
            << std::defaultfloat << ',' << -1 << ','
            << (row.checksum_ok ? 't' : 'f') << '\n';
@@ -566,7 +585,7 @@ int main(int argc, char** argv) {
         std::vector<Config> configs;
         for (const size_t n : SIZES) {
             if (!selected(n, size_filter)) continue;
-            for (const int threads : THREAD_COUNTS) {
+            for (const int threads : bench::THREAD_COUNTS) {
                 if (selected(threads, thread_filter)) {
                     configs.push_back({n, threads});
                 }
@@ -646,8 +665,25 @@ int main(int argc, char** argv) {
                 const double seconds = std::chrono::duration<double>(end - start).count();
                 const auto energy = rapl.delta(energy_before, energy_after);
 
-                if (energy.package_j < 0.0) {
-                    throw std::runtime_error("RAPL package read failed during measurement");
+                // PATCH F5: strict finite&positive package-energy validation.
+                // The previous "< 0.0" check let 0.0 J and NaN through.
+                if (!std::isfinite(energy.package_j) || energy.package_j <= 0.0) {
+                    throw std::runtime_error(
+                        "Invalid RAPL package energy (must be finite and > 0.0) for N=" +
+                        std::to_string(config.n) +
+                        ", threads=" + std::to_string(config.threads) +
+                        ", repetition=" + std::to_string(repetition) +
+                        ": device_energy_j=" + std::to_string(energy.package_j));
+                }
+                if (rapl.dram_available()) {
+                    if (!std::isfinite(energy.dram_j) || energy.dram_j < 0.0) {
+                        throw std::runtime_error(
+                            "Invalid RAPL DRAM energy (must be finite and >= 0.0) for N=" +
+                            std::to_string(config.n) +
+                            ", threads=" + std::to_string(config.threads) +
+                            ", repetition=" + std::to_string(repetition) +
+                            ": dram_energy_j=" + std::to_string(energy.dram_j));
+                    }
                 }
                 if (!std::isfinite(seconds) || seconds <= 0.0) {
                     throw std::runtime_error(
@@ -700,6 +736,19 @@ int main(int argc, char** argv) {
                 row.temp_before_c = temp_before;
                 row.temp_after_c = temp_after;
                 row.checksum_ok = checksum.ok;
+
+                // PATCH F3: 'below' is a hard campaign-gate failure
+                // (contract 8.3). A below-row must never be written out as
+                // a valid campaign line.
+                if (row.runtime_status == "below") {
+                    throw std::runtime_error(
+                        "Hard failure: runtime_status=below for N=" +
+                        std::to_string(config.n) +
+                        ", threads=" + std::to_string(config.threads) +
+                        ", repetition=" + std::to_string(repetition) +
+                        ", batches=" + std::to_string(batches) +
+                        ", e2e_time_s=" + std::to_string(row.e2e_time_s));
+                }
 
                 write_axpy_row(output, row);
                 output.flush();

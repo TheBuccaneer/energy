@@ -471,34 +471,48 @@ run_axpy() {
     local thread_filter=$7
     local anti_collapse=$8
 
-    local -a env_args=(
-        env
-        -u GOMP_CPU_AFFINITY
-        OMP_DYNAMIC=FALSE
-        OMP_PROC_BIND=spread
-        OMP_PLACES=cores
-    )
-
-    if [[ -n "$size_filter" ]]; then
-        env_args+=(BENCH_SIZE_FILTER="$size_filter")
+    # GNU env options must precede NAME=VALUE assignments.  The previous
+    # array builder could append "-u BENCH_*" after OMP_* assignments for
+    # full sessions, causing env to interpret "-u" as the command name.
+    if [[ -n "$size_filter" && -n "$thread_filter" ]]; then
+        if (( anti_collapse == 1 )); then
+            env \
+                -u GOMP_CPU_AFFINITY \
+                OMP_DYNAMIC=FALSE \
+                OMP_PROC_BIND=spread \
+                OMP_PLACES=cores \
+                BENCH_SIZE_FILTER="$size_filter" \
+                BENCH_THREAD_FILTER="$thread_filter" \
+                AXPY_ANTI_COLLAPSE_PROBE=1 \
+                stdbuf -oL -eL \
+                "$BIN" "$output" "$reps" "$session_id" "$seed" \
+                2>&1 | tee "$log"
+        else
+            env \
+                -u GOMP_CPU_AFFINITY \
+                -u AXPY_ANTI_COLLAPSE_PROBE \
+                OMP_DYNAMIC=FALSE \
+                OMP_PROC_BIND=spread \
+                OMP_PLACES=cores \
+                BENCH_SIZE_FILTER="$size_filter" \
+                BENCH_THREAD_FILTER="$thread_filter" \
+                stdbuf -oL -eL \
+                "$BIN" "$output" "$reps" "$session_id" "$seed" \
+                2>&1 | tee "$log"
+        fi
     else
-        env_args+=(-u BENCH_SIZE_FILTER)
+        env \
+            -u GOMP_CPU_AFFINITY \
+            -u BENCH_SIZE_FILTER \
+            -u BENCH_THREAD_FILTER \
+            -u AXPY_ANTI_COLLAPSE_PROBE \
+            OMP_DYNAMIC=FALSE \
+            OMP_PROC_BIND=spread \
+            OMP_PLACES=cores \
+            stdbuf -oL -eL \
+            "$BIN" "$output" "$reps" "$session_id" "$seed" \
+            2>&1 | tee "$log"
     fi
-    if [[ -n "$thread_filter" ]]; then
-        env_args+=(BENCH_THREAD_FILTER="$thread_filter")
-    else
-        env_args+=(-u BENCH_THREAD_FILTER)
-    fi
-    if (( anti_collapse == 1 )); then
-        env_args+=(AXPY_ANTI_COLLAPSE_PROBE=1)
-    else
-        env_args+=(-u AXPY_ANTI_COLLAPSE_PROBE)
-    fi
-
-    "${env_args[@]}" \
-        stdbuf -oL -eL \
-        "$BIN" "$output" "$reps" "$session_id" "$seed" \
-        2>&1 | tee "$log"
 }
 
 stamp=$(date +%Y%m%d_%H%M%S)
