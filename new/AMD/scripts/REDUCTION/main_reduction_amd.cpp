@@ -1,312 +1,227 @@
-#include "benchmark_common.hpp"
-
-#include <omp.h>
-
 #include <algorithm>
 #include <chrono>
 #include <cmath>
-#include <cstdlib>
+#include <cstdint>
+#include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <limits>
-#include <memory>
-#include <optional>
+#include <omp.h>
 #include <sstream>
-#include <stdexcept>
 #include <string>
-#include <type_traits>
-#include <unordered_set>
 #include <vector>
 
-namespace {
+namespace fs = std::filesystem;
+static constexpr std::size_t BLOCK_SIZE = 4096;
 
-constexpr int MAX_BATCHES = 10000000;
-constexpr std::size_t BLOCK_SIZE = 4096;
-constexpr long double MAX_RELATIVE_ERROR = 1.0e-4L;
-
-const std::vector<std::size_t> SIZES{
-    1000000, 2000000, 4000000, 8000000, 16000000,
-    32000000, 64000000, 128000000, 256000000
+struct RaplDomain {
+    fs::path dir;
+    fs::path energy_uj;
+    fs::path max_energy_range_uj;
+    std::string name;
 };
 
-struct Config {
-    std::size_t n;
-    int threads;
-};
-
-struct ReductionResult {
-    float value;
-    int observed_threads;
-};
-
-struct CheckResult {
-    bool ok;
-    long double relative_error;
-};
-
-inline float x_value(std::size_t i) {
-    return 0.5f + static_cast<float>(i % 29) * 0.0078125f;
+static bool read_u64(const fs::path& p, uint64_t& out) {
+    std::ifstream f(p);
+    if (!f) return false;
+    f >> out;
+    return !f.fail();
 }
 
-void initialize(float* x, std::size_t n) {
-#pragma omp parallel for schedule(static)
-    for (std::size_t i = 0; i < n; ++i) {
-        x[i] = x_value(i);
+static std::string read_line(const fs::path& p) {
+    std::ifstream f(p);
+    std::string s;
+    if (f) std::getline(f, s);
+    return s;
+}
+
+static std::string lower(std::string s) {
+    std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return char(std::tolower(c)); });
+    return s;
+}
+
+static std::vector<RaplDomain> discover_rapl() {
+    std::vector<RaplDomain> out;
+    fs::path root("/sys/class/powercap");
+    if (!fs::exists(root)) return out;
+    for (const auto& e : fs::recursive_directory_iterator(root)) {
+        if (!e.is_directory()) continue;
+        fs::path energy = e.path() / "energy_uj";
+        if (!fs::exists(energy)) continue;
+        out.push_back({e.path(), energy, e.path() / "max_energy_range_uj", read_line(e.path() / "name")});
     }
+    return out;
 }
 
-int active_openmp_threads() {
-    int active = 0;
+static const RaplDomain* find_domain(const std::vector<RaplDomain>& domains, const std::string& needle) {
+    for (const auto& d : domains) {
+        if (lower(d.name).find(needle) != std::string::npos) return &d;
+    }
+    return nullptr;
+}
+
+static double delta_j(uint64_t before, uint64_t after, uint64_t max_range_uj) {
+    uint64_t delta = 0;
+    if (after >= before) {
+        delta = after - before;
+    } else if (max_range_uj > 0) {
+        delta = (max_range_uj - before) + after;
+    } else {
+        delta = (std::numeric_limits<uint64_t>::max() - before) + after + 1ULL;
+    }
+    return double(delta) / 1e6;
+}
+
+static std::string now_iso() {
+    auto now = std::chrono::system_clock::now();
+    std::time_t t = std::chrono::system_clock::to_time_t(now);
+    std::tm tm{};
+    localtime_r(&t, &tm);
+    char buf[64];
+    std::strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%S%z", &tm);
+    return std::string(buf);
+}
+
+static float openmp_blocked_sum_fp32(const std::vector<float>& x, int threads) {
+    const std::size_t N = x.size();
+    const std::size_t blocks = (N + BLOCK_SIZE - 1) / BLOCK_SIZE;
+    std::vector<float> partial(blocks, 0.0f);
+
+    omp_set_dynamic(0);
+    omp_set_num_threads(threads);
+
 #pragma omp parallel
     {
-#pragma omp single
-        active = omp_get_num_threads();
-    }
-    return active;
-}
-
-void require_thread_team(int requested, int observed, const char* phase) {
-    if (observed != requested) {
-        throw std::runtime_error(
-            std::string("OpenMP team mismatch during ") + phase +
-            ": requested=" + std::to_string(requested) +
-            ", observed=" + std::to_string(observed));
-    }
-}
-
-ReductionResult reduction_sum(const float* x, float* partials,
-                              std::size_t n, std::size_t block_count,
-                              int batches) {
-    float final_result = 0.0f;
-    int observed_threads = 0;
-
-#pragma omp parallel shared(final_result, partials, observed_threads)
-    {
-#pragma omp single
-        observed_threads = omp_get_num_threads();
-
-        for (int batch = 0; batch < batches; ++batch) {
 #pragma omp for schedule(static)
-            for (std::size_t block = 0; block < block_count; ++block) {
-                const std::size_t begin = block * BLOCK_SIZE;
-                const std::size_t end = std::min(n, begin + BLOCK_SIZE);
-                float local = 0.0f;
-
+        for (std::size_t b = 0; b < blocks; ++b) {
+            const std::size_t begin = b * BLOCK_SIZE;
+            const std::size_t end = std::min(begin + BLOCK_SIZE, N);
+            float local = 0.0f;
 #pragma omp simd reduction(+:local)
-                for (std::size_t i = begin; i < end; ++i) {
-                    local += x[i];
-                }
-                partials[block] = local;
+            for (std::size_t i = begin; i < end; ++i) {
+                local += x[i];
             }
+            partial[b] = local;
+        }
 
+#pragma omp barrier
 #pragma omp single
-            {
-                float sum = 0.0f;
-                for (std::size_t block = 0; block < block_count; ++block) {
-                    sum += partials[block];
-                }
-                final_result = sum;
-            }
+        {
+            float total = 0.0f;
+            for (std::size_t b = 0; b < blocks; ++b) total += partial[b];
+            partial[0] = total;
         }
+#pragma omp barrier
     }
-
-    return {final_result, observed_threads};
+    return partial[0];
 }
 
-int calibrate(const float* x, float* partials, std::size_t n,
-              std::size_t block_count, int requested_threads) {
-    ReductionResult warmup = reduction_sum(x, partials, n, block_count, 1);
-    require_thread_team(requested_threads, warmup.observed_threads, "warm-up");
-
-    int batches = 1;
-    for (int step = 0; step < bench::MAX_CALIBRATION_STEPS; ++step) {
-        const auto start = std::chrono::steady_clock::now();
-        const ReductionResult result = reduction_sum(x, partials, n, block_count, batches);
-        const double seconds = std::chrono::duration<double>(
-            std::chrono::steady_clock::now() - start).count();
-        require_thread_team(requested_threads, result.observed_threads, "calibration");
-
-        if (seconds >= bench::TARGET_RUNTIME_S || batches == MAX_BATCHES) {
-            return batches;
-        }
-        batches = bench::scale_batches(seconds, batches, MAX_BATCHES);
-    }
-    return batches;
+static double reference_sum(const std::vector<float>& x) {
+    double s = 0.0;
+    for (float v : x) s += double(v);
+    return s;
 }
-
-long double expected_result(std::size_t n) {
-    const std::size_t q = n / 29;
-    const std::size_t r = n % 29;
-    const long double rr = static_cast<long double>(r);
-    const long double remainder =
-        rr * 0.5L + (rr * (rr - 1.0L) * 0.5L) / 128.0L;
-    return static_cast<long double>(q) * 17.671875L + remainder;
-}
-
-CheckResult check_result(float actual, long double expected) {
-    if (!std::isfinite(actual)) {
-        return {false, std::numeric_limits<long double>::infinity()};
-    }
-    const long double relative =
-        std::abs(static_cast<long double>(actual) - expected) /
-        std::max(1.0L, std::abs(expected));
-    return {relative <= MAX_RELATIVE_ERROR, relative};
-}
-
-template <typename T>
-std::optional<std::unordered_set<T>> read_filter(const char* name) {
-    const char* raw = std::getenv(name);
-    if (!raw || !*raw) {
-        return std::nullopt;
-    }
-
-    std::unordered_set<T> values;
-    std::stringstream stream(raw);
-    std::string token;
-    while (std::getline(stream, token, ',')) {
-        if (token.empty()) {
-            continue;
-        }
-        if constexpr (std::is_same_v<T, int>) {
-            values.insert(std::stoi(token));
-        } else {
-            values.insert(static_cast<T>(std::stoull(token)));
-        }
-    }
-    if (values.empty()) {
-        throw std::runtime_error(std::string(name) + " contains no values");
-    }
-    return values;
-}
-
-std::vector<Config> build_configs() {
-    const auto size_filter = read_filter<std::size_t>("BENCH_SIZE_FILTER");
-    const auto thread_filter = read_filter<int>("BENCH_THREAD_FILTER");
-
-    std::vector<Config> configs;
-    for (std::size_t n : SIZES) {
-        if (size_filter && !size_filter->count(n)) {
-            continue;
-        }
-        for (int threads : bench::THREAD_COUNTS) {
-            if (thread_filter && !thread_filter->count(threads)) {
-                continue;
-            }
-            configs.push_back({n, threads});
-        }
-    }
-    if (configs.empty()) {
-        throw std::runtime_error("REDUCTION filters produced no configurations");
-    }
-    return configs;
-}
-
-}  // namespace
 
 int main(int argc, char** argv) {
-    try {
-        const bench::Options options =
-            bench::parse_options(argc, argv, "reduction_amd.csv");
-        const auto parent = std::filesystem::path(options.output_file).parent_path();
-        if (!parent.empty()) {
-            std::filesystem::create_directories(parent);
-        }
-
-        std::ofstream output(options.output_file, std::ios::trunc);
-        if (!output) {
-            throw std::runtime_error("Cannot open output file: " + options.output_file);
-        }
-        bench::write_header(output);
-
-        bench::Rapl rapl;
-        bench::require_rapl(rapl);
-        const std::string model = bench::cpu_model();
-
-        omp_set_dynamic(0);
-        if (omp_get_dynamic() != 0) {
-            throw std::runtime_error("OpenMP dynamic teams could not be disabled");
-        }
-
-        std::vector<Config> configs = build_configs();
-        bench::shuffle_configs(configs, options.seed);
-
-        std::cout << "REDUCTION(sum) | AMD | " << model
-                  << " | session=" << options.session_id
-                  << " | reps=" << options.repetitions
-                  << " | configs=" << configs.size()
-                  << " | DRAM-RAPL=" << (rapl.dram_available() ? "yes" : "no")
-                  << '\n';
-
-        int sequence = 0;
-        for (const Config config : configs) {
-            omp_set_num_threads(config.threads);
-            require_thread_team(config.threads, active_openmp_threads(), "thread guard");
-
-            const std::size_t block_count =
-                (config.n + BLOCK_SIZE - 1) / BLOCK_SIZE;
-            std::unique_ptr<float, decltype(&std::free)> x(
-                bench::allocate_aligned(config.n), &std::free);
-            std::unique_ptr<float, decltype(&std::free)> partials(
-                bench::allocate_aligned(block_count), &std::free);
-            if (!x || !partials) {
-                throw std::runtime_error(
-                    "Allocation failed for REDUCTION N=" + std::to_string(config.n));
-            }
-
-            initialize(x.get(), config.n);
-            const long double expected = expected_result(config.n);
-            const int batches = calibrate(
-                x.get(), partials.get(), config.n, block_count, config.threads);
-
-            for (int repetition = 1; repetition <= options.repetitions; ++repetition) {
-                const int clock_before = bench::average_online_cpu_frequency_mhz();
-                const int temp_before = bench::cpu_temperature_c();
-                const auto energy_before = rapl.read();
-                const auto start = std::chrono::steady_clock::now();
-                const ReductionResult result = reduction_sum(
-                    x.get(), partials.get(), config.n, block_count, batches);
-                const auto end = std::chrono::steady_clock::now();
-                const auto energy_after = rapl.read();
-                const int clock_after = bench::average_online_cpu_frequency_mhz();
-                const int temp_after = bench::cpu_temperature_c();
-
-                require_thread_team(
-                    config.threads, result.observed_threads, "measurement");
-                const CheckResult check = check_result(result.value, expected);
-                const double seconds =
-                    std::chrono::duration<double>(end - start).count();
-                const auto energy = rapl.delta(energy_before, energy_after);
-                const double flops_per_op = static_cast<double>(config.n - 1);
-                const double logical_bytes_per_op =
-                    static_cast<double>(config.n) * sizeof(float) + sizeof(float);
-
-                const auto row = bench::make_cpu_row(
-                    options, ++sequence, repetition,
-                    "REDUCTION", "openmp_blocked_sum_fp32", model,
-                    result.observed_threads, static_cast<long long>(config.n),
-                    "elements=" + std::to_string(config.n), batches,
-                    seconds, energy, flops_per_op, logical_bytes_per_op,
-                    check.ok, clock_before, clock_after, temp_before, temp_after);
-                bench::write_row(output, row);
-                output.flush();
-                bench::print_result(row);
-                std::cout << "  relative_error=" << std::scientific
-                          << static_cast<double>(check.relative_error)
-                          << std::defaultfloat << '\n';
-
-                if (!check.ok) {
-                    throw std::runtime_error(
-                        "REDUCTION checksum failed for N=" +
-                        std::to_string(config.n) + ", threads=" +
-                        std::to_string(config.threads));
-                }
-            }
-        }
-        return 0;
-    } catch (const std::exception& error) {
-        std::cerr << "FATAL: " << error.what() << '\n';
+    if (argc != 5) {
+        std::cerr << "usage: " << argv[0] << " N threads reps output_csv\n";
         return 2;
     }
+
+    const std::size_t N = std::stoull(argv[1]);
+    const int threads = std::stoi(argv[2]);
+    const int reps = std::stoi(argv[3]);
+    const std::string output_csv = argv[4];
+    if (N < 1 || threads < 1 || reps < 1) {
+        std::cerr << "invalid N/threads/reps\n";
+        return 2;
+    }
+
+    omp_set_dynamic(0);
+    omp_set_num_threads(threads);
+
+    std::vector<float> x(N);
+#pragma omp parallel for schedule(static)
+    for (std::size_t i = 0; i < N; ++i) {
+        const int centered = int(i % 17) - 8;
+        x[i] = 1.0f + float(centered) * 1e-5f;
+    }
+
+    const double ref = reference_sum(x);
+    volatile float warm = openmp_blocked_sum_fp32(x, threads);
+    (void)warm;
+
+    const auto domains = discover_rapl();
+    const RaplDomain* pkg = find_domain(domains, "package");
+    if (!pkg && !domains.empty()) pkg = &domains.front();
+    const RaplDomain* dram = find_domain(domains, "dram");
+
+    if (!pkg) {
+        std::cerr << "ERROR: no RAPL package domain found under /sys/class/powercap. Run enable script / check permissions.\n";
+        return 1;
+    }
+
+    uint64_t pkg_max = 0, dram_max = 0;
+    read_u64(pkg->max_energy_range_uj, pkg_max);
+    if (dram) read_u64(dram->max_energy_range_uj, dram_max);
+
+    std::ofstream out(output_csv);
+    if (!out) {
+        std::cerr << "cannot open output csv: " << output_csv << "\n";
+        return 2;
+    }
+
+    out << "timestamp,device,kernel,N,threads,reps,rep,block_size,blocks,"
+        << "time_s,package_j,dram_j,total_j,power_w,logical_bytes,flops,"
+        << "bandwidth_gbs,gflops,checksum,reference,rel_err,checksum_ok,"
+        << "rapl_package_name,rapl_dram_name\n";
+
+    for (int r = 1; r <= reps; ++r) {
+        uint64_t pkg0 = 0, pkg1 = 0, dram0 = 0, dram1 = 0;
+        if (!read_u64(pkg->energy_uj, pkg0)) {
+            std::cerr << "ERROR: cannot read package energy: " << pkg->energy_uj << "\n";
+            return 1;
+        }
+        bool has_dram0 = dram && read_u64(dram->energy_uj, dram0);
+
+        auto t0 = std::chrono::steady_clock::now();
+        float result = openmp_blocked_sum_fp32(x, threads);
+        auto t1 = std::chrono::steady_clock::now();
+
+        if (!read_u64(pkg->energy_uj, pkg1)) {
+            std::cerr << "ERROR: cannot read package energy after run\n";
+            return 1;
+        }
+        bool has_dram1 = dram && read_u64(dram->energy_uj, dram1);
+
+        const double sec = std::chrono::duration<double>(t1 - t0).count();
+        const double pkg_j = delta_j(pkg0, pkg1, pkg_max);
+        const double dram_j = (has_dram0 && has_dram1) ? delta_j(dram0, dram1, dram_max) : 0.0;
+        const double total_j = pkg_j + dram_j;
+        const double power_w = total_j / sec;
+        const double logical_bytes = double(4ULL * N + 4ULL);
+        const double flops = double(N - 1ULL);
+        const double bandwidth_gbs = logical_bytes / sec / 1e9;
+        const double gflops = flops / sec / 1e9;
+        const double rel_err = std::abs(double(result) - ref) / std::max(1.0, std::abs(ref));
+        const bool checksum_ok = std::isfinite(result) && rel_err <= 1e-4;
+        const std::size_t blocks = (N + BLOCK_SIZE - 1) / BLOCK_SIZE;
+
+        out << now_iso() << ",AMD_CPU,openmp_blocked_sum_fp32,"
+            << N << ',' << threads << ',' << reps << ',' << r << ','
+            << BLOCK_SIZE << ',' << blocks << ','
+            << std::setprecision(12) << sec << ',' << pkg_j << ',' << dram_j << ',' << total_j << ',' << power_w << ','
+            << logical_bytes << ',' << flops << ',' << bandwidth_gbs << ',' << gflops << ','
+            << result << ',' << ref << ',' << rel_err << ',' << (checksum_ok ? 1 : 0) << ','
+            << '"' << pkg->name << '"' << ',' << '"' << (dram ? dram->name : "NONE") << '"' << '\n';
+
+        if (!checksum_ok) {
+            std::cerr << "ERROR: checksum failed, rel_err=" << rel_err << "\n";
+            return 1;
+        }
+    }
+
+    return 0;
 }

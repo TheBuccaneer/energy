@@ -1,0 +1,46 @@
+metric,policy,lower_is_better,problem_size,leader_count,selection_status,gap_to_second_pct,ci_separated_from_all,exact_winner,leader_platforms,exact_winner_label,exact_winner_value
+runtime_s,runtime_opt,True,1000000,1,clear_leader,8.636153728795204,True,3090,3090,RTX 3090,5.658497548303753e-06
+runtime_s,runtime_opt,True,2000000,1,clear_leader,68.70833722839171,True,5060ti,5060ti,RTX 5060 Ti,8.196056425240346e-06
+runtime_s,runtime_opt,True,4000000,2,tie_or_uncertain,30.683814476783343,False,5060ti,"5060ti,AMD",RTX 5060 Ti,1.228461746965751e-05
+runtime_s,runtime_opt,True,8000000,1,clear_leader,100.78018924600234,True,5060ti,5060ti,RTX 5060 Ti,2.0508436181337272e-05
+runtime_s,runtime_opt,True,16000000,1,clear_leader,26.803792540428084,True,3090,3090,RTX 3090,7.689482427341227e-05
+runtime_s,runtime_opt,True,32000000,1,clear_leader,107.02141060672416,True,3090,3090,RTX 3090,0.0001487715977242
+runtime_s,runtime_opt,True,64000000,1,clear_leader,108.03089148851414,True,3090,3090,RTX 3090,0.0002925112850248
+runtime_s,runtime_opt,True,128000000,1,clear_leader,108.46867491448849,True,3090,3090,RTX 3090,0.0005799773257971
+runtime_s,runtime_opt,True,256000000,1,clear_leader,108.75005045831428,True,3090,3090,RTX 3090,0.0011548805571593
+energy_j,energy_opt,True,1000000,1,clear_leader,198.56715397202245,True,5060ti,5060ti,RTX 5060 Ti,0.0004058325746143
+energy_j,energy_opt,True,2000000,1,clear_leader,431.1211455843876,True,5060ti,5060ti,RTX 5060 Ti,0.0007296760128185
+energy_j,energy_opt,True,4000000,1,clear_leader,284.26780435427844,True,5060ti,5060ti,RTX 5060 Ti,0.0010193909390201
+energy_j,energy_opt,True,8000000,1,clear_leader,576.8112681062943,True,5060ti,5060ti,RTX 5060 Ti,0.0018198622132004
+energy_j,energy_opt,True,16000000,1,clear_leader,64.54370062997424,True,5060ti,5060ti,RTX 5060 Ti,0.0134059067972692
+energy_j,energy_opt,True,32000000,1,clear_leader,101.95149686520098,True,5060ti,5060ti,RTX 5060 Ti,0.0257298337438423
+energy_j,energy_opt,True,64000000,1,clear_leader,102.5820467986057,True,5060ti,5060ti,RTX 5060 Ti,0.0510550486618004
+energy_j,energy_opt,True,128000000,1,clear_leader,101.75711845102518,True,5060ti,5060ti,RTX 5060 Ti,0.1017971014492753
+energy_j,energy_opt,True,256000000,1,clear_leader,102.41172687275481,True,5060ti,5060ti,RTX 5060 Ti,0.2025132211538461
+edp_j_s,edp_opt,True,1000000,1,clear_leader,174.41513855674287,True,5060ti,5060ti,RTX 5060 Ti,2.502561815929421e-09
+edp_j_s,edp_opt,True,2000000,1,clear_leader,817.9858887647549,True,5060ti,5060ti,RTX 5060 Ti,5.980464346876632e-09
+edp_j_s,edp_opt,True,4000000,1,clear_leader,402.175824536354,True,5060ti,5060ti,RTX 5060 Ti,1.2522827737896893e-08
+edp_j_s,edp_opt,True,8000000,1,clear_leader,1423.964667900499,True,5060ti,5060ti,RTX 5060 Ti,3.7322528058247615e-08
+edp_j_s,edp_opt,True,16000000,2,tie_or_uncertain,3.524482874242474,False,3090,"3090,5060ti",RTX 3090,2.044118833047e-06
+edp_j_s,edp_opt,True,32000000,1,clear_leader,2.5414373757180586,True,3090,3090,RTX 3090,7.727762971647691e-06
+edp_j_s,edp_opt,True,64000000,1,clear_leader,2.6971455577990744,True,3090,3090,RTX 3090,3.0250734289870027e-05
+edp_j_s,edp_opt,True,128000000,1,clear_leader,3.3249479139667804,True,3090,3090,RTX 3090,0.0001191174242659
+edp_j_s,edp_opt,True,256000000,1,clear_leader,3.1375533627473473,True,3090,3090,RTX 3090,0.0004734121106324
+logical_bandwidth_gb_s,bandwidth_opt,False,1000000,1,clear_leader,8.636153728795204,True,3090,3090,RTX 3090,706.9021353908831
+logical_bandwidth_gb_s,bandwidth_opt,False,2000000,1,clear_leader,68.70833722839171,True,5060ti,5060ti,RTX 5060 Ti,976.0796637957995
+logical_bandwidth_gb_s,bandwidth_opt,False,4000000,2,tie_or_uncertain,30.683814476783322,False,5060ti,"5060ti,AMD",RTX 5060 Ti,1302.4421834476605
+logical_bandwidth_gb_s,bandwidth_opt,False,8000000,1,clear_leader,100.78018924600234,True,5060ti,5060ti,RTX 5060 Ti,1560.333694731931
+logical_bandwidth_gb_s,bandwidth_opt,False,16000000,1,clear_leader,26.803792540428084,True,3090,3090,RTX 3090,832.3057449541388
+logical_bandwidth_gb_s,bandwidth_opt,False,32000000,1,clear_leader,107.02141060672412,True,3090,3090,RTX 3090,860.3793059834754
+logical_bandwidth_gb_s,bandwidth_opt,False,64000000,1,clear_leader,108.03089148851414,True,3090,3090,RTX 3090,875.1799233260198
+logical_bandwidth_gb_s,bandwidth_opt,False,128000000,1,clear_leader,108.46867491448849,True,3090,3090,RTX 3090,882.7931390185395
+logical_bandwidth_gb_s,bandwidth_opt,False,256000000,1,clear_leader,108.75005045831423,True,3090,3090,RTX 3090,886.67178406637
+logical_gb_per_j,bytes_per_j_opt,False,1000000,1,clear_leader,198.56715397202248,True,5060ti,5060ti,RTX 5060 Ti,9.856291116605345
+logical_gb_per_j,bytes_per_j_opt,False,2000000,1,clear_leader,431.1211455843875,True,5060ti,5060ti,RTX 5060 Ti,10.963775510583934
+logical_gb_per_j,bytes_per_j_opt,False,4000000,1,clear_leader,284.2678043542785,True,5060ti,5060ti,RTX 5060 Ti,15.695650596404327
+logical_gb_per_j,bytes_per_j_opt,False,8000000,1,clear_leader,576.8112681062942,True,5060ti,5060ti,RTX 5060 Ti,17.583750993832087
+logical_gb_per_j,bytes_per_j_opt,False,16000000,1,clear_leader,64.54370062997425,True,5060ti,5060ti,RTX 5060 Ti,4.774015288024894
+logical_gb_per_j,bytes_per_j_opt,False,32000000,1,clear_leader,101.95149686520098,True,5060ti,5060ti,RTX 5060 Ti,4.974769960596156
+logical_gb_per_j,bytes_per_j_opt,False,64000000,1,clear_leader,102.5820467986057,True,5060ti,5060ti,RTX 5060 Ti,5.014195671338969
+logical_gb_per_j,bytes_per_j_opt,False,128000000,1,clear_leader,101.75711845102514,True,5060ti,5060ti,RTX 5060 Ti,5.029612795558089
+logical_gb_per_j,bytes_per_j_opt,False,256000000,1,clear_leader,102.41172687275481,True,5060ti,5060ti,RTX 5060 Ti,5.056460008712633

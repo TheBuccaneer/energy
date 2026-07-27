@@ -1,0 +1,1 @@
+/home/rock/projects/energy/new/AMD/scripts/REDUCTION/main_reduction_amd.cpp

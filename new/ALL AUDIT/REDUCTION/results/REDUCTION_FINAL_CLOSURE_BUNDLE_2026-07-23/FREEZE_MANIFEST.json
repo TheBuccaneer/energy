@@ -1,0 +1,84 @@
+{
+  "freeze_date": "2026-07-23",
+  "verdict": "PASS WITH REPORTING QUALIFICATIONS",
+  "full_rerun_required": false,
+  "analysis_pipeline": {
+    "file": "REDUCTION_analysis_all_platforms_v1_4.zip",
+    "sha256": "33e7742e5e2da7f82d821c9419645fc71d70118e2ae9c28d3488ecc212976d40"
+  },
+  "campaigns": [
+    {
+      "Plattform": "RTX 3090",
+      "Kampagne": "20260722_191930",
+      "Rohzeilen": 450,
+      "Source": "/home/rock/projects/energy/new/3090/scripts/REDUCTION/main_reduction.cu",
+      "Source-SHA-256": "2791f28e575f34e0f802b08b22e3df6f069e98b5b9a2eaff7f651108225f892c",
+      "Runner": "/home/rock/projects/energy/new/3090/02_run_GPU_3090_REDUCTION_only.sh",
+      "Runner-SHA-256": "482ff73c0203128bac58277c3da374fa70f4123e3c4ba079da8c9710adbc773a"
+    },
+    {
+      "Plattform": "RTX 5060 Ti",
+      "Kampagne": "20260722_050953",
+      "Rohzeilen": 450,
+      "Source": "/home/rock/projects/energy/new/5060ti/scripts/REDUCTION/main_reduction.cu",
+      "Source-SHA-256": "2791f28e575f34e0f802b08b22e3df6f069e98b5b9a2eaff7f651108225f892c",
+      "Runner": "/home/rock/projects/energy/new/5060ti/scripts/02_run_GPU_5060Ti_REDUCTION_only.sh",
+      "Runner-SHA-256": "2ea114b6d6139888dacf824821dc79c48f3f4d7871584d9750346812de052044"
+    },
+    {
+      "Plattform": "AMD",
+      "Kampagne": "20260722_174206",
+      "Rohzeilen": 4050,
+      "Source": "/home/rock/projects/energy/new/AMD/scripts/REDUCTION/main_reduction_amd.cpp",
+      "Source-SHA-256": "7138ae0caac769b5cfeaa6a722da22df94e49e94cfe3f095979ada3bdd01eea2",
+      "Runner": "/home/rock/projects/energy/new/AMD/scripts/02_run_CPU_AMD_REDUCTION_only.sh",
+      "Runner-SHA-256": "0d01466078b1aeb497657d2c0091965b77a316998ee602bf11bf4e6aa07cc699"
+    },
+    {
+      "Plattform": "Intel",
+      "Kampagne": "20260721_164732",
+      "Rohzeilen": 3150,
+      "Source": "/home/rock/projects/energy/new/INTEL/scripts/REDUCTION/main_reduction_intel.cpp",
+      "Source-SHA-256": "b0ece22c5eda5ca42ba9dadfb87bc42d73ec070c55b75e2d1a7b1082132ab468",
+      "Runner": "/home/rock/projects/energy/new/INTEL/scripts/02_run_CPU_Intel_REDUCTION_only.sh",
+      "Runner-SHA-256": "fc83509a1a4517deb118f3679cdf479873431327c1137de5be0e97dc7bcf2b84"
+    }
+  ],
+  "result_archives": [
+    {
+      "role": "Gemeinsame Vier-Plattform-Ergebnisse",
+      "file": "REDUCTION(1).zip",
+      "sha256": "3ab54ebdd2d35a2a9de7fd77a3f6004310cf8e7351754e6843500d176a6acd23"
+    },
+    {
+      "role": "RTX-3090-Plattformergebnisse",
+      "file": "REDUCTION2(1).zip",
+      "sha256": "f445217354e16497fd568933aa19b7cd74323223c0447b950eb3879590059146"
+    },
+    {
+      "role": "RTX-5060-Ti-Plattformergebnisse",
+      "file": "REDUCTION3(1).zip",
+      "sha256": "9f0ed4a7bb9ae1576baba96cc021a9c0fc2ffcd7cff649cf6a60e27a143b43fc"
+    },
+    {
+      "role": "AMD-Plattformergebnisse",
+      "file": "REDUCTION4(1).zip",
+      "sha256": "7a20df01e603d665698e1f67380c75348d28b88cbc81c08f1f1b0702ef6784db"
+    },
+    {
+      "role": "Intel-Plattformergebnisse",
+      "file": "REDUCTION5(1).zip",
+      "sha256": "8fba579ef8518b03a6be1e2ce1d5a53e831b11e1ba5a7b2a925eac46010a60a7"
+    }
+  ],
+  "frozen_decisions": {
+    "operation": "one-array FP32 sum",
+    "flops_per_op": "N-1",
+    "logical_bytes_per_op": "4*N+4",
+    "statistical_unit": "five session medians; n=5",
+    "cpu_primary_energy": "Package RAPL",
+    "gpu_primary_energy": "NVML board energy including VRAM",
+    "gpu_scope": "resident; allocations and PCIe excluded",
+    "outlier_policy": "flag, do not remove"
+  }
+}

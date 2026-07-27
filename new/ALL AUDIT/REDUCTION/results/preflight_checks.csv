@@ -1,0 +1,43 @@
+platform,category,check,severity,status,observed,expected
+INTEL,inputs,required_platform_outputs,FAIL,PASS,all present,all required files
+INTEL,validation,no_hard_failures,FAIL,PASS,0,0
+INTEL,validation,warnings_recorded,WARN,WARN,1,0
+INTEL,freshness,complete_raw_campaign,FAIL,PASS,['20260721_164732'],at least one
+INTEL,freshness,analysis_matches_latest_complete,FAIL,PASS,manifest=20260721_164732; latest=20260721_164732,same
+INTEL,coverage,size_grid,FAIL,PASS,"[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+INTEL,coverage,five_session_medians,FAIL,PASS,"min=5, max=5",5
+AMD,inputs,required_platform_outputs,FAIL,PASS,all present,all required files
+AMD,validation,no_hard_failures,FAIL,PASS,0,0
+AMD,validation,warnings_recorded,WARN,WARN,1,0
+AMD,freshness,complete_raw_campaign,FAIL,PASS,"['20260721_172119', '20260722_174206']",at least one
+AMD,freshness,analysis_matches_latest_complete,FAIL,PASS,manifest=20260722_174206; latest=20260722_174206,same
+AMD,coverage,size_grid,FAIL,PASS,"[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+AMD,coverage,five_session_medians,FAIL,PASS,"min=5, max=5",5
+3090,inputs,required_platform_outputs,FAIL,PASS,all present,all required files
+3090,validation,no_hard_failures,FAIL,PASS,0,0
+3090,validation,warnings_recorded,WARN,WARN,1,0
+3090,freshness,complete_raw_campaign,FAIL,PASS,['20260722_191930'],at least one
+3090,freshness,analysis_matches_latest_complete,FAIL,PASS,manifest=20260722_191930; latest=20260722_191930,same
+3090,coverage,size_grid,FAIL,PASS,"[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+3090,coverage,five_session_medians,FAIL,PASS,"min=5, max=5",5
+5060ti,inputs,required_platform_outputs,FAIL,PASS,all present,all required files
+5060ti,validation,no_hard_failures,FAIL,PASS,0,0
+5060ti,validation,warnings_recorded,WARN,WARN,2,0
+5060ti,freshness,complete_raw_campaign,FAIL,PASS,['20260722_050953'],at least one
+5060ti,freshness,analysis_matches_latest_complete,FAIL,PASS,manifest=20260722_050953; latest=20260722_050953,same
+5060ti,coverage,size_grid,FAIL,PASS,"[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]","[1000000, 2000000, 4000000, 8000000, 16000000, 32000000, 64000000, 128000000, 256000000]"
+5060ti,coverage,five_session_medians,FAIL,PASS,"min=5, max=5",5
+CPU,provenance,cpu_sources_present,FAIL,PASS,"[PosixPath('/home/rock/projects/energy/new/AMD/scripts/REDUCTION/main_reduction_amd.cpp'), PosixPath('/home/rock/projects/energy/new/INTEL/scripts/REDUCTION/main_reduction_intel.cpp')]",both
+GPU,provenance,gpu_sources_present,FAIL,PASS,"[PosixPath('/home/rock/projects/energy/new/3090/scripts/REDUCTION/main_reduction.cu'), PosixPath('/home/rock/projects/energy/new/5060ti/scripts/REDUCTION/main_reduction.cu')]",both
+CPU,provenance,cpu_sources_semantically_identical,FAIL,PASS,"{'raw_sha256': ['7138ae0caac769b5cfeaa6a722da22df94e49e94cfe3f095979ada3bdd01eea2', 'b0ece22c5eda5ca42ba9dadfb87bc42d73ec070c55b75e2d1a7b1082132ab468'], 'normalized_sha256': ['49af49a61a6128a26e6b4077baad4776183c0a8afba448946b93b52d407566d0', '49af49a61a6128a26e6b4077baad4776183c0a8afba448946b93b52d407566d0']}",identical except default output filename and startup platform label
+INTEL,provenance,cpu_required_tokens,FAIL,PASS,all present,"['BLOCK_SIZE', 'reduction_sum', 'omp simd reduction', 'expected_result', 'openmp_blocked_sum_fp32', 'BENCH_SIZE_FILTER', 'BENCH_THREAD_FILTER', 'omp_set_dynamic(0)']"
+AMD,provenance,cpu_required_tokens,FAIL,PASS,all present,"['BLOCK_SIZE', 'reduction_sum', 'omp simd reduction', 'expected_result', 'openmp_blocked_sum_fp32', 'BENCH_SIZE_FILTER', 'BENCH_THREAD_FILTER', 'omp_set_dynamic(0)']"
+GPU,provenance,gpu_sources_byte_identical,FAIL,PASS,"['2791f28e575f34e0f802b08b22e3df6f069e98b5b9a2eaff7f651108225f892c', '2791f28e575f34e0f802b08b22e3df6f069e98b5b9a2eaff7f651108225f892c']",same SHA-256
+3090,provenance,gpu_required_tokens,FAIL,PASS,all present,"['cub::DeviceReduce::Sum', 'cub_device_reduce_sum_fp32', 'nvmlDeviceGetTotalEnergyConsumption', 'nvmlDeviceGetHandleByPciBusId', 'gpu_resident', 'BENCH_SIZE_FILTER', 'BENCH_EXPECTED_GPU']"
+5060ti,provenance,gpu_required_tokens,FAIL,PASS,all present,"['cub::DeviceReduce::Sum', 'cub_device_reduce_sum_fp32', 'nvmlDeviceGetTotalEnergyConsumption', 'nvmlDeviceGetHandleByPciBusId', 'gpu_resident', 'BENCH_SIZE_FILTER', 'BENCH_EXPECTED_GPU']"
+ALL,statistics,session_median_primary_unit,FAIL,PASS,five session medians,no n=50 pseudoreplication
+ALL,statistics,native_best_is_descriptive,WARN,WARN,selection and summary use same five sessions,descriptive post-selection
+ALL,semantics,logical_not_physical_bandwidth,WARN,WARN,4*N+4 logical bytes,must never be called measured DRAM/VRAM traffic
+ALL,semantics,internal_reduction_traffic_excluded,WARN,WARN,CPU partials and CUB workspace excluded,semantic data-volume anchor only
+ALL,semantics,energy_domain_asymmetry,WARN,WARN,CPU package RAPL; GPU board NVML,must remain explicit
+ALL,semantics,gpu_resident_scope,WARN,WARN,allocations and PCIe excluded,must remain explicit

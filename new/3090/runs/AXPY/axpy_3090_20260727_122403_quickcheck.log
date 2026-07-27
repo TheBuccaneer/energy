@@ -1,0 +1,17 @@
+AXPY | NVIDIA GeForce RTX 3090 | pci_bus_id=0000:01:00.0 | implementation=cuda_axpy_inplace_fp32 | session=axpy_3090_20260727_122403_quickcheck | reps=2 | mode=gpu_resident | alpha=3 | block_size=256 | CUDA runtime=12040 | CUDA driver=13000
+[CALIBRATION] N=64000000 batches=1076
+[AXPY] N=64000000 rep=1 batches=1076 e2e_time_s=1.016474 kernel_time_s=1.016491 device_energy_j=337.456000 avg_power_w=331.987 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=64000000 rep=2 batches=1076 e2e_time_s=1.016564 kernel_time_s=1.016584 device_energy_j=342.586000 avg_power_w=337.004 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=256000000 batches=276
+[AXPY] N=256000000 rep=1 batches=276 e2e_time_s=1.040504 kernel_time_s=1.040524 device_energy_j=378.011000 avg_power_w=363.296 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=256000000 rep=2 batches=276 e2e_time_s=1.061156 kernel_time_s=1.061172 device_energy_j=338.845000 avg_power_w=319.317 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[CALIBRATION] N=1000000 batches=81381
+[AXPY] N=1000000 rep=1 batches=81381 e2e_time_s=1.142356 kernel_time_s=1.142376 device_energy_j=366.924000 avg_power_w=321.199 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[AXPY] N=1000000 rep=2 batches=81381 e2e_time_s=1.141641 kernel_time_s=1.141661 device_energy_j=400.402000 avg_power_w=350.725 runtime_status=in_range checksum=OK
+  max_abs_error=0.000e+00 max_rel_error=0.000e+00
+[ANTI_COLLAPSE] N=1000000 device=gpu B_cal=81381 B_probe=20345 two_B_probe=40690 t1=0.269805573 t2=0.526355469 ratio=1.95086952 time_basis=kernel_time_s sm_clock_mhz=1965 temp_c=54 throttle_reasons=0x4 checksum1=OK checksum2=OK gate=PASS

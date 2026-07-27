@@ -1,0 +1,9 @@
+{
+  "python_compile_all": "PASS",
+  "canonical_header_45_unique": "PASS",
+  "legacy_5060_is_exact_two_column_swap": "PASS",
+  "per_file_header_capture": "PASS",
+  "legacy_5060_header_warning": "PASS",
+  "uppercase_T_runner_provenance": "PASS",
+  "full_four_platform_synthetic_pipeline": "PASS"
+}

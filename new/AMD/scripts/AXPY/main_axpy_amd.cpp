@@ -624,7 +624,7 @@ int main(int argc, char** argv) {
             initialize_x(x.get(), config.n);   // x initialized once, never modified again
             reset_y(y.get(), config.n);        // first-touch y = y0
 
-            const long long batches = calibrate(x.get(), y.get(), config.n);
+            long long batches = calibrate(x.get(), y.get(), config.n);
             std::cout << "[CALIBRATION] N=" << config.n
                       << " threads=" << config.threads
                       << " batches=" << batches << '\n';
@@ -648,7 +648,15 @@ int main(int argc, char** argv) {
             }
 
             for (int repetition = 1; repetition <= options.repetitions; ++repetition) {
-                reset_y(y.get(), config.n);  // reset outside window before every rep
+                // A transient speed-up may make the once-calibrated batch count
+                // fall below the 0.75 s campaign floor. In that case, discard
+                // the unrecorded attempt, scale batches from the observed time,
+                // and retry the same repetition. No below-row is written.
+                constexpr int MAX_BELOW_RETRIES = 3;
+                int measurement_attempt = 0;
+                while (true) {
+                ++measurement_attempt;
+                reset_y(y.get(), config.n);  // reset outside window before every attempt
 
                 const int clock_before = bench::average_online_cpu_frequency_mhz();
                 const int temp_before = bench::cpu_temperature_c();
@@ -737,17 +745,39 @@ int main(int argc, char** argv) {
                 row.temp_after_c = temp_after;
                 row.checksum_ok = checksum.ok;
 
-                // PATCH F3: 'below' is a hard campaign-gate failure
-                // (contract 8.3). A below-row must never be written out as
-                // a valid campaign line.
+                // A below attempt is never committed to CSV. Re-scale from
+                // the observed wall time and retry the same repetition. This
+                // keeps the hard no-below campaign invariant while avoiding a
+                // full-session abort on a transient frequency/scheduling shift.
                 if (row.runtime_status == "below") {
-                    throw std::runtime_error(
-                        "Hard failure: runtime_status=below for N=" +
-                        std::to_string(config.n) +
-                        ", threads=" + std::to_string(config.threads) +
-                        ", repetition=" + std::to_string(repetition) +
-                        ", batches=" + std::to_string(batches) +
-                        ", e2e_time_s=" + std::to_string(row.e2e_time_s));
+                    if (measurement_attempt > MAX_BELOW_RETRIES || batches >= MAX_BATCHES) {
+                        throw std::runtime_error(
+                            "Hard failure after adaptive below-retries for N=" +
+                            std::to_string(config.n) +
+                            ", threads=" + std::to_string(config.threads) +
+                            ", repetition=" + std::to_string(repetition) +
+                            ", attempts=" + std::to_string(measurement_attempt) +
+                            ", batches=" + std::to_string(batches) +
+                            ", e2e_time_s=" + std::to_string(row.e2e_time_s));
+                    }
+                    const long long old_batches = batches;
+                    batches = axpy_scale_batches(row.e2e_time_s, batches);
+                    if (batches <= old_batches) {
+                        throw std::runtime_error(
+                            "Adaptive below-retry made no batch progress for N=" +
+                            std::to_string(config.n) +
+                            ", threads=" + std::to_string(config.threads));
+                    }
+                    std::cout << "[RECALIBRATION] N=" << config.n
+                              << " threads=" << config.threads
+                              << " repetition=" << repetition
+                              << " attempt=" << measurement_attempt
+                              << " observed_time_s=" << row.e2e_time_s
+                              << " old_batches=" << old_batches
+                              << " new_batches=" << batches
+                              << " action=retry_same_repetition"
+                              << '\n';
+                    continue;
                 }
 
                 write_axpy_row(output, row);
@@ -763,6 +793,8 @@ int main(int argc, char** argv) {
                         "AXPY checksum failed for N=" + std::to_string(config.n) +
                         ", threads=" + std::to_string(config.threads));
                 }
+                break;  // successful repetition
+                }  // adaptive attempt loop
             }
         }
 

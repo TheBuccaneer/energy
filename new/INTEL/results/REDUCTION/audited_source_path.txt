@@ -1,0 +1,1 @@
+/home/rock/projects/energy/new/INTEL/scripts/REDUCTION/main_reduction_intel.cpp

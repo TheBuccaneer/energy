@@ -1,0 +1,10 @@
+platform,problem_size,working_set_gib,energy_opt_configuration,runtime_opt_configuration,energy_leaders,runtime_leaders,leader_set_overlap,leader_sets_disjoint,energy_selection_status,runtime_selection_status,runtime_opt_energy_penalty_pct,runtime_opt_runtime_gain_pct,interpretation
+INTEL,1000000,0.0037252940237522125,20T,20T,"8T,10T,16T,20T","8T,10T,16T,20T","10T,16T,20T,8T",False,tie_or_uncertain,tie_or_uncertain,0.0,0.0,no_tie_aware_conflict
+INTEL,2000000,0.007450584322214127,20T,10T,"8T,10T,16T,20T","10T,16T,20T","10T,16T,20T",False,tie_or_uncertain,tie_or_uncertain,8.186044766869971,4.771311896753416,no_tie_aware_conflict
+INTEL,4000000,0.014901164919137955,16T,10T,"8T,10T,16T,20T","10T,20T","10T,20T",False,tie_or_uncertain,tie_or_uncertain,15.791202649090375,5.562185932932707,no_tie_aware_conflict
+INTEL,8000000,0.02980232611298561,4T,16T,"4T,16T","10T,16T",16T,False,tie_or_uncertain,tie_or_uncertain,11.44550138836573,20.15790365526814,no_tie_aware_conflict
+INTEL,16000000,0.05960464850068092,4T,8T,4T,"8T,10T",,True,clear_leader,tie_or_uncertain,31.62170867186951,5.14305325239417,disjoint_but_at_least_one_uncertain
+INTEL,32000000,0.11920929327607155,4T,8T,"2T,4T",8T,,True,tie_or_uncertain,clear_leader,30.04186392248378,3.005304024148747,disjoint_but_at_least_one_uncertain
+INTEL,64000000,0.2384185828268528,4T,8T,"2T,4T","4T,8T",4T,False,tie_or_uncertain,tie_or_uncertain,36.80393374726154,1.3262565099189105,no_tie_aware_conflict
+INTEL,128000000,0.4768371619284153,4T,8T,"2T,4T","4T,8T",4T,False,tie_or_uncertain,tie_or_uncertain,36.91154670639112,0.8248697760249613,no_tie_aware_conflict
+INTEL,256000000,0.9536743201315403,4T,8T,4T,"4T,8T,10T,16T,20T",4T,False,clear_leader,tie_or_uncertain,39.44929355415417,0.24358490191013216,no_tie_aware_conflict

@@ -1,0 +1,25 @@
+REDUCTION(sum) | AMD | AMD Ryzen Threadripper 3970X 32-Core Processor | session=reduction_amd_20260722_173726_quickcheck | reps=2 | configs=6 | DRAM-RAPL=no
+[REDUCTION] N=256000000 threads=1 rep=1 batches=19 time=1.065 s | package=85.527 J | dram=NA | total=85.527 J | power=80.3 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=1 rep=2 batches=19 time=1.062 s | package=84.490 J | dram=NA | total=84.490 J | power=79.5 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=64000000 threads=64 rep=1 batches=131 time=0.985 s | package=150.135 J | dram=NA | total=150.135 J | power=152.5 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=64 rep=2 batches=131 time=1.021 s | package=155.775 J | dram=NA | total=155.775 J | power=152.6 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=256000000 threads=64 rep=1 batches=45 time=1.102 s | package=169.820 J | dram=NA | total=169.820 J | power=154.1 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=256000000 threads=64 rep=2 batches=45 time=1.103 s | package=170.717 J | dram=NA | total=170.717 J | power=154.7 W | runtime=in_range | checksum=OK
+  relative_error=3.5e-09
+[REDUCTION] N=1000000 threads=1 rep=1 batches=11341 time=1.013 s | package=81.790 J | dram=NA | total=81.790 J | power=80.7 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=1 rep=2 batches=11341 time=1.010 s | package=81.428 J | dram=NA | total=81.428 J | power=80.7 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=1 batches=141019 time=1.012 s | package=189.654 J | dram=NA | total=189.654 J | power=187.3 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=1000000 threads=64 rep=2 batches=141019 time=1.036 s | package=193.656 J | dram=NA | total=193.656 J | power=187.0 W | runtime=in_range | checksum=OK
+  relative_error=1.4e-07
+[REDUCTION] N=64000000 threads=1 rep=1 batches=71 time=1.007 s | package=82.874 J | dram=NA | total=82.874 J | power=82.3 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08
+[REDUCTION] N=64000000 threads=1 rep=2 batches=71 time=1.014 s | package=81.113 J | dram=NA | total=81.113 J | power=80.0 W | runtime=in_range | checksum=OK
+  relative_error=2.1e-08

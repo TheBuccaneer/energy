@@ -1,0 +1,7 @@
+REDUCTION(sum) | NVIDIA GeForce RTX 3090 | session=reduction_3090_20260722_191930_quickcheck | reps=2 | configs=3
+N=256000000 batches=866 kernel_s=1.00023 e2e_s=1.00024 energy_j=347.087 checksum=OK relative_error=3.455529e-09
+N=256000000 batches=866 kernel_s=1.00021 e2e_s=1.00022 energy_j=345.766 checksum=OK relative_error=3.455529e-09
+N=1000000 batches=179763 kernel_s=1.00385 e2e_s=1.00385 energy_j=208.302 checksum=OK relative_error=6.410263e-08
+N=1000000 batches=179763 kernel_s=1.00946 e2e_s=1.00946 energy_j=232.262 checksum=OK relative_error=6.410263e-08
+N=64000000 batches=3420 kernel_s=1.00029 e2e_s=1.0003 energy_j=378.45 checksum=OK relative_error=2.083333e-08
+N=64000000 batches=3420 kernel_s=1.00031 e2e_s=1.00032 energy_j=346.768 checksum=OK relative_error=2.083333e-08

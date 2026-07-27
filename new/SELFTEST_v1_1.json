@@ -1,0 +1,41 @@
+{
+  "python_compile": "PASS",
+  "scientific_6_exact_reproduction": "PASS",
+  "material_mutation_rejected": "PASS",
+  "n_vs_n_minus_1_detected_at_1M": "PASS",
+  "4n_vs_4n_plus_4_detected_at_1M_2M": "PASS",
+  "sample_rows": [
+    {
+      "N": 4000000,
+      "batches": 25824,
+      "flops_exact": 103295974176,
+      "flops_csv": 103296000000.0,
+      "bytes_exact": 16000004,
+      "bytes_csv": 16000000.0
+    },
+    {
+      "N": 256000000,
+      "batches": 49,
+      "flops_exact": 12543999951,
+      "flops_csv": 12544000000.0,
+      "bytes_exact": 1024000004,
+      "bytes_csv": 1024000000.0
+    },
+    {
+      "N": 2000000,
+      "batches": 26320,
+      "flops_exact": 52639973680,
+      "flops_csv": 52639970000.0,
+      "bytes_exact": 8000004,
+      "bytes_csv": 8000004.0
+    },
+    {
+      "N": 1000000,
+      "batches": 11341,
+      "flops_exact": 11340988659,
+      "flops_csv": 11340990000.0,
+      "bytes_exact": 4000004,
+      "bytes_csv": 4000004.0
+    }
+  ]
+}

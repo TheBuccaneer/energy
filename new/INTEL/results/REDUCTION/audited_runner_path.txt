@@ -1,0 +1,1 @@
+/home/rock/projects/energy/new/INTEL/scripts/02_run_CPU_Intel_REDUCTION_only.sh

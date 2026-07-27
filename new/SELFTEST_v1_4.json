@@ -1,0 +1,6 @@
+{
+  "python_compile_all": "PASS",
+  "observed_cpu_literal_normalization": "PASS",
+  "substantive_cpu_formula_mutation_rejected": "PASS",
+  "combined_preflight_on_existing_four_platform_synthetic_results": "PASS"
+}

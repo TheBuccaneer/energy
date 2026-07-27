@@ -1,0 +1,38 @@
+{
+  "python_compile_all": "PASS",
+  "gpu_exact_representation": {
+    "status": "PASS",
+    "mode": "exact",
+    "exact_only_rows": 3,
+    "scientific_6_only_rows": 0,
+    "indistinguishable_rows": 0,
+    "unsupported_rows": 0
+  },
+  "cpu_scientific_6_representation": {
+    "status": "PASS",
+    "mode": "scientific_6",
+    "exact_only_rows": 0,
+    "scientific_6_only_rows": 3,
+    "indistinguishable_rows": 0,
+    "unsupported_rows": 0
+  },
+  "unsupported_mutation_rejected": {
+    "status": "PASS",
+    "exact_only_rows": 2,
+    "scientific_6_only_rows": 0,
+    "indistinguishable_rows": 0,
+    "unsupported_rows": 1
+  },
+  "mixed_mode_detected": {
+    "status": "PASS",
+    "mode": "mixed",
+    "exact_only_rows": 2,
+    "scientific_6_only_rows": 1,
+    "indistinguishable_rows": 0,
+    "unsupported_rows": 0
+  },
+  "cpu_source_parser": "PASS",
+  "gpu_direct_flops_total_parser": "PASS",
+  "wrong_source_rejected": "PASS",
+  "full_four_platform_synthetic_pipeline": "PASS"
+}
