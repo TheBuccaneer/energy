@@ -1,0 +1,4 @@
+severity,platform,file,row,message
+WARN,intel,,0,Provenienzmanifest fehlt: axpy_intel_20260725_163341_manifest.txt.
+WARN,amd,,0,Provenienzmanifest fehlt: axpy_amd_20260725_215406_manifest.txt.
+WARN,intel,,0,CPU-Telemetrie erreicht 100.0 °C; 102 Zeilen liegen bei mindestens 95 °C. Siehe axpy_telemetry_report.md.

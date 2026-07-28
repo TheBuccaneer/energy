@@ -1,0 +1,5 @@
+platform,platform_label,campaign_id,recalibration_events,below_retry_events
+intel,Intel i9-7900X,axpy_intel_20260725_163341,0,0
+amd,AMD Threadripper 3970X,axpy_amd_20260725_215406,0,0
+3090,RTX 3090,axpy_3090_20260727_133600,0,0
+5060ti,RTX 5060 Ti,axpy_5060ti_20260727_141707,0,0

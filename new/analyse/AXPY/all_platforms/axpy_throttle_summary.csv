@@ -1,0 +1,5 @@
+platform,throttle_reasons_hex,throttle_labels,rows
+3090,0x4,software_power_cap,450
+5060ti,0x0,none,450
+amd,-1,not_applicable,4050
+intel,-1,not_applicable,3150

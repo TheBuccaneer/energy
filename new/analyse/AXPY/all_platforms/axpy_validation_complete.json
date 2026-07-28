@@ -1,0 +1,11 @@
+{
+  "status": "PASS MIT WARNUNGEN",
+  "accepted_rows": 8100,
+  "rejected_rows": 0,
+  "campaigns": {
+    "intel": "axpy_intel_20260725_163341",
+    "amd": "axpy_amd_20260725_215406",
+    "3090": "axpy_3090_20260727_133600",
+    "5060ti": "axpy_5060ti_20260727_141707"
+  }
+}

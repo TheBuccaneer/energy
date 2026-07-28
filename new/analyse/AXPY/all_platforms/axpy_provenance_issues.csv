@@ -1,0 +1,4 @@
+severity,platform,scope,message
+WARN,intel,manifest,Manifest fehlt: axpy_intel_20260725_163341_manifest.txt
+WARN,amd,manifest,Manifest fehlt: axpy_amd_20260725_215406_manifest.txt
+WARN,amd,quickcheck,"Kein Quickcheck-Log gefunden; Kampagne bleibt analysierbar, Provenienzstatus ist partial."

@@ -1,0 +1,30 @@
+{
+  "analysis_parameters": {
+    "aggregation": "median_of_session_medians",
+    "bootstrap_resamples": 5000,
+    "required_repetitions": 10,
+    "required_sessions": 5,
+    "tie_percent": 2.0
+  },
+  "campaign_lock_sha256": "311236aee79875727a59f64fff5d4e7327ae46680ffa00ec9a1694d33a0d60d6",
+  "component_status": {
+    "provenance": "PASS MIT WARNUNGEN",
+    "robustness": "PASS_WITH_WARNINGS",
+    "validation": "PASS MIT WARNUNGEN"
+  },
+  "created_unix": 1785177439.8131108,
+  "failures": 0,
+  "script_sha256": {
+    "00_validate_axpy_provenance.py": "bff9d43db4e4cd4520477ba6b96f25ab963ad3362f1dd2a24d7a08f30e4063b5",
+    "01_validate_and_aggregate_axpy.py": "3e59c040d6167c31369f72a706f5657925b07e131e61297b5139ea2e58650ef7",
+    "02_compare_axpy_all.py": "6eb2309a703623f2e05930e2cae3fa87078171d82a3f81b5c3cb4787585e941c",
+    "03_assess_axpy_robustness.py": "616fc30697c7cae32f4776123deae8502f8903f9f47aa9689f4a0c855499678a",
+    "04_build_axpy_handover.py": "fbc87b61ea89552ce7cd5e13e1b45f2fe12b113c52abd668ed46225907e8d45f",
+    "05_verify_axpy_campaign_lock.py": "5793db995843f6daf5ab19b867cde6449dc81677eb05d97109f534f1288e87aa",
+    "axpy_analysis_common.py": "a31b99a82c8a998aa932d6a358eabb24041bb9008224564eda04648404845724",
+    "run_all_axpy_analysis.sh": "10c3157c46252cfad31ea930e42949e02745089f275eba50a83e5072a452d9f4",
+    "selftest_axpy_analysis_v5.py": "ca58ef9bb8ed7cf2163e80b16a0c4f0a55b6ddee0be53ca1b55826a610298bbd"
+  },
+  "status": "PASS_WITH_WARNINGS",
+  "warnings": 13
+}

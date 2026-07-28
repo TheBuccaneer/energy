@@ -1,0 +1,11 @@
+{
+  "status": "PASS_WITH_WARNINGS",
+  "sizes": 9,
+  "observed_sessions": 5,
+  "required_sessions": 5,
+  "required_repetitions": 10,
+  "in_range_primary_disagreements": 0,
+  "partial_in_range_configurations": 7,
+  "directional_gap_cases": 0,
+  "warnings": 7
+}

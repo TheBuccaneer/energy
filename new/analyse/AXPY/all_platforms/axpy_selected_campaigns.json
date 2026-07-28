@@ -1,0 +1,70 @@
+[
+  {
+    "platform": "intel",
+    "platform_label": "Intel i9-7900X",
+    "directory": "/home/rock/projects/energy/new/INTEL/runs/AXPY",
+    "campaign_id": "axpy_intel_20260725_163341",
+    "selection_mode": "latest_complete",
+    "sessions": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "complete": true,
+    "manifest_file": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_manifest.txt",
+    "manifest_exists": false
+  },
+  {
+    "platform": "amd",
+    "platform_label": "AMD Threadripper 3970X",
+    "directory": "/home/rock/projects/energy/new/AMD/runs/AXPY",
+    "campaign_id": "axpy_amd_20260725_215406",
+    "selection_mode": "latest_complete",
+    "sessions": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "complete": true,
+    "manifest_file": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_manifest.txt",
+    "manifest_exists": false
+  },
+  {
+    "platform": "3090",
+    "platform_label": "RTX 3090",
+    "directory": "/home/rock/projects/energy/new/3090/runs/AXPY",
+    "campaign_id": "axpy_3090_20260727_133600",
+    "selection_mode": "latest_complete",
+    "sessions": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "complete": true,
+    "manifest_file": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_manifest.txt",
+    "manifest_exists": true
+  },
+  {
+    "platform": "5060ti",
+    "platform_label": "RTX 5060 Ti",
+    "directory": "/home/rock/projects/energy/new/5060ti/runs/AXPY",
+    "campaign_id": "axpy_5060ti_20260727_141707",
+    "selection_mode": "latest_complete",
+    "sessions": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "complete": true,
+    "manifest_file": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_manifest.txt",
+    "manifest_exists": true
+  }
+]

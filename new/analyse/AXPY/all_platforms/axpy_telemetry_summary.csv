@@ -1,0 +1,5 @@
+platform,platform_label,kind,rows,median_temp_c,max_temp_c,rows_temp_ge_95c,rows_temp_ge_100c,median_clock_after_mhz,median_clock_after_before_ratio,min_clock_after_before_ratio,hot_rows,cool_rows,hot_median_clock_after_mhz,cool_median_clock_after_mhz,hot_to_cool_clock_ratio,hot_median_clock_after_before_ratio,within_window_clock_drop_detected
+intel,Intel i9-7900X,cpu,3150,77.0,100.0,102,9,2324.0,0.9019607843137255,0.34403905447070915,102,2905,1340.0,2324.0,0.576592082616179,0.9816782679685905,no
+amd,AMD Threadripper 3970X,cpu,4050,70.0,88.0,0,0,2167.0,0.9949641797262987,0.7955950540958269,0,4050,nan,2167.0,nan,nan,not_assessable
+3090,RTX 3090,gpu,450,63.0,65.0,0,0,1935.0,1.0,0.9921259842519685,0,450,nan,1935.0,nan,nan,not_assessable
+5060ti,RTX 5060 Ti,gpu,450,55.0,72.0,0,0,2790.0,1.0,0.9920491507047343,0,450,nan,2790.0,nan,nan,not_assessable

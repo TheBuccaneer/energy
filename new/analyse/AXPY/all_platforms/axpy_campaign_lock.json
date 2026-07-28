@@ -1,0 +1,263 @@
+{
+  "schema": "axpy-campaign-lock-v2",
+  "sessions_expected": 5,
+  "repetitions_expected": 10,
+  "campaigns": [
+    {
+      "platform": "intel",
+      "platform_label": "Intel i9-7900X",
+      "campaign_id": "axpy_intel_20260725_163341",
+      "directory": "/home/rock/projects/energy/new/INTEL/runs/AXPY",
+      "manifest": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_manifest.txt",
+      "manifest_exists": false,
+      "manifest_sha256": "",
+      "quickcheck": {
+        "status": "pass",
+        "qualification_basis": "measurement_and_anti_collapse_evidence",
+        "path": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_quickcheck.log",
+        "sha256": "29c9740b9e430afc32925b50c3bcf09d865a3acd22dc1a643ce5173166ba1e6a"
+      },
+      "recalibration_events": 0,
+      "below_retry_events": 0,
+      "files": [
+        {
+          "session": 1,
+          "session_id": "axpy_intel_20260725_163341_session1",
+          "csv": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session1.csv",
+          "csv_sha256": "92c29807194c8640b06976c39c6bf0c92c5e0e32358eb1e45a87be77e8425236",
+          "log": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session1.log",
+          "log_exists": true,
+          "log_sha256": "af9f9a4a7302b59fd5b4eefcd327ac9bde477541f2fab514adafbcc3ab3f7c1c"
+        },
+        {
+          "session": 2,
+          "session_id": "axpy_intel_20260725_163341_session2",
+          "csv": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session2.csv",
+          "csv_sha256": "f9f67521d3856c6e0ed56205f5b7d522be3ae5437b5fb4c70717eddbd88cc488",
+          "log": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session2.log",
+          "log_exists": true,
+          "log_sha256": "c4dc91d1dd0be9cf929e5cd10603d2f33970e182169d02b1aa87af6ff0113e24"
+        },
+        {
+          "session": 3,
+          "session_id": "axpy_intel_20260725_163341_session3",
+          "csv": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session3.csv",
+          "csv_sha256": "6128aa2fcf0fd35231c1dd9407fe38aa1fbbe952ae7c87b2e8b6e7b98cdb6e02",
+          "log": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session3.log",
+          "log_exists": true,
+          "log_sha256": "94ae393478c0270000e93554ca5f342bd51992b9cf787a0e6291d28b9c4859bf"
+        },
+        {
+          "session": 4,
+          "session_id": "axpy_intel_20260725_163341_session4",
+          "csv": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session4.csv",
+          "csv_sha256": "bd613f65173c831be8bde3e21300a26019aafd2c1b7657ad57f054f41723e9fb",
+          "log": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session4.log",
+          "log_exists": true,
+          "log_sha256": "e8ae98d72e56635a4eaa2a863446cbce8a54bc537dc012c1284901e051f85bfc"
+        },
+        {
+          "session": 5,
+          "session_id": "axpy_intel_20260725_163341_session5",
+          "csv": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session5.csv",
+          "csv_sha256": "fa87089a94035f2afab21609477822097202d2010bc9032124787942793119c6",
+          "log": "/home/rock/projects/energy/new/INTEL/runs/AXPY/axpy_intel_20260725_163341_session5.log",
+          "log_exists": true,
+          "log_sha256": "3447600d70528d9252bd54f801ba3a407f3b8a2b43ebd073c6034220c319a6a4"
+        }
+      ]
+    },
+    {
+      "platform": "amd",
+      "platform_label": "AMD Threadripper 3970X",
+      "campaign_id": "axpy_amd_20260725_215406",
+      "directory": "/home/rock/projects/energy/new/AMD/runs/AXPY",
+      "manifest": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_manifest.txt",
+      "manifest_exists": false,
+      "manifest_sha256": "",
+      "quickcheck": {
+        "status": "missing",
+        "qualification_basis": "none",
+        "path": "",
+        "sha256": ""
+      },
+      "recalibration_events": 0,
+      "below_retry_events": 0,
+      "files": [
+        {
+          "session": 1,
+          "session_id": "axpy_amd_20260725_215406_session1",
+          "csv": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session1.csv",
+          "csv_sha256": "3d923737d08ef4ff9b034798d4e8a6335672bd558f1a7a35fb8abf6df7abe513",
+          "log": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session1.log",
+          "log_exists": true,
+          "log_sha256": "f4de387d82e9ae68e959891f94116be18e99801a254a33d1b1cf0df3d698315c"
+        },
+        {
+          "session": 2,
+          "session_id": "axpy_amd_20260725_215406_session2",
+          "csv": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session2.csv",
+          "csv_sha256": "14a94b195c1ac7b68d768cf49e1a21db2ab276f6e6fb7cd432c89ac42156d440",
+          "log": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session2.log",
+          "log_exists": true,
+          "log_sha256": "bbc3f3daf6e8a4cad54cef57513f7c72712c5c0d2fe599e19c4495ce9cf3083b"
+        },
+        {
+          "session": 3,
+          "session_id": "axpy_amd_20260725_215406_session3",
+          "csv": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session3.csv",
+          "csv_sha256": "af7cd148a7a1cd92cf27de01b16ba2d202b8af33d04bd80d530c95d749a7b753",
+          "log": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session3.log",
+          "log_exists": true,
+          "log_sha256": "ff77691eb223ce3562e497bef4c906a9b38f7f4184d1ef1ff7f70308ef72202c"
+        },
+        {
+          "session": 4,
+          "session_id": "axpy_amd_20260725_215406_session4",
+          "csv": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session4.csv",
+          "csv_sha256": "2d8389c1544ce273986b0b6eb8ef40a20497c79e0ac0d0824e4c8ff0d6926450",
+          "log": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session4.log",
+          "log_exists": true,
+          "log_sha256": "d406049e58862d052e767be3a1ef876b7ed595029ba1974c5970d4a523c27fc9"
+        },
+        {
+          "session": 5,
+          "session_id": "axpy_amd_20260725_215406_session5",
+          "csv": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session5.csv",
+          "csv_sha256": "383a55f18d9520f6575fad6d71c727b4fea3ed15133afc68bb569d6a087d5a69",
+          "log": "/home/rock/projects/energy/new/AMD/runs/AXPY/axpy_amd_20260725_215406_session5.log",
+          "log_exists": true,
+          "log_sha256": "c5843a98d337f97cf6e83f7f6c90cd605bfaf6854be0b1a1460bda171187a851"
+        }
+      ]
+    },
+    {
+      "platform": "3090",
+      "platform_label": "RTX 3090",
+      "campaign_id": "axpy_3090_20260727_133600",
+      "directory": "/home/rock/projects/energy/new/3090/runs/AXPY",
+      "manifest": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_manifest.txt",
+      "manifest_exists": true,
+      "manifest_sha256": "e27e2459f33a3f28e84e861d9cf483caa1bab3bad70837eed2595c8abd853b2b",
+      "quickcheck": {
+        "status": "pass",
+        "qualification_basis": "measurement_and_anti_collapse_evidence",
+        "path": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_122403_quickcheck.log",
+        "sha256": "602a02de4beccdc13fc7b431304fdce3149986a85141c7b6bc809bc8f252693a"
+      },
+      "recalibration_events": 0,
+      "below_retry_events": 0,
+      "files": [
+        {
+          "session": 1,
+          "session_id": "axpy_3090_20260727_133600_session1",
+          "csv": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session1.csv",
+          "csv_sha256": "69d634a285074ab89f8d1674a4fc80eb799eb719bfaf1ea0feaf138b31baf211",
+          "log": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session1.log",
+          "log_exists": true,
+          "log_sha256": "4b7d986b0846ef86aa780a66be7aac63555cdfdb3352a3d8ae5ab8fc46ed06ce"
+        },
+        {
+          "session": 2,
+          "session_id": "axpy_3090_20260727_133600_session2",
+          "csv": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session2.csv",
+          "csv_sha256": "3bfea87227495c95caf2e559edb5a81b99a1046ceab44b95aaac285ff97493eb",
+          "log": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session2.log",
+          "log_exists": true,
+          "log_sha256": "55d304a3519ebac5155a8335efe480820b063732e3b2bd2f384efa8ebb0b8409"
+        },
+        {
+          "session": 3,
+          "session_id": "axpy_3090_20260727_133600_session3",
+          "csv": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session3.csv",
+          "csv_sha256": "f7c6f8692e99dac633f2ce09a71bb1c03c04e1e5007e380e14da7ef0ef87883d",
+          "log": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session3.log",
+          "log_exists": true,
+          "log_sha256": "2da2e04518d4dfff05558bf8b88b993bb9a516a34d1ac6fd2d3b35da8bf2d1ac"
+        },
+        {
+          "session": 4,
+          "session_id": "axpy_3090_20260727_133600_session4",
+          "csv": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session4.csv",
+          "csv_sha256": "8e290f05ab4161ced503204c2c1fbf8a174b30cddc425576f90cabdc6523c981",
+          "log": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session4.log",
+          "log_exists": true,
+          "log_sha256": "73c2ac660d70e425c40961bbddbb4025bd569e1f5d41fd8e36ddfdda25fc1634"
+        },
+        {
+          "session": 5,
+          "session_id": "axpy_3090_20260727_133600_session5",
+          "csv": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session5.csv",
+          "csv_sha256": "aaa7682d1166ed67af87ca0296591241b25dc0424bfda8a4661f5a184e5b4901",
+          "log": "/home/rock/projects/energy/new/3090/runs/AXPY/axpy_3090_20260727_133600_session5.log",
+          "log_exists": true,
+          "log_sha256": "06fc929b08ba86c889d36c8bef725a8c74dc72d0ed55391440e7c72504992e60"
+        }
+      ]
+    },
+    {
+      "platform": "5060ti",
+      "platform_label": "RTX 5060 Ti",
+      "campaign_id": "axpy_5060ti_20260727_141707",
+      "directory": "/home/rock/projects/energy/new/5060ti/runs/AXPY",
+      "manifest": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_manifest.txt",
+      "manifest_exists": true,
+      "manifest_sha256": "329ef5e195f04ef8f5f42690bdbed02ebeed9616742e8b68ea5fcb57a4342201",
+      "quickcheck": {
+        "status": "pass",
+        "qualification_basis": "measurement_and_anti_collapse_evidence",
+        "path": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_140945_quickcheck.log",
+        "sha256": "f9753414bda54fd6eb054a8ff5631da34e61f8f20a1dad6cd29e89a27918cffe"
+      },
+      "recalibration_events": 0,
+      "below_retry_events": 0,
+      "files": [
+        {
+          "session": 1,
+          "session_id": "axpy_5060ti_20260727_141707_session1",
+          "csv": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session1.csv",
+          "csv_sha256": "38a89ee3b57c9b8a544cc4d3686293f4aa67fa044b73403c0e1962a3a63a0568",
+          "log": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session1.log",
+          "log_exists": true,
+          "log_sha256": "c58a5cdb6194e054621aa812c41bf799c25abf80df8f17144f59d49463695300"
+        },
+        {
+          "session": 2,
+          "session_id": "axpy_5060ti_20260727_141707_session2",
+          "csv": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session2.csv",
+          "csv_sha256": "e9aaf15011af2630616559e7d28603f36f3ca08861bdc52f799c98e57cf6c9cc",
+          "log": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session2.log",
+          "log_exists": true,
+          "log_sha256": "162ab52259f58981dfdbe468e58cfa15510685803d2d4381f7823acd4402e52c"
+        },
+        {
+          "session": 3,
+          "session_id": "axpy_5060ti_20260727_141707_session3",
+          "csv": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session3.csv",
+          "csv_sha256": "d5a3460cacbf0606e4648aac6f68b36bb5beb4ad55ac5dff3c1c742de0c83b62",
+          "log": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session3.log",
+          "log_exists": true,
+          "log_sha256": "7316751705a9de67c822f9a319f48474a4779d47c40afa93ac1b336884858b9e"
+        },
+        {
+          "session": 4,
+          "session_id": "axpy_5060ti_20260727_141707_session4",
+          "csv": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session4.csv",
+          "csv_sha256": "9c1441e066b4ce3fc19742762e577595185b66a5414362b51b58b0d830b1088e",
+          "log": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session4.log",
+          "log_exists": true,
+          "log_sha256": "bf5f086bd57a08e547e5bf37adab25f5bf144f6268300467006ab92642c506c9"
+        },
+        {
+          "session": 5,
+          "session_id": "axpy_5060ti_20260727_141707_session5",
+          "csv": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session5.csv",
+          "csv_sha256": "45f8bf42d1d0f0045331af8e24ba6bc36d62fbfb540794091124424bb4ade117",
+          "log": "/home/rock/projects/energy/new/5060ti/runs/AXPY/axpy_5060ti_20260727_141707_session5.log",
+          "log_exists": true,
+          "log_sha256": "e5c22724f6097f36b3ef484f825ff43e9f88d932021081d8e5acb941553f6f6b"
+        }
+      ]
+    }
+  ]
+}
