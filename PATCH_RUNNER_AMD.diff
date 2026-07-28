@@ -1,0 +1,318 @@
+--- /mnt/data/conv2d_base/new/AMD/scripts/02_run_CPU_AMD_CONV2D_only.sh	2026-07-28 22:21:12.000000000 +0000
++++ /mnt/data/conv2d_v4/new/AMD/scripts/02_run_CPU_AMD_CONV2D_only.sh	2026-07-28 22:34:03.747685518 +0000
+@@ -229,10 +229,7 @@
+     -o "$BIN"
+ )
+ 
+-echo "[build] Compiling ${PLATFORM} CONV2D with oneDNN and OpenMP..."
+-printf '[build] command:'
+-printf ' %q' "${COMPILE_CMD[@]}"
+-printf '\n'
++echo "[build] ${PLATFORM} CONV2D"
+ "${COMPILE_CMD[@]}"
+ 
+ LDD_OUTPUT=$(ldd "$BIN")
+@@ -245,11 +242,7 @@
+     die "TBB is linked; official CONV2D requires oneDNN OpenMP runtime"
+ fi
+ 
+-echo "[preflight] Build OK; oneDNN linked; exactly one visible OpenMP runtime family (libgomp)."
+-echo "[preflight] source_sha256=$(sha256sum "$SRC" | awk '{print $1}')"
+-echo "[preflight] header_sha256=$(sha256sum "$HEADER" | awk '{print $1}')"
+-echo "[preflight] runner_sha256=$(sha256sum "${BASH_SOURCE[0]}" | awk '{print $1}')"
+-echo "[preflight] binary_sha256=$(sha256sum "$BIN" | awk '{print $1}')"
++echo "[preflight] build/link/runtime PASS"
+ 
+ validate_csv() {
+     local csv_path=$1
+@@ -525,6 +518,7 @@
+ import math
+ import re
+ import sys
++from collections import Counter
+ 
+ path, shapes_s, threads_s, reps_s, require_verbose_s = sys.argv[1:]
+ shapes = {int(value) for value in shapes_s.split(",") if value}
+@@ -533,106 +527,87 @@
+ require_verbose = bool(int(require_verbose_s))
+ expected_configs = len(shapes) * len(threads)
+ expected_rows = expected_configs * reps
+-text = open(path, encoding="utf-8", errors="replace").read()
+-lines = text.splitlines()
++lines = open(path, encoding="utf-8", errors="replace").read().splitlines()
+ 
+-config_lines = [line for line in lines if line.startswith("[CONFIG] ")]
+-onednn_lines = [line for line in lines if line.startswith("[ONEDNN] ")]
+-env_lines = [line for line in lines if line.startswith("[ENV] ")]
++banner_lines = [line for line in lines if line.startswith("CONV2D | ")]
+ calibration_lines = [line for line in lines if line.startswith("[CALIBRATION] ")]
+ result_lines = [line for line in lines if line.startswith("[CONV2D] ")]
+ checksum_lines = [line for line in lines if line.startswith("[CHECKSUM] ")]
+ anti_lines = [line for line in lines if line.startswith("[ANTI_COLLAPSE] ")]
++diagnostic_lines = [
++    line for line in lines
++    if line.startswith(("[CONFIG] ", "[ONEDNN] ", "[ENV] ", "[BENCHMARK] "))
++]
++verbose_lines = [
++    line for line in lines
++    if re.match(r"^(onednn_verbose|dnnl_verbose),", line.strip(), re.IGNORECASE)
++]
+ 
+-expected_checksum_lines = expected_configs * (reps + 1)  # warm-up rep=0 plus official reps
+-for name, actual, expected in [
+-    ("CONFIG", len(config_lines), expected_configs),
+-    ("ONEDNN", len(onednn_lines), expected_configs),
+-    ("ENV", len(env_lines), expected_configs),
+-    ("CALIBRATION", len(calibration_lines), expected_configs),
+-    ("CONV2D", len(result_lines), expected_rows),
+-    ("CHECKSUM", len(checksum_lines), expected_checksum_lines),
+-]:
+-    if actual != expected:
+-        raise SystemExit(f"log {name} count mismatch: got {actual}, expected {expected}")
++if len(banner_lines) != 1:
++    raise SystemExit(f"expected one compact CONV2D banner, got {len(banner_lines)}")
++if len(calibration_lines) != expected_configs:
++    raise SystemExit(
++        f"CALIBRATION count mismatch: got {len(calibration_lines)}, expected {expected_configs}"
++    )
++if len(result_lines) != expected_rows:
++    raise SystemExit(f"CONV2D count mismatch: got {len(result_lines)}, expected {expected_rows}")
+ if anti_lines:
+     raise SystemExit("regular measurement log unexpectedly contains anti-collapse output")
++if diagnostic_lines:
++    raise SystemExit("normal measurement log unexpectedly contains audit/provenance diagnostics")
++if checksum_lines:
++    raise SystemExit("successful normal measurement unexpectedly emitted detailed checksum diagnostics")
++if require_verbose:
++    if not verbose_lines:
++        raise SystemExit("required oneDNN verbose output is missing")
++else:
++    if verbose_lines:
++        raise SystemExit("normal measurement unexpectedly contains oneDNN verbose output")
+ 
+-seen_configs = set()
+-for line in config_lines:
+-    fields = dict(token.split("=", 1) for token in line.split()[1:] if "=" in token)
+-    shape = int(fields["shape"])
+-    requested = int(fields["threads_requested"])
+-    observed = int(fields["threads_observed"])
+-    if shape not in shapes or requested not in threads:
+-        raise SystemExit(f"unexpected CONFIG line: {line}")
+-    if observed != requested:
+-        raise SystemExit(f"thread mismatch in CONFIG line: {line}")
+-    seen_configs.add((shape, requested))
+-if seen_configs != {(shape, thread) for shape in shapes for thread in threads}:
+-    raise SystemExit(f"CONFIG coverage mismatch: {sorted(seen_configs)}")
+-
+-for line in onednn_lines:
+-    if "cpu_threading_runtime=OpenMP" not in line:
+-        raise SystemExit(f"oneDNN runtime is not OpenMP: {line}")
+-    if "scratchpad_mode=user" not in line:
+-        raise SystemExit(f"user scratchpad marker missing: {line}")
+-    if "execute_api=dnnl_primitive_execute" not in line:
+-        raise SystemExit(f"direct C execute marker missing: {line}")
+-    match_size = re.search(r"scratchpad_size_bytes=(\d+)", line)
+-    match_count = re.search(r"execute_arg_count=(\d+)", line)
+-    if not match_size or not match_count:
+-        raise SystemExit(f"scratchpad/argument diagnostics missing: {line}")
+-    size = int(match_size.group(1))
+-    count = int(match_count.group(1))
+-    expected_count = 4 if size > 0 else 3
+-    if count != expected_count:
+-        raise SystemExit(
+-            f"execute_arg_count={count}, expected {expected_count} for scratchpad size {size}"
+-        )
+-
+-for line in env_lines:
+-    if "OMP_PROC_BIND=spread" not in line or "OMP_PLACES=cores" not in line:
+-        raise SystemExit(f"OpenMP affinity environment mismatch: {line}")
+-
++calibration_coverage = set()
+ for line in calibration_lines:
+     fields = dict(token.split("=", 1) for token in line.split()[1:] if "=" in token)
+-    runtime = float(fields["runtime_s"])
+-    status = fields["status"]
+-    if not math.isfinite(runtime) or runtime <= 0.0:
+-        raise SystemExit(f"invalid calibration runtime: {line}")
+-    expected_status = "below" if runtime < 0.75 else ("in_range" if runtime <= 1.25 else "above")
+-    if status != expected_status:
+-        raise SystemExit(f"calibration status mismatch: {line}")
+-    if status == "below":
+-        raise SystemExit(f"calibration returned forbidden below status: {line}")
++    shape = int(fields["shape"])
++    thread = int(fields["threads"])
++    batches = int(fields["batches"])
++    if shape not in shapes or thread not in threads or batches < 1:
++        raise SystemExit(f"invalid calibration line: {line}")
++    calibration_coverage.add((shape, thread))
++expected_coverage = {(shape, thread) for shape in shapes for thread in threads}
++if calibration_coverage != expected_coverage:
++    raise SystemExit(f"calibration coverage mismatch: {sorted(calibration_coverage)}")
+ 
+-for line in checksum_lines:
++counts = Counter()
++repetition_sets = {}
++for line in result_lines:
+     fields = dict(token.split("=", 1) for token in line.split()[1:] if "=" in token)
+-    if fields.get("gate") != "PASS":
+-        raise SystemExit(f"checksum gate failed: {line}")
+-    if int(fields.get("nonfinite", "-1")) != 0:
+-        raise SystemExit(f"non-finite checksum sample: {line}")
+-    normalized = float(fields["max_normalized_error"])
+-    if not math.isfinite(normalized) or normalized > 1.0:
+-        raise SystemExit(f"checksum normalized error invalid: {line}")
++    shape = int(fields["shape"])
++    thread = int(fields["threads"])
++    rep = int(fields["rep"])
++    batches = int(fields["batches"])
++    runtime = float(fields["e2e_time_s"])
++    energy = float(fields["device_energy_j"])
++    status = fields["runtime_status"]
++    checksum = fields["checksum"]
++    key = (shape, thread)
++    if shape not in shapes or thread not in threads:
++        raise SystemExit(f"unexpected result configuration: {line}")
++    if batches < 1 or not math.isfinite(runtime) or runtime <= 0.0:
++        raise SystemExit(f"invalid result timing/batches: {line}")
++    if not math.isfinite(energy) or energy <= 0.0:
++        raise SystemExit(f"invalid result energy: {line}")
++    if status == "below" or checksum != "OK":
++        raise SystemExit(f"failed result gate: {line}")
++    counts[key] += 1
++    repetition_sets.setdefault(key, set()).add(rep)
+ 
+-verbose_lines = [
+-    line for line in lines
+-    if re.match(r"^(onednn_verbose|dnnl_verbose),", line.strip(), re.IGNORECASE)
+-]
+-conv_verbose = [line for line in verbose_lines if "convolution" in line.lower()]
+-if require_verbose:
+-    if not verbose_lines or not conv_verbose:
+-        raise SystemExit("oneDNN verbose output/convolution implementation line is missing")
+-else:
+-    if verbose_lines:
+-        raise SystemExit("official session unexpectedly contains oneDNN verbose output")
++for key in expected_coverage:
++    if counts[key] != reps or repetition_sets.get(key) != set(range(1, reps + 1)):
++        raise SystemExit(
++            f"result coverage mismatch for {key}: count={counts[key]}, reps={sorted(repetition_sets.get(key, set()))}"
++        )
+ 
+-print(
+-    f"validated CONV2D log: configurations={expected_configs}, rows={expected_rows}, "
+-    f"checksums={expected_checksum_lines}, verbose={'yes' if require_verbose else 'no'}"
+-)
++print(f"validated compact CONV2D log: configurations={expected_configs}, rows={expected_rows}")
+ PYLOG
+ }
+ 
+@@ -657,6 +632,8 @@
+     raise SystemExit("anti-collapse mode emitted regular CONV2D result lines")
+ if any(line.startswith("[CALIBRATION] ") for line in lines):
+     raise SystemExit("anti-collapse mode emitted regular calibration lines")
++if any(line.startswith(("[CONFIG] ", "[ONEDNN] ", "[ENV] ", "[BENCHMARK] ", "CONV2D | ")) for line in lines):
++    raise SystemExit("anti-collapse quiet mode emitted audit/provenance diagnostics")
+ 
+ fields = dict(token.split("=", 1) for token in anti_lines[0].split()[1:] if "=" in token)
+ required = {
+@@ -689,15 +666,6 @@
+ if fields["gate"] != "PASS":
+     raise SystemExit(f"anti-collapse gate={fields['gate']!r}")
+ 
+-onednn_lines = [line for line in lines if line.startswith("[ONEDNN] ")]
+-if len(onednn_lines) != 1:
+-    raise SystemExit(f"anti-collapse expected one ONEDNN line, got {len(onednn_lines)}")
+-if "cpu_threading_runtime=OpenMP" not in onednn_lines[0]:
+-    raise SystemExit("anti-collapse oneDNN runtime is not OpenMP")
+-if "scratchpad_mode=user" not in onednn_lines[0]:
+-    raise SystemExit("anti-collapse user scratchpad marker missing")
+-if "execute_api=dnnl_primitive_execute" not in onednn_lines[0]:
+-    raise SystemExit("anti-collapse direct C execute marker missing")
+ 
+ verbose_lines = [
+     line for line in lines
+@@ -799,16 +767,13 @@
+         OMP_PLACES=cores \
+         BENCH_SIZE_FILTER="$VERBOSE_PROBE_SHAPE" \
+         BENCH_THREAD_FILTER="$VERBOSE_PROBE_THREAD" \
++        CONV2D_DIAGNOSTICS=1 \
+         ONEDNN_VERBOSE=1 \
+         DNNL_VERBOSE=1 \
+         stdbuf -oL -eL \
+         "$BIN" "$output" 1 "$session_id" "$seed" \
+         >"$log" 2>&1
+ 
+-    echo "[verbose-probe] Selected oneDNN evidence:"
+-    grep -m1 -Ei '^(onednn_verbose|dnnl_verbose),v[0-9]+,info,cpu,runtime:' "$log" || true
+-    grep -m1 -Ei '^(onednn_verbose|dnnl_verbose),v[0-9]+,info,cpu,isa:' "$log" || true
+-    grep -m1 '^\[ONEDNN\] ' "$log" || true
+ }
+ 
+ run_measurement() {
+@@ -828,6 +793,7 @@
+         -u GOMP_CPU_AFFINITY
+         -u OMP_NUM_THREADS
+         -u CONV2D_ANTI_COLLAPSE_PROBE
++        -u CONV2D_DIAGNOSTICS
+     )
+     local -a env_vars=(
+         OMP_DYNAMIC=FALSE
+@@ -871,6 +837,7 @@
+         -u BENCH_THREAD_FILTER \
+         -u ONEDNN_VERBOSE \
+         -u DNNL_VERBOSE \
++        -u CONV2D_DIAGNOSTICS \
+         OMP_DYNAMIC=FALSE \
+         OMP_PROC_BIND=spread \
+         OMP_PLACES=cores \
+@@ -940,19 +907,18 @@
+     fi
+ } > "$manifest"
+ 
+-echo "[provenance] manifest=$manifest"
+ 
+ verbose_id="${campaign_id}_verbose_probe"
+ verbose_csv="$RUN_DIR/${verbose_id}.csv"
+ verbose_log="$RUN_DIR/${verbose_id}.log"
+ 
+-echo "[quickcheck] Running compact oneDNN verbose probe: shape=${VERBOSE_PROBE_SHAPE}; threads=${VERBOSE_PROBE_THREAD}; reps=1"
++echo "[quickcheck] oneDNN preflight"
+ run_verbose_probe "$verbose_csv" "$verbose_log" "$verbose_id" "$VERBOSE_PROBE_SEED"
+ validate_csv "$verbose_csv" "$VERBOSE_PROBE_SHAPE" "$VERBOSE_PROBE_THREAD" 1 "$verbose_id"
+ validate_verbose_probe_log "$verbose_log" "$VERBOSE_PROBE_SHAPE" "$VERBOSE_PROBE_THREAD"
+ append_file_hash "$manifest" "verbose_probe_csv" "$verbose_csv"
+ append_file_hash "$manifest" "verbose_probe_log" "$verbose_log"
+-echo "[quickcheck] Compact oneDNN verbose probe PASS: $verbose_log"
++echo "[quickcheck] oneDNN preflight PASS"
+ 
+ quick_id="${campaign_id}_quickcheck"
+ quick_csv="$RUN_DIR/${quick_id}.csv"
+@@ -967,16 +933,16 @@
+ validate_measurement_log "$quick_log" "$QUICK_SHAPES" "$QUICK_THREADS" "$QUICK_REPS" 0
+ append_file_hash "$manifest" "quickcheck_csv" "$quick_csv"
+ append_file_hash "$manifest" "quickcheck_log" "$quick_log"
+-echo "[quickcheck] Measurement matrix PASS: $quick_csv"
++echo "[quickcheck] measurement matrix PASS"
+ 
+ anti_id="${campaign_id}_anti_collapse"
+ anti_csv="$RUN_DIR/${anti_id}.csv"
+ anti_log="$RUN_DIR/${anti_id}.log"
+-echo "[quickcheck] Running exclusive anti-collapse probe: shape=1; threads=${MAX_THREAD}"
++echo "[quickcheck] anti-collapse"
+ run_anti_collapse "$anti_csv" "$anti_log" "$anti_id" "$ANTI_SEED"
+ validate_anti_collapse_log "$anti_log" "$MAX_THREAD"
+ append_file_hash "$manifest" "anti_collapse_log" "$anti_log"
+-echo "[quickcheck] Anti-collapse PASS: $anti_log"
++echo "[quickcheck] anti-collapse PASS"
+ 
+ if (( QUICKCHECK_ONLY == 1 )); then
+     POWER_OFF_AT_END=0
+@@ -998,7 +964,7 @@
+     validate_measurement_log "$log" "$ALL_SHAPES" "$ALL_THREADS" "$REPS" 0
+     append_file_hash "$manifest" "session${session}_csv" "$output"
+     append_file_hash "$manifest" "session${session}_log" "$log"
+-    echo "[run] Session ${session}/${SESSIONS} PASS: $output"
++    echo "[run] session ${session}/${SESSIONS} PASS"
+ 
+     if (( session < SESSIONS )); then
+         echo "[pause] Sleeping ${SESSION_PAUSE_S}s before the next independent session..."

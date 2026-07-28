@@ -1,0 +1,115 @@
+[BENCHMARK] workload=CONV2D platform=AMD backend=oneDNN schema=cpu-gpu-v2 mode=measurement session_id=conv2d_amd_20260729_002444_quickcheck repetitions=2 seed=6400 configurations=12 device_name=AMD Ryzen Threadripper 3970X 32-Core Processor dram_rapl_available=no reuse_regime=warm_resident algorithm_policy=convolution_auto scratchpad_mode=user execute_api=dnnl_primitive_execute onednn_cpu_threading_runtime=OpenMP onednn_version=3.8.1
+onednn_cpu_threading_runtime=OpenMP DNNL_CPU_THREADING_RUNTIME=2 DNNL_RUNTIME_OMP=2 openmp_spec_date=201511
+[CONFIG] shape=5 threads_requested=1 threads_observed=1
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:3:224:224];dtype=3;format_kind=2;size_bytes=19267584;strides=[150528:1:672:3];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[64:3:7:7];dtype=3;format_kind=2;size_bytes=37632;strides=[4704:32:672:96];inner_nblks=1;inner_blks=[32];inner_idxs=[0]" dst_layout="dims=[32:64:112:112];dtype=3;format_kind=2;size_bytes=102760448;strides=[802816:1:7168:64];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=8216 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=1 observed_threads=1 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=5 threads=1 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=5 threads=1 batches=10 runtime_s=1.006 status=in_range
+[CHECKSUM] shape=5 threads=1 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=5 threads=1 rep=1 batches=10 runtime_s=1.005403 device_energy_j=96.350593 status=in_range
+[CHECKSUM] shape=5 threads=1 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=5 threads=1 rep=2 batches=10 runtime_s=1.015014 device_energy_j=97.262823 status=in_range
+[CONFIG] shape=6 threads_requested=64 threads_observed=64
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brgconv_1x1:avx2 src_layout="dims=[32:256:56:56];dtype=3;format_kind=2;size_bytes=102760448;strides=[802816:1:14336:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[256:256:1:1];dtype=3;format_kind=2;size_bytes=270336;strides=[6144:24:6144:6144];inner_nblks=1;inner_blks=[24];inner_idxs=[0]" dst_layout="dims=[32:256:56:56];dtype=3;format_kind=2;size_bytes=102760448;strides=[802816:1:14336:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=267776 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=64 observed_threads=64 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=6 threads=64 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=6 threads=64 batches=134 runtime_s=1.02749 status=in_range
+[CHECKSUM] shape=6 threads=64 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=64 rep=1 batches=134 runtime_s=1.039116 device_energy_j=235.538524 status=in_range
+[CHECKSUM] shape=6 threads=64 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=64 rep=2 batches=134 runtime_s=1.067245 device_energy_j=240.899224 status=in_range
+[CONFIG] shape=4 threads_requested=1 threads_observed=1
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:256:14:14];dtype=3;format_kind=2;size_bytes=6422528;strides=[50176:1:3584:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[512:256:3:3];dtype=3;format_kind=2;size_bytes=4866048;strides=[55296:24:18432:6144];inner_nblks=1;inner_blks=[24];inner_idxs=[0]" dst_layout="dims=[32:512:7:7];dtype=3;format_kind=2;size_bytes=3211264;strides=[25088:1:3584:512];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=8216 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=1 observed_threads=1 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=4 threads=1 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=4 threads=1 batches=31 runtime_s=1.00965 status=in_range
+[CHECKSUM] shape=4 threads=1 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=4 threads=1 rep=1 batches=31 runtime_s=1.035113 device_energy_j=109.716952 status=in_range
+[CHECKSUM] shape=4 threads=1 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=4 threads=1 rep=2 batches=31 runtime_s=1.002758 device_energy_j=98.347880 status=in_range
+[CONFIG] shape=3 threads_requested=64 threads_observed=64
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:128:28:28];dtype=3;format_kind=2;size_bytes=12845056;strides=[100352:1:3584:128];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[256:128:3:3];dtype=3;format_kind=2;size_bytes=1179648;strides=[36864:32:12288:4096];inner_nblks=1;inner_blks=[32];inner_idxs=[0]" dst_layout="dims=[32:256:14:14];dtype=3;format_kind=2;size_bytes=6422528;strides=[50176:1:3584:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=267776 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=64 observed_threads=64 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=3 threads=64 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=3 threads=64 batches=779 runtime_s=1.12203 status=in_range
+[CHECKSUM] shape=3 threads=64 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=3 threads=64 rep=1 batches=779 runtime_s=1.009755 device_energy_j=244.516911 status=in_range
+[CHECKSUM] shape=3 threads=64 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=3 threads=64 rep=2 batches=779 runtime_s=1.038024 device_energy_j=248.514430 status=in_range
+[CONFIG] shape=2 threads_requested=1 threads_observed=1
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:64:56:56];dtype=3;format_kind=2;size_bytes=25690112;strides=[200704:1:3584:64];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[128:64:3:3];dtype=3;format_kind=2;size_bytes=331776;strides=[13824:24:4608:1536];inner_nblks=1;inner_blks=[24];inner_idxs=[0]" dst_layout="dims=[32:128:28:28];dtype=3;format_kind=2;size_bytes=12845056;strides=[100352:1:3584:128];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=8216 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=1 observed_threads=1 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=2 threads=1 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=2 threads=1 batches=29 runtime_s=1.01191 status=in_range
+[CHECKSUM] shape=2 threads=1 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=2 threads=1 rep=1 batches=29 runtime_s=1.006372 device_energy_j=92.825827 status=in_range
+[CHECKSUM] shape=2 threads=1 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=2 threads=1 rep=2 batches=29 runtime_s=1.009112 device_energy_j=90.786702 status=in_range
+[CONFIG] shape=3 threads_requested=1 threads_observed=1
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:128:28:28];dtype=3;format_kind=2;size_bytes=12845056;strides=[100352:1:3584:128];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[256:128:3:3];dtype=3;format_kind=2;size_bytes=1179648;strides=[36864:32:12288:4096];inner_nblks=1;inner_blks=[32];inner_idxs=[0]" dst_layout="dims=[32:256:14:14];dtype=3;format_kind=2;size_bytes=6422528;strides=[50176:1:3584:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=8216 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=1 observed_threads=1 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=3 threads=1 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=3 threads=1 batches=32 runtime_s=1.01777 status=in_range
+[CHECKSUM] shape=3 threads=1 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=3 threads=1 rep=1 batches=32 runtime_s=1.019147 device_energy_j=88.579083 status=in_range
+[CHECKSUM] shape=3 threads=1 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=3 threads=1 rep=2 batches=32 runtime_s=1.024699 device_energy_j=88.895306 status=in_range
+[CONFIG] shape=2 threads_requested=64 threads_observed=64
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:64:56:56];dtype=3;format_kind=2;size_bytes=25690112;strides=[200704:1:3584:64];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[128:64:3:3];dtype=3;format_kind=2;size_bytes=331776;strides=[13824:24:4608:1536];inner_nblks=1;inner_blks=[24];inner_idxs=[0]" dst_layout="dims=[32:128:28:28];dtype=3;format_kind=2;size_bytes=12845056;strides=[100352:1:3584:128];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=267776 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=64 observed_threads=64 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=2 threads=64 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=2 threads=64 batches=785 runtime_s=1.91475 status=above
+[WARNING] runtime_status=above shape=2 threads=64 rep=1 e2e_time_s=1.49474
+[CHECKSUM] shape=2 threads=64 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=2 threads=64 rep=1 batches=785 runtime_s=1.494737 device_energy_j=291.449436 status=above
+[WARNING] runtime_status=above shape=2 threads=64 rep=2 e2e_time_s=1.29399
+[CHECKSUM] shape=2 threads=64 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=2 threads=64 rep=2 batches=785 runtime_s=1.293992 device_energy_j=269.959305 status=above
+[CONFIG] shape=5 threads_requested=64 threads_observed=64
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:3:224:224];dtype=3;format_kind=2;size_bytes=19267584;strides=[150528:1:672:3];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[64:3:7:7];dtype=3;format_kind=2;size_bytes=37632;strides=[4704:32:672:96];inner_nblks=1;inner_blks=[32];inner_idxs=[0]" dst_layout="dims=[32:64:112:112];dtype=3;format_kind=2;size_bytes=102760448;strides=[802816:1:7168:64];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=267776 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=64 observed_threads=64 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=5 threads=64 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=5 threads=64 batches=255 runtime_s=1.05171 status=in_range
+[CHECKSUM] shape=5 threads=64 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=5 threads=64 rep=1 batches=255 runtime_s=0.965213 device_energy_j=214.439915 status=in_range
+[CHECKSUM] shape=5 threads=64 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=5 threads=64 rep=2 batches=255 runtime_s=1.008826 device_energy_j=219.211656 status=in_range
+[CONFIG] shape=6 threads_requested=1 threads_observed=1
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brgconv_1x1:avx2 src_layout="dims=[32:256:56:56];dtype=3;format_kind=2;size_bytes=102760448;strides=[802816:1:14336:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[256:256:1:1];dtype=3;format_kind=2;size_bytes=270336;strides=[6144:24:6144:6144];inner_nblks=1;inner_blks=[24];inner_idxs=[0]" dst_layout="dims=[32:256:56:56];dtype=3;format_kind=2;size_bytes=102760448;strides=[802816:1:14336:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=8216 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=1 observed_threads=1 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=6 threads=1 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=6 threads=1 batches=8 runtime_s=1.01456 status=in_range
+[CHECKSUM] shape=6 threads=1 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=1 rep=1 batches=8 runtime_s=1.022727 device_energy_j=102.985092 status=in_range
+[CHECKSUM] shape=6 threads=1 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=1 rep=2 batches=8 runtime_s=1.014360 device_energy_j=101.274426 status=in_range
+[CONFIG] shape=1 threads_requested=1 threads_observed=1
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:64:56:56];dtype=3;format_kind=2;size_bytes=25690112;strides=[200704:1:3584:64];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[64:64:3:3];dtype=3;format_kind=2;size_bytes=147456;strides=[18432:32:6144:2048];inner_nblks=1;inner_blks=[32];inner_idxs=[0]" dst_layout="dims=[32:64:56:56];dtype=3;format_kind=2;size_bytes=25690112;strides=[200704:1:3584:64];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=8216 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=1 observed_threads=1 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=1 threads=1 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=1 threads=1 batches=17 runtime_s=1.01901 status=in_range
+[CHECKSUM] shape=1 threads=1 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=1 threads=1 rep=1 batches=17 runtime_s=1.020133 device_energy_j=103.029522 status=in_range
+[CHECKSUM] shape=1 threads=1 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=1 threads=1 rep=2 batches=17 runtime_s=1.035254 device_energy_j=104.270258 status=in_range
+[CONFIG] shape=4 threads_requested=64 threads_observed=64
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:256:14:14];dtype=3;format_kind=2;size_bytes=6422528;strides=[50176:1:3584:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[512:256:3:3];dtype=3;format_kind=2;size_bytes=4866048;strides=[55296:24:18432:6144];inner_nblks=1;inner_blks=[24];inner_idxs=[0]" dst_layout="dims=[32:512:7:7];dtype=3;format_kind=2;size_bytes=3211264;strides=[25088:1:3584:512];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=267776 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=64 observed_threads=64 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=4 threads=64 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=4 threads=64 batches=713 runtime_s=1.04483 status=in_range
+[CHECKSUM] shape=4 threads=64 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=4 threads=64 rep=1 batches=713 runtime_s=1.061651 device_energy_j=228.061921 status=in_range
+[WARNING] runtime_status=above shape=4 threads=64 rep=2 e2e_time_s=1.3717
+[CHECKSUM] shape=4 threads=64 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=4 threads=64 rep=2 batches=713 runtime_s=1.371699 device_energy_j=261.998444 status=above
+[CONFIG] shape=1 threads_requested=64 threads_observed=64
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brg_conv_fwd:avx2 src_layout="dims=[32:64:56:56];dtype=3;format_kind=2;size_bytes=25690112;strides=[200704:1:3584:64];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[64:64:3:3];dtype=3;format_kind=2;size_bytes=147456;strides=[18432:32:6144:2048];inner_nblks=1;inner_blks=[32];inner_idxs=[0]" dst_layout="dims=[32:64:56:56];dtype=3;format_kind=2;size_bytes=25690112;strides=[200704:1:3584:64];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=267776 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=64 observed_threads=64 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=1 threads=64 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=1 threads=64 batches=367 runtime_s=1.23587 status=in_range
+[WARNING] runtime_status=above shape=1 threads=64 rep=1 e2e_time_s=1.31612
+[CHECKSUM] shape=1 threads=64 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=1 threads=64 rep=1 batches=367 runtime_s=1.316117 device_energy_j=270.440085 status=above
+[WARNING] runtime_status=above shape=1 threads=64 rep=2 e2e_time_s=1.32473
+[CHECKSUM] shape=1 threads=64 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=1 threads=64 rep=2 batches=367 runtime_s=1.324731 device_energy_j=271.971135 status=above

@@ -1,0 +1,21 @@
+[BENCHMARK] workload=CONV2D platform=AMD backend=oneDNN schema=cpu-gpu-v2 mode=measurement session_id=conv2d_amd_20260729_002444_session1 repetitions=10 seed=4097 configurations=54 device_name=AMD Ryzen Threadripper 3970X 32-Core Processor dram_rapl_available=no reuse_regime=warm_resident algorithm_policy=convolution_auto scratchpad_mode=user execute_api=dnnl_primitive_execute onednn_cpu_threading_runtime=OpenMP onednn_version=3.8.1
+onednn_cpu_threading_runtime=OpenMP DNNL_CPU_THREADING_RUNTIME=2 DNNL_RUNTIME_OMP=2 openmp_spec_date=201511
+[CONFIG] shape=6 threads_requested=32 threads_observed=32
+[ONEDNN] version=3.8.1 cpu_threading_runtime=OpenMP implementation=brgconv_1x1:avx2 src_layout="dims=[32:256:56:56];dtype=3;format_kind=2;size_bytes=102760448;strides=[802816:1:14336:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" weight_layout="dims=[256:256:1:1];dtype=3;format_kind=2;size_bytes=270336;strides=[6144:24:6144:6144];inner_nblks=1;inner_blks=[24];inner_idxs=[0]" dst_layout="dims=[32:256:56:56];dtype=3;format_kind=2;size_bytes=102760448;strides=[802816:1:14336:256];inner_nblks=0;inner_blks=[];inner_idxs=[]" src_reorder=yes weight_reorder=yes dst_reorder=yes scratchpad_mode=user scratchpad_size_bytes=135936 execute_api=dnnl_primitive_execute execute_arg_count=4
+[ENV] requested_threads=32 observed_threads=32 OMP_NUM_THREADS_env=unset OMP_PROC_BIND=spread OMP_PLACES=cores ONEDNN_VERBOSE=unset DNNL_VERBOSE=unset effective_isa=7
+[CHECKSUM] shape=6 threads=32 rep=0 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CALIBRATION] shape=6 threads=32 batches=145 runtime_s=1.03143 status=in_range
+[CHECKSUM] shape=6 threads=32 rep=1 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=32 rep=1 batches=145 runtime_s=1.035963 device_energy_j=295.290912 status=in_range
+[CHECKSUM] shape=6 threads=32 rep=2 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=32 rep=2 batches=145 runtime_s=1.003614 device_energy_j=286.963950 status=in_range
+[CHECKSUM] shape=6 threads=32 rep=3 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=32 rep=3 batches=145 runtime_s=0.993696 device_energy_j=284.577705 status=in_range
+[CHECKSUM] shape=6 threads=32 rep=4 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=32 rep=4 batches=145 runtime_s=1.058846 device_energy_j=301.120032 status=in_range
+[CHECKSUM] shape=6 threads=32 rep=5 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=32 rep=5 batches=145 runtime_s=1.024646 device_energy_j=292.967820 status=in_range
+[CHECKSUM] shape=6 threads=32 rep=6 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=32 rep=6 batches=145 runtime_s=0.990398 device_energy_j=284.106935 status=in_range
+[CHECKSUM] shape=6 threads=32 rep=7 samples=32 max_abs_error=0.000000e+00 max_rel_error=0.000000e+00 max_normalized_error=0.000000e+00 nonfinite=0 worst_flat_index=0 worst_n=0 worst_k=0 worst_oh=0 worst_ow=0 gate=PASS
+[CONV2D] shape=6 threads=32 rep=7 batches=145 runtime_s=1.009467 device_energy_j=288.995888 status=in_range

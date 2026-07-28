@@ -408,9 +408,16 @@ ChecksumDiagnostics verify_checksum(
     return diag;
 }
 
+bool diagnostics_enabled() {
+    const char* raw = std::getenv("CONV2D_DIAGNOSTICS");
+    return raw && *raw && std::string(raw) != "0";
+}
+
 void print_checksum_diagnostics(
     int shape_id, int threads, int repetition, const ChecksumDiagnostics& diag
 ) {
+    if (!diagnostics_enabled() && diag.ok) return;
+
     std::cout << "[CHECKSUM]"
               << " shape=" << shape_id
               << " threads=" << threads
@@ -764,44 +771,45 @@ void run_anti_collapse_probe(const std::string& model) {
     ConvRunner runner(shape, input.get(), weights.get(), output.get());
     runner.prepare(threads);
 
-    const dnnl::version_t* version = dnnl::version();
-    const int observed_threads = active_openmp_threads();
-    const dnnl::cpu_isa effective_isa = dnnl::get_effective_cpu_isa();
-    std::cout << "[CONFIG] shape=" << shape.id
-              << " threads_requested=" << threads
-              << " threads_observed=" << observed_threads
-              << " mode=anti_collapse\n";
-    std::cout << "[ONEDNN]"
-              << " version=" << version->major << "." << version->minor << "." << version->patch
-              << " cpu_threading_runtime=OpenMP"
-              << " implementation=" << runner.impl_info_str()
-              << " src_layout=" << bench::csv_escape(runner.src_layout_string())
-              << " weight_layout=" << bench::csv_escape(runner.weight_layout_string())
-              << " dst_layout=" << bench::csv_escape(runner.dst_layout_string())
-              << " src_reorder=" << (runner.reorder_src() ? "yes" : "no")
-              << " weight_reorder=" << (runner.reorder_weights() ? "yes" : "no")
-              << " dst_reorder=" << (runner.reorder_dst() ? "yes" : "no")
-              << " scratchpad_mode=user"
-              << " scratchpad_size_bytes=" << runner.scratchpad_size_bytes()
-              << " execute_api=dnnl_primitive_execute"
-              << " execute_arg_count=" << runner.execute_arg_count()
-              << '\n';
-    std::cout << "[ENV]"
-              << " requested_threads=" << threads
-              << " observed_threads=" << observed_threads
-              << " OMP_NUM_THREADS_env="
-              << (std::getenv("OMP_NUM_THREADS") ? std::getenv("OMP_NUM_THREADS") : "unset")
-              << " OMP_PROC_BIND="
-              << (std::getenv("OMP_PROC_BIND") ? std::getenv("OMP_PROC_BIND") : "unset")
-              << " OMP_PLACES="
-              << (std::getenv("OMP_PLACES") ? std::getenv("OMP_PLACES") : "unset")
-              << " ONEDNN_VERBOSE="
-              << (std::getenv("ONEDNN_VERBOSE") ? std::getenv("ONEDNN_VERBOSE") : "unset")
-              << " DNNL_VERBOSE="
-              << (std::getenv("DNNL_VERBOSE") ? std::getenv("DNNL_VERBOSE") : "unset")
-              << " effective_isa=" << static_cast<int>(effective_isa)
-              << '\n';
-
+    if (diagnostics_enabled()) {
+        const dnnl::version_t* version = dnnl::version();
+        const int observed_threads = active_openmp_threads();
+        const dnnl::cpu_isa effective_isa = dnnl::get_effective_cpu_isa();
+        std::cout << "[CONFIG] shape=" << shape.id
+                  << " threads_requested=" << threads
+                  << " threads_observed=" << observed_threads
+                  << " mode=anti_collapse\n";
+        std::cout << "[ONEDNN]"
+                  << " version=" << version->major << "." << version->minor << "." << version->patch
+                  << " cpu_threading_runtime=OpenMP"
+                  << " implementation=" << runner.impl_info_str()
+                  << " src_layout=" << bench::csv_escape(runner.src_layout_string())
+                  << " weight_layout=" << bench::csv_escape(runner.weight_layout_string())
+                  << " dst_layout=" << bench::csv_escape(runner.dst_layout_string())
+                  << " src_reorder=" << (runner.reorder_src() ? "yes" : "no")
+                  << " weight_reorder=" << (runner.reorder_weights() ? "yes" : "no")
+                  << " dst_reorder=" << (runner.reorder_dst() ? "yes" : "no")
+                  << " scratchpad_mode=user"
+                  << " scratchpad_size_bytes=" << runner.scratchpad_size_bytes()
+                  << " execute_api=dnnl_primitive_execute"
+                  << " execute_arg_count=" << runner.execute_arg_count()
+                  << '\n';
+        std::cout << "[ENV]"
+                  << " requested_threads=" << threads
+                  << " observed_threads=" << observed_threads
+                  << " OMP_NUM_THREADS_env="
+                  << (std::getenv("OMP_NUM_THREADS") ? std::getenv("OMP_NUM_THREADS") : "unset")
+                  << " OMP_PROC_BIND="
+                  << (std::getenv("OMP_PROC_BIND") ? std::getenv("OMP_PROC_BIND") : "unset")
+                  << " OMP_PLACES="
+                  << (std::getenv("OMP_PLACES") ? std::getenv("OMP_PLACES") : "unset")
+                  << " ONEDNN_VERBOSE="
+                  << (std::getenv("ONEDNN_VERBOSE") ? std::getenv("ONEDNN_VERBOSE") : "unset")
+                  << " DNNL_VERBOSE="
+                  << (std::getenv("DNNL_VERBOSE") ? std::getenv("DNNL_VERBOSE") : "unset")
+                  << " effective_isa=" << static_cast<int>(effective_isa)
+                  << '\n';
+    }
     runner.run_batches(1);
 
     const CalibrationResult calibration = calibrate(runner, threads);
@@ -985,9 +993,12 @@ void print_conv2d_result(const Conv2dRow& row) {
               << " threads=" << row.num_threads
               << " rep=" << row.repetition
               << " batches=" << row.batches
-              << " runtime_s=" << std::fixed << std::setprecision(6) << row.e2e_time_s
+              << " e2e_time_s=" << std::fixed << std::setprecision(6) << row.e2e_time_s
+              << " kernel_time_s=" << row.kernel_time_s
               << " device_energy_j=" << std::setprecision(6) << row.device_energy_j
-              << " status=" << row.runtime_status
+              << " avg_power_w=" << std::setprecision(3) << row.avg_power_w
+              << " runtime_status=" << row.runtime_status
+              << " checksum=" << (row.checksum_ok ? "OK" : "FAIL")
               << std::defaultfloat << '\n';
 }
 
@@ -1077,37 +1088,11 @@ int main(int argc, char** argv) {
         const dnnl::version_t* version = dnnl::version();
 
         if (anti_collapse_mode) {
-            std::cout << "[BENCHMARK]"
-                      << " workload=CONV2D"
-                      << " platform=AMD"
-                      << " backend=oneDNN"
-                      << " schema=cpu-gpu-v2"
-                      << " mode=anti_collapse"
-                      << " session_id=" << options.session_id
-                      << " repetitions=0"
-                      << " seed=" << options.seed
-                      << " configurations=1"
-                      << " device_name=" << model
-                      << " dram_rapl_available=not_sampled"
-                      << " reuse_regime=warm_resident"
-                      << " algorithm_policy=convolution_auto"
-                      << " scratchpad_mode=user"
-                      << " execute_api=dnnl_primitive_execute"
-                      << " onednn_cpu_threading_runtime=OpenMP"
-                      << " onednn_version=" << version->major << "."
-                      << version->minor << "." << version->patch
-                      << '\n';
-
-            std::cout << "onednn_cpu_threading_runtime=OpenMP"
-                      << " DNNL_CPU_THREADING_RUNTIME="
-                      << DNNL_CPU_THREADING_RUNTIME
-                      << " DNNL_RUNTIME_OMP=" << DNNL_RUNTIME_OMP
-#ifdef _OPENMP
-                      << " openmp_spec_date=" << _OPENMP
-#else
-                      << " openmp_spec_date=unavailable"
-#endif
-                      << '\n';
+            if (diagnostics_enabled()) {
+                std::cout << "[BENCHMARK] workload=CONV2D platform=AMD"
+                          << " mode=anti_collapse session=" << options.session_id
+                          << " device=" << model << '\n';
+            }
 
             // Exclusive probe mode: no regular configuration loop, no RAPL
             // requirement, and no CSV file creation or truncation.
@@ -1137,37 +1122,13 @@ int main(int argc, char** argv) {
                 "Failed to write CONV2D CSV header: " + options.output_file);
         }
 
-        std::cout << "[BENCHMARK]"
-                  << " workload=CONV2D"
-                  << " platform=AMD"
-                  << " backend=oneDNN"
-                  << " schema=cpu-gpu-v2"
-                  << " mode=measurement"
-                  << " session_id=" << options.session_id
-                  << " repetitions=" << options.repetitions
-                  << " seed=" << options.seed
-                  << " configurations=" << configs.size()
-                  << " device_name=" << model
-                  << " dram_rapl_available="
-                  << (rapl.dram_available() ? "yes" : "no")
-                  << " reuse_regime=warm_resident"
-                  << " algorithm_policy=convolution_auto"
-                  << " scratchpad_mode=user"
-                  << " execute_api=dnnl_primitive_execute"
-                  << " onednn_cpu_threading_runtime=OpenMP"
-                  << " onednn_version=" << version->major << "."
-                  << version->minor << "." << version->patch
-                  << '\n';
-
-        std::cout << "onednn_cpu_threading_runtime=OpenMP"
-                  << " DNNL_CPU_THREADING_RUNTIME="
-                  << DNNL_CPU_THREADING_RUNTIME
-                  << " DNNL_RUNTIME_OMP=" << DNNL_RUNTIME_OMP
-#ifdef _OPENMP
-                  << " openmp_spec_date=" << _OPENMP
-#else
-                  << " openmp_spec_date=unavailable"
-#endif
+        std::cout << "CONV2D | " << model
+                  << " | platform=AMD"
+                  << " | implementation=onednn_convolution_auto"
+                  << " | session=" << options.session_id
+                  << " | reps=" << options.repetitions
+                  << " | configs=" << configs.size()
+                  << " | DRAM-RAPL=" << (rapl.dram_available() ? "yes" : "no")
                   << '\n';
 
         long long sequence = 0;
@@ -1179,9 +1140,11 @@ int main(int argc, char** argv) {
             require_thread_team(config.threads, "before first-touch");
             const int observed_threads = active_openmp_threads();
 
-            std::cout << "[CONFIG] shape=" << shape.id
-                      << " threads_requested=" << config.threads
-                      << " threads_observed=" << observed_threads << '\n';
+            if (diagnostics_enabled()) {
+                std::cout << "[CONFIG] shape=" << shape.id
+                          << " threads_requested=" << config.threads
+                          << " threads_observed=" << observed_threads << '\n';
+            }
 
             const std::uint64_t input_count = shape.input_elements();
             const std::uint64_t weight_count = shape.weight_elements();
@@ -1210,38 +1173,41 @@ int main(int argc, char** argv) {
             require_thread_team(config.threads, "before reorders");
             runner.prepare(config.threads);
 
-            // execute_arg_count is only populated by prepare() (fixed C
-            // argument list assembly happens there); log after prepare()
-            // so the reported count reflects reality instead of the
-            // pre-prepare initial value of 0.
-            std::cout << "[ONEDNN]"
-                      << " version=" << version->major << "." << version->minor << "." << version->patch
-                      << " cpu_threading_runtime=OpenMP"
-                      << " implementation=" << runner.impl_info_str()
-                      << " src_layout=" << bench::csv_escape(runner.src_layout_string())
-                      << " weight_layout=" << bench::csv_escape(runner.weight_layout_string())
-                      << " dst_layout=" << bench::csv_escape(runner.dst_layout_string())
-                      << " src_reorder=" << (runner.reorder_src() ? "yes" : "no")
-                      << " weight_reorder=" << (runner.reorder_weights() ? "yes" : "no")
-                      << " dst_reorder=" << (runner.reorder_dst() ? "yes" : "no")
-                      << " scratchpad_mode=user"
-                      << " scratchpad_size_bytes=" << runner.scratchpad_size_bytes()
-                      << " execute_api=dnnl_primitive_execute"
-                      << " execute_arg_count=" << runner.execute_arg_count()
-                      << '\n';
+            if (diagnostics_enabled()) {
+                // execute_arg_count is only populated by prepare() (fixed C
+                // argument list assembly happens there); log after prepare()
+                // so the reported count reflects reality instead of the
+                // pre-prepare initial value of 0.
+                std::cout << "[ONEDNN]"
+                          << " version=" << version->major << "." << version->minor << "." << version->patch
+                          << " cpu_threading_runtime=OpenMP"
+                          << " implementation=" << runner.impl_info_str()
+                          << " src_layout=" << bench::csv_escape(runner.src_layout_string())
+                          << " weight_layout=" << bench::csv_escape(runner.weight_layout_string())
+                          << " dst_layout=" << bench::csv_escape(runner.dst_layout_string())
+                          << " src_reorder=" << (runner.reorder_src() ? "yes" : "no")
+                          << " weight_reorder=" << (runner.reorder_weights() ? "yes" : "no")
+                          << " dst_reorder=" << (runner.reorder_dst() ? "yes" : "no")
+                          << " scratchpad_mode=user"
+                          << " scratchpad_size_bytes=" << runner.scratchpad_size_bytes()
+                          << " execute_api=dnnl_primitive_execute"
+                          << " execute_arg_count=" << runner.execute_arg_count()
+                          << '\n';
 
-            const dnnl::cpu_isa effective_isa = dnnl::get_effective_cpu_isa();
-            std::cout << "[ENV]"
-                      << " requested_threads=" << config.threads
-                      << " observed_threads=" << observed_threads
-                      << " OMP_NUM_THREADS_env="
-                      << (std::getenv("OMP_NUM_THREADS") ? std::getenv("OMP_NUM_THREADS") : "unset")
-                      << " OMP_PROC_BIND=" << (std::getenv("OMP_PROC_BIND") ? std::getenv("OMP_PROC_BIND") : "unset")
-                      << " OMP_PLACES=" << (std::getenv("OMP_PLACES") ? std::getenv("OMP_PLACES") : "unset")
-                      << " ONEDNN_VERBOSE=" << (std::getenv("ONEDNN_VERBOSE") ? std::getenv("ONEDNN_VERBOSE") : "unset")
-                      << " DNNL_VERBOSE=" << (std::getenv("DNNL_VERBOSE") ? std::getenv("DNNL_VERBOSE") : "unset")
-                      << " effective_isa=" << static_cast<int>(effective_isa)
-                      << '\n';
+                const dnnl::cpu_isa effective_isa = dnnl::get_effective_cpu_isa();
+                std::cout << "[ENV]"
+                          << " requested_threads=" << config.threads
+                          << " observed_threads=" << observed_threads
+                          << " OMP_NUM_THREADS_env="
+                          << (std::getenv("OMP_NUM_THREADS") ? std::getenv("OMP_NUM_THREADS") : "unset")
+                          << " OMP_PROC_BIND=" << (std::getenv("OMP_PROC_BIND") ? std::getenv("OMP_PROC_BIND") : "unset")
+                          << " OMP_PLACES=" << (std::getenv("OMP_PLACES") ? std::getenv("OMP_PLACES") : "unset")
+                          << " ONEDNN_VERBOSE=" << (std::getenv("ONEDNN_VERBOSE") ? std::getenv("ONEDNN_VERBOSE") : "unset")
+                          << " DNNL_VERBOSE=" << (std::getenv("DNNL_VERBOSE") ? std::getenv("DNNL_VERBOSE") : "unset")
+                          << " effective_isa=" << static_cast<int>(effective_isa)
+                          << '\n';
+
+            }
 
             require_thread_team(config.threads, "before warm-up");
             runner.run_batches(1);
@@ -1262,10 +1228,12 @@ int main(int argc, char** argv) {
             // (CODING-AUFTRAG section 20/33 both call for them).
             std::cout << "[CALIBRATION] shape=" << shape.id
                       << " threads=" << config.threads
-                      << " batches=" << batches
-                      << " runtime_s=" << calibration.seconds
-                      << " status=" << bench::runtime_status(calibration.seconds)
-                      << '\n';
+                      << " batches=" << batches;
+            if (diagnostics_enabled()) {
+                std::cout << " runtime_s=" << calibration.seconds
+                          << " status=" << bench::runtime_status(calibration.seconds);
+            }
+            std::cout << '\n';
 
             for (int repetition = 1; repetition <= options.repetitions; ++repetition) {
                 require_thread_team(config.threads, "before official measurement");

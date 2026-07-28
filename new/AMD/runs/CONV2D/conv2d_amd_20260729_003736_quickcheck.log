@@ -1,0 +1,16 @@
+CONV2D | AMD Ryzen Threadripper 3970X 32-Core Processor | platform=AMD | implementation=onednn_convolution_auto | session=conv2d_amd_20260729_003736_quickcheck | reps=2 | configs=12 | DRAM-RAPL=no
+[CALIBRATION] shape=5 threads=1 batches=10
+[CONV2D] shape=5 threads=1 rep=1 batches=10 e2e_time_s=1.003825 kernel_time_s=1.003825 device_energy_j=96.344200 avg_power_w=95.977 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 threads=1 rep=2 batches=10 e2e_time_s=1.007543 kernel_time_s=1.007543 device_energy_j=96.223005 avg_power_w=95.503 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=6 threads=64 batches=93
+[CONV2D] shape=6 threads=64 rep=1 batches=93 e2e_time_s=1.014418 kernel_time_s=1.014418 device_energy_j=230.659596 avg_power_w=227.381 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 threads=64 rep=2 batches=93 e2e_time_s=1.015898 kernel_time_s=1.015898 device_energy_j=225.553460 avg_power_w=222.024 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=4 threads=1 batches=31
+[CONV2D] shape=4 threads=1 rep=1 batches=31 e2e_time_s=1.004803 kernel_time_s=1.004803 device_energy_j=102.631060 avg_power_w=102.140 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 threads=1 rep=2 batches=31 e2e_time_s=1.038661 kernel_time_s=1.038661 device_energy_j=105.075087 avg_power_w=101.164 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=3 threads=64 batches=545
+[CONV2D] shape=3 threads=64 rep=1 batches=545 e2e_time_s=0.934006 kernel_time_s=0.934006 device_energy_j=195.831151 avg_power_w=209.668 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 threads=64 rep=2 batches=545 e2e_time_s=0.921023 kernel_time_s=0.921023 device_energy_j=194.702684 avg_power_w=211.398 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=2 threads=1 batches=29
+[CONV2D] shape=2 threads=1 rep=1 batches=29 e2e_time_s=1.009004 kernel_time_s=1.009004 device_energy_j=101.341271 avg_power_w=100.437 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 threads=1 rep=2 batches=29 e2e_time_s=1.005682 kernel_time_s=1.005682 device_energy_j=100.785757 avg_power_w=100.216 runtime_status=in_range checksum=OK
