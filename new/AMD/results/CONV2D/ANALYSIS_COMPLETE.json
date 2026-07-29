@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "platform": "AMD",
+  "campaign": "20260729_005653",
+  "raw_rows": 2700,
+  "session_medians": 270,
+  "practical_tolerance": 0.02
+}

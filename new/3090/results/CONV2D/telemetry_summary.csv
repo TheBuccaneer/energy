@@ -1,0 +1,7 @@
+problem_size,configuration,rows,avg_power_w_median,temp_c_median,temp_c_max,sm_clock_mhz_median,clock_change_pct_median,throttle_reasons_unique
+1,gpu_resident,50,342.11644840769225,58.0,62,1620.0,0.0,0x4
+2,gpu_resident,50,338.7274177814238,63.0,64,1710.0,0.0,0x4
+3,gpu_resident,50,331.2602149280232,59.0,63,1725.0,0.0,0x4
+4,gpu_resident,50,327.20956007725124,62.0,64,1845.0,0.0,0x4
+5,gpu_resident,50,335.36542051770175,60.0,63,1631.0,0.0,0x4
+6,gpu_resident,50,342.52230974978704,62.0,63,1455.0,0.0,0x4

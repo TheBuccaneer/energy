@@ -1,0 +1,13 @@
+{
+  "platform": "5060ti",
+  "campaign": "20260729_100925",
+  "sessions": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "raw_rows": 300,
+  "validation_schema": "cpu-gpu-v2"
+}

@@ -1,0 +1,56 @@
+category,check,severity,status,observed,expected
+coverage,five_sessions,FAIL,PASS,"[1, 2, 3, 4, 5]","[1, 2, 3, 4, 5]"
+schema,exact_header,FAIL,PASS,"['schema_version', 'timestamp', 'session_id', 'sequence_index', 'run_id_global', 'repetition', 'workload', 'implementation', 'execution_mode', 'device_name', 'num_threads', 'problem_size', 'problem_spec', 'batches', 'e2e_time_s', 'kernel_time_s', 'wall_time_s', 'device_energy_j', 'total_energy_j', 'dram_energy_j', 'energy_per_op_j', 'energy_per_second_j', 'energy_per_flop_j', 'time_per_op_ms_kernel', 'time_per_op_ms_e2e', 'flops_total', 'gflops_per_s', 'logical_bytes_per_op', 'avg_power_w', 'runtime_status', 'pcie_gen', 'pcie_width', 'sm_clock_mhz', 'clock_before_mhz', 'clock_after_mhz', 'mem_clock_mhz', 'temp_c', 'temp_before_c', 'temp_after_c', 'throttle_reasons', 'cpu_cycles', 'cpu_instructions', 'cpu_ipc', 'cpu_cache_misses', 'checksum_ok']","['schema_version', 'timestamp', 'session_id', 'sequence_index', 'run_id_global', 'repetition', 'workload', 'implementation', 'execution_mode', 'device_name', 'num_threads', 'problem_size', 'problem_spec', 'batches', 'e2e_time_s', 'kernel_time_s', 'wall_time_s', 'device_energy_j', 'total_energy_j', 'dram_energy_j', 'energy_per_op_j', 'energy_per_second_j', 'energy_per_flop_j', 'time_per_op_ms_kernel', 'time_per_op_ms_e2e', 'flops_total', 'gflops_per_s', 'logical_bytes_per_op', 'avg_power_w', 'runtime_status', 'pcie_gen', 'pcie_width', 'sm_clock_mhz', 'clock_before_mhz', 'clock_after_mhz', 'mem_clock_mhz', 'temp_c', 'temp_before_c', 'temp_after_c', 'throttle_reasons', 'cpu_cycles', 'cpu_instructions', 'cpu_ipc', 'cpu_cache_misses', 'checksum_ok']"
+schema,schema_version,FAIL,PASS,['cpu-gpu-v2'],cpu-gpu-v2
+coverage,session_1_row_count,FAIL,PASS,60,60
+coverage,session_2_row_count,FAIL,PASS,60,60
+coverage,session_3_row_count,FAIL,PASS,60,60
+coverage,session_4_row_count,FAIL,PASS,60,60
+coverage,session_5_row_count,FAIL,PASS,60,60
+semantics,workload,FAIL,PASS,['CONV2D'],CONV2D
+semantics,implementation,FAIL,PASS,0,cudnn_convolution_fwd_fp32*
+semantics,execution_mode,FAIL,PASS,['gpu_resident'],gpu_resident
+semantics,device_identity,FAIL,PASS,['NVIDIA GeForce RTX 3090'],['3090']
+coverage,shape_ids,FAIL,PASS,"[np.int64(1), np.int64(2), np.int64(3), np.int64(4), np.int64(5), np.int64(6)]","[1, 2, 3, 4, 5, 6]"
+coverage,thread_grid,FAIL,PASS,[np.int64(-1)],[-1]
+coverage,no_duplicates,FAIL,PASS,0,0
+coverage,ten_repetitions_per_configuration,FAIL,PASS,"{'bad': 0, 'groups': 30}",30
+coverage,sequence_and_run_ids,FAIL,PASS,0,0
+semantics,problem_spec_geometry,FAIL,PASS,0,0
+semantics,plan_or_primitive_stable_within_configuration,FAIL,PASS,0,0
+numeric,positive_batches,FAIL,PASS,0,0
+numeric,positive_e2e_time_s,FAIL,PASS,0,0
+numeric,positive_kernel_time_s,FAIL,PASS,0,0
+numeric,positive_wall_time_s,FAIL,PASS,0,0
+numeric,positive_device_energy_j,FAIL,PASS,0,0
+numeric,positive_total_energy_j,FAIL,PASS,0,0
+numeric,positive_energy_per_op_j,FAIL,PASS,0,0
+numeric,positive_energy_per_second_j,FAIL,PASS,0,0
+numeric,positive_energy_per_flop_j,FAIL,PASS,0,0
+numeric,positive_time_per_op_ms_kernel,FAIL,PASS,0,0
+numeric,positive_time_per_op_ms_e2e,FAIL,PASS,0,0
+numeric,positive_flops_total,FAIL,PASS,0,0
+numeric,positive_gflops_per_s,FAIL,PASS,0,0
+numeric,positive_logical_bytes_per_op,FAIL,PASS,0,0
+numeric,positive_avg_power_w,FAIL,PASS,0,0
+correctness,all_checksums,FAIL,PASS,0,0
+formula,flops_total,FAIL,PASS,0,0
+formula,logical_bytes_per_op,FAIL,PASS,0,0
+formula,energy_per_op_j,FAIL,PASS,0,0
+formula,energy_per_second_j,FAIL,PASS,0,0
+formula,energy_per_flop_j,FAIL,PASS,0,0
+formula,time_per_op_ms_kernel,FAIL,PASS,0,0
+formula,time_per_op_ms_e2e,FAIL,PASS,0,0
+formula,gflops_per_s,FAIL,PASS,0,0
+formula,avg_power_w,FAIL,PASS,0,0
+runtime,runtime_status_formula,FAIL,PASS,0,0
+runtime,no_below_rows_written,FAIL,PASS,{'in_range': 300},no below rows
+runtime,all_runtime_in_target,WARN,PASS,{'in_range': 300},all in_range preferred
+timing,wall_equals_e2e,FAIL,PASS,0,0
+timing,gpu_kernel_not_materially_above_e2e,FAIL,PASS,"{'rows': 0, 'max_ms': 0.0}","0 rows; tolerance max(0.5 ms,0.5%)"
+timing,gpu_kernel_slightly_above_e2e,WARN,PASS,"{'rows': 0, 'max_ms': 0.0}",diagnostic only
+energy,gpu_device_equals_total,FAIL,PASS,0,0
+sentinels,gpu_dram_and_cpu_counters,FAIL,PASS,checked,all -1
+gpu,telemetry_present,WARN,PASS,0,0
+provenance,source_present,FAIL,PASS,/home/rock/projects/energy/new/3090/scripts/CONV2D/main_conv2d.cu,present
+provenance,runner_present,WARN,PASS,/home/rock/projects/energy/new/3090/02_run_GPU_3090_CONV2D_only.sh,one known CONV2D runner path

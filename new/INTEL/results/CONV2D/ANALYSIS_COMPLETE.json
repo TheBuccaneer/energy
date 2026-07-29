@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "platform": "INTEL",
+  "campaign": "20260729_004307",
+  "raw_rows": 2100,
+  "session_medians": 210,
+  "practical_tolerance": 0.02
+}

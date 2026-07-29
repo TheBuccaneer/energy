@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "platform": "5060ti",
+  "campaign": "20260729_100925",
+  "raw_rows": 300,
+  "session_medians": 30,
+  "practical_tolerance": 0.02
+}

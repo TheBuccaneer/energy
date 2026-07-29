@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "platforms": [
+    "AMD",
+    "INTEL",
+    "3090",
+    "5060ti"
+  ],
+  "shapes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "practical_tolerance": 0.02,
+  "configuration_rows": 108,
+  "session_medians": 540
+}

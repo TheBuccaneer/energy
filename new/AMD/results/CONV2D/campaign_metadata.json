@@ -1,0 +1,13 @@
+{
+  "platform": "AMD",
+  "campaign": "20260729_005653",
+  "sessions": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "raw_rows": 2700,
+  "validation_schema": "cpu-gpu-v2"
+}

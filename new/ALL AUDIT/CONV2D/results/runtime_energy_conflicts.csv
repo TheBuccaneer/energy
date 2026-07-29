@@ -1,0 +1,7 @@
+problem_size,runtime_tie_set,energy_tie_set,same_tie_set,overlap
+1,3090,3090,True,3090
+2,3090,5060ti,False,
+3,3090,3090,True,3090
+4,3090,5060ti,False,
+5,3090,3090,True,3090
+6,3090,5060ti,False,

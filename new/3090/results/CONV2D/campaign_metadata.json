@@ -1,0 +1,13 @@
+{
+  "platform": "3090",
+  "campaign": "20260729_093014",
+  "sessions": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "raw_rows": 300,
+  "validation_schema": "cpu-gpu-v2"
+}

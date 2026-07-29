@@ -1,0 +1,8 @@
+platform,campaign,session,path,sha256,bytes
+AMD,20260729_005653,1,/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session1.csv,66ec7868a600c46f71cb9a0ddd69118eaea50ab2af117c93e7bc84a3d1d1ff6e,451259
+AMD,20260729_005653,2,/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session2.csv,e533ef94231e87c5163818c3e5b41b217f955f85add5456658d4bf5b40fb9c3a,451441
+AMD,20260729_005653,3,/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session3.csv,716f3c59b3b85ca555100b78ba1850915241bfb3d15a97092b04636c6bd4bdea,451557
+AMD,20260729_005653,4,/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session4.csv,3ef3d33fa5f6e4b5f1d2b2ccad33963e6c39b9260847729d54d562b10d68dd9c,452450
+AMD,20260729_005653,5,/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session5.csv,631f3d1a64de22ec69af4deac04fd28f08d6d21cd10247c6674f9079c35b1d5b,451922
+AMD,20260729_005653,source,/home/rock/projects/energy/new/AMD/scripts/CONV2D/main_conv2d_amd.cpp,75940b1dd10c01a4a5788e39415c80aa1ae34c7b36071c3affeb2c20ff0dfb0d,62844
+AMD,20260729_005653,runner,/home/rock/projects/energy/new/AMD/scripts/02_run_CPU_AMD_CONV2D_only.sh,03f830fe2eb420a33b7be679739dce35c8005a669da1601d735d062f199f8edf,36254

@@ -1,0 +1,67 @@
+CONV2D | NVIDIA GeForce RTX 3090 | pci_bus_id=0000:01:00.0 | implementation=cudnn_convolution_fwd_fp32 | session=conv2d_3090_20260729_093014_session3 | reps=10 | mode=gpu_resident | cudnn_version=91900 | CUDA runtime=12040 | CUDA driver=13000
+[CALIBRATION] shape=5 batches=2136 runtime_s=1.01261 status=in_range
+[CONV2D] shape=5 rep=1 batches=2136 e2e_time_s=1.005694 kernel_time_s=1.005678 device_energy_j=336.318000 avg_power_w=334.414 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=2 batches=2136 e2e_time_s=1.002675 kernel_time_s=1.002661 device_energy_j=334.248000 avg_power_w=333.356 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=3 batches=2136 e2e_time_s=1.009719 kernel_time_s=1.009704 device_energy_j=364.233000 avg_power_w=360.727 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=4 batches=2136 e2e_time_s=1.004536 kernel_time_s=1.004521 device_energy_j=339.334000 avg_power_w=337.802 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=5 batches=2136 e2e_time_s=1.004604 kernel_time_s=1.004590 device_energy_j=335.359000 avg_power_w=333.822 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=6 batches=2136 e2e_time_s=1.005801 kernel_time_s=1.005786 device_energy_j=335.525000 avg_power_w=333.590 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=7 batches=2136 e2e_time_s=1.005604 kernel_time_s=1.005589 device_energy_j=337.196000 avg_power_w=335.317 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=8 batches=2136 e2e_time_s=1.005981 kernel_time_s=1.005965 device_energy_j=334.996000 avg_power_w=333.004 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=9 batches=2136 e2e_time_s=1.006171 kernel_time_s=1.006156 device_energy_j=337.714000 avg_power_w=335.643 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=10 batches=2136 e2e_time_s=1.006765 kernel_time_s=1.006742 device_energy_j=334.243000 avg_power_w=331.997 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=3 batches=4250 runtime_s=1.01 status=in_range
+[CONV2D] shape=3 rep=1 batches=4250 e2e_time_s=1.011421 kernel_time_s=1.011405 device_energy_j=335.133000 avg_power_w=331.349 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=2 batches=4250 e2e_time_s=1.011891 kernel_time_s=1.011876 device_energy_j=332.752000 avg_power_w=328.842 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=3 batches=4250 e2e_time_s=1.011227 kernel_time_s=1.011211 device_energy_j=333.374000 avg_power_w=329.673 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=4 batches=4250 e2e_time_s=1.011620 kernel_time_s=1.011604 device_energy_j=327.082000 avg_power_w=323.325 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=5 batches=4250 e2e_time_s=1.011864 kernel_time_s=1.011849 device_energy_j=329.490000 avg_power_w=325.627 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=6 batches=4250 e2e_time_s=1.012955 kernel_time_s=1.012940 device_energy_j=329.737000 avg_power_w=325.520 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=7 batches=4250 e2e_time_s=1.012540 kernel_time_s=1.012525 device_energy_j=335.377000 avg_power_w=331.223 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=8 batches=4250 e2e_time_s=1.011676 kernel_time_s=1.011661 device_energy_j=333.689000 avg_power_w=329.838 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=9 batches=4250 e2e_time_s=1.010575 kernel_time_s=1.010560 device_energy_j=334.223000 avg_power_w=330.726 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=10 batches=4250 e2e_time_s=1.011063 kernel_time_s=1.011048 device_energy_j=328.921000 avg_power_w=325.322 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=1 batches=3232 runtime_s=1.01 status=in_range
+[CONV2D] shape=1 rep=1 batches=3232 e2e_time_s=1.006910 kernel_time_s=1.006891 device_energy_j=345.778000 avg_power_w=343.405 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=2 batches=3232 e2e_time_s=1.006894 kernel_time_s=1.006878 device_energy_j=346.597000 avg_power_w=344.224 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=3 batches=3232 e2e_time_s=1.007209 kernel_time_s=1.007194 device_energy_j=343.472000 avg_power_w=341.014 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=4 batches=3232 e2e_time_s=1.007836 kernel_time_s=1.007822 device_energy_j=346.281000 avg_power_w=343.589 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=5 batches=3232 e2e_time_s=1.006773 kernel_time_s=1.006757 device_energy_j=341.497000 avg_power_w=339.200 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=6 batches=3232 e2e_time_s=1.007733 kernel_time_s=1.007717 device_energy_j=344.473000 avg_power_w=341.829 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=7 batches=3232 e2e_time_s=1.007522 kernel_time_s=1.007506 device_energy_j=381.655000 avg_power_w=378.806 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=8 batches=3232 e2e_time_s=1.008990 kernel_time_s=1.008975 device_energy_j=347.596000 avg_power_w=344.499 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=9 batches=3232 e2e_time_s=1.009067 kernel_time_s=1.009052 device_energy_j=345.735000 avg_power_w=342.629 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=10 batches=3232 e2e_time_s=1.008130 kernel_time_s=1.008116 device_energy_j=347.424000 avg_power_w=344.622 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=4 batches=3279 runtime_s=1.01 status=in_range
+[CONV2D] shape=4 rep=1 batches=3279 e2e_time_s=1.004934 kernel_time_s=1.004920 device_energy_j=328.616000 avg_power_w=327.002 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=2 batches=3279 e2e_time_s=1.004226 kernel_time_s=1.004212 device_energy_j=325.568000 avg_power_w=324.198 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=3 batches=3279 e2e_time_s=1.003772 kernel_time_s=1.003757 device_energy_j=329.654000 avg_power_w=328.415 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=4 batches=3279 e2e_time_s=1.003478 kernel_time_s=1.003464 device_energy_j=327.703000 avg_power_w=326.567 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=5 batches=3279 e2e_time_s=1.003511 kernel_time_s=1.003496 device_energy_j=323.766000 avg_power_w=322.633 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=6 batches=3279 e2e_time_s=1.004024 kernel_time_s=1.004005 device_energy_j=328.033000 avg_power_w=326.718 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=7 batches=3279 e2e_time_s=1.004127 kernel_time_s=1.004113 device_energy_j=325.580000 avg_power_w=324.242 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=8 batches=3279 e2e_time_s=1.004598 kernel_time_s=1.004583 device_energy_j=362.257000 avg_power_w=360.599 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=9 batches=3279 e2e_time_s=1.005145 kernel_time_s=1.005131 device_energy_j=330.365000 avg_power_w=328.674 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=10 batches=3279 e2e_time_s=1.004544 kernel_time_s=1.004530 device_energy_j=329.779000 avg_power_w=328.287 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=6 batches=1364 runtime_s=1.02 status=in_range
+[CONV2D] shape=6 rep=1 batches=1364 e2e_time_s=1.022390 kernel_time_s=1.022375 device_energy_j=341.923000 avg_power_w=334.435 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=2 batches=1364 e2e_time_s=1.019296 kernel_time_s=1.019279 device_energy_j=346.677000 avg_power_w=340.114 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=3 batches=1364 e2e_time_s=1.019479 kernel_time_s=1.019465 device_energy_j=379.684000 avg_power_w=372.430 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=4 batches=1364 e2e_time_s=1.019255 kernel_time_s=1.019240 device_energy_j=344.969000 avg_power_w=338.452 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=5 batches=1364 e2e_time_s=1.019360 kernel_time_s=1.019339 device_energy_j=343.554000 avg_power_w=337.029 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=6 batches=1364 e2e_time_s=1.019640 kernel_time_s=1.019625 device_energy_j=342.645000 avg_power_w=336.045 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=7 batches=1364 e2e_time_s=1.018593 kernel_time_s=1.018578 device_energy_j=380.997000 avg_power_w=374.042 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=8 batches=1364 e2e_time_s=1.019956 kernel_time_s=1.019943 device_energy_j=345.631000 avg_power_w=338.868 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=9 batches=1364 e2e_time_s=1.019840 kernel_time_s=1.019825 device_energy_j=344.300000 avg_power_w=337.602 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=10 batches=1364 e2e_time_s=1.019473 kernel_time_s=1.019459 device_energy_j=342.736000 avg_power_w=336.189 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=2 batches=3472 runtime_s=1.01 status=in_range
+[CONV2D] shape=2 rep=1 batches=3472 e2e_time_s=1.005010 kernel_time_s=1.004996 device_energy_j=342.854000 avg_power_w=341.145 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=2 batches=3472 e2e_time_s=1.002836 kernel_time_s=1.002822 device_energy_j=342.136000 avg_power_w=341.169 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=3 batches=3472 e2e_time_s=1.004460 kernel_time_s=1.004447 device_energy_j=339.751000 avg_power_w=338.243 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=4 batches=3472 e2e_time_s=1.003645 kernel_time_s=1.003630 device_energy_j=337.941000 avg_power_w=336.714 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=5 batches=3472 e2e_time_s=1.004621 kernel_time_s=1.004604 device_energy_j=341.298000 avg_power_w=339.728 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=6 batches=3472 e2e_time_s=1.004778 kernel_time_s=1.004763 device_energy_j=339.327000 avg_power_w=337.713 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=7 batches=3472 e2e_time_s=1.004488 kernel_time_s=1.004474 device_energy_j=342.373000 avg_power_w=340.843 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=8 batches=3472 e2e_time_s=1.004106 kernel_time_s=1.004089 device_energy_j=339.958000 avg_power_w=338.568 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=9 batches=3472 e2e_time_s=1.004352 kernel_time_s=1.004337 device_energy_j=336.205000 avg_power_w=334.748 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=10 batches=3472 e2e_time_s=1.004751 kernel_time_s=1.004738 device_energy_j=340.451000 avg_power_w=338.841 runtime_status=in_range checksum=OK

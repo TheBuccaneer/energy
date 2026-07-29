@@ -1,0 +1,121 @@
+platform,platform_label,device_kind,energy_domain,problem_size,objective,configuration,num_threads,value,selected_campaign
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,1,runtime,gpu_resident,-1,0.0003114451813407,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,1,energy,gpu_resident,-1,0.1065770775409329,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,1,edp,gpu_resident,-1,3.318029078511065e-05,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,1,throughput,gpu_resident,-1,23756.194603481297,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,1,energy_efficiency,gpu_resident,-1,69.42169819262313,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,2,runtime,gpu_resident,-1,0.0002893070187211,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,2,energy,gpu_resident,-1,0.0979851670506912,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,2,edp,gpu_resident,-1,2.8346523125624988e-05,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,2,throughput,gpu_resident,-1,12787.0251647826,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,2,energy_efficiency,gpu_resident,-1,37.75447020705474,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,3,runtime,gpu_resident,-1,0.0002380348142352,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,3,energy,gpu_resident,-1,0.0784748464808691,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,3,edp,gpu_resident,-1,1.8652604101657136e-05,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,3,throughput,gpu_resident,-1,15541.323829752284,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,3,energy_efficiency,gpu_resident,-1,47.140916220792896,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,4,runtime,gpu_resident,-1,0.0003062447918572,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,4,energy,gpu_resident,-1,0.1001294602012808,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,4,edp,gpu_resident,-1,3.067337682275305e-05,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,4,throughput,gpu_resident,-1,12079.800980829914,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,4,energy_efficiency,gpu_resident,-1,36.94596012645064,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,5,runtime,gpu_resident,-1,0.0004733076907677,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,5,energy,gpu_resident,-1,0.1587692853762423,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,5,edp,gpu_resident,-1,7.516846282475107e-05,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,5,throughput,gpu_resident,-1,15957.68054811591,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,5,energy_efficiency,gpu_resident,-1,47.57152202183882,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,6,runtime,gpu_resident,-1,0.0007474163896627,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,6,energy,gpu_resident,-1,0.2526645894428152,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,6,edp,gpu_resident,-1,0.0001888588882384,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,6,throughput,gpu_resident,-1,17598.406358241613,20260729_093014
+3090,RTX 3090,GPU,GPU board NVML TotalEnergyConsumption,6,energy_efficiency,gpu_resident,-1,52.05854039199496,20260729_093014
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,1,runtime,gpu_resident,-1,0.0007166533381088,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,1,energy,gpu_resident,-1,0.1198900429799427,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,1,edp,gpu_resident,-1,8.592193468997175e-05,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,1,throughput,gpu_resident,-1,10324.032363465896,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,1,energy_efficiency,gpu_resident,-1,61.71284466186225,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,2,runtime,gpu_resident,-1,0.0005828563919627,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,2,energy,gpu_resident,-1,0.0924463869463869,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,2,edp,gpu_resident,-1,5.388019495007685e-05,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,2,throughput,gpu_resident,-1,6346.977023933127,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,2,energy_efficiency,gpu_resident,-1,40.01645166782499,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,3,runtime,gpu_resident,-1,0.0004731176098644,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,3,energy,gpu_resident,-1,0.084270028275212,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,3,edp,gpu_resident,-1,3.983201198982845e-05,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,3,throughput,gpu_resident,-1,7819.147207978272,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,3,energy_efficiency,gpu_resident,-1,43.89908734272027,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,4,runtime,gpu_resident,-1,0.0004846154214079,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,4,energy,gpu_resident,-1,0.0861506518590053,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,4,edp,gpu_resident,-1,4.162082554943685e-05,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,4,throughput,gpu_resident,-1,7633.632727598928,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,4,energy_efficiency,gpu_resident,-1,42.940779434561065,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,5,runtime,gpu_resident,-1,0.0010487651956087,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,5,energy,gpu_resident,-1,0.1862388282025819,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,5,edp,gpu_resident,-1,0.0001949508020594,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,5,throughput,gpu_resident,-1,7201.700619497869,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,5,energy_efficiency,gpu_resident,-1,40.62781954757792,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,6,runtime,gpu_resident,-1,0.0012177912001216,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,6,energy,gpu_resident,-1,0.2179719512195121,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,6,edp,gpu_resident,-1,0.0002658100575788,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,6,throughput,gpu_resident,-1,10800.979324698306,20260729_100925
+5060ti,RTX 5060 Ti,GPU,GPU board NVML TotalEnergyConsumption,6,energy_efficiency,gpu_resident,-1,60.34421046079196,20260729_100925
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,1,runtime,32T,32,0.0021982584226579,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,1,energy,32T,32,0.5786336383442265,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,1,edp,32T,32,0.0012720885942809,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,1,throughput,32T,32,3365.733611726508,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,1,energy_efficiency,32T,32,12.786592043884731,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,2,runtime,32T,32,0.0011579776864988,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,2,energy,64T,64,0.3022220253537735,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,2,edp,64T,64,0.0003594420046951,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,2,throughput,32T,32,3194.686896914987,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,2,energy_efficiency,64T,64,12.240590871899824,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,3,runtime,32T,32,0.0011554848568985,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,3,energy,64T,64,0.2996115106257379,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,3,edp,64T,64,0.0003545213331255,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,3,throughput,32T,32,3201.579810046808,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,3,energy_efficiency,64T,64,12.347243002729131,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,4,runtime,32T,32,0.0011607068039772,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,4,energy,64T,64,0.2903272330960854,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,4,edp,64T,64,0.0003476391931357,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,4,throughput,32T,32,3187.1758990358844,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,4,energy_efficiency,64T,64,12.742111308671811,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,5,runtime,64T,64,0.0028799458508522,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,5,energy,64T,64,0.7427797698863636,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,5,edp,64T,64,0.0021387264510902,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,5,throughput,64T,64,2622.5815916628867,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,5,energy_efficiency,64T,64,10.168414965354426,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,6,runtime,32T,32,0.0057522896522988,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,6,energy,64T,64,1.4056095578034682,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,6,edp,64T,64,0.0081720083071273,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,6,throughput,32T,32,2286.6263969846214,20260729_005653
+AMD,AMD Threadripper 3970X,CPU,CPU package RAPL plus DRAM RAPL when available,6,energy_efficiency,64T,64,9.357746947983136,20260729_005653
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,1,runtime,20T,20,0.0045348652400881,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,1,energy,20T,20,0.7182687139639639,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,1,edp,20T,20,0.0032550984654399,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,1,throughput,20T,20,1631.5264917334175,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,1,energy_efficiency,20T,20,10.30081491639567,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,2,runtime,20T,20,0.0023610855511727,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,2,energy,20T,20,0.3791731833688699,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,2,edp,20T,20,0.0008969229826298,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,2,throughput,20T,20,1566.8118156473274,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,2,energy_efficiency,20T,20,9.756428710542847,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,3,runtime,20T,20,0.0022411155,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,3,energy,10T,10,0.358497366972477,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,3,edp,10T,10,0.0008168508949091,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,3,throughput,20T,20,1650.6860670005929,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,3,energy_efficiency,10T,10,10.31911672920648,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,4,runtime,20T,20,0.002491494742647,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,4,energy,10T,10,0.410718193902439,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,4,edp,10T,10,0.0010562356384894,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,4,throughput,20T,20,1484.8021720849576,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,4,energy_efficiency,10T,10,9.007090980454887,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,5,runtime,10T,10,0.0063174054813664,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,5,energy,8T,8,1.0133582843137252,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,5,edp,10T,10,0.0064295002829032,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,5,throughput,10T,10,1195.5705709724048,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,5,energy_efficiency,8T,8,7.45333036217731,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,6,runtime,20T,20,0.0096999421826923,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,6,energy,10T,10,1.5926298834951456,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,6,edp,20T,20,0.0156355400169085,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,6,throughput,20T,20,1356.0222445206996,20260729_004307
+INTEL,Intel Core i9-7900X,CPU,CPU package RAPL plus DRAM RAPL when available,6,energy_efficiency,10T,10,8.258879362860139,20260729_004307

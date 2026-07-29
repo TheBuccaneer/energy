@@ -1,0 +1,31 @@
+problem_size,objective,platform,platform_label,configuration,value,exact_winner,within_2pct,energy_domain
+1,edp,3090,RTX 3090,gpu_resident,3.318029078511065e-05,True,True,GPU board NVML TotalEnergyConsumption
+1,energy,3090,RTX 3090,gpu_resident,0.1065770775409329,True,True,GPU board NVML TotalEnergyConsumption
+1,energy_efficiency,3090,RTX 3090,gpu_resident,69.42169819262313,True,True,GPU board NVML TotalEnergyConsumption
+1,runtime,3090,RTX 3090,gpu_resident,0.0003114451813407,True,True,GPU board NVML TotalEnergyConsumption
+1,throughput,3090,RTX 3090,gpu_resident,23756.194603481297,True,True,GPU board NVML TotalEnergyConsumption
+2,edp,3090,RTX 3090,gpu_resident,2.8346523125624988e-05,True,True,GPU board NVML TotalEnergyConsumption
+2,energy,5060ti,RTX 5060 Ti,gpu_resident,0.0924463869463869,True,True,GPU board NVML TotalEnergyConsumption
+2,energy_efficiency,5060ti,RTX 5060 Ti,gpu_resident,40.01645166782499,True,True,GPU board NVML TotalEnergyConsumption
+2,runtime,3090,RTX 3090,gpu_resident,0.0002893070187211,True,True,GPU board NVML TotalEnergyConsumption
+2,throughput,3090,RTX 3090,gpu_resident,12787.0251647826,True,True,GPU board NVML TotalEnergyConsumption
+3,edp,3090,RTX 3090,gpu_resident,1.8652604101657136e-05,True,True,GPU board NVML TotalEnergyConsumption
+3,energy,3090,RTX 3090,gpu_resident,0.0784748464808691,True,True,GPU board NVML TotalEnergyConsumption
+3,energy_efficiency,3090,RTX 3090,gpu_resident,47.140916220792896,True,True,GPU board NVML TotalEnergyConsumption
+3,runtime,3090,RTX 3090,gpu_resident,0.0002380348142352,True,True,GPU board NVML TotalEnergyConsumption
+3,throughput,3090,RTX 3090,gpu_resident,15541.323829752284,True,True,GPU board NVML TotalEnergyConsumption
+4,edp,3090,RTX 3090,gpu_resident,3.067337682275305e-05,True,True,GPU board NVML TotalEnergyConsumption
+4,energy,5060ti,RTX 5060 Ti,gpu_resident,0.0861506518590053,True,True,GPU board NVML TotalEnergyConsumption
+4,energy_efficiency,5060ti,RTX 5060 Ti,gpu_resident,42.940779434561065,True,True,GPU board NVML TotalEnergyConsumption
+4,runtime,3090,RTX 3090,gpu_resident,0.0003062447918572,True,True,GPU board NVML TotalEnergyConsumption
+4,throughput,3090,RTX 3090,gpu_resident,12079.800980829914,True,True,GPU board NVML TotalEnergyConsumption
+5,edp,3090,RTX 3090,gpu_resident,7.516846282475107e-05,True,True,GPU board NVML TotalEnergyConsumption
+5,energy,3090,RTX 3090,gpu_resident,0.1587692853762423,True,True,GPU board NVML TotalEnergyConsumption
+5,energy_efficiency,3090,RTX 3090,gpu_resident,47.57152202183882,True,True,GPU board NVML TotalEnergyConsumption
+5,runtime,3090,RTX 3090,gpu_resident,0.0004733076907677,True,True,GPU board NVML TotalEnergyConsumption
+5,throughput,3090,RTX 3090,gpu_resident,15957.68054811591,True,True,GPU board NVML TotalEnergyConsumption
+6,edp,3090,RTX 3090,gpu_resident,0.0001888588882384,True,True,GPU board NVML TotalEnergyConsumption
+6,energy,5060ti,RTX 5060 Ti,gpu_resident,0.2179719512195121,True,True,GPU board NVML TotalEnergyConsumption
+6,energy_efficiency,5060ti,RTX 5060 Ti,gpu_resident,60.34421046079196,True,True,GPU board NVML TotalEnergyConsumption
+6,runtime,3090,RTX 3090,gpu_resident,0.0007474163896627,True,True,GPU board NVML TotalEnergyConsumption
+6,throughput,3090,RTX 3090,gpu_resident,17598.406358241613,True,True,GPU board NVML TotalEnergyConsumption

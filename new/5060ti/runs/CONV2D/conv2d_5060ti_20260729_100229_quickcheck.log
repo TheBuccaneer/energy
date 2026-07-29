@@ -1,0 +1,19 @@
+CONV2D | NVIDIA GeForce RTX 5060 Ti | pci_bus_id=0000:01:00.0 | implementation=cudnn_convolution_fwd_fp32 | session=conv2d_5060ti_20260729_100229_quickcheck | reps=2 | mode=gpu_resident | cudnn_version=91900 | CUDA runtime=12040 | CUDA driver=13000
+[CALIBRATION] shape=4 batches=2058 runtime_s=1.00988 status=in_range
+[CONV2D] shape=4 rep=1 batches=2058 e2e_time_s=1.010567 kernel_time_s=1.010535 device_energy_j=179.788000 avg_power_w=177.908 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 rep=2 batches=2058 e2e_time_s=1.008935 kernel_time_s=1.008859 device_energy_j=178.602000 avg_power_w=177.020 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=5 batches=954 runtime_s=1.01 status=in_range
+[CONV2D] shape=5 rep=1 batches=954 e2e_time_s=1.020774 kernel_time_s=1.020746 device_energy_j=178.349000 avg_power_w=174.719 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 rep=2 batches=954 e2e_time_s=1.021660 kernel_time_s=1.021633 device_energy_j=196.018000 avg_power_w=191.862 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=2 batches=1687 runtime_s=1 status=in_range
+[CONV2D] shape=2 rep=1 batches=1687 e2e_time_s=1.009310 kernel_time_s=1.009213 device_energy_j=154.324000 avg_power_w=152.900 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 rep=2 batches=1687 e2e_time_s=1.010523 kernel_time_s=1.010439 device_energy_j=170.831000 avg_power_w=169.052 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=1 batches=1368 runtime_s=1.01 status=in_range
+[CONV2D] shape=1 rep=1 batches=1368 e2e_time_s=0.996071 kernel_time_s=0.996058 device_energy_j=167.265000 avg_power_w=167.925 runtime_status=in_range checksum=OK
+[CONV2D] shape=1 rep=2 batches=1368 e2e_time_s=0.993514 kernel_time_s=0.993484 device_energy_j=151.005000 avg_power_w=151.991 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=3 batches=2090 runtime_s=1.01 status=in_range
+[CONV2D] shape=3 rep=1 batches=2090 e2e_time_s=1.011304 kernel_time_s=1.011316 device_energy_j=177.334000 avg_power_w=175.352 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 rep=2 batches=2090 e2e_time_s=1.014830 kernel_time_s=1.014841 device_energy_j=196.456000 avg_power_w=193.585 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=6 batches=803 runtime_s=1 status=in_range
+[CONV2D] shape=6 rep=1 batches=803 e2e_time_s=0.998833 kernel_time_s=0.998790 device_energy_j=179.466000 avg_power_w=179.676 runtime_status=in_range checksum=OK
+[CONV2D] shape=6 rep=2 batches=803 e2e_time_s=0.997028 kernel_time_s=0.996995 device_energy_j=179.597000 avg_power_w=180.132 runtime_status=in_range checksum=OK
