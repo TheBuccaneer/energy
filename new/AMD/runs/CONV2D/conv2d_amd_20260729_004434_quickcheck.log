@@ -1,0 +1,24 @@
+CONV2D | AMD Ryzen Threadripper 3970X 32-Core Processor | platform=AMD | implementation=onednn_convolution_auto | session=conv2d_amd_20260729_004434_quickcheck | reps=2 | configs=12 | DRAM-RAPL=no
+[CALIBRATION] shape=5 threads=1 batches=10
+[CONV2D] shape=5 threads=1 rep=1 batches=10 e2e_time_s=1.012113 kernel_time_s=1.012113 device_energy_j=97.322695 avg_power_w=96.158 runtime_status=in_range checksum=OK
+[CONV2D] shape=5 threads=1 rep=2 batches=10 e2e_time_s=1.008702 kernel_time_s=1.008702 device_energy_j=97.603260 avg_power_w=96.761 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=6 threads=64 batches=110
+[WARNING] runtime_status=above shape=6 threads=64 rep=1 e2e_time_s=1.54
+[CONV2D] shape=6 threads=64 rep=1 batches=110 e2e_time_s=1.535021 kernel_time_s=1.535021 device_energy_j=332.065454 avg_power_w=216.326 runtime_status=above checksum=OK
+[WARNING] runtime_status=above shape=6 threads=64 rep=2 e2e_time_s=1.55
+[CONV2D] shape=6 threads=64 rep=2 batches=110 e2e_time_s=1.551669 kernel_time_s=1.551669 device_energy_j=340.698339 avg_power_w=219.569 runtime_status=above checksum=OK
+[CALIBRATION] shape=4 threads=1 batches=30
+[CONV2D] shape=4 threads=1 rep=1 batches=30 e2e_time_s=0.999417 kernel_time_s=0.999417 device_energy_j=115.705458 avg_power_w=115.773 runtime_status=in_range checksum=OK
+[CONV2D] shape=4 threads=1 rep=2 batches=30 e2e_time_s=1.004961 kernel_time_s=1.004961 device_energy_j=111.037638 avg_power_w=110.489 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=3 threads=64 batches=651
+[CONV2D] shape=3 threads=64 rep=1 batches=651 e2e_time_s=1.227815 kernel_time_s=1.227815 device_energy_j=247.278105 avg_power_w=201.397 runtime_status=in_range checksum=OK
+[WARNING] runtime_status=above shape=3 threads=64 rep=2 e2e_time_s=1.32
+[CONV2D] shape=3 threads=64 rep=2 batches=651 e2e_time_s=1.316285 kernel_time_s=1.316285 device_energy_j=257.240283 avg_power_w=195.429 runtime_status=above checksum=OK
+[CALIBRATION] shape=2 threads=1 batches=30
+[CONV2D] shape=2 threads=1 rep=1 batches=30 e2e_time_s=1.014163 kernel_time_s=1.014163 device_energy_j=104.838923 avg_power_w=103.375 runtime_status=in_range checksum=OK
+[CONV2D] shape=2 threads=1 rep=2 batches=30 e2e_time_s=1.016426 kernel_time_s=1.016426 device_energy_j=103.578795 avg_power_w=101.905 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=3 threads=1 batches=31
+[CONV2D] shape=3 threads=1 rep=1 batches=31 e2e_time_s=1.010317 kernel_time_s=1.010317 device_energy_j=110.303408 avg_power_w=109.177 runtime_status=in_range checksum=OK
+[CONV2D] shape=3 threads=1 rep=2 batches=31 e2e_time_s=1.006864 kernel_time_s=1.006864 device_energy_j=107.073366 avg_power_w=106.343 runtime_status=in_range checksum=OK
+[CALIBRATION] shape=2 threads=64 batches=409
+FATAL: Hard failure: runtime_status=below for shape_id=2, threads=64, repetition=1, batches=409, e2e_time_s=0.678156

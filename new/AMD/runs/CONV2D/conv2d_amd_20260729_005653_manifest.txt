@@ -1,8 +1,8 @@
-campaign_id=conv2d_amd_20260729_002444
+campaign_id=conv2d_amd_20260729_005653
 platform=AMD
 workload=CONV2D
 schema_version=cpu-gpu-v2
-created_at=2026-07-29T00:24:44+02:00
+created_at=2026-07-29T00:56:53+02:00
 hostname=rock-tobefilledbyoem
 kernel=Linux 6.17.0-41-generic x86_64 GNU/Linux
 compiler=g++ (Ubuntu 15.2.0-4ubuntu4) 15.2.0
@@ -16,21 +16,21 @@ power_off_at_end=1
 quickcheck_only=0
 verbose_probe_shape=6
 verbose_probe_thread=1
-source_sha256=17022fb1396a1b053e889bc421590459ccf12251779f3e7e5d04071d6c14cfd3
+source_sha256=75940b1dd10c01a4a5788e39415c80aa1ae34c7b36071c3affeb2c20ff0dfb0d
 header_sha256=33482d03cb11784d78b7ac899a6224bf04ab28011ede8c632981525abec26a13
-runner_sha256=25c9bb8d3cd02fea36633c6a5567ec1f9262dbb8a63d42958fc05830ab1ff781
-binary_sha256=e8fa95015ca19c7268def21724e759bc1600402e3d90a0c6b50dd59d8eb22fef
-git_commit=625f740d851620761226d71af33aec0c0911dd0b
+runner_sha256=03f830fe2eb420a33b7be679739dce35c8005a669da1601d735d062f199f8edf
+binary_sha256=1f0470fec9435dd597ff9337927d0c90f44d93a2eac9c449953758707e0cc579
+git_commit=78c0c4fcd4e6e4a8b026b5db8c99f631bf76a2d6
 git_dirty=yes
 --- ldd ---
-	linux-vdso.so.1 (0x000078f27ba16000)
-	libdnnl.so.3.6 => /lib/x86_64-linux-gnu/libdnnl.so.3.6 (0x000078f278e00000)
-	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x000078f278a00000)
-	libgomp.so.1 => /lib/x86_64-linux-gnu/libgomp.so.1 (0x000078f27b969000)
-	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x000078f27b93c000)
-	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000078f278600000)
-	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x000078f278cf3000)
-	/lib64/ld-linux-x86-64.so.2 (0x000078f27ba18000)
+	linux-vdso.so.1 (0x00007b0343fc5000)
+	libdnnl.so.3.6 => /lib/x86_64-linux-gnu/libdnnl.so.3.6 (0x00007b0341400000)
+	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007b0341000000)
+	libgomp.so.1 => /lib/x86_64-linux-gnu/libgomp.so.1 (0x00007b0343f19000)
+	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007b0343eec000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007b0340c00000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007b03412f3000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007b0343fc7000)
 --- cpu ---
 Architecture:                            x86_64
 CPU op-mode(s):                          32-bit, 64-bit
@@ -47,7 +47,7 @@ Core(s) per socket:                      32
 Socket(s):                               1
 Stepping:                                0
 Frequency boost:                         enabled
-CPU(s) scaling MHz:                      65%
+CPU(s) scaling MHz:                      56%
 CPU max MHz:                             4550,8599
 CPU min MHz:                             575,7120
 BogoMIPS:                                7400,28
@@ -82,7 +82,7 @@ Vulnerability Vmscape:                   Mitigation; IBPB before exit to userspa
 available: 1 nodes (0)
 node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63
 node 0 size: 128665 MB
-node 0 free: 115591 MB
+node 0 free: 122486 MB
 node distances:
 node     0 
    0:   10 
@@ -94,13 +94,36 @@ cpubind: 0
 nodebind: 0 
 membind: 0 
 preferred: 
-verbose_probe_csv_sha256=47abcb4a8b39e64836aa9e9a5a0f777c4f4e3d0ac81694da3733e889f120de98
-verbose_probe_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_002444_verbose_probe.csv
-verbose_probe_log_sha256=6bc7cd366ac1901242a21be731ee7c25aab877a85173c42d055c9624bcdbe1a8
-verbose_probe_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_002444_verbose_probe.log
-quickcheck_csv_sha256=5c067bf996690d80baba15d4591d12bc1ac01ce4a66ca333929ea59c72a6625e
-quickcheck_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_002444_quickcheck.csv
-quickcheck_log_sha256=650051fd0c1a00fb8f23ee6d6b92e0510a88d9df9d152933d8954940c5452ce9
-quickcheck_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_002444_quickcheck.log
-anti_collapse_log_sha256=b8de569f213665f20534a100171defbb6ee01d00651cf8f654c84196df45e3c2
-anti_collapse_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_002444_anti_collapse.log
+verbose_probe_csv_sha256=e67ca21f023b5a5251d0b23526d39aff999637254b10cec073b87ca8fdfb6211
+verbose_probe_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_verbose_probe.csv
+verbose_probe_log_sha256=3fe8b6ecf2f04f73847064487520368a4ea406484196fc19e63372d2d3fb6002
+verbose_probe_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_verbose_probe.log
+quickcheck_csv_sha256=c8783c7c6592fd82926573ca62f72d656099160b9f80982eb1beae28d461c7c0
+quickcheck_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_quickcheck.csv
+quickcheck_log_sha256=5e084fdcc95375ca849a61520ab198cf7f9a2b239ec5e3767c629ffba4c0fe32
+quickcheck_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_quickcheck.log
+anti_collapse_log_sha256=bd00a4942b3660a09d87ea6ab26537f90ca940de8b21d20176efa76c3055eda5
+anti_collapse_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_anti_collapse.log
+session1_csv_sha256=66ec7868a600c46f71cb9a0ddd69118eaea50ab2af117c93e7bc84a3d1d1ff6e
+session1_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session1.csv
+session1_log_sha256=e7eac29efb2fdfaa6af26b7266dec8cfcdeb647e0184e5e42a48599853047daf
+session1_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session1.log
+session2_csv_sha256=e533ef94231e87c5163818c3e5b41b217f955f85add5456658d4bf5b40fb9c3a
+session2_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session2.csv
+session2_log_sha256=b1f18a5669022857fc880afc56fe9e685870514b37d01aa599b9107f4513b26d
+session2_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session2.log
+session3_csv_sha256=716f3c59b3b85ca555100b78ba1850915241bfb3d15a97092b04636c6bd4bdea
+session3_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session3.csv
+session3_log_sha256=8f202e591bbc1aa1c6fa1d66ac67b1a631b09c491cd6512ab95033894c6be76a
+session3_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session3.log
+session4_csv_sha256=3ef3d33fa5f6e4b5f1d2b2ccad33963e6c39b9260847729d54d562b10d68dd9c
+session4_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session4.csv
+session4_log_sha256=ed138badc6152d57cb405ed4b10f6d50c3e31e0b654b411f5f65b32b47042991
+session4_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session4.log
+session5_csv_sha256=631f3d1a64de22ec69af4deac04fd28f08d6d21cd10247c6674f9079c35b1d5b
+session5_csv_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session5.csv
+session5_log_sha256=2c009fc156afd1cd60aac0b925a0d50a435242d9fd4b80d3e5102e1cc4ca5173
+session5_log_path=/home/rock/projects/energy/new/AMD/runs/CONV2D/conv2d_amd_20260729_005653_session5.log
+official_status=PASS
+official_rows_total=2700
+completed_at=2026-07-29T01:56:28+02:00
