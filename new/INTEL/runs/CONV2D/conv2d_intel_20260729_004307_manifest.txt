@@ -1,0 +1,128 @@
+campaign_id=conv2d_intel_20260729_004307
+platform=Intel
+workload=CONV2D
+schema_version=cpu-gpu-v2
+created_at=2026-07-29T00:43:07+02:00
+hostname=rock-ms7a95
+kernel=Linux 6.17.0-41-generic x86_64 GNU/Linux
+compiler=g++ (Ubuntu 15.2.0-4ubuntu4) 15.2.0
+all_shapes=1,2,3,4,5,6
+all_threads=1,2,4,8,10,16,20
+sessions=5
+repetitions=10
+quick_repetitions=2
+session_pause_s=60
+power_off_at_end=1
+quickcheck_only=0
+verbose_probe_shape=6
+verbose_probe_thread=1
+source_sha256=6a7a37fe5b9fb8bfd83f32532daf5bcbe3be1a2346d2385a7d5a169fe285eb5c
+header_sha256=6164822ff7609c84562ef3405312274a7c3fff9fc1dca21ad51cce90f7472cb5
+runner_sha256=00e5261adf8bab23972bff55aaffe7f3f4a99f991d495d9a5548782e3b3e7aad
+binary_sha256=ad2ad97e204dd059c3548fcda2d4ea0c1fbfca1f4db2edb21022b58918902919
+git_commit=78c0c4fcd4e6e4a8b026b5db8c99f631bf76a2d6
+git_dirty=yes
+--- ldd ---
+	linux-vdso.so.1 (0x00007642be6af000)
+	libdnnl.so.3.6 => /lib/x86_64-linux-gnu/libdnnl.so.3.6 (0x00007642bba00000)
+	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007642bb600000)
+	libgomp.so.1 => /lib/x86_64-linux-gnu/libgomp.so.1 (0x00007642be60d000)
+	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007642be5e0000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007642bb200000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007642be4d1000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007642be6b1000)
+--- cpu ---
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           46 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  20
+On-line CPU(s) list:                     0-19
+Vendor ID:                               GenuineIntel
+Model name:                              Intel(R) Core(TM) i9-7900X CPU @ 3.30GHz
+CPU family:                              6
+Model:                                   85
+Thread(s) per core:                      2
+Core(s) per socket:                      10
+Socket(s):                               1
+Stepping:                                4
+CPU(s) scaling MHz:                      60%
+CPU max MHz:                             4500,0000
+CPU min MHz:                             1200,0000
+BogoMIPS:                                6599,98
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault cat_l3 cdp_l3 pti ssbd mba ibrs ibpb stibp tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm mpx rdt_a avx512f avx512dq rdseed adx smap clflushopt clwb intel_pt avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts hwp hwp_act_window hwp_pkg_req vnmi md_clear flush_l1d arch_capabilities
+Virtualization:                          VT-x
+L1d cache:                               320 KiB (10 instances)
+L1i cache:                               320 KiB (10 instances)
+L2 cache:                                10 MiB (10 instances)
+L3 cache:                                13,8 MiB (1 instance)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-19
+Vulnerability Gather data sampling:      Vulnerable
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             KVM: Mitigation: Split huge pages
+Vulnerability L1tf:                      Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
+Vulnerability Mds:                       Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Meltdown:                  Mitigation; PTI
+Vulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Old microcode:             Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Mitigation; IBRS
+Vulnerability Spec rstack overflow:      Not affected
+Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; IBRS; IBPB conditional; STIBP conditional; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Not affected
+Vulnerability Tsx async abort:           Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Vmscape:                   Mitigation; IBPB before exit to userspace
+--- numactl --hardware ---
+available: 1 nodes (0)
+node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+node 0 size: 47820 MB
+node 0 free: 43708 MB
+node distances:
+node     0 
+   0:   10 
+--- numactl --show ---
+policy: default
+preferred node: current
+physcpubind: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+cpubind: 0 
+nodebind: 0 
+membind: 0 
+preferred: 
+verbose_probe_csv_sha256=e06be41b89e42c85b111ff8bac45222ecd79e033f73c2a0337c94cfa51ec7d6c
+verbose_probe_csv_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_verbose_probe.csv
+verbose_probe_log_sha256=1a6ec416eb829a0cd88bc213203d4a4d5d54d5677857c769af8eceb31a4fecb6
+verbose_probe_log_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_verbose_probe.log
+quickcheck_csv_sha256=99ce6dd4e492cc59eb0b51f0a75866ea1364d9381dd43a357ea52953ca01dc64
+quickcheck_csv_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_quickcheck.csv
+quickcheck_log_sha256=7ea1d4e2520ebe535269f8e9ed443c8bd0a57f90f2a634b0f027a8ac0707c790
+quickcheck_log_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_quickcheck.log
+anti_collapse_log_sha256=32acbf61584edc846d66a50cb77fb0fa30a07ce2585275337f8bc4e0cd3b0d7a
+anti_collapse_log_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_anti_collapse.log
+session1_csv_sha256=7ab29f36ac0fe36c4e4a5a377a2349420d16966043f6cb2b3d50c55facead8f4
+session1_csv_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session1.csv
+session1_log_sha256=0aed8c612a1d59ecf2ac273fcdd6f2a926f40383f73d95dc85cc413ab23b7bf0
+session1_log_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session1.log
+session2_csv_sha256=3b667dbbbcb5a3adf6a1736cdf8fc1a92045437d695b0dc9d10169811f844ab8
+session2_csv_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session2.csv
+session2_log_sha256=3e376476f584716ef108d80a79edea777509cc6bbb6ceac1d13433d0d3e2e37f
+session2_log_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session2.log
+session3_csv_sha256=07ecde02e14681c0c3b91b4837bb68ca8ce27c3c76e926801649f3096580958a
+session3_csv_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session3.csv
+session3_log_sha256=baa9e65aa07c4e8ec0e46b10138ea2bf3add6357ab75cdc289ca6d2bacf39ceb
+session3_log_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session3.log
+session4_csv_sha256=c744ae7878f13ac9a147f728a782f8b2c4c70c537d1a9db80b0a25a34c1aaee9
+session4_csv_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session4.csv
+session4_log_sha256=5118d06713c14a0d59426ef08a6c92d172ebfd620af1f4fd221ebddd4ff31f94
+session4_log_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session4.log
+session5_csv_sha256=407dfe008985a344a0e2681357fd1c440233cfdf0a7d56be56b5835f0da7eda3
+session5_csv_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session5.csv
+session5_log_sha256=bfea993c8fd185fa8071091bd35c99718e6e4045cd0878e9ef02f47244e8a8d2
+session5_log_path=/home/rock/projects/energy/new/INTEL/runs/CONV2D/conv2d_intel_20260729_004307_session5.log
+official_status=PASS
+official_rows_total=2100
+completed_at=2026-07-29T01:30:04+02:00
